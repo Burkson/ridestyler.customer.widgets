@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>HTML5 boilerplate – all you really need…</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <!--script src="http://localhost:58075/js?DataType=jsonp"></script-->
+    <script src="http://api-alpha.ridestyler.net/js?DataType=jsonp"></script>
+	<script src="rsvr.js"></script>
+    <style>
+        .vehicle-container {
+            background: #efefef;
+            border: 1px solid #ccc;
+            width: 800px;
+            height: 400px;
+        }
+    </style>
+</head>
+
+<body id="home">
+	<div id="container" class="vehicle-container">
+
+	</div>
+
+    <button type="button" id="refresh-button">Refresh</button>
+
+    <script>
+        ridestyler.initialize({ Key: 'c028c54cf0c447c594a862de6ac85d1a' });
+        var cso = 0;
+        var rsv = new RideStylerViewport('#container');
+        var instructions = {
+            Type: 'side',
+            PaintColor: '#AFB2A3',
+            Type: 'angle',
+            PositionX: 1,
+            PositionY: 2,
+            VehicleConfiguration: 'a26dc2e9-2e0d-49cd-82c3-64647e2a6722',
+            VehicleTireOption: 'dc0337e9-447e-4096-88c6-2abedbd6dcd6'
+        }
+
+        $('#refresh-button').click(function() {
+            rsv.Update({ Suspension: ++cso });
+        });
+
+        rsv.Update(instructions);
+        //rsv.Update('http://api.ridestyler.net/vehicle/render?key=c028c54cf0c447c594a862de6ac85d1a&Type=side&PaintColor=%23AFB2A3&Width=611&Height=260&PositionX=1&PositionY=2&VehicleConfiguration=a26dc2e9-2e0d-49cd-82c3-64647e2a6722&VehicleTireOption=dc0337e9-447e-4096-88c6-2abedbd6dcd6');
+        //rsv.Update('key=c028c54cf0c447c594a862de6ac85d1a&Type=side&PaintColor=%23AFB2A3&Width=611&Height=260&PositionX=1&PositionY=2&VehicleConfiguration=a26dc2e9-2e0d-49cd-82c3-64647e2a6722&VehicleTireOption=dc0337e9-447e-4096-88c6-2abedbd6dcd6');
+    </script>
+</body>
+</html>
