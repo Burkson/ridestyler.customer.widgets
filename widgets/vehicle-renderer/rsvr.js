@@ -20,7 +20,7 @@ function RideStylerViewport(elem, options) {
         if (typeof document.querySelector === 'function') {
             container = document.querySelector(elem);
         } else if (elem[0] === '.') {
-            container = document.getElementsByClassName(elem.replace('.', ''));
+            container = document.getElementsByClassName(elem.substring(1));
         } else if (elem[0] === '#') {
             container = document.getElementById(elem.substring(1));
         }

@@ -1,1 +1,3 @@
-# Temporary
+# Vehicle Renderer
+This script allows you to quicky implement RideStyler vehicle visualization into your website. Simply include the script and initialize it with the container you would like to contain the vehicle image. The script will take care of the rest.
+*Note: * This widget requires that the RideStyler API script be included in your website as well as it is used for communicating with the API.
