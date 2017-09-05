@@ -1,0 +1,194 @@
+.psc-widget {
+	font-size: 12px;
+	font-family: "proxima-nova-alt-ext-cond", sans-serif;
+	color: #555;
+}
+
+.psc-h2 {
+    color: #428def;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.psc-tm-wrap, .psc-ctm-wrap {
+	float: left;
+	margin: 0 20px 20px 0;
+}
+
+.psc-ts-wrap, .psc-tsd-wrap {
+	float: left;
+}
+
+.psc-ts-wrap {
+	padding-right: 25px;
+	border-right: 2px dashed #dedede;
+}
+
+.psc-tsd-wrap {
+	padding-left: 25px;
+}
+
+table.psc-table {
+	margin-top: 20px;
+	border-spacing: 0px;
+}
+
+.psc-table th, .psc-title {
+	font-weight: normal;
+	font-size: 14px;
+	text-transform: uppercase;
+}
+
+.psc-table td {
+	width: 80px;
+	padding: 2px 10px;
+}	
+
+.psc-table td > span {
+	display: block;
+}
+
+.psc-widget select {
+    box-sizing: border-box;
+    height: 32px;
+    background-color: #fcfcfc;
+    box-shadow: none;
+    font-size: 12px;
+    padding: 3px;
+    width: 90%;
+    color: #555;
+}
+
+.psc-value {
+	font-size: 12px;
+	box-sizing: border-box;
+	height: 36px;
+	line-height: 36px !important;
+	background-color: #fcfcfc;
+	box-shadow: none;
+	text-align: center;
+	border: 1px solid #ccc;
+}
+
+.psc-exp {
+	font-size: 10px;
+	color: #a3a3a3;
+}
+
+.psc-clear {
+	clear: both;
+} 
+ 
+td.psc-image {
+	text-align: center;
+	transform: scale(.8);
+	padding-left: 0px;
+}
+
+.psc-sprite {
+	background-image: url(/images/psc-sprite.png);
+	background-repeat: no-repeat;
+	display: inline-block;
+}
+
+#psc-form-submit {
+	display: none;
+}
+
+.psc-input-radio-group {
+	margin-bottom: 20px;
+}
+
+.psc-input-select-group span {
+	width: 130px;
+	text-align: left;
+	display: inline-block;
+	position: relative;
+}
+
+.psc-sizetype {
+	margin-top: -1px;
+	vertical-align: middle;
+}
+
+.psc-bottom-wrap {
+	margin-top: 20px;
+}
+
+.psc-ts-table .psc-diameter {
+	background-position: 0 -82px;
+	width: 75px;
+	height: 72px;
+}
+
+.psc-ts-table .psc-width {
+	background-position: 0 -306px;
+	color: red;
+	width: 40px;
+	height: 75px
+}
+
+.psc-ts-table .psc-sidewall {
+	background-position: 0 -236px;
+	width: 70px;
+	height: 70px;
+}
+
+.psc-ts-table .psc-circumference {
+	background-position: 0 0;
+    width: 80px;
+    height: 82px;
+}
+
+.psc-ts-table .psc-revsmile {
+	background-position: 0 -154px;
+    width: 80px;
+    height: 82px;
+}
+
+.psc-tsd-table tbody tr:first-child > td {
+    padding-top: 20px;
+}
+
+.psc-tsd-table > tbody > tr > td {
+	padding: 10px;
+}
+
+#psc-loading {
+	font-size: 14px;
+	font-family: "proxima-nova-alt-ext-cond", sans-serif;
+	color: #555;
+}
+
+.psc-first-input:after {
+	content: '/';
+	text-align: center;
+	line-height: 36px;
+	color: #666;
+	width: 12%;
+	position: absolute;
+}
+
+.flotation .psc-first-input:after {
+	content: 'x';
+}
+
+.psc-second-input:after {
+	content: 'R';
+	text-align: center;
+	line-height: 36px;
+	color: #666;
+	width: 12%;
+	position: absolute;
+}
+
+@media screen and (max-width: 870px)  {
+	.psc-ts-wrap {
+		border: none;
+	}
+	.psc-tsd-wrap {
+		padding-left: 0;
+		clear: both;
+	}
+}
