@@ -48,8 +48,6 @@
 				<input id="psc-sizetype1" name="psc-sizetype" type="radio" value="flotation" class="psc-sizetype" /> Flotation
 			</label>
 		</div>
-		
-		<br />
 
 		<div class="psc-ts-wrap">
 			<h2 class="psc-h2">Tire Specifications</h2>
@@ -60,7 +58,7 @@
 						<th>&nbsp;</th>
 						<th>Tire 1</th>
 						<th>Tire 2</th>
-						<th>Difference</th>
+						<th class="psc-diff-header">Difference</th>
 					</tr>
 				</thead>
 				<tbody>

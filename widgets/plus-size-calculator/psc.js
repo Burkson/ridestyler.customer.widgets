@@ -1,18 +1,54 @@
 (function () {
+	/**
+	 * PlusSizeCalculator: Render the Plus Size Calculator widget within a container element
+	 * @constructor
+	 * @param {number} containerId - The id of the widget's parent element
+	 * @param {Object} options - Optional arguments
+	 */
 	function PlusSizeCalculator(containerId, options) {
 		var self = this;
+
+		if (typeof options !== 'object') {
+			options = {};
+		}
+
+		// Dev or production
+		this.dev = options.dev ? options.dev : false;
+
+		// Id of our widget's parent element
 		this.containerId = containerId;
-		this.cssUri = 'styles/psc.css';
-		this.tplUri = 'templates/psc.tpl';
-		this.mphIncrement = 10;
+
+		// Paths to our stylesheet and template
+		this.cdnUrl = this.dev ? '' : 'https://gitcdn.xyz/repo/Burkson/com.burkson.ridestyler.widgets/master/widgets/plus-size-calculator/';
+		this.cssUri = this.cdnUrl + 'styles/psc.css';
+		this.tplUri = this.cdnUrl + 'templates/psc.tpl';
+
+		// Increment the Tire Speed Difference data by this value per row
+		this.mphIncrement = options.mphIncrement ? options.mphIncrement : 10;
+
+		// Metric and flotation tire measurements
 		this.measurements = [];
 		this.flotMeasurements = [];
+
+		// Indicates whether each measurement form is filled
 		this.tmEntered = false;
 		this.ctmEntered = false;
+
+		// If our stylesheet and template have been injected
 		this.stylesheetLoaded = false;
 		this.templateLoaded = false;
+
+		// Width thresholds for adjusting layout
+		this.smallWidth = 840;
+		this.smallestWidth = 480;
+
+		// The widget container element
 		this.element = document.getElementById(this.containerId);
 
+		// The widget wrapper element, used in resizing
+		this.wrap = null;
+
+		// If we don't have a container element loaded, wait for DOMContent loaded to fire
 		if (!this.element) {
 			this.addListener(document, 'DOMContentLoaded', function(event) {
 				self.element = document.getElementById(self.containerId);
@@ -23,7 +59,7 @@
 		}
 	}
 
-	/*
+	/**
 	 * When the DOM is ready, show a loading message and inject our stylesheet and template
 	 */
 	PlusSizeCalculator.prototype.afterDomReady = function() {
@@ -39,7 +75,7 @@
 		this.loadTemplate(this.initialize);
 	};
 
-	/*
+	/**
 	 * Get tire sizes from ridestyler and initialize the measurement selects
 	 * Also set up event handlers for user actions
 	 */
@@ -84,6 +120,10 @@
 			}
 		});
 
+		// Adjust styles on resize
+		this.addListener(window, 'resize', this.adjustLayout);
+		this.adjustLayout();
+
 		// First menu change
 		var firsti = document.getElementsByClassName('psc-firsti');
 		this.addListeners(firsti, 'change', this.onFirstChange);
@@ -105,7 +145,7 @@
 		this.addListeners(submit, 'click', this.onSubmit);
 	};
 
-	/*
+	/**
 	 * A first menu has changed, clear second and third menus and repopulate second
 	 */
 	PlusSizeCalculator.prototype.onFirstChange = function(e) {
@@ -114,8 +154,7 @@
 		fVal = first.value,
 		parent = first.parentElement.parentElement,
 		second = first.parentElement.nextElementSibling,
-		third = second.nextElementSibling,
-		clearClass = '';
+		third = second.nextElementSibling;
 
 		emptyDisableElem(second.children[0]);
 		emptyDisableElem(third.children[0]);
@@ -131,7 +170,7 @@
 		}
 	};
 
-	/*
+	/**
 	 * A second menu has changed, clear the third menu and repopulate it
 	 */
 	PlusSizeCalculator.prototype.onSecondChange = function(e) {
@@ -141,8 +180,7 @@
 		parent = second.parentElement.parentElement,
 		first = second.parentElement.previousElementSibling,
 		third = second.parentElement.nextElementSibling,
-		fVal = first.children[0].value,
-		clearClass = '';
+		fVal = first.children[0].value;
 
 		emptyDisableElem(third.children[0]);
 
@@ -156,15 +194,15 @@
 		}
 	};
 
-	/*
+	/**
 	 * A third menu has changed, clear spec values and submit our form
 	 */
-	PlusSizeCalculator.prototype.onThirdChange = function(e) {
+	PlusSizeCalculator.prototype.onThirdChange = function() {
 		this.checkFormAfterChange();
 		document.getElementById("psc-form-submit").click();
 	};
 
-	/*
+	/**
 	 * Change to/from metic/flotation
 	 * Clear our menus and repopulate the firsts
 	 */
@@ -243,9 +281,10 @@
 		}
 	};
 
-	/*
+	/**
 	 * One or more of our measurement sections are complete
 	 * Make an API call to compare sizes and display the info
+	 * @return {boolean} - false to suppress form submission
 	 */
 	PlusSizeCalculator.prototype.onSubmit = function(e) {
 		e.preventDefault();
@@ -286,7 +325,37 @@
 		return false;
 	};
 
-	/*
+	/**
+	 * Set class(es) on widget wrapper based on container dimensions
+	 */
+	PlusSizeCalculator.prototype.adjustLayout = function() {
+		if (!this.element) return;
+
+		var cWidth = this.element.offsetWidth;
+		if (!this.wrap) {
+			this.wrap = this.element.getElementsByClassName('psc-widget')[0];
+		}
+
+		if (this.wrap) {
+			if (cWidth <= this.smallestWidth) {
+				if (!hasClass(this.wrap, 'psc-small')) {
+					addClass(this.wrap, 'psc-small');
+				}
+				if (!hasClass(this.wrap, 'psc-smallest')) {
+					addClass(this.wrap, 'psc-smallest');
+				}
+			} else if (cWidth <= this.smallWidth) {
+				if (!hasClass(this.wrap, 'psc-small')) {
+					addClass(this.wrap, 'psc-small');
+				}
+				removeClass(this.wrap, 'psc-smallest');
+			} else {
+				removeClass(this.wrap, ['psc-small', 'psc-smallest']);
+			}
+		}
+	};
+
+	/**
 	 * After a form change, check whether each measurement form is filled out
 	 * Set an internal indicator if so
 	 */
@@ -332,9 +401,10 @@
 		clearValsByClass(clearClass);
 	};
 
-	/*
+	/**
 	 * Separate metric GetValidTireSizeDescriptions response data into arrays for each menu
-	 * Returns object in the form {first:[], second:[], third:[]}
+	 * @param {Array} tireSizes - Raw metric data on tire sizes
+	 * @return {Object} - Measurements in the form {first:[], second:[], third:[]}
 	 */
 	PlusSizeCalculator.prototype.getMetricMeasurements = function(tireSizes) {
 		var res = {},
@@ -372,9 +442,10 @@
 		return res;
 	};
 
-	/*
+	/**
 	 * Separate flotation GetValidTireSizeDescriptions response data into arrays for each menu
-	 * Returns object in the form {first:[], second:[], third:[]}
+	 * @param {Array} tireSizes - Raw flotation data on tire sizes
+	 * @return {Object} - Measurements in the form {first:[], second:[], third:[]}
 	 */
 	PlusSizeCalculator.prototype.getFlotationMeasurements = function(tireSizes) {
 		var res = {},
@@ -414,13 +485,14 @@
 		return res;
 	};
 
-	/*
-	 * Populate the specification / difference sections 
+	/**
+	 * Populates the tire specification / difference sections
+	 * @param {Object} compData - Data from ridestyler comparing two tire sizes
 	 */
-	PlusSizeCalculator.prototype.populateComparison = function(data) {
-		var baseSize = data.BaseSize,
-		newSizes = data.NewSizes[0],
-		diffs = data.Differences[0],
+	PlusSizeCalculator.prototype.populateComparison = function(compData) {
+		var baseSize = compData.BaseSize,
+		newSizes = compData.NewSizes[0],
+		diffs = compData.Differences[0],
 		tsdBody = document.getElementById('psc-tsd-table').getElementsByTagName('tbody'),
 		trs = tsdBody[0].getElementsByTagName('tr'),
 		len = trs.length,
@@ -457,8 +529,9 @@
 		}
 	};
 
-	/*
+	/**
 	 * Load our html template via xhr
+	 * @param {function} cb
 	 */
 	PlusSizeCalculator.prototype.loadTemplate = function(cb) {
 		var self = this,
@@ -481,8 +554,9 @@
 		xhr.send(null);
 	};
 
-	/*
+	/**
 	 * Insert our stylesheet into the <head>
+	 * @param {function} cb
 	 */
 	PlusSizeCalculator.prototype.insertStyles = function(cb) {
 		var self = this,
@@ -501,8 +575,9 @@
 		prependChild(document.getElementsByTagName('head')[0], css);
 	};
 
-	/*
+	/**
 	 * Display or remove a loading indicator 
+	 * @param {boolean} isLoading
 	 */
 	PlusSizeCalculator.prototype.showLoading = function(isLoading) {
 		var loadingIndicator = document.getElementById('psc-loading');
@@ -529,7 +604,7 @@
 		}
 	};
 
-	/*
+	/**
 	 * Clear the non .psc-tire1 fields
 	 */
 	PlusSizeCalculator.prototype.clearSecond = function() {
@@ -543,8 +618,11 @@
 		}
 	};
 
-	/* 
+	/**
 	 * Add an event listener of type eventType for one or more elements
+	 * @param {Array} els - Array of elements on which to attach listeners
+	 * @param {string} eventType - The event type we are listening for
+	 * @param {function} cb - Callback to execute when the event fires
 	 */
 	PlusSizeCalculator.prototype.addListeners = function(els, eventType, cb) {
 		if (els) {
@@ -558,8 +636,11 @@
 		}
 	};
 
-	/*
+	/**
 	 * Add an event listener of type eventType for a single element
+	 * @param {Element} el
+	 * @param {string} eventType
+	 * @param {function} cb 
 	 */
 	PlusSizeCalculator.prototype.addListener = function(el, eventType, cb) {
 		if (el) {
@@ -573,8 +654,9 @@
 		}
 	};
 
-	/*
+	/**
 	 * Disable a class of elements
+	 * @param {string} className - className of elements to disable
 	 */
 	var disableByClass = function(className) {
 		var elems = document.getElementsByClassName(className),
@@ -585,17 +667,21 @@
 		}	
 	};
 
-	/* 
+	/**
 	 * Empty and disable an element
+	 * @param {Element} elem
 	 */
 	var emptyDisableElem = function(elem) {
 		elem.innerHTML = ''; 
 		elem.disabled = 'disabled';
 	};
 
-	/*
+	/**
 	 * Initialize a measurement select
 	 * Empty the select, sort the data to populate it, and create <options> for the data
+	 * @param {Element} elem - The select Element to initialize
+	 * @param {string} label - Label for the first option
+	 * @param {Array} data - Data to populate the select
 	 */
 	var initSelect = function(elem, label, data) {
 		var opt = null,
@@ -610,6 +696,7 @@
 		opt = document.createElement('option');
 		opt.innerText = label;
 		opt.value = '';
+
 		elem.appendChild(opt);
 		elem.disabled = false;
 
@@ -620,8 +707,9 @@
 		}
 	};
 
-	/*
+	/**
 	 * Clear a class of elements
+	 * @param {string} className
 	 */
 	var clearValsByClass = function (className) {
 		var elems = document.getElementsByClassName(className),
@@ -633,42 +721,65 @@
 		}
 	};
 
-	/*
-	 * Returns true if the el has class cl
+	/**
+	 * Determines if element el has class cl
+	 * @param {Element} el
+	 * @param {string} cl
+	 * @return {boolean}
 	 */
 	var hasClass = function (el, cl) {
 		var regex = new RegExp('(?:\\s|^)' + cl + '(?:\\s|$)');
 		return !!el.className.match(regex);
 	};
 
-	/*
+	/**
 	 * Add class cl to element el
+	 * @param {Element} el
+	 * @param {string} cl
 	 */
 	var addClass = function (el, cl) {
 		if (el.className.indexOf(cl) === -1) {
 			el.className += ' ' + cl;
+			el.className = el.className.trim();
 		}
 	};
 
-	/* 
-	 * Remove class from element el
+	/**
+	 * Remove class(es) from element el
+	 * @param {Element} el
+	 * @param {string|Array} cl
 	 */
 	var removeClass = function (el, cl) {
-        var regex = new RegExp('(?:\\s|^)' + cl + '(?:\\s|$)');
-        el.className = el.className.replace(regex, ' ');
+		var regex = null,
+		len = 0;
+
+		if (typeof cl !== 'object') {
+			cl = [cl];
+		}
+
+		len = cl.length;
+		for (var i = 0; i < len; i++) {
+			regex = new RegExp('(?:\\s|^)' + cl[i] + '(?:\\s|$)');
+			el.className = el.className.replace(regex, ' ');
+		}
     };
 
-    /*
-     * Call a function with context ctx
-     */
-    var proxy = function(callback, ctx) {
+	/**
+	 * Call function cbwith context ctx
+	 * @param {function} cb
+	 * @param {Object} ctx
+	 * @return {function}
+	 */
+	var proxy = function(cb, ctx) {
 		return function() {
-			return callback.apply(ctx, arguments);
+			return cb.apply(ctx, arguments);
 		};
 	};
 
-	/*
+	/**
 	 * Prepend node newChild to a parent element
+	 * @param {Element} parent
+	 * @param {Element} newChild
 	 */
 	function prependChild(parent, newChild) {
 		parent.insertBefore(newChild, parent.firstChild);
