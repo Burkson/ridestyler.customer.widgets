@@ -1,25 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="utf-8">
 	<title>RideStyler Vehicle Selection Modal test</title>
-    <script src="http://api-alpha.ridestyler.net/js?DataType=json"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="rsvsm.css">
-	<script src="rsvsm.js"></script>
-    <style>
-    </style>
+	<script src="http://api-alpha.ridestyler.net/js?DataType=json"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="dist/css/rsvsm.css">
+	<script type="text/javascript" src="dist/js/rsvsm.min.js"></script>
+	<style>
+
+	</style>
 </head>
 
 <body id="home">
-    <button type="button" id="call-button">Select</button>
-    <script>
-        ridestyler.initialize({ Key: 'c028c54cf0c447c594a862de6ac85d1a' });
-        var rsvsm = new RideStylerVehicleSelectionModal();
-        var button = document.getElementById('call-button');
-        button.onclick = function () {
-            rsvsm.Show();
-        }
-    </script>
+	<button type="button" id="call-button">Select</button>
+	<script>
+		ridestyler.initialize({
+			Key: 'c028c54cf0c447c594a862de6ac85d1a'
+		});
+		var vsmOptions = {
+			ConfirmButtonText: 'Confirm Vehicle',
+			ImageSettings: {},
+			afterBackClicked: function(data) {
+			},
+			afterOptionSelected: function(data) {
+			},
+			callback: function(data) {
+			}
+		};
+		var rsvsm = new RideStylerVehicleSelectionModal(vsmOptions);
+		var button = document.getElementById('call-button');
+		button.onclick = function() {
+			rsvsm.Show();
+		}
+	</script>
 </body>
+
 </html>

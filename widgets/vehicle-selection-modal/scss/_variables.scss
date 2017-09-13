@@ -1,0 +1,37 @@
+//
+// Variables
+// ----------------------------
+
+// Colors
+$modal-bg:                        #fff !default;
+
+$gray-base:                       #000 !default;
+$gray-dark:                       lighten($gray-base, 40%) !default; // #666
+$gray-med:                        lighten($gray-base, 60%) !default; // #999
+$gray-light:                      lighten($gray-base, 87%) !default; // #dedede
+
+$red-base:                        #ff0000 !default;
+$red-normal:                      lighten($red-base, 5%) !default; // #e60000
+
+// Fonts
+$headers-font-weight:             700 !default;
+$lineinfo-font-weight:            700 !default;
+$vehicle-info-font-weight:        700 !default;
+
+$font-family-default:             Helvetica,Arial,sans-serif !default;
+
+// Button
+$gray-btn-text:                   #fff !default;
+
+// Padding and Margins
+$edge-padding:                    20px !default;
+$close-btn-padding:               15px !default;
+
+// Line heights
+$header-line-height:              1.5em !default;
+$regular-line-height:             1.3em !default;
+$progress-line-height:            1.1em !default;
+
+//Dimensions
+$modal-width:                     440px !default;
+$modal-height:                    460px !default;
