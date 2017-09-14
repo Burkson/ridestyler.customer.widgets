@@ -5,6 +5,7 @@
 	min-width: 410px;
 	min-height: 200px;
 	overflow: auto;
+	height: 100%;
 }
 
 .psc-h2 {
@@ -49,7 +50,7 @@ th.psc-diff-header {
 
 .psc-table td {
 	width: 80px;
-	padding: 2px 5px;
+	padding: 0px 5px;
 }	
 
 .psc-table td > span {
@@ -63,7 +64,7 @@ th.psc-diff-header {
     box-shadow: none;
     font-size: 12px;
     padding: 3px;
-    width: 90%;
+    width: 114px;
     color: #555;
     border: 1px solid #ccc;
 }
@@ -111,6 +112,7 @@ td.psc-image {
 
 .psc-input-select-group span {
 	width: 130px;
+	line-height: 32px;
 	text-align: left;
 	display: inline-block;
 	position: relative;
@@ -126,9 +128,9 @@ td.psc-image {
 }
 
 .psc-ts-table .psc-diameter {
-	background-position: 0 -82px;
+	background-position: 0 -83px;
 	width: 75px;
-	height: 72px;
+	height: 71.3px;
 }
 
 .psc-ts-table .psc-width {
@@ -141,13 +143,13 @@ td.psc-image {
 .psc-ts-table .psc-sidewall {
 	background-position: 0 -236px;
 	width: 70px;
-	height: 70px;
+	height: 69.7px;
 }
 
 .psc-ts-table .psc-circumference {
 	background-position: 0 0;
     width: 80px;
-    height: 82px;
+    height: 81.3px;
 }
 
 .psc-ts-table .psc-revsmile {
@@ -161,7 +163,7 @@ td.psc-image {
 }
 
 .psc-tsd-table > tbody > tr > td {
-	padding: 10px;
+	padding: 9px 5px;
 }
 
 #psc-loading {
@@ -173,10 +175,11 @@ td.psc-image {
 .psc-first-input:after {
 	content: '/';
 	text-align: center;
-	line-height: 36px;
+	line-height: 32px;
 	color: #666;
-	width: 10%;
-	position: absolute;
+	width: 12px;
+	display: inline-block;
+	/*position: absolute;*/
 }
 
 .flotation .psc-first-input:after {
@@ -186,10 +189,11 @@ td.psc-image {
 .psc-second-input:after {
 	content: 'R';
 	text-align: center;
-	line-height: 36px;
+	line-height: 32px;
 	color: #666;
-	width: 10%;
-	position: absolute;
+	width: 12px;
+	display: inline-block;
+	/*position: absolute;*/
 }
 
 .psc-small.psc-widget {
@@ -235,12 +239,11 @@ td.psc-image {
 }
 
 .psc-smallest .psc-table td {
-    width: 69px;
-    padding: 2px 2px;
+	width: 69px;
 }
 
 .psc-smallest .psc-tsd-table td {
-		padding: 5px;
+	padding: 5px;
 
 }
 .psc-smallest td.psc-image {
@@ -289,6 +292,7 @@ td.psc-image {
 .psc-smallest .psc-select {
 	font-size: 10px;
 	padding: 1px;
+	width: 95px;
 }
 
 .psc-smallest .psc-input-select-group span {
