@@ -98,6 +98,7 @@
 	font-weight: $headers-font-weight;
 	font-size: 16px;
 	line-height: $header-line-height;
+	margin: 18px auto;
 }
 
 .vsm-close {
@@ -268,7 +269,8 @@
 	}
 
 	.dot-info-before {
-		left: -48%;
+		left: -8px;
+		text-align: left;
 	}
 
 	.dot-info-after {
@@ -331,7 +333,13 @@
 }
 
 .vsm-group-wrap .vsm-group-list {
-	margin: 10px 0 15px;
+	margin: 0 0 15px;
+}
+.vsm-group-title {
+	color: $gray-med;
+	margin-top: 0;
+	margin-bottom: 10px;
+	font-weight: $headers-font-weight;
 }
 
 .vsm-third-container > a {
@@ -348,6 +356,12 @@
 	width: 100%;
 	margin-bottom: 10px;
 	white-space: normal;
+	&:first-child {
+		margin-top: 10px;
+	}
+	&:last-child {
+		margin-bottom: 0;
+	}
 }
 
 .vsm-btn {
@@ -419,10 +433,11 @@
 .vsm-selected-info {
 	font-size: 14px;
 	font-weight: $lineinfo-font-weight;
-	max-height: 50px;
+	max-height: 46px;
 	overflow: hidden;
 	display: block;
 	text-decoration: underline;
+	line-height: $progress-line-height;
 }
 
 .vsm-vehicle-display {

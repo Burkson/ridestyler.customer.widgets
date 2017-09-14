@@ -30,6 +30,7 @@ function RideStylerVehicleSelectionModal(options) {
     // Extend default settings
     options = extend({
         ConfirmButtonText: 'Confirm Vehicle',
+        GroupOptions: false,
         afterBackClicked: null,
         afterOptionSelected: null,
         callback: null
@@ -453,8 +454,14 @@ function RideStylerVehicleSelectionModal(options) {
         headerElement = modal.querySelectorAll('.vsm-header')[0],
         bodyElement = modal.querySelectorAll('.vsm-modal-body')[0],
         vsmLinkStyle = modal.querySelectorAll('.vsm-line-step')[0],
-        finalScreen = modal.querySelectorAll('.vsm-final')[0],
-        onListItemSelected = function(o){
+        finalScreen = modal.querySelectorAll('.vsm-final')[0];
+
+        var menuOptions = menu.Options,
+        menuKey = menu.Key,
+        menuTitle = menu.Title,
+        menuGroups = menu.Groups;
+
+        var onListItemSelected = function(o) {
             var optionValue = o.getAttribute('data-optionvalue');
             var optionKey = o.getAttribute('data-optionkey');
             var optionLabel = o.getAttribute('data-optionlabel');
@@ -492,14 +499,39 @@ function RideStylerVehicleSelectionModal(options) {
             else {
                 return;
             }
-        }
+        },
+        buildListItem = function(optObj) {
+            var optionLabel = optObj.Label,
+            optionValue = optObj.Value;
+            if (typeof optionLabel === 'undefined' || typeof optionValue === 'undefined') {
+                return undefined;
+            }
+
+            var optionBtn = document.createElement('a'),
+            optionText = document.createTextNode(optionLabel);
+            optionBtn.className = 'vsm-option-item vsm-btn vsm-btn-gray';
+            optionBtn.href = 'javascript:void(0)';
+            optionBtn.setAttribute('data-optionvalue', optionValue);
+            optionBtn.setAttribute('data-optionlabel', optionLabel);
+            optionBtn.appendChild(optionText);
+
+            optionBtn.onclick = function(){
+                onListItemSelected(this);
+            };
+            return optionBtn;
+        },
+        buildListHeader = function(headerText) {
+            var menuSubHeader = document.createElement('p'),
+            menuSubHeaderText = document.createTextNode(headerText);
+            menuSubHeader.className = 'vsm-group-title';
+            menuSubHeader.appendChild(menuSubHeaderText);
+
+            return menuSubHeader;
+        };
+
         //In progress, removing the final screen element from loaded modal
         finalScreen.parentNode.removeChild(finalScreen);
         addClass(vsmLinkStyle, 'vsm-single-step');
-
-        var menuOptions = menu.Options,
-        menuKey = menu.Key,
-        menuTitle = menu.Title;
 
         //Create right-side progress bar
         var divELe = document.createElement('div'),
@@ -549,31 +581,82 @@ function RideStylerVehicleSelectionModal(options) {
             groupWrap.className = 'vsm-group-wrap center-piece';
             itemListContainer.appendChild(groupWrap);
 
-            /*Make list in group*/
-            var groupList = document.createElement('div');
-            groupList.className = 'vsm-group-list vsm-one-container';
-            groupWrap.appendChild(groupList);
+            if (options.GroupOptions && menuGroups) {
+                var menuGroupedOptions = {};
+                for (var i = 0; i < menuOptions.length; i++) {
+                    var thisMenuOption = menuOptions[i],
+                    thisMenuOptionGroup = thisMenuOption.Group;
+                    if (thisMenuOptionGroup) {
+                        //If Group value of this option is not null or undefined
+                        if (!menuGroupedOptions[thisMenuOptionGroup]) {
+                            menuGroupedOptions[thisMenuOptionGroup] = [thisMenuOption];
+                        }
+                        else {
+                            menuGroupedOptions[thisMenuOptionGroup].push(thisMenuOption);
+                        }
+                    }
+                    else {
+                        //If Group value of this option is null or undefined, put them in Ungrouped array
+                        //May never happen, more like an error handling
+                        if (!menuGroupedOptions['_ungrouped']) {
+                            menuGroupedOptions['_ungrouped'] = [thisMenuOption];
+                        }
+                        else {
+                            menuGroupedOptions['_ungrouped'].push(thisMenuOption);
+                        }
+                    }
+                }
+                //Go through known Groups before checking ungrouped options
+                for (var j = 0; j < menuGroups.length; j++) {
+                    var menuGroup = menuGroups[j];
+                    var subGroup = menuGroupedOptions[menuGroup];
+                    if (subGroup) {
+                        var groupList = document.createElement('div');
+                        groupList.className = 'vsm-group-list vsm-one-container';
+                        groupList.appendChild(buildListHeader(menuGroup));
+                        groupWrap.appendChild(groupList);
 
-            for (var i = 0; i < menuOptions.length; i++) {
-                var optionObj = menuOptions[i];
-                var optionLabel = optionObj.Label,
-                optionValue = optionObj.Value;
-                if (typeof(optionLabel) === 'undefined' || typeof(optionValue) === 'undefined') continue;
+                        for (var i = 0; i < subGroup.length; i++) {
+                            var listItem = buildListItem(subGroup[i]);
+                            if (typeof listItem !== 'undefined') {
+                                listItem.setAttribute('data-optionkey', menuKey);
+                                listItem.setAttribute('data-menutitle', menuTitle);
+                                groupList.appendChild(listItem);
+                            }
+                        }
+                    }
+                }
+                //Check if Ungrouped options exist
+                if (menuGroupedOptions['_ungrouped']) {
+                    var groupList = document.createElement('div');
+                    groupList.className = 'vsm-group-list vsm-one-container';
+                    groupList.appendChild(buildListHeader('Ungrouped'));
+                    groupWrap.appendChild(groupList);
 
-                var optionBtn = document.createElement('a'),
-                optionText = document.createTextNode(optionLabel);
-                optionBtn.className = 'vsm-option-item vsm-btn vsm-btn-gray';
-                optionBtn.href = 'javascript:void(0)';
-                optionBtn.setAttribute('data-optionvalue', optionValue);
-                optionBtn.setAttribute('data-optionkey', menuKey);
-                optionBtn.setAttribute('data-optionlabel', optionLabel);
-                optionBtn.setAttribute('data-menutitle', menuTitle);
-                optionBtn.appendChild(optionText);
-                groupList.appendChild(optionBtn);
+                    var subGroup = menuGroupedOptions['_ungrouped'];
+                    for (var i = 0; i < subGroup.length; i++) {
+                        var listItem = buildListItem(subGroup[i]);
+                        if (typeof listItem !== 'undefined') {
+                            listItem.setAttribute('data-optionkey', menuKey);
+                            listItem.setAttribute('data-menutitle', menuTitle);
+                            groupList.appendChild(listItem);
+                        }
+                    }
+                }
+            }
+            else {
+                var groupList = document.createElement('div');
+                groupList.className = 'vsm-group-list vsm-one-container';
+                groupWrap.appendChild(groupList);
 
-                optionBtn.onclick = function(){
-                    onListItemSelected(this);
-                };
+                for (var i = 0; i < menuOptions.length; i++) {
+                    var listItem = buildListItem(menuOptions[i]);
+                    if (typeof listItem !== 'undefined') {
+                        listItem.setAttribute('data-optionkey', menuKey);
+                        listItem.setAttribute('data-menutitle', menuTitle);
+                        groupList.appendChild(listItem);
+                    }
+                }
             }
         }
     }
