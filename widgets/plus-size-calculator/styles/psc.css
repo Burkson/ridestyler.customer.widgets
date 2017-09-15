@@ -9,11 +9,11 @@
 }
 
 .psc-h2 {
-    color: #428def;
-    font-size: 16px;
-    font-weight: 400;
-    text-transform: uppercase;
-}
+	color: #428def;
+	font-size: 16px;
+	font-weight: 600;
+	text-transform: uppercase;
+	}
 
 .psc-tm-wrap, .psc-ctm-wrap {
 	float: left;
@@ -58,22 +58,22 @@ th.psc-diff-header {
 }
 
 .psc-widget select {
-    box-sizing: border-box;
-    height: 32px;
-    background-color: #fcfcfc;
-    box-shadow: none;
-    font-size: 12px;
-    padding: 3px;
-    width: 114px;
-    color: #555;
-    border: 1px solid #ccc;
+	box-sizing: border-box;
+	height: 32px;
+	background-color: #fcfcfc;
+	box-shadow: none;
+	font-size: 12px;
+	padding: 3px;
+	width: 124px;
+	color: #555;
+	border: 1px solid #ccc;
 }
 
 .psc-value {
 	font-size: 12px;
 	box-sizing: border-box;
 	height: 36px;
-	line-height: 36px !important;
+	line-height: 36px;
 	background-color: #fcfcfc;
 	box-shadow: none;
 	text-align: center;
@@ -111,7 +111,7 @@ td.psc-image {
 }
 
 .psc-input-select-group span {
-	width: 130px;
+	width: 140px;
 	line-height: 32px;
 	text-align: left;
 	display: inline-block;
@@ -128,9 +128,9 @@ td.psc-image {
 }
 
 .psc-ts-table .psc-diameter {
-	background-position: 0 -83px;
+	background-position: 0 -82.2px;
 	width: 75px;
-	height: 71.3px;
+	height: 71.5px;
 }
 
 .psc-ts-table .psc-width {
@@ -143,23 +143,23 @@ td.psc-image {
 .psc-ts-table .psc-sidewall {
 	background-position: 0 -236px;
 	width: 70px;
-	height: 69.7px;
+	height: 69.5px;
 }
 
 .psc-ts-table .psc-circumference {
 	background-position: 0 0;
-    width: 80px;
-    height: 81.3px;
+	width: 80px;
+	height: 81.59px;
 }
 
 .psc-ts-table .psc-revsmile {
-	background-position: 0 -154px;
-    width: 80px;
-    height: 82px;
+	background-position: 0 -154.5px;
+	width: 80px;
+	height: 81.3px;
 }
 
 .psc-tsd-table tbody tr:first-child > td {
-    padding-top: 20px;
+	padding-top: 20px;
 }
 
 .psc-tsd-table > tbody > tr > td {
@@ -179,7 +179,6 @@ td.psc-image {
 	color: #666;
 	width: 12px;
 	display: inline-block;
-	/*position: absolute;*/
 }
 
 .flotation .psc-first-input:after {
@@ -193,7 +192,6 @@ td.psc-image {
 	color: #666;
 	width: 12px;
 	display: inline-block;
-	/*position: absolute;*/
 }
 
 .psc-small.psc-widget {
@@ -269,24 +267,24 @@ td.psc-image {
 }
 
 .psc-smallest .psc-sidewall {
-    background-position: 0 -206.5px;
-    width: 61px;
-    height: 61px;
-    background-size: 70px;
+	background-position: 0 -206.5px;
+	width: 61px;
+	height: 61px;
+	background-size: 70px;
 }
 
 .psc-smallest .psc-circumference {
-    background-position: 0 0;
-    width: 64px;
-    height: 65.5px;
-    background-size: 64px;
+	background-position: 0 0;
+	width: 64px;
+	height: 65.5px;
+	background-size: 64px;
 }
 
 .psc-smallest .psc-revsmile {
-    background-position: 0px -129px;
-    width: 63px;
-    height: 68px;
-    background-size: 67px;
+	background-position: 0px -129px;
+	width: 63px;
+	height: 68px;
+	background-size: 67px;
 }
 
 .psc-smallest .psc-select {
@@ -296,5 +294,5 @@ td.psc-image {
 }
 
 .psc-smallest .psc-input-select-group span {
-    width: 110px;
+	width: 110px;
 }
