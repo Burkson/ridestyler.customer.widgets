@@ -52,7 +52,7 @@
 		this.tplInitComplete = false;
 
 		// Width thresholds for adjusting layout
-		this.smallWidth = 840;
+		this.smallWidth = 880;
 		this.smallestWidth = 480;
 
 		// The widget container element
@@ -60,6 +60,20 @@
 
 		// The widget wrapper element, used in resizing
 		this.wrap = null;
+
+		// Groups of input selects
+		this.inputGroups = null;
+
+		// "Measurement" headers, used when showing spinner during api calls
+		this.selectHeaders = null;
+
+		// Form inputs
+		this.firsti = null;
+		this.secondi = null;
+		this.thirdi = null;
+		this.sizeType = null;
+		this.submit = null;
+		this.selects = null;
 
 		// If we don't have a container element loaded, wait for DOMContent loaded to fire
 		if (!this.element) {
@@ -87,8 +101,8 @@
 
 		this.loadStyles(cb);
 		this.loadTemplate(cb);
-		this.getMetricSizes(cb);
-		this.getFlotationSizes(cb);
+		this.getTireSizes('metric', cb);
+		this.getTireSizes('flotation', cb);
 	};
 
 	/**
@@ -119,51 +133,41 @@
 		}
 	};
 
+
 	/**
-	 * Get metric tire sizes from RideStyler
+	 * Get tire size data from RideStyler
+	 * @param {string} sizeType - Metric or flotation tire size
 	 * @param {function} cb - Callback function
 	 */
-	PlusSizeCalculator.prototype.getMetricSizes = function(cb) {
+	PlusSizeCalculator.prototype.getTireSizes = function(sizeType, cb) {
 		var self = this;
 
+		sizeType = sizeType.toLowerCase();
+		if (sizeType !== 'metric' && sizeType !== 'flotation') {
+			console.error('Invalid size type: ' + sizeType);
+			return;
+		}
+
 		ridestyler.ajax.send({
-			action: "Tire/GetValidTireSizeDescriptions",
+			action: 'Tire/GetValidTireSizeDescriptions',
 			data: {
-				SizeType: 'Metric'
+				SizeType: sizeType
 			},
 			callback: function (res) {
 				if (res.Success) {
-					self.metricSizes = self.calcMetric(res.Sizes);
-					self.metricLoaded = true;
+					if (sizeType === 'metric') {
+						self.metricSizes = self.normalizeMetric(res.Sizes);
+						self.metricLoaded = true;
+					} else {
+						self.flotSizes = self.normalizeFlotation(res.Sizes);
+						self.flotationLoaded = true;
+					}
 
-					cb.apply(self);
+					if (typeof cb === 'function') {
+						cb.apply(self);
+					}
 				} else {
-					console.error('Failed to retrieve metric tire sizes');
-				}
-			}
-		});
-	};
-
-	/**
-	 * Get flotation tire sizes from RideStyler
-	 * @param {function} cb - Callback function
-	 */
-	PlusSizeCalculator.prototype.getFlotationSizes = function(cb) {
-		var self = this;
-
-		ridestyler.ajax.send({
-			action: "Tire/GetValidTireSizeDescriptions",
-			data: {
-				SizeType: 'Flotation'
-			},
-			callback: function (res) {
-				if (res.Success) {
-					self.flotSizes = self.calcFlotation(res.Sizes);
-					self.flotationLoaded = true;
-
-					cb.apply(self);
-				} else {
-					console.error('Failed to retrieve flotation tire sizes');
+					console.error('Failed to retrieve tire sizes');
 				}
 			}
 		});
@@ -173,39 +177,45 @@
 	 * Initialize the template, populate the form with data and set up event handlers
 	 */
 	PlusSizeCalculator.prototype.initTpl = function() {
-		var self = this,
-		md = self.metricSizes,
-		len = 0,
-		firstData = [],
-		firstEls = [],
-		firsti = document.getElementsByClassName('psc-firsti'),
-		secondi = document.getElementsByClassName('psc-secondi'),
-		thirdi = document.getElementsByClassName('psc-thirdi'),
-		sizeType = document.getElementsByClassName('psc-sizetype'),
-		submit = document.getElementById('psc-form-submit');
+		var md = this.metricSizes,
+		i = 0,
+		len;
 
-		disableByClass('psc-firsti');
-		disableByClass('psc-secondi');
-		disableByClass('psc-thirdi');
+		// Save these so we don't have to continually select them
+		this.inputGroups = this.element.getElementsByClassName('psc-input-select-group');
+		this.wrap = this.element.getElementsByClassName('psc-widget')[0];
+		this.firsti = this.element.getElementsByClassName('psc-firsti');
+		this.secondi = this.element.getElementsByClassName('psc-secondi');
+		this.thirdi = this.element.getElementsByClassName('psc-thirdi');
+		this.sizeType = this.element.getElementsByClassName('psc-sizetype');
+		this.selects = this.element.getElementsByClassName('psc-select');
+		this.selectHeaders = this.element.getElementsByClassName('psc-select-header');
+		this.spinners = this.element.getElementsByClassName('psc-loading');
+		this.submit = document.getElementById('psc-form-submit');
 
 		// Initialize the 'firsti' selects with metric data
 		if (md.first.length) {
-			firstData = md.first;
-			firstEls = document.getElementsByClassName('psc-firsti');
-
-			len = firstEls.length;
-			for (var i = 0; i < len; i++) {
-				initSelect(firstEls[i], 'Width', firstData);
+			len = this.firsti.length;
+			for (i = 0; i < len; i++) {
+				initSelect(this.firsti[i], 'Width', md.first);
 			}
+		}
+
+		// Set our spinner backround
+		len = this.spinners.length;
+		for (i = 0; i < len; i++) {
+			this.spinners[i].style['background-image'] = "url('" + this.loadingImg + "')";
 		}
 
 		// Event handlers
 		this.addListener(window, 'resize', this.adjustLayout);
-		this.addListeners(firsti, 'change', this.onFirstChange);
-		this.addListeners(secondi, 'change', this.onSecondChange);
-		this.addListeners(thirdi, 'change', this.onThirdChange);
-		this.addListeners(sizeType, 'change', this.onSizeTypeChange);
-		this.addListeners(submit, 'click', this.onSubmit);
+		this.addListeners(this.firsti, 'change', this.onFirstChange);
+		this.addListeners(this.secondi, 'change', this.onSecondChange);
+		this.addListeners(this.thirdi, 'change', this.onThirdChange);
+		this.addListeners(this.sizeType, 'change', this.onSizeTypeChange);
+		this.addListeners(this.submit, 'click', this.onSubmit);
+
+		this.adjustLayout();
 	};
 
 	/**
@@ -214,6 +224,7 @@
 	PlusSizeCalculator.prototype.onFirstChange = function(e) {
 		var first = e.target,
 		secondVals = [],
+		secondLabel = '',
 		fVal = first.value,
 		parent = first.parentElement.parentElement,
 		second = first.parentElement.nextElementSibling,
@@ -225,9 +236,9 @@
 		this.checkFormAfterChange();
 
 		if (fVal != '') {
-			secondVals = hasClass(parent, "flotation") ? this.flotSizes.second[fVal] : this.metricSizes.second[fVal];
+			secondVals = hasClass(parent, 'flotation') ? this.flotSizes.second[fVal] : this.metricSizes.second[fVal];
 			if (secondVals && secondVals.length) {
-				var secondLabel = hasClass(parent, "flotation") ? 'Width' : 'Aspect Ratio';
+				secondLabel = hasClass(parent, 'flotation') ? 'Width' : 'Aspect Ratio';
 				initSelect(second.children[0], secondLabel, secondVals);
 			}
 		}
@@ -250,7 +261,7 @@
 		this.checkFormAfterChange();
 
 		if (fVal != '' && sVal != '') {
-			thirdVals = hasClass(parent, "flotation") ? this.flotSizes.third[fVal + "_" + sVal] : this.metricSizes.third[fVal + "_" + sVal];
+			thirdVals = hasClass(parent, 'flotation') ? this.flotSizes.third[fVal + '_' + sVal] : this.metricSizes.third[fVal + '_' + sVal];
 			if (thirdVals.length) {
 				initSelect(third.children[0], 'Inner Diameter', thirdVals);
 			}
@@ -262,7 +273,7 @@
 	 */
 	PlusSizeCalculator.prototype.onThirdChange = function() {
 		this.checkFormAfterChange();
-		document.getElementById("psc-form-submit").click();
+		this.submit.click();
 	};
 
 	/**
@@ -273,42 +284,37 @@
 	PlusSizeCalculator.prototype.onSizeTypeChange = function(e) {
 		var self = this,
 		sizetype = e.target,
-		groups = document.getElementsByClassName('psc-input-select-group'),
-		selects = document.getElementsByClassName('psc-select'),
-		firstSelects = document.getElementsByClassName('psc-firsti'),
-		len = selects.length,
+		firstSelects = this.firsti,
+		len = this.selects.length,
 		stVal = sizetype.value,
 		firstVals = null;
 
 		for (var i = 0; i < len; i++) {
-			emptyDisableElem(selects[i]);
+			emptyDisableElem(this.selects[i]);
 		}
 
-		this.clearAll();
+		clearValsByClass('psc-value');
 
+		len = firstSelects.length;
 		if (stVal === 'flotation') {
 			firstVals = this.flotSizes.first;
-
-			len = firstSelects.length;
 			for (i = 0; i < len; i++) {
 				initSelect(firstSelects[i], 'Outer Diameter', firstVals);
 			}
 
-			len = groups.length;
+			len = this.inputGroups.length;
 			for (i = 0; i < len; i++) {
-				addClass(groups[i], "flotation");
+				addClass(this.inputGroups[i], 'flotation');
 			}
 		} else {
 			firstVals = this.metricSizes.first;
-
-			len = groups.length;
-			for (i = 0; i < len; i++) {
-				removeClass(groups[i], "flotation");
-			}
-
-			len = firstSelects.length;
 			for (i = 0; i < len; i++) {
 				initSelect(firstSelects[i], 'Width', firstVals);
+			}
+
+			len = this.inputGroups.length;
+			for (i = 0; i < len; i++) {
+				removeClass(this.inputGroups[i], 'flotation');
 			}
 		}
 	};
@@ -326,25 +332,36 @@
 		}
 
 		var self = this,
-		selects = document.getElementsByClassName('psc-select'),
-		groups = document.getElementsByClassName('psc-input-select-group'),
-		sep1 = hasClass(groups[0], 'flotation') ? 'x' : '/',
-		sep2 = hasClass(groups[1], 'flotation') ? 'x' : '/',
-		tmSize = selects[0].value + sep1 + selects[1].value + "R" + selects[2].value,
+		sep1 = hasClass(this.inputGroups[0], 'flotation') ? 'x' : '/',
+		sep2 = hasClass(this.inputGroups[1], 'flotation') ? 'x' : '/',
+		tmSize = this.selects[0].value + sep1 + this.selects[1].value + 'R' + this.selects[2].value,
 		compareSize = tmSize,
-		params = {};
+		params = {},
+		header,
+		spinner;
 
 		if (this.ctmComplete) {
-			compareSize = selects[3].value + sep2 + selects[4].value + "R" + selects[5].value;
+			compareSize = this.selects[3].value + sep2 + this.selects[4].value + 'R' + this.selects[5].value;
+			header = this.selectHeaders[1];
+			spinner = this.spinners[1];
+		} else {
+			header = this.selectHeaders[0];
+			spinner = this.spinners[0];
 		}
 
 		params = {
 			BaseSize: tmSize,
-			"NewSizes[0]": compareSize
+			'NewSizes[0]': compareSize
 		};
 
-		ridestyler.ajax.send({
-			action: "Tire/CompareSizes",
+		setTimeout(function() {
+			if (!xhr || xhr.readyState !== 4) {
+				spinner.style.display = 'inline-block';
+			}
+		}, 200);
+
+		var xhr = ridestyler.ajax.send({
+			action: 'Tire/CompareSizes',
 			data: params,
 			callback: function (res) {
 				if (res.Success) {
@@ -352,6 +369,7 @@
 				} else {
 					console.error('RS request failed');
 				}
+				spinner.style.display = 'none';
 			}
 		});
 
@@ -365,9 +383,6 @@
 		if (!this.element) return;
 
 		var cWidth = this.element.offsetWidth;
-		if (!this.wrap) {
-			this.wrap = this.element.getElementsByClassName('psc-widget')[0];
-		}
 
 		if (this.wrap) {
 			if (cWidth <= this.smallestWidth) {
@@ -394,12 +409,12 @@
 	 */
 	PlusSizeCalculator.prototype.checkFormAfterChange = function() {
 		var self = this,
-		groups = document.getElementsByClassName('psc-input-select-group'),
-		baseGroup = groups[0].getElementsByClassName("psc-select"),
-		compGroup = groups[1].getElementsByClassName("psc-select"),
+		baseGroup = this.inputGroups[0].getElementsByClassName('psc-select'),
+		compGroup = this.inputGroups[1].getElementsByClassName('psc-select'),
 		baseVals = [],
 		compVals = [],
 		len = baseGroup.length,
+		exceptClass = '';
 		val = null;
 
 		for (var i = 0; i < len; i++) {
@@ -430,18 +445,17 @@
 		// If the first section measurements are complete (tmComplete=true), clear the tire2 vals
 		// Otherwise, clear all vals
 		if (this.tmComplete) {
-			this.clearSecond();
-		} else {
-			this.clearAll();
+			exceptClass = 'psc-tire1';
 		}
+		clearValsByClass('psc-value', exceptClass);
 	};
 
 	/**
-	 * Separate metric GetValidTireSizeDescriptions response data into arrays for each menu
+	 * Organize metric GetValidTireSizeDescriptions response data into arrays for each menu
 	 * @param {Array} tireSizes - Raw metric data on tire sizes
 	 * @return {Object} - Measurements in the form {first:[], second:[], third:[]}
 	 */
-	PlusSizeCalculator.prototype.calcMetric = function(tireSizes) {
+	PlusSizeCalculator.prototype.normalizeMetric = function(tireSizes) {
 		var res = {},
 		width = [],
 		aspect = [],
@@ -455,16 +469,16 @@
 				width.push(tSize.Width);
 				aspect[tSize.Width] = [];
 				aspect[tSize.Width].push(tSize.AspectRatio);
-				inDiam[tSize.Width + "_" + tSize.AspectRatio] = [];
-				inDiam[tSize.Width + "_" + tSize.AspectRatio].push(tSize.InsideDiameter);
+				inDiam[tSize.Width + '_' + tSize.AspectRatio] = [];
+				inDiam[tSize.Width + '_' + tSize.AspectRatio].push(tSize.InsideDiameter);
 			} else {
 				if (aspect[tSize.Width].indexOf(tSize.AspectRatio) === -1) {
 					aspect[tSize.Width].push(tSize.AspectRatio);
-					inDiam[tSize.Width + "_" + tSize.AspectRatio] = [];
-					inDiam[tSize.Width + "_" + tSize.AspectRatio].push(tSize.InsideDiameter);
+					inDiam[tSize.Width + '_' + tSize.AspectRatio] = [];
+					inDiam[tSize.Width + '_' + tSize.AspectRatio].push(tSize.InsideDiameter);
 				} else {
-					if (inDiam[tSize.Width + "_" + tSize.AspectRatio].indexOf(tSize.InsideDiameter) === -1) {
-						inDiam[tSize.Width + "_" + tSize.AspectRatio].push(tSize.InsideDiameter);
+					if (inDiam[tSize.Width + '_' + tSize.AspectRatio].indexOf(tSize.InsideDiameter) === -1) {
+						inDiam[tSize.Width + '_' + tSize.AspectRatio].push(tSize.InsideDiameter);
 					} 
 				}
 			}
@@ -478,11 +492,11 @@
 	};
 
 	/**
-	 * Separate flotation GetValidTireSizeDescriptions response data into arrays for each menu
+	 * Organize flotation GetValidTireSizeDescriptions response data into arrays for each menu
 	 * @param {Array} tireSizes - Raw flotation data on tire sizes
 	 * @return {Object} - Measurements in the form {first:[], second:[], third:[]}
 	 */
-	PlusSizeCalculator.prototype.calcFlotation = function(tireSizes) {
+	PlusSizeCalculator.prototype.normalizeFlotation = function(tireSizes) {
 		var res = {},
 		outDiam = [],
 		width = [],
@@ -497,17 +511,17 @@
 				outDiam.push(tSize.OutsideDiameter);
 				width[tSize.OutsideDiameter] = [];
 				width[tSize.OutsideDiameter].push(tSize.Width);
-				inDiam[tSize.OutsideDiameter + "_" + tSize.Width] = [];
-				inDiam[tSize.OutsideDiameter + "_" + tSize.Width].push(tSize.InsideDiameter);
+				inDiam[tSize.OutsideDiameter + '_' + tSize.Width] = [];
+				inDiam[tSize.OutsideDiameter + '_' + tSize.Width].push(tSize.InsideDiameter);
 			} else {
 				if (width.indexOf(tSize.Width) === -1) {
 					width[tSize.OutsideDiameter] = [];
 					width[tSize.OutsideDiameter].push(tSize.Width);
-					inDiam[tSize.OutsideDiameter + "_" + tSize.Width] = [];
-					inDiam[tSize.OutsideDiameter + "_" + tSize.Width].push(tSize.InsideDiameter);
+					inDiam[tSize.OutsideDiameter + '_' + tSize.Width] = [];
+					inDiam[tSize.OutsideDiameter + '_' + tSize.Width].push(tSize.InsideDiameter);
 				} else {
-					if (inDiam[tSize.OutsideDiameter + "_" + tSize.Width].indexOf(tSize.InsideDiameter) === -1) {
-						inDiam[tSize.OutsideDiameter + "_" + tSize.Width].push(tSize.InsideDiameter);
+					if (inDiam[tSize.OutsideDiameter + '_' + tSize.Width].indexOf(tSize.InsideDiameter) === -1) {
+						inDiam[tSize.OutsideDiameter + '_' + tSize.Width].push(tSize.InsideDiameter);
 					}
 				}
 			}
@@ -560,7 +574,7 @@
 		}
 
 		if (!this.ctmComplete) {
-			this.clearSecond();
+			clearValsByClass('psc-value', 'psc-tire1');
 		}
 	};
 
@@ -580,7 +594,9 @@
 					self.tplHtml = xhr.responseText;
 					self.templateLoaded = true;
 
-					cb.apply(self);
+					if (typeof cb === 'function') {
+						cb.apply(self);
+					}
 				} else {
 					console.error('xhr request for template failed');
 				}
@@ -606,7 +622,10 @@
 		css.onload = function() {
 			if (!self.stylesheetLoaded) {
 				self.stylesheetLoaded = true;
-				cb.apply(self);
+
+				if (typeof cb === 'function') {
+					cb.apply(self);
+				}
 			}
 		};
 
@@ -620,14 +639,16 @@
 	PlusSizeCalculator.prototype.showLoading = function(isLoading) {
 		var loadingIndicator = document.getElementById('psc-loading'),
 		elem = null,
-		position = '';
+		position = '',
+		cHeight = this.element.clientHeight;
+		cWidth = this.element.clientWidth;
 
 		if (this.templateLoaded && this.stylesheetLoaded) {
 			isLoading = false;
 		}
 
 		if (isLoading) {
-			if (loadingIndicator == null) {
+			if (!loadingIndicator && cHeight > 0 && cWidth > 0) {
 				elem = document.createElement('img');
 				elem.id = 'psc-loading';
 				elem.src = this.loadingImg;
@@ -648,32 +669,6 @@
 		} else {
 			if (loadingIndicator) {
 				loadingIndicator.outerHTML = '';
-			}
-		}
-	};
-
-	/**
-	 * Clear all .psc-value fields
-	 */
-	PlusSizeCalculator.prototype.clearAll = function() {
-		var pscVals = document.getElementsByClassName('psc-value'),
-		len = pscVals.length;
-
-		for (var i = 0; i < len; i++) {
-			pscVals[i].innerHTML = '';
-		}
-	};
-
-	/**
-	 * Clear tire2 and tire difference values
-	 */
-	PlusSizeCalculator.prototype.clearSecond = function() {
-		var secondVals = document.getElementsByClassName('psc-value'),
-		len = secondVals.length;
-
-		for (var i = 0; i < len; i++) {
-			if (!hasClass(secondVals[i], 'psc-tire1')) {
-				secondVals[i].innerHTML = '';
 			}
 		}
 	};
@@ -712,19 +707,6 @@
 				console.error('Unable to attach ' + eventType + ' event listener');
 			}
 		}
-	};
-
-	/**
-	 * Disable a class of elements
-	 * @param {string} className - className of elements to disable
-	 */
-	var disableByClass = function(className) {
-		var elems = document.getElementsByClassName(className),
-		len = elems.length;
-
-		for (var i = 0; i < len; i++) {
-			elems[i].disabled = 'disabled';
-		}	
 	};
 
 	/**
@@ -769,15 +751,18 @@
 
 	/**
 	 * Clear a class of elements
-	 * @param {string} className
+	 * @param {string} className - Class to clear
+	 * @param {string} exceptClass - Optional class to ignore
 	 */
-	var clearValsByClass = function (className) {
+	var clearValsByClass = function (className, exceptClass) {
 		var elems = document.getElementsByClassName(className),
 		len = elems.length;
 
 		for (var i = 0; i < len; i++) {
-			elems[i].innerText = '';
-			elems[i].innerHTML = '';
+			if (!exceptClass || !hasClass(elems[i], exceptClass)) {
+				elems[i].innerText = '';
+				elems[i].innerHTML = '';
+			}
 		}
 	};
 

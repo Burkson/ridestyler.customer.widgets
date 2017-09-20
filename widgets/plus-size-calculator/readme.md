@@ -14,6 +14,17 @@ Next, create a container div in your document to store the Plus Size Calculator 
 ```
 <div id="container"></div>
 ```
+Optionally, you might consder specifying a width, height, and border for your container. The widget's layout will change depending on your container's width, so play around with stylings until you get something that works for you. The following is a good starting point. Place this somewhere inside your document's <head> tag:
+```
+<style>
+#container {
+	width: 600px;
+	height: 800px;
+	margin: 0 auto;
+	border: 1px dotted #CCC;
+}
+</style>
+```
 ## Initialize the Widget
 Now we need to initialize the API and our Plus Size Calculator widget.
 

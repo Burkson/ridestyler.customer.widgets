@@ -1,39 +1,37 @@
 <div class="psc-widget">
 	<form id="psc-form">
 		<div class="psc-tm-wrap">
-			<h2 class="psc-h2">Tire Measurements</h2>
+			<h2 class="psc-h2 psc-select-header">Tire Measurements</h2><span class="psc-loading"></span>
 
 			<p>Enter the sizing information for your current tire:</p>
 
 			<div class="psc-input-group psc-input-select-group">
 				<span class="psc-first-input">
-					<select class="psc-firsti psc-select" id="psc-first0" name="psc-first0"></select>
+					<select class="psc-firsti psc-select" id="psc-first0" name="psc-first0" disabled></select>
 				</span>
 				<span class="psc-second-input">
-					<select class="psc-secondi psc-select" id="psc-second0" name="psc-second0">
-					</select>
+					<select class="psc-secondi psc-select" id="psc-second0" name="psc-second0" disabled></select>
 				</span>
 				<span class="psc-third-input">
-					<select class="psc-thirdi psc-select" id="psc-third0" name="psc-third0"></select>
+					<select class="psc-thirdi psc-select" id="psc-third0" name="psc-third0" disabled></select>
 				</span>
 			</div>
 		</div>
 
 		<div class="psc-ctm-wrap">
-			<h2 class="psc-h2">Comparison Tire Measurements</h2>
+			<h2 class="psc-h2 psc-select-header">Comparison Tire Measurements</h2><span class="psc-loading"></span>
 
 			<p>Enter the sizing information for your comparison tire:</p>
 
 			<div class="psc-input-group psc-input-select-group">
 				<span class="psc-first-input">
-					<select class="psc-firsti psc-select" id="psc-first1" name="psc-first1"></select>
+					<select class="psc-firsti psc-select" id="psc-first1" name="psc-first1" disabled></select>
 				</span>
 				<span class="psc-second-input">
-					<select class="psc-secondi psc-select" id="psc-second1" name="psc-second1">
-					</select>
+					<select class="psc-secondi psc-select" id="psc-second1" name="psc-second1" disabled></select>
 				</span>
 				<span class="psc-third-input">
-					<select class="psc-thirdi psc-select" id="psc-third1" name="psc-third1"></select>
+					<select class="psc-thirdi psc-select" id="psc-third1" name="psc-third1" disabled></select>
 				</span>
 			</div>
 		</div>
