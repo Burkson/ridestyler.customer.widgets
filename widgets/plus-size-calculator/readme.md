@@ -7,14 +7,14 @@ All of the RideStyler Widgets are designed to be as easy as possible to add to y
 The first step is simply adding a reference to the RideStyler JavaScript API and the Plus Size Calculator script.
 ```
 <script src="http://api-alpha.ridestyler.net/js?DataType=json"></script>
-<script src="psc.js"></script>
+<script src="dist/js/psc.min.js"></script>
 ```
 ## Add a Container
 Next, create a container div in your document to store the Plus Size Calculator widget. Give it an id attribute, for example, "container".
 ```
 <div id="container"></div>
 ```
-Optionally, you might consder specifying a width, height, and border for your container. The widget's layout will change depending on your container's width, so play around with stylings until you get something that works for you. The following is a good starting point. Place this somewhere inside your document's <head> tag:
+Optionally, you might consder specifying a width, height, and border for your container. The widget's layout will change depending on your container's width, so play around with stylings until you get something that works for you. The following is a good starting point. Place this somewhere inside your document's `<head>` tag:
 ```
 <style>
 #container {
