@@ -1,0 +1,14 @@
+{
+  "name": "com.burkson.ridestyler.widgets",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Burkson/com.burkson.ridestyler.widgets.git"
+  },
+  "contributors": [
+    {
+      "name": "Byron Carasco",
+      "url": "https://github.com/bcarasco"
+    }
+  ]
+}
