@@ -1,7 +1,5 @@
 //Template HTML
 var vsm_template = '<div id="vsm_modal_base" class="vsm-modal vsm-hide vsm-fade" style="z-index: 9999;" tabindex="-1" role="dialog"> <div class="vsm-modal-container"> <div class="vsm-modal-header"> <button type="button" class="vsm-close"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAARVBMVEUAAACdnZ2ampqbm5ubm5uampqdnZ2ZmZmZmZmZmZmcnJyZmZmZmZmdnZ2ZmZmZmZmbm5uZmZmbm5ubm5uZmZmcnJybm5v/bA1VAAAAF3RSTlMAFL8yOr0Qz//tMvHLEs3zNO8wNuswLru4YpkAAADeSURBVHgBvdUFisQAEETRjrvL/W+6Em8+1PoWNpO8H5y2/1oQRhrESep8lhel9FVeN87nvqDP87ZxXhVxt4GsuT0K+K0Itv9hnrOA3xZuD/rBFcIXkZku6HVBrwt6XdDrgl4V8KOZLui5yRf0unj4md5YPPxiHAt6XdDrQntRzCsFC3i9sriDLv6a1wW9Luh1QS8L+mGWBf20yoLeTBf0sqDftogCnoX0opDebCxcIT2KKhZeFtHD94axCKV3H0zcyYJHUad2FvAocEbhUWTuUMOj2PxdhN6zCAP7p70CQy4hRTemab0AAAAASUVORK5CYII=" style="width:24px;"></button> </div><div class="vsm-modal-body vsm-option-body vsm-list-body"> <a href="javascript:void(0);" class="vsm-back-link vsm-back-step">❮ </a> <div class="vsm-in-progress"> <p class="vsm-header vsm-center"></p><div class="vsm-line-step center-piece vsm-columns"> </div><div class="vsm-list-container scrollable"><i class="vsm-loaderIcon" alt="Loading options"></i></div></div><div class="vsm-final"> <div class="center-piece vsm-line-step vehicle-result-wrap"> <i class="dot-style dot-before active"></i> <p class="vehicle-result-name"></p><p class="vehicle-result-size"></p></div><div class="scrollable"> <div class="center-piece vehicle-image-wrap"> <div style="position: relative; text-align: center; min-height: 120px;"> <i class="vsm-loaderIcon" alt="Loading an image of your vehicle"></i> <img src="" alt="" class="vsm-vehicle-display" style="display: none;"> </div><a href="javascript:void(0);" class="vsm-btn vsm-btn-gray vsm-full-width vsm-find"></a> </div></div></div></div></div></div>';
-//Promise Polyfill
-!function(e){function n(){}function t(e,n){return function(){e.apply(n,arguments)}}function o(e){if("object"!=typeof this)throw new TypeError("Promises must be constructed via new");if("function"!=typeof e)throw new TypeError("not a function");this._state=0,this._handled=!1,this._value=void 0,this._deferreds=[],s(e,this)}function i(e,n){for(;3===e._state;)e=e._value;return 0===e._state?void e._deferreds.push(n):(e._handled=!0,void o._immediateFn(function(){var t=1===e._state?n.onFulfilled:n.onRejected;if(null===t)return void(1===e._state?r:u)(n.promise,e._value);var o;try{o=t(e._value)}catch(i){return void u(n.promise,i)}r(n.promise,o)}))}function r(e,n){try{if(n===e)throw new TypeError("A promise cannot be resolved with itself.");if(n&&("object"==typeof n||"function"==typeof n)){var i=n.then;if(n instanceof o)return e._state=3,e._value=n,void f(e);if("function"==typeof i)return void s(t(i,n),e)}e._state=1,e._value=n,f(e)}catch(r){u(e,r)}}function u(e,n){e._state=2,e._value=n,f(e)}function f(e){2===e._state&&0===e._deferreds.length&&o._immediateFn(function(){e._handled||o._unhandledRejectionFn(e._value)});for(var n=0,t=e._deferreds.length;n<t;n++)i(e,e._deferreds[n]);e._deferreds=null}function c(e,n,t){this.onFulfilled="function"==typeof e?e:null,this.onRejected="function"==typeof n?n:null,this.promise=t}function s(e,n){var t=!1;try{e(function(e){t||(t=!0,r(n,e))},function(e){t||(t=!0,u(n,e))})}catch(o){if(t)return;t=!0,u(n,o)}}var a=setTimeout;o.prototype["catch"]=function(e){return this.then(null,e)},o.prototype.then=function(e,t){var o=new this.constructor(n);return i(this,new c(e,t,o)),o},o.all=function(e){var n=Array.prototype.slice.call(e);return new o(function(e,t){function o(r,u){try{if(u&&("object"==typeof u||"function"==typeof u)){var f=u.then;if("function"==typeof f)return void f.call(u,function(e){o(r,e)},t)}n[r]=u,0===--i&&e(n)}catch(c){t(c)}}if(0===n.length)return e([]);for(var i=n.length,r=0;r<n.length;r++)o(r,n[r])})},o.resolve=function(e){return e&&"object"==typeof e&&e.constructor===o?e:new o(function(n){n(e)})},o.reject=function(e){return new o(function(n,t){t(e)})},o.race=function(e){return new o(function(n,t){for(var o=0,i=e.length;o<i;o++)e[o].then(n,t)})},o._immediateFn="function"==typeof setImmediate&&function(e){setImmediate(e)}||function(e){a(e,0)},o._unhandledRejectionFn=function(e){"undefined"!=typeof console&&console&&console.warn("Possible Unhandled Promise Rejection:",e)},o._setImmediateFn=function(e){o._immediateFn=e},o._setUnhandledRejectionFn=function(e){o._unhandledRejectionFn=e},"undefined"!=typeof module&&module.exports?module.exports=o:e.Promise||(e.Promise=o)}(this);
 
 var _vsmModalIDCounter = 0;
 function RideStylerVehicleSelectionModal(options) {
@@ -332,7 +330,7 @@ function RideStylerVehicleSelectionModal(options) {
      * @param  {Element} toModal - The modal to transition to
      * @param  {Element} fromModal - The current modal to transition from
      * @param  {Boolean} backwards - set to true, if transition from higher index to lower index
-     * @return {Promise} - Returns the promise
+     * @return {RideStylerPromise} - Returns a promise that will resolve when the transition is complete
      */
     function transitionToModal(toModal, fromModal, backwards) {
         backwards = !! backwards;
@@ -340,7 +338,9 @@ function RideStylerVehicleSelectionModal(options) {
         if (!toModal || !fromModal)
             return;
 
-        var fromAnimatePromise, toAnimatePromise;
+        /** @type {RideStylerPromise} */
+        var fromAnimatePromise = ridestyler.promise(), 
+            toAnimatePromise = ridestyler.promise();
 
         if (!backwards) {
             var fromZ = parseInt(fromModal.style.zIndex, 10) || 0,
@@ -353,65 +353,71 @@ function RideStylerVehicleSelectionModal(options) {
             if (backwards) {
                 toModal.style.display = 'block';
                 addClass(toModal, 'in');
-                toAnimatePromise = new Promise(function(resolve, reject) {
-                    resolve();
-                });
-                fromAnimatePromise = new Promise(function(resolve, reject) {
-                    setTimeout(function() {
-                        removeClass(fromModal, 'in');
-                        fromModal.onTransitionEndOnce(function(){
-                            fromModal.style.display = 'none';
-                            resolve();
-                        })
-                    }, 50);
-                });
+
+                toAnimatePromise.resolve();
+
+                setTimeout(function() {
+                    removeClass(fromModal, 'in');
+                    fromModal.onTransitionEndOnce(function(){
+                        fromModal.style.display = 'none';
+                        fromAnimatePromise.resolve();
+                    })
+                }, 50);
             }
             else {
                 toModal.style.display = 'block';
-                toAnimatePromise = new Promise(function(toResolve, toReject) {
-                    setTimeout(function() {
-                        addClass(toModal, 'in');
-                        toModal.onTransitionEndOnce(function(){
-                            fromModal.style.display = 'none';
-                            removeClass(fromModal, 'in');
-                            toResolve();
-                            fromAnimatePromise = new Promise(function(fromResolve, fromReject) {
-                                fromResolve();
-                            })
-                        })
-                    }, 50);
-                });
+                
+                setTimeout(function() {
+                    addClass(toModal, 'in');
+                    toModal.onTransitionEndOnce(function(){
+                        fromModal.style.display = 'none';
+                        removeClass(fromModal, 'in');
+
+                        toAnimatePromise.resolve();
+                        fromAnimatePromise.resolve();
+                    })
+                }, 50);
             }
         }
         else {
             if (backwards) {
                 toModal.style.display = 'block';
                 addClass(toModal, 'in');
-                toAnimatePromise = new Promise(function(resolve, reject) {
-                    resolve();
-                });
+
                 removeClass(fromModal, 'in');
                 fromModal.style.display = 'none';
-                fromAnimatePromise = new Promise(function(resolve, reject) {
-                    resolve();
-                });
             }
             else {
                 toModal.style.display = 'block';
-                toAnimatePromise = new Promise(function(resolve, reject) {
-                    resolve();
-                });
                 addClass(toModal, 'in');
+             
                 fromModal.style.display = 'none';
                 removeClass(fromModal, 'in');
-                fromAnimatePromise = new Promise(function(resolve, reject) {
-                    resolve();
-                });
             }
-        }
 
-        return Promise.all([fromAnimatePromise, toAnimatePromise]).then(function(result) {
-        }).catch(function(e){console.warn(e)});
+            toAnimatePromise.resolve();
+            fromAnimatePromise.resolve();
+        }
+        
+        var allPromise = ridestyler.promise();
+        var onPromiseChange = function () {
+            var toState = toAnimatePromise.state(),
+                fromState = fromAnimatePromise.state();
+            
+            // Still waiting for resolution
+            if (toState === 0 || fromState === 0) return;
+
+            // One promise has been rejected but the other is resolved
+            if (toState === 2 || fromState === 2) return allPromise.reject();
+
+            // Both promises are resolved
+            allPromise.resolve();
+        };
+
+        toAnimatePromise.always(onPromiseChange);
+        fromAnimatePromise.always(onPromiseChange);
+
+        return allPromise;
     }
 
     /**
