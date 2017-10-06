@@ -1,6 +1,6 @@
 (function() {
 	/**
-	 * ImageBuilder: Layer and manipulate a series of images to create a single image
+	 * LayerBuilder: Layer and manipulate a series of images to create a single image
 	 * @constructor
 	 * @param {string} containerId - The id of the container element
 	 * @param {Object} opts - Optional arguments
@@ -9,7 +9,8 @@
 		var self = this;
 
 		if (!containerId || typeof containerId !== 'string') {
-			throw new Error('Invalid containerId');
+			console.error('Invalid containerId');
+			return;
 		}
 
 		if (typeof opts !== 'object') {
@@ -21,6 +22,9 @@
 
 		// The container element
 		this.container = document.getElementById(containerId);
+
+		// Optional name for the layer set
+		this.name = typeof opts.name === 'string' ? opts.name.trim() : '';
 
 		// An array of layers in the format [{name: 'name', image: url|elem}]
 		this.layers = [];
@@ -43,9 +47,6 @@
 		// Default operation
 		this.dfltOperation = 'multiply';
 
-		// Number of canvases that have transitioned into view
-		this.transitioned = 0;
-
 		// Default canvas style
 		this.dfltCanvasStyle = {
 			position: 'absolute',
@@ -57,6 +58,8 @@
 				self.container = document.getElementById(self.containerId);
 				self.initPromise.resolve();
 			});
+		} else {
+			self.initPromise.resolve();
 		}
 	}
 
@@ -313,6 +316,7 @@
 		ctx = null,
 		link = null,
 		layer = null,
+		dims = null;
 		style = {display: 'none'};
 
 		if (!this.layers.length) {
@@ -322,19 +326,10 @@
 
 		imgType = typeof imgType === 'string' ? imgType.trim() : 'image/png';
 
-		for (var i = 0; i < len; i++) {
-			layer = this.layers[i];
-			if (layer.canvas.clientWidth > width) {
-				width = layer.canvas.clientWidth;
-			}
-			if (layer.canvas.clientHeight > height) {
-				height = layer.canvas.clientHeight;
-			}
-		}
-
+		dims = this.getDimensions();
 		canvas = this.createCanvas(style);
-		canvas.width = width;
-		canvas.height = height;
+		canvas.width = dims.width;
+		canvas.height = dims.height;
 		ctx = canvas.getContext('2d');
 
 		for (i = 0; i < len; i++) {
@@ -342,6 +337,26 @@
 		}
 
 		return canvas.toDataURL(imgType);
+	};
+
+	/**
+	 * Get the dimensions of the entire layer stack
+	 * @returns {object} - An object representing the stack dimensions
+	 */
+	LayerBuilder.prototype.getDimensions = function() {
+		var res = {width: 0, height: 0};
+
+		for (var i = 0, len = this.layers.length; i < len; i++) {
+			layer = this.layers[i];
+			if (layer.canvas.clientWidth > res.width) {
+				res.width = layer.canvas.clientWidth;
+			}
+			if (layer.canvas.clientHeight > res.height) {
+				res.height = layer.canvas.clientHeight;
+			}
+		}
+
+		return res;
 	};
 
 	/****************************************************************************
