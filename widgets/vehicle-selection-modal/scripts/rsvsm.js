@@ -163,7 +163,7 @@ function RideStylerVehicleSelectionModal(options) {
             backDrop.id = 'vsm-backdrop';
             backDrop.style.opacity = 0;
             backDrop.style.transition = 'opacity linear .3s';
-            document.body.appendChild(backDrop);
+            getModalContainer().appendChild(backDrop);
 
             showBackdrop();
         }
