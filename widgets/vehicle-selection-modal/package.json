@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "This script allows you to quickly implement RideStyler vehicle selection modal into your website.",
   "main": "gulpfile.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "types": "./rsvsm.d.ts",
   "keywords": [],
   "author": "",
   "license": "ISC",
