@@ -238,13 +238,24 @@ function RideStylerVehicleSelectionModal(options) {
         }
     }
 
+    /**
+     * Return the container that modals should be appended to
+     */
+    function getModalContainer() {
+        if (typeof options.container === 'function') return options.container();
+
+        if (options.container) return options.container;
+
+        return document.body;
+    }
+
     /*Load HTML code and append to body*/
     function loadBase() {
         var existingModal = document.getElementById('vsm_modal_base');
         if (!existingModal) {
             var divEle = document.createElement('div');
             divEle.innerHTML = vsm_template;
-            options.container.appendChild(divEle.firstChild);
+            getModalContainer().appendChild(divEle.firstChild);
         }
     }
 
@@ -266,7 +277,7 @@ function RideStylerVehicleSelectionModal(options) {
         modalBaseCopy.id = 'vsm_modal_' + _vsmModalIDCounter;
         modalArray.push('vsm_modal_' + _vsmModalIDCounter);
         modalBaseCopy.className += ' vsm_modal_' + _vsmModalIDCounter;
-        options.container.appendChild(modalBaseCopy);
+        getModalContainer().appendChild(modalBaseCopy);
 
         //Setup transition
         if (typeof(transitionModal) !== 'undefined') {

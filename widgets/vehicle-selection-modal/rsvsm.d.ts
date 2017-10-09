@@ -31,7 +31,7 @@ declare namespace RideStylerVehicleSelectionModal {
         /**
          * The container to append modals to, by defualt: document.body
          */
-        container?: Node;
+        container?: Node | (()=>Node);
 
         /**
          * A function to run when the back button is clicked
