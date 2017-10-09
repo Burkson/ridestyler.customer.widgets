@@ -39,15 +39,15 @@ That's it! You are ready to start picking vehicles on your website.
 # Documentation
 
 ## Options
-      Option        |   Type   |                         Default                         |                              Description
-------------------- | -------- | ------------------------------------------------------- | ---------------------------------------------------------------------
-ConfirmButtonText   | String   | ```Confirm Vehicle```                                   | Text to appear on the button of the last screen
-ImageSettings       | JSON     | ```{Width:260, Height:120, PositionX:1, PositionY:1}``` | Image Settings for vehicle image
-GroupOptions        | Boolean  | false                                                   | Set to true to auto-group options
-container           | Node     | document.body                                           | The container of the modal
-afterBackClicked    | Function |                                                         | Function to run after each back button click
-afterOptionSelected | Function |                                                         | Function to run after each option selection
-callback            | Function |                                                         | Callback function to run after modal close or final vehicle selection
+-Option | Type | Default | Description
+------ | ---- | ------- | -----------
+ConfirmButtonText | String | ```Confirm Vehicle``` | Text to appear on the button of the last screen
+ImageSettings | JSON | ```{Width:260, Height:120, PositionX:1, PositionY:1}``` | Image Settings for vehicle image
+GroupOptions | Boolean | false | Set to true to auto-group options
+container | Node | document.body | Defines what element to put the modals in
+afterBackClicked | Function |  | Function to run after each back button click
+afterOptionSelected | Function |  | Function to run after each option selection
+callback | Function |  | Callback function to run after modal close or final vehicle selection
 
 Options example:
 ```
