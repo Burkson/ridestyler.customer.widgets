@@ -288,6 +288,18 @@
 	};
 
 	/**
+	 * Reset a layer to its original state
+	 */
+	LayerBuilder.prototype.resetLayer = function(layerName) {
+		var layer = this.getLayer(layerName);
+
+		if (!layer) return;
+
+		layer.ctx.clearRect(0, 0, layer.canvas.width, layer.canvas.height);
+		layer.ctx.putImageData(layer.imgData, layer.img.width, layer.img.height);
+	};
+
+	/**
 	 * Get a layer by its name
 	 * @param {string} layerName - The layer name
 	 * @returns {object} The corresponding layer object

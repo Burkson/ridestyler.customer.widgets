@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+	<script src="http://api-alpha.ridestyler.net/js?Key=c028c54cf0c447c594a862de6ac85d1a"></script>
+	<script type="text/javascript" src="src/layerBuilder.js"></script>
+	<script type="text/javascript">
+		var ib = new LayerBuilder('container'),
+		layers = [
+			{name: 'base', img: 'layers/base.png'},
+			{name: 'bolts', img: 'layers/bolts.png'},
+			{name: 'cap', img: 'layers/cap.png'},
+			{name: 'cap-text', img: 'layers/cap-text.png'},
+			{name: 'inside-barrel', img: 'layers/inside-barrel.png'},
+			{name: 'lip-outer', img: 'layers/lip-outer.png'},
+			{name: 'outer-barrel', img: 'layers/outer-barrel.png'},
+			{name: 'spoke-face', img: 'layers/spoke-face.png'},
+		];
+
+		ib.setLayers(layers).done(function() {
+			ib.setColor('inside-barrel', '#e80000');
+			ib.setColor('outer-barrel', '#4286f4');
+			ib.setColor('spoke-face', '#e80000');
+			ib.setColor('spoke-face', '#4286f4');
+			ib.setColor('outer-barrel', '#e80000', 'screen');  
+			ib.setColor('base', '#098765');
+		});
+	</script>
+	<style>
+	#container {
+		overflow: auto;
+		margin: auto;
+	}
+	</style>
+</head>
+<body>
+	<div id="container"></div>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+	<script src="http://api-alpha.ridestyler.net/js?Key=c028c54cf0c447c594a862de6ac85d1a"></script>
+	<script type="text/javascript" src="../layer-builder/src/layerBuilder.js"></script>
+	<script type="text/javascript" src="src/js/wheelBuilder.js"></script>
+	<script type="text/javascript">
+		var defaultLayerOpts = [
+			{
+				name: 'Blue',
+				color: '#0000FF'
+			},
+			{
+				name: 'Red',
+				color: '#FF0000'
+			},
+			{
+				name: 'Green',
+				color: '#008000'
+			},
+			{
+				name: 'Yellow',
+				color: '#FFFF00'
+			}
+		];
+
+		var layerStacks = [
+			{
+				name: 'Preview',
+				visible: true,
+				selected: true,
+				layers: [
+					{name: 'base', label: 'Base', img: '/layers/base.png'},
+					{name: 'bolts', img: '/layers/bolts.png'},
+					{name: 'cap', img: '/layers/cap.png'},
+					{name: 'cap-text', img: '/layers/cap-text.png'},
+					{name: 'inside-barrel', img: '/layers/inside-barrel.png'},
+					{name: 'lip-outer', img: '/layers/lip-outer.png'},
+					{name: 'outer-barrel', img: '/layers/outer-barrel.png'},
+					{
+						name: 'spoke-face', 
+						img: '/layers/spoke-face.png',
+						options: [
+							{
+								name: 'Blue',
+								color: '#0000FF'
+							},
+							{
+								name: 'Red',
+								color: '#FF0000'
+							}
+						]
+					}
+				]
+			},
+			{
+				name: 'Prevew2',
+				visible: true,
+				selected: false,
+				layers: [
+					{name: 'bolts', img: '/layers/bolts.png', readOnly: true},
+					{name: 'cap', img: '/layers/cap.png'},
+					{name: 'cap-text', img: '/layers/cap-text.png'},
+					{name: 'inside-barrel', img: '/layers/inside-barrel.png'},
+					{name: 'lip-outer', img: '/layers/lip-outer.png'},
+					{name: 'outer-barrel', img: '/layers/outer-barrel.png'},
+					{name: 'spoke-face', img: '/layers/spoke-face.png'}
+				]
+			}
+		];
+		var wb = new WheelBuilder('container', layerStacks, {defaultLayerOpts: defaultLayerOpts});
+	</script>
+	<style>
+	body {
+		font-family: Arial,sans-serif;
+	}
+
+	#container {
+	/*	border: 1px dotted gray;
+		width: 800px;
+		height: 800px; */
+		overflow: auto;
+		margin: auto;
+	}
+	</style>
+</head>
+<body>
+	<div id="container"></div>
+</body>
+</html>
