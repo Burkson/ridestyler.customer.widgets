@@ -58,7 +58,6 @@ span.wb-color {
 }
 
 .wb-wheel-wrap {
-    border: 1px dotted #ccc;
     float: left;
     position: relative;
 }
@@ -99,7 +98,7 @@ span.wb-color {
 }
 
 .wb-stack-selected {
-    border: 1px dotted #87CEFA;
+    border: 1px dotted #0000FF;
 }
 
 .wb-clear {

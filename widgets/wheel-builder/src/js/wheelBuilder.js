@@ -143,40 +143,28 @@
 	WheelBuilder.prototype.selectStack = function(stackName) {
 		var self = this,
 		stack = this.getLayerStack(stackName),
-		layerSelectEl = this.layerSelectEl,
 		len = stack.layers.length,
 		layer = null,
 		opts = null,
 		a = null,
 		colorSpan = null,
 		li = null,
-		selected = self.wheelEl.getElementsByClassName('wb-wheel-selected'),
-		onclick = function(e) {
+		layerOnclick = function(e) {
 			var tgt = e.target,
 			layerIdx = tgt.getAttribute('data-layeridx');
 
 			self.showLayerOpts(stack, layerIdx);
 		};
 
-		// Hide the previously selected wheel
-		if (selected.length > 0) {
-			selected[0].style.opacity = 0;
-			selected[0].style.display = 'none';
-			removeClass(selected[0], 'wb-wheel-selected');
-		}
-
-		// Set our new stack as selected and show it
-		addClass(stack.containEl, 'wb-wheel-selected');
-		stack.containEl.style.display = 'block';
-		self.selectedStack = stack.idx;
+		// Show this stack in the preview pane
+		this.togglePreviewStack(stack);
 
 		// Display the stack name in the ctrl header
-		this.ctrlEl.getElementsByClassName('wb-ctrl-title')[0].innerHTML = stack.name;
+		this.setStackTitle(stack.name);
 
 		// Clear layer selection pane
-		layerSelectEl.innerHTML = '';
-		layerSelectEl.style.display = 'block';
-		self.layerOptsEl.style.display = 'none';
+		this.layerSelectEl.innerHTML = '';
+		this.toggle(this.layerSelectEl, this.layerOptsEl);
 
 		// Loop through layers and create the control pane
 		for (var i = 0; i < len; i++) {
@@ -200,13 +188,28 @@
 			a.href = '#';
 			a.innerText = layer.label;
 			a.setAttribute('data-layeridx', i);
-			a.onclick = onclick;
+			a.onclick = layerOnclick;
 		
 			li.appendChild(a);
-			layerSelectEl.appendChild(li);
+			this.layerSelectEl.appendChild(li);
 		}
 
 		stack.containEl.style.opacity = 1;
+	};
+
+	WheelBuilder.prototype.togglePreviewStack = function(stack) {
+		var selected = this.wheelEl.getElementsByClassName('wb-wheel-selected');
+
+		// Hide the previously selected wheel
+		if (selected.length > 0) {
+			selected[0].style.display = 'none';
+			removeClass(selected[0], 'wb-wheel-selected');
+		}
+
+		// Set our new stack as selected and show it
+		addClass(stack.containEl, 'wb-wheel-selected');
+		stack.containEl.style.display = 'block';
+		this.selectedStack = stack.idx;
 	};
 
 	/**
@@ -264,13 +267,10 @@
 			this.layerOptsEl.appendChild(li);
 		}
 
-
 		back.innerText = 'Back';
 		back.onclick = function() {
-			self.layerSelectEl.style.display = 'block';
-			self.layerOptsEl.style.display = 'none';
+			self.toggle(self.layerSelectEl, self.layerOptsEl);
 		};
-
 		navLi.appendChild(back);
 
 		reset.innerText = 'Reset';
@@ -279,18 +279,17 @@
 			layer.currentColor = '';
 			layerCtrl.getElementsByTagName('span')[0].style.backgroundColor = '#FFF';
 		};
-
 		navLi.appendChild(reset);
 
 		this.layerOptsEl.appendChild(navLi);
 
 		// Hide layer selector and show layer opts
-		this.layerSelectEl.style.display = 'none';
-		this.layerOptsEl.style.display = 'block';
+		this.toggle(this.layerOptsEl, this.layerSelectEl);
 	};
 
 	/**
 	 * Set a stack of layers
+	 * @param {object} ls - Data represending the layer stack
 	 */
 	WheelBuilder.prototype.setLayerStack = function(ls) {
 		var self = this;
@@ -350,9 +349,7 @@
 						layer.readOnly = true;
 						layer.options = [];
 					}
-				} 
-
-				//ls.layers[i] = layer;
+				}
 			}
 
 			if (exists) {
@@ -406,6 +403,7 @@
 
 	/**
 	 * Add a selector to the list of stack selection items
+	 * @param {object} ls - The layer stack for which we are adding a selector
 	 */
 	WheelBuilder.prototype.addStackSelector = function(ls) {
 		var self = this,
@@ -417,19 +415,26 @@
 		img.src = imgSrc;
 		li.appendChild(img);
 
-		li.onclick = function() {
-			var curSelected = self.wheelEl.getElementsByClassName('wb-stack-selected')[0];
+		li.onclick = function(e) {
+			var tgt = e.target,
+			item = tgt,
+			curSelected = self.selectorEl.getElementsByClassName('wb-stack-selected')[0];
+
+			if (tgt.tagName.toLowerCase !== 'li') {
+				item = tgt.parentElement;
+			}
+
 			removeClass(curSelected, 'wb-stack-selected');
-			addClass(li, 'wb-stack-selected');
 
 			self.selectStack(ls.name);
+
+			addClass(item, 'wb-stack-selected');
 		};
 
 		if (ls.selected) {
 			addClass(li, 'wb-stack-selected');
 		}
 
-		// REWRITE THIS
 		if (!selector.children.length) {
 			selector.appendChild(li);
 		} else {
@@ -455,9 +460,21 @@
 
 	/**
 	 * Get a layer stack by name
+	 * @param {string} stackname - Name of the stack to select
+	 * @returns {object} The layer stack corresponding to stackName
 	 */
 	WheelBuilder.prototype.getLayerStack = function(stackName) {
 		return this.stackLookup.hasOwnProperty(stackName) ? this.layerStacks[this.stackLookup[stackName]] : null;
+	};
+
+	/**
+	 * Set the title of the control pane
+	 * @param {string} title - The title to set
+	 */
+	WheelBuilder.prototype.setStackTitle = function(title) {
+		if (typeof title === 'string') {
+			this.ctrlEl.getElementsByClassName('wb-ctrl-title')[0].innerHTML = title;
+		}
 	};
 
 	/**
@@ -513,6 +530,14 @@
 		};
 
 		head.insertBefore(css, head.firstElementChild);
+	};
+
+	/**
+	 * Swap visibility for two elements
+	 */
+	WheelBuilder.prototype.toggle = function(showEl, hideEl) {
+		hideEl.style.display = 'none';
+		showEl.style.display = 'block';
 	};
 
 
