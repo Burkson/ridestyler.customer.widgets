@@ -279,7 +279,7 @@ function RideStylerVehicleSelectionModal(options) {
                     var bm = prepareFunctionOptions.backModal,
                     bc = prepareFunctionOptions.thisModal;
                     transitionToModal(bm, bc, true)
-                    .then(
+                    .done(
                         function(){
                             if (infoArray.length) infoArray.pop();
                             if (dataArray.length) dataArray.pop();
