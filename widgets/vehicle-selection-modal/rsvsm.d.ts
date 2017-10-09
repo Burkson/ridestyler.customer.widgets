@@ -2,6 +2,15 @@
 
 declare class RideStylerVehicleSelectionModal {
     constructor(options:RideStylerVehicleSelectionModal.Options);
+
+    /**
+     * Show the vehicle selection modal
+     */
+    Show():void;
+    /**
+     * Hide the vehicle selection modal
+     */
+    Hide():void;
 }
 
 declare namespace RideStylerVehicleSelectionModal {
