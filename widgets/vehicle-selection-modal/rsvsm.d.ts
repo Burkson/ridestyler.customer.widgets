@@ -1,5 +1,3 @@
-/// <reference path="typings/ridestyler.d.ts" />
-
 declare class RideStylerVehicleSelectionModal {
     constructor(options:RideStylerVehicleSelectionModal.Options);
 
