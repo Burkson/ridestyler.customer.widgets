@@ -29,6 +29,9 @@ function RideStylerVehicleSelectionModal(options) {
     options = extend({
         ConfirmButtonText: 'Confirm Vehicle',
         GroupOptions: false,
+
+        container: document.body,
+        
         afterBackClicked: null,
         afterOptionSelected: null,
         callback: null
@@ -241,7 +244,7 @@ function RideStylerVehicleSelectionModal(options) {
         if (!existingModal) {
             var divEle = document.createElement('div');
             divEle.innerHTML = vsm_template;
-            document.body.appendChild(divEle.firstChild);
+            options.container.appendChild(divEle.firstChild);
         }
     }
 
@@ -263,7 +266,7 @@ function RideStylerVehicleSelectionModal(options) {
         modalBaseCopy.id = 'vsm_modal_' + _vsmModalIDCounter;
         modalArray.push('vsm_modal_' + _vsmModalIDCounter);
         modalBaseCopy.className += ' vsm_modal_' + _vsmModalIDCounter;
-        document.body.appendChild(modalBaseCopy);
+        options.container.appendChild(modalBaseCopy);
 
         //Setup transition
         if (typeof(transitionModal) !== 'undefined') {

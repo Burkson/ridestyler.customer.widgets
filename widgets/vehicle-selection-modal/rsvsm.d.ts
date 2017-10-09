@@ -28,6 +28,11 @@ declare namespace RideStylerVehicleSelectionModal {
          */
         GroupOptions?: boolean;
 
+        /**
+         * The container to append modals to, by defualt: document.body
+         */
+        container?: Node;
+
         afterBackClicked?: (data: OptionChangedEvent) => void;
         afterOptionSelected?: (data: OptionSelectedEvent) => void;
         callback?: (data: VehicleSelectedEvent) => void;
