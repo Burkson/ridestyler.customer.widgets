@@ -14,7 +14,7 @@ declare class RideStylerVehicleSelectionModal {
 declare namespace RideStylerVehicleSelectionModal {
     export interface Options {
         /**
-         * Text to appear on the button of the last screen
+         * Text to appear on the button of the last screen, by default "Confirm Vehicle"
          */
         ConfirmButtonText?:string;
 
@@ -33,8 +33,20 @@ declare namespace RideStylerVehicleSelectionModal {
          */
         container?: Node;
 
+        /**
+         * A function to run when the back button is clicked
+         */
         afterBackClicked?: (data: OptionChangedEvent) => void;
+
+        /**
+         * A function to run after menu option has been selected
+         */
         afterOptionSelected?: (data: OptionSelectedEvent) => void;
+
+        /**
+         * A function to call after the modal has been closed, either via a
+         * selected vehicle or manually closing the window
+         */
         callback?: (data: VehicleSelectedEvent) => void;
     }
 
