@@ -54,7 +54,7 @@
 				]
 			},
 			{
-				name: 'Prevew2',
+				name: 'Preview2',
 				visible: true,
 				selected: false,
 				layers: [
@@ -66,9 +66,24 @@
 					{name: 'outer-barrel', img: '/layers/outer-barrel.png'},
 					{name: 'spoke-face', img: '/layers/spoke-face.png'}
 				]
+			},
+			{
+				name: 'Hidden Preview',
+				visible: false,
+				selected: false,
+				layers: [
+					{name: 'bolts', img: '/layers/bolts.png', readOnly: true},
+					{name: 'inside-barrel', img: '/layers/inside-barrel.png'},
+					{name: 'lip-outer', img: '/layers/lip-outer.png'},
+					{name: 'outer-barrel', img: '/layers/outer-barrel.png'},
+					{name: 'spoke-face', img: '/layers/spoke-face.png'}
+				]
 			}
 		];
 		var wb = new WheelBuilder('container', layerStacks, {defaultLayerOpts: defaultLayerOpts});
+		wb.loaded(function() {
+			var imgdata = wb.getStackImage('Hidden Preview');
+		});
 	</script>
 	<style>
 	body {
@@ -76,9 +91,6 @@
 	}
 
 	#container {
-	/*	border: 1px dotted gray;
-		width: 800px;
-		height: 800px; */
 		overflow: auto;
 		margin: auto;
 	}

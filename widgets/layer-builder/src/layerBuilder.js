@@ -35,6 +35,9 @@
 		// Number of image layers we are drawing
 		this.layerCount = 0;
 
+		// True when imgLoadPromise resolves
+		this.loaded = false;
+
 		// Resolves after all image layers are done loading
 		this.imgLoadPromise = new promise();
 
@@ -108,6 +111,7 @@
 					canvas.style.opacity = 1;
 				}
 
+				self.loaded = true;
 				self.imgLoadPromise.resolve();
 			}
 		}
@@ -289,6 +293,7 @@
 
 	/**
 	 * Reset a layer to its original state
+	 * @param {string} layerName - The layer to reset
 	 */
 	LayerBuilder.prototype.resetLayer = function(layerName) {
 		var layer = this.getLayer(layerName);
@@ -296,7 +301,15 @@
 		if (!layer) return;
 
 		layer.ctx.clearRect(0, 0, layer.canvas.width, layer.canvas.height);
-		layer.ctx.putImageData(layer.imgData, layer.img.width, layer.img.height);
+		layer.ctx.drawImage(layer.img, 0, 0, layer.img.width, layer.img.height);
+	};
+
+	/**
+	 * Get all valid image operations
+	 * @returns {Array} - An array of operation types
+	 */
+	LayerBuilder.prototype.getOperations = function() {
+		return imgOperations;
 	};
 
 	/**

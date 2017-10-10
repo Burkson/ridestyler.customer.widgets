@@ -3,19 +3,28 @@
     padding: 10px;
 }
 
+
+
 .wb-ctrl-wrap {
     background: #fff;
     border: 1px solid #ccc;
-    left: 80px;
     float: left;
     height: 300px;
+    width: 300px;
     opacity: 1;
     overflow: hidden;
-    top: 20px;
-    -webkit-transition: height .4s ease-in-out, opacity .4s ease-in-out;
-    transition: height .4s ease-in-out, opacity .4s ease-in-out;
-    width: 300px;
-    z-index: 4;
+    -webkit-transition: opacity .5s ease-in-out;
+    transition: opacity .5s ease-in-out;
+}
+
+.wb-ctrl-wrap a {
+    color: #1E90FF;
+    text-decoration: none;
+}
+
+.wb-ctrl {
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .wb-ctrl-header {
@@ -39,6 +48,19 @@
     width: 280px;
 }
 
+.wb-ctrl-actions {
+    border-top: 1px solid #ccc;
+    padding: 10px;
+    position: absolute;
+    top: 280px;
+    width: 280px;
+}
+
+.wb-ctrl-actions a {
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
 span.wb-color {
     width: 10px;
     height: 10px;
@@ -49,12 +71,14 @@ span.wb-color {
     display: inline-block;
 }
 
-.wb-layer-select, .wb-layer-options {
+.wb-layer-select ul, .wb-layer-options ul {
     list-style-type: none;
+    margin-bottom: 10px;
+    padding: 10px;
 }
 
-.wb-layer-options {
-    display: none;
+.wb-layer-options button {
+    margin-left: 10px;
 }
 
 .wb-wheel-wrap {
@@ -64,9 +88,8 @@ span.wb-color {
 
 .wb-wheel {
     opacity: 0;
-    /*display: none;*/
-    -webkit-transition: height .4s ease-in-out, opacity .4s ease-in-out;
-    transition: height .4s ease-in-out, opacity .4s ease-in-out;
+    -webkit-transition: opacity .5s ease-in-out;
+    transition: opacity .5s ease-in-out;
 }
 
 .wb-wheel-selected {
@@ -84,8 +107,8 @@ span.wb-color {
 .wb-wheel-selector {
     list-style-type: none;
     opacity: 0;
-    -webkit-transition: height .4s ease-in-out, opacity .4s ease-in-out;
-    transition: height .4s ease-in-out, opacity .4s ease-in-out;
+    -webkit-transition: opacity .5s ease-in-out;
+    transition: opacity .5s ease-in-out;
 }
 
 .wb-wheel-selector li {
@@ -98,7 +121,7 @@ span.wb-color {
 }
 
 .wb-stack-selected {
-    border: 1px dotted #0000FF;
+    border: 1px dotted #1E90FF;
 }
 
 .wb-clear {
