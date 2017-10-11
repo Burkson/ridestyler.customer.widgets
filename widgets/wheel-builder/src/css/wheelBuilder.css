@@ -1,9 +1,6 @@
 #wb-wrapper {
-    border: 1px dotted #ccc;
     padding: 10px;
 }
-
-
 
 .wb-ctrl-wrap {
     background: #fff;
@@ -20,6 +17,7 @@
 .wb-ctrl-wrap a {
     color: #1E90FF;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .wb-ctrl {
@@ -81,11 +79,6 @@ span.wb-color {
     margin-left: 10px;
 }
 
-.wb-wheel-wrap {
-    float: left;
-    position: relative;
-}
-
 .wb-wheel {
     opacity: 0;
     -webkit-transition: opacity .5s ease-in-out;
@@ -101,10 +94,11 @@ span.wb-color {
 }
 
 .wb-wheel-selector-wrap {
-    float: right;
+    float: left;
 }
 
 .wb-wheel-selector {
+    margin-top: 0px;
     list-style-type: none;
     opacity: 0;
     -webkit-transition: opacity .5s ease-in-out;
@@ -112,8 +106,9 @@ span.wb-color {
 }
 
 .wb-wheel-selector li {
-
+    margin-bottom: 5px;
 }
+
 
 .wb-wheel-selector li img {
     width: 100px;
@@ -122,6 +117,10 @@ span.wb-color {
 
 .wb-stack-selected {
     border: 1px dotted #1E90FF;
+}
+
+.wb-reset-all {
+    margin-top: 20px;
 }
 
 .wb-clear {

@@ -240,6 +240,8 @@
 			}
 		}
 
+		layer.currentColor = color;
+
 		operation = operation.toLowerCase();
 
 		var imgData = new ImageData(layer.img.width, layer.img.height);
@@ -294,14 +296,31 @@
 	/**
 	 * Reset a layer to its original state
 	 * @param {string} layerName - The layer to reset
+	 * @param {number} width - Optional width of the image
+	 * @param {number} height - Optional height of the image
 	 */
-	LayerBuilder.prototype.resetLayer = function(layerName) {
+	LayerBuilder.prototype.resetLayer = function(layerName, width, height) {
 		var layer = this.getLayer(layerName);
 
 		if (!layer) return;
 
+		width = isNaN(parseInt(width)) ? layer.img.width : parseInt(width);
+		height = isNaN(parseInt(height)) ? layer.img.height : parseInt(height);
+
 		layer.ctx.clearRect(0, 0, layer.canvas.width, layer.canvas.height);
-		layer.ctx.drawImage(layer.img, 0, 0, layer.img.width, layer.img.height);
+		layer.ctx.drawImage(layer.img, 0, 0, width, height);
+		layer.currentColor = '';
+	};
+
+	/**
+	 * Reset all layers to their original state
+	 */
+	LayerBuilder.prototype.resetAllLayers = function() {
+		var len = this.layers.length;
+
+		for (var i = 0; i < len; i++) {
+			this.resetLayer(this.layers[i].name);
+		}
 	};
 
 	/**

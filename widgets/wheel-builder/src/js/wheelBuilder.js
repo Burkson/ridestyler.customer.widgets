@@ -76,7 +76,6 @@
 		// Elements from the template we will be manipulating
 		this.wrapEl = null;
 		this.ctrlEl = null;
-		this.wheelEl = null;
 		this.selectorEl = null;
 		this.layerSelectWrap = null;
 		this.layerOptsWrap = null;
@@ -162,16 +161,16 @@
 			return;
 		}
 
+		// Set the template html inside the container
 		this.container.innerHTML = this.tplHtml;
 
+		// Save these elements for later use
 		this.wrapEl = document.getElementById('wb-wrapper');
 		this.ctrlEl = this.wrapEl.getElementsByClassName('wb-ctrl-wrap')[0];
-		this.wheelEl = this.wrapEl.getElementsByClassName('wb-wheel-wrap')[0];
 		this.layerSelectWrap = this.ctrlEl.getElementsByClassName('wb-layer-select')[0];
 		this.layerOptsWrap = this.ctrlEl.getElementsByClassName('wb-layer-options')[0];
-		this.selectorEl = this.wheelEl.getElementsByClassName('wb-wheel-selector')[0];
+		this.selectorEl = this.wrapEl.getElementsByClassName('wb-wheel-selector')[0];
 
-		// Action events
 		var download = this.ctrlEl.getElementsByClassName('wb-download')[0];
 		download.onclick = function(e) {
 			self.exportSelectedStack(e);
@@ -180,7 +179,7 @@
 		// Create our layer stacks
 		var len = this.dirtyStacks.length;
 		for (var i = 0; i < len; i++) {
-			this.setLayerStack(this.dirtyStacks[i]);
+			this.addLayerStack(this.dirtyStacks[i]);
 		}
 	};
 
@@ -228,12 +227,20 @@
 		layerClass = '',
 		layer = null,
 		colorSpan = null,
+		textSpan = null,
 		a = null,
 		li = null,
+		reset = null,
 		ul = document.createElement('ul'),
 		layerOnclick = function(e) {
 			var tgt = e.target,
-			layerIdx = tgt.getAttribute('data-layeridx');
+			layerIdx = null;
+
+			if (tgt.tagName !== 'A') {
+				tgt = tgt.parentElement;
+			}
+
+			layerIdx = parseInt(tgt.getAttribute('data-layeridx'));
 
 			self.createLayerOpts(ls, layerIdx);
 			toggle(self.layerOptsWrap, self.layerSelectWrap);
@@ -250,25 +257,40 @@
 			}
 
 			layerClass = convertNameToClass(layer.name);
+			a = document.createElement('a');
 			li = document.createElement('li');
-			li.className = 'wb-ctrl-layer wb-ctrl-layer-' + layerClass;
-
 			colorSpan = document.createElement('span');
+			textSpan = document.createElement('span');
+
+			addClass(li, 'wb-ctrl-layer');
+			addClass(li, 'wb-ctrl-layer-' + layerClass);
 			addClass(colorSpan, 'wb-color');
+
 			if (layer.currentColor) {
 				colorSpan.style.backgroundColor = layer.currentColor;
 			}
-			li.appendChild(colorSpan);
 
-			a = document.createElement('a');
-			a.href = '#';
-			a.innerText = layer.label;
+			textSpan.innerText = layer.name;
+
+			a.appendChild(colorSpan);
+			a.appendChild(textSpan);
 			a.setAttribute('data-layeridx', i);
 			a.onclick = layerOnclick;
-		
+
 			li.appendChild(a);
 			ul.appendChild(li);
 		}
+
+		li = document.createElement('li');
+		reset = document.createElement('button');
+		reset.innerText = 'Reset All';
+		reset.onclick = function() {
+			self.resetAllLayers();
+		};
+		addClass(reset, 'wb-reset-all');
+
+		li.appendChild(reset);
+		ul.appendChild(li);
 
 		ls.layerSelectEl = ul;
 		this.layerSelectWrap.appendChild(ul);
@@ -279,7 +301,7 @@
 	 * @param {object} stack - The stack we are showing
 	 */
 	WheelBuilder.prototype.showPreviewStack = function(stack) {
-		var selected = this.wheelEl.getElementsByClassName('wb-wheel-selected');
+		var selected = this.wrapEl.getElementsByClassName('wb-wheel-selected');
 
 		// Hide the previously selected wheel
 		if (selected.length > 0) {
@@ -309,10 +331,18 @@
 		li = null,
 		colorLink = null,
 		colorSpan = null,
+		colorText = null,
 		colorOp = '',
 		colorLinkOnclick = function(e) {
 			var tgt = e.target,
-			color = tgt.getAttribute('data-color'),
+			color = '',
+			operation = '';
+
+			if (tgt.tagName !== 'A') {
+				tgt = tgt.parentElement;
+			}
+
+			color = tgt.getAttribute('data-color');
 			operation = tgt.getAttribute('data-operation');
 
 			self.setLayerColor(layer.name, color, operation);
@@ -347,13 +377,16 @@
 			li = document.createElement('li');
 
 			colorSpan = document.createElement('span');
+			colorText = document.createElement('span');
+			colorLink = document.createElement('a');
+
 			addClass(colorSpan, 'wb-color');
 			colorSpan.style.backgroundColor = opts[i].color.trim();
-			li.appendChild(colorSpan);
+			colorLink.appendChild(colorSpan);
 
-			colorLink = document.createElement('a');
-			colorLink.href = '#';
-			colorLink.innerHTML = opts[i].name.trim();
+			colorText.innerHTML = opts[i].name.trim();
+			colorLink.appendChild(colorText);
+
 			colorLink.onclick = colorLinkOnclick;
 			colorLink.setAttribute('data-color', opts[i].color.trim());
 			colorLink.setAttribute('data-operation', colorOp);
@@ -384,10 +417,10 @@
 	};
 
 	/**
-	 * Set a stack of layers
+	 * Add a stack of layers
 	 * @param {object} ls - Data represending the layer stack
 	 */
-	WheelBuilder.prototype.setLayerStack = function(ls) {
+	WheelBuilder.prototype.addLayerStack = function(ls) {
 		var self = this;
 
 		if (!ls || typeof ls !== 'object') {
@@ -397,18 +430,18 @@
 
 		this.asyncPromise.done(function() {
 			var exists = self.getLayerStack(ls.name),
-			previewEl = self.wheelEl.getElementsByClassName('wb-wheel-preview')[0],
+			previewEl = self.wrapEl.getElementsByClassName('wb-wheel-preview')[0],
 			layer = null,
 			stackEl = null,
 			lb = null,
-			lowerName = '';
+			className = '';
 
 			if (!ls.name || !ls.name.trim()) {
 				console.error('No name provided for layer stack');
 				return;
 			} else {
 				ls.name = ls.name.trim();
-				lowerName = ls.name.toLowerCase();
+				className = convertNameToClass(ls.name.toLowerCase());
 			}
 
 			ls.visible = !!ls.visible;
@@ -449,21 +482,21 @@
 			}
 
 			if (exists) {
-				stackEl = self.wheelEl.getElementById('wb-wheel-' + lowerName);
+				stackEl = self.wrapEl.getElementById('wb-wheel-' + className);
 				stackEl.innerHTML = '';
 
 				idx = self.stackLookup[ls.name];
 				self.layerStacks[idx] = ls;
 			} else {
 				stackEl = document.createElement('div');
-				stackEl.id = 'wb-wheel-' + lowerName;
+				stackEl.id = 'wb-wheel-' + className;
 				previewEl.appendChild(stackEl);
 
 				idx = self.layerStacks.length;
 				self.stackLookup[ls.name] = idx;
 				self.layerStacks[idx] = ls;
 			}
-			stackEl.className = 'wb-wheel';
+			addClass(stackEl, 'wb-wheel');
 
 			// Set up the layer builder for this stack
 			lb = new LayerBuilder(stackEl.id);
@@ -477,7 +510,7 @@
 				}
 
 				if (!ls.selected) {
-					stackEl.style.display = 'none';
+					toggle(null, stackEl);
 				}
 			});
 
@@ -493,7 +526,7 @@
 				self.visibleStacks++;
 
 				if (ls.selected) {
-					stackEl.className += ' wb-wheel-selected';
+					addClass(stackEl, 'wb-wheel-selected');
 					self.selectedStack = idx;
 					self.selectStack(ls.name);
 				}
@@ -626,6 +659,31 @@
 	};
 
 	/**
+	 * Reset all layers to their original state
+	 */
+	WheelBuilder.prototype.resetAllLayers = function() {
+		var len = this.layerStacks.length,
+		len2 = null,
+		stack = null,
+		layerColors = this.ctrlEl.getElementsByClassName('wb-color');
+
+		for (var i = 0; i < len; i++) {
+			stack = this.layerStacks[i];
+			stack.lb.resetAllLayers();
+
+			len2 = stack.layers.length;
+			for (var j = 0; j < len2; j++) {
+				stack.layers[j].currentColor = '';
+			}
+		}
+
+		len = layerColors.length;
+		for (i = 0; i < len; i++) {
+			layerColors[i].style.backgroundColor = '';
+		}
+	};
+
+	/**
 	 * Get a layer stack by name
 	 * @param {string} stackname - Name of the stack to select
 	 * @returns {object} The layer stack corresponding to stackName
@@ -709,11 +767,12 @@
 		display = null,
 		imgData = null;
 
+		// Hack to get the data url - canvas must be visible
 		if (stack && stack.lb) {
 			display = stack.containEl.style.display;
 			stack.containEl.style.display = 'block';
 			imgData = stack.lb.getImage();
-			stack.containEl.style.opacity = display;
+			stack.containEl.style.display = display;
 		}
 
 		return imgData;
