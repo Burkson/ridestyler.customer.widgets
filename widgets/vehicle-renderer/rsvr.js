@@ -25,7 +25,7 @@ function RideStylerViewport(elem, options) {
         } else if (elem[0] === '#') {
             container = document.getElementById(elem.substring(1));
         }
-    } else if (elem === 'object') {
+    } else if (typeof elem === 'object') {
         // Is this a DOM element
         if (elem.tagName) {
             container = elem;
