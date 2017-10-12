@@ -69,6 +69,10 @@ declare namespace ridestyler {
             WheelModels?: string;
         }
 
+        interface VehicleFilterModel extends ActionRequestPagedModel {
+
+        }
+
         const enum ImagePosition
         {
             Near = 0,
@@ -105,6 +109,33 @@ declare namespace ridestyler {
             ShowCaliper?: boolean;
             Resource?: string;
             WheelFitmentResourceType?: WheelFitmentResourceType;
+        }
+
+        interface VehicleRenderInstructions extends ImageRenderRequest {
+            VehicleConfiguration?:string;
+            VehicleTireOption?:string;
+            VehicleFilters?:VehicleFilterModel;
+            PaintColor?:string;
+            
+            Suspension?:number;
+            SuspensionFront?:number;
+            SuspensionRear?:number;
+
+            WheelPartNumber?:string;
+            WheelPartNumberFront?:string;
+            WheelPartNumberRear?:string;
+
+            WheelItemNumber?:string;
+            WheelItemNumberFront?:string;
+            WheelItemNumberRear?:string;
+            
+            WheelFitment?:string;
+            WheelFitmentFront?:string;
+            WheelFitmentRear?:string;
+            
+            WheelFitmentResource?:string;
+            WheelFitmentResourceFront?:string;
+            WheelFitmentResourceRear?:string;
         }
     }
     
@@ -267,4 +298,4 @@ declare namespace ridestyler {
     }
 }
 
-declare type RideStylerPromise<ResolveValueType, RejectValueType = ResolveValueType> = ridestyler.RideStylerPromise<ResolveValueType, RejectValueType>;
+declare type RideStylerPromise<ResolveValueType = any, RejectValueType = ResolveValueType> = ridestyler.RideStylerPromise<ResolveValueType, RejectValueType>;
