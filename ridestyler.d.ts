@@ -111,7 +111,7 @@ declare namespace ridestyler {
             WheelFitmentResourceType?: WheelFitmentResourceType;
         }
 
-        interface VehicleRenderInstructions extends ImageRenderRequest {
+        interface VehicleRenderInstructions {
             VehicleConfiguration?:string;
             VehicleTireOption?:string;
             VehicleFilters?:VehicleFilterModel;
@@ -136,6 +136,10 @@ declare namespace ridestyler {
             WheelFitmentResource?:string;
             WheelFitmentResourceFront?:string;
             WheelFitmentResourceRear?:string;
+        }
+
+        interface VehicleRenderRequest extends VehicleRenderInstructions, ImageRenderRequest {
+            
         }
     }
     
