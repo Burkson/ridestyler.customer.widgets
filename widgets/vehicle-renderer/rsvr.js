@@ -1,3 +1,4 @@
+/* exported RideStylerViewport */
 function RideStylerViewport(elem, options) {
 
     // UI resources
@@ -26,8 +27,8 @@ function RideStylerViewport(elem, options) {
         }
     } else if (elem === 'object') {
         // Is this a DOM element
-        if (o.tagName) {
-            container = o;
+        if (elem.tagName) {
+            container = elem;
         }
     }
 
@@ -74,7 +75,7 @@ function RideStylerViewport(elem, options) {
         if (hasChanges == false) return;        
 
         renderer.Render(state);
-    }
+    };
 
     function prepareArguments(args) {
         var values = {};
@@ -111,8 +112,8 @@ function RideStylerViewport(elem, options) {
         var retiredImages = [];
 
         this.Render = function(instructions) {
-            var newLayer = createNewLayer(instructions);
-        }
+            createNewLayer(instructions);
+        };
 
         function createNewLayer(instructions) {
             // Show our loader since we are creating a new layer
@@ -164,13 +165,13 @@ function RideStylerViewport(elem, options) {
                         for(var i = 0; i < removedImages.length; i++) {
                             container.removeChild(removedImages[i]);
                         }
-                    }, 300)
+                    }, 300);
                 }
             };
 
             // Start loading our image
             img.src = imageUrl;
-       }
+        }
     }
 
     function createLoaderElement() {
@@ -181,7 +182,7 @@ function RideStylerViewport(elem, options) {
 
         // Setup style of the element
         loader.style.padding = '5px';
-        loader.style.borderRadius = '21px'
+        loader.style.borderRadius = '21px';
         loader.style.background = '#fff';
         loader.style.opacity = 0;
         loader.style.transition = 'opacity linear 300ms';
