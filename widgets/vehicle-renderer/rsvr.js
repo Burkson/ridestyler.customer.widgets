@@ -50,7 +50,7 @@ function RideStylerViewport(elem, options) {
 
         if (!calculatedStyle) return false;
 
-        return isOffsetPositioned(calculatedStyle.position);
+        return isOffsetPositionValue(calculatedStyle.position);
     }();
 
     // If we're not positioned using offset positioning, set relative positioning on the container
