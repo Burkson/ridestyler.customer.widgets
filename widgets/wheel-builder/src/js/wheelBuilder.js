@@ -41,6 +41,10 @@
 		// The container element
 		this.container = document.getElementById(containerId);
 
+		// Threshholds for adjusting layout
+		this.smallWidth = 880;
+		this.smallestWidth = 480;
+
 		// Stacks prior to validation
 		this.dirtyStacks = layerStacks;
 
@@ -99,6 +103,7 @@
 	}
 
 	/**
+	 * Check if all layer stacks have finished loading, resolve loadedPromise if so
 	 */
 	 WheelBuilder.prototype.checkLoaded = function() {
 		var len = this.layerStacks.length,
@@ -171,6 +176,9 @@
 		this.layerOptsWrap = this.ctrlEl.getElementsByClassName('wb-layer-options')[0];
 		this.selectorEl = this.wrapEl.getElementsByClassName('wb-wheel-selector')[0];
 
+		// Event handlers
+		window.addEventListener('resize', function() {self.adjustLayout();});
+
 		var download = this.ctrlEl.getElementsByClassName('wb-download')[0];
 		download.onclick = function(e) {
 			self.exportSelectedStack(e);
@@ -180,6 +188,35 @@
 		var len = this.dirtyStacks.length;
 		for (var i = 0; i < len; i++) {
 			this.addLayerStack(this.dirtyStacks[i]);
+		}
+
+		this.adjustLayout();
+	};
+
+	/**
+	 * Adjust the widget layout depending on the container dimensions
+	 */
+	WheelBuilder.prototype.adjustLayout = function() {
+		if (!this.container) return;
+
+		var cWidth = this.container.offsetWidth;
+
+		if (this.wrapEl) {
+			if (cWidth <= this.smallestWidth) {
+				if (!hasClass(this.wrapEl, 'wb-small')) {
+					addClass(this.wrapEl, 'wb-small');
+				}
+				if (!hasClass(this.wrapEl, 'wb-smallest')) {
+					addClass(this.wrapEl, 'wb-smallest');
+				}
+			} else if (cWidth <= this.smallWidth) {
+				if (!hasClass(this.wrapEl, 'wb-small')) {
+					addClass(this.wrapEl, 'wb-small');
+				}
+				removeClass(this.wrapEl, 'wb-smallest');
+			} else {
+				removeClass(this.wrapEl, ['wb-small', 'wb-smallest']);
+			}
 		}
 	};
 
@@ -431,7 +468,6 @@
 		this.asyncPromise.done(function() {
 			var exists = self.getLayerStack(ls.name),
 			previewEl = self.wrapEl.getElementsByClassName('wb-wheel-preview')[0],
-			layer = null,
 			stackEl = null,
 			lb = null,
 			className = '';
@@ -453,32 +489,7 @@
 			}
 
 			for (var i = 0, len = ls.layers.length; i < len; i++) {
-				layer = ls.layers[i];
-
-				if (typeof layer !== 'object') {
-					console.error('Invalid layer for stack ' + ls.name);
-					continue;
-				}
-
-				if (typeof layer.name !== 'string' || typeof layer.img !== 'string') {
-					console.error('Layer name and img properties invalid for stack ' + ls.name);
-					continue;
-				} else {
-					layer.name = layer.name.trim();
-					layer.img = layer.img.trim();
-					layer.label = typeof layer.label === 'string' && layer.label.trim() ? layer.label : layer.name;
-				}
-			
-				layer.readOnly = !!layer.readOnly;
-
-				if (!layer.options || typeof layer.options !== 'object' || !layer.options.length) {
-					if (self.defaultLayerOpts.length) {
-						layer.options = self.defaultLayerOpts;
-					} else {
-						layer.readOnly = true;
-						layer.options = [];
-					}
-				}
+				ls.layers[i] = self.validateLayer(ls.layers[i]);
 			}
 
 			if (exists) {
@@ -514,6 +525,7 @@
 				}
 			});
 
+			// Check if all of the stack's layers have loaded
 			lb.imgLoadPromise.done(function() {
 				self.checkLoaded();
 			});
@@ -681,6 +693,40 @@
 		for (i = 0; i < len; i++) {
 			layerColors[i].style.backgroundColor = '';
 		}
+	};
+
+	/**
+	 * Validate a stack layer
+	 * @param {object} layer - The layer to validate
+	 * @returns {object} The validated layer or false if invalid
+	 */
+	WheelBuilder.prototype.validateLayer = function(layer) {
+		if (typeof layer !== 'object') {
+			console.error('Invalid layer for stack ' + ls.name);
+			return false;
+		}
+
+		if (typeof layer.name !== 'string' || typeof layer.img !== 'string') {
+			console.error('Layer name and img properties invalid');
+			return false;
+		} else {
+			layer.name = layer.name.trim();
+			layer.img = layer.img.trim();
+			layer.label = typeof layer.label === 'string' && layer.label.trim() ? layer.label : layer.name;
+		}
+
+		layer.readOnly = !!layer.readOnly;
+
+		if (!layer.options || typeof layer.options !== 'object' || !layer.options.length) {
+			if (self.defaultLayerOpts.length) {
+				layer.options = self.defaultLayerOpts;
+			} else {
+				layer.readOnly = true;
+				layer.options = [];
+			}
+		}
+
+		return layer;
 	};
 
 	/**

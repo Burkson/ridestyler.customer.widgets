@@ -6,7 +6,6 @@
     background: #fff;
     border: 1px solid #ccc;
     float: left;
-    height: 300px;
     width: 300px;
     opacity: 1;
     overflow: hidden;
@@ -49,7 +48,6 @@
 .wb-ctrl-actions {
     border-top: 1px solid #ccc;
     padding: 10px;
-    position: absolute;
     top: 280px;
     width: 280px;
 }
@@ -71,12 +69,13 @@ span.wb-color {
 
 .wb-layer-select ul, .wb-layer-options ul {
     list-style-type: none;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
+    margin-top: 0px;
     padding: 10px;
 }
 
 .wb-layer-options button {
-    margin-left: 10px;
+    margin: 0px 0px 10px 10px;
 }
 
 .wb-wheel {
@@ -90,7 +89,7 @@ span.wb-color {
 }
 
 .wb-wheel-preview {
-    float: left;
+    clear: both;
 }
 
 .wb-wheel-selector-wrap {
@@ -99,6 +98,7 @@ span.wb-color {
 
 .wb-wheel-selector {
     margin-top: 0px;
+    padding-left: 20px;
     list-style-type: none;
     opacity: 0;
     -webkit-transition: opacity .5s ease-in-out;
@@ -109,9 +109,9 @@ span.wb-color {
     margin-bottom: 5px;
 }
 
-
 .wb-wheel-selector li img {
     width: 100px;
+    height: auto;
     cursor: pointer;
 }
 
@@ -125,4 +125,8 @@ span.wb-color {
 
 .wb-clear {
     clear: both;
+}
+
+.wb-small .wb-ctrl-wrap {
+    width: 200px;
 }
