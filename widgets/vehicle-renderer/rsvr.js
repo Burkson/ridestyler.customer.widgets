@@ -39,8 +39,8 @@ function RideStylerViewport(elem, options) {
     // Prepare the container so it can properly wrap the contents
     var isOffsetPositioned = function () {
         var position = container.style.position;
-        var isOffsetPositionValue = function () {
-            return position === 'fixed' || position === 'absolute' || position === 'relative';
+        var isOffsetPositionValue = function (value) {
+            return value === 'fixed' || value === 'absolute' || value === 'relative';
         };
 
         if (isOffsetPositionValue(position)) return true;
