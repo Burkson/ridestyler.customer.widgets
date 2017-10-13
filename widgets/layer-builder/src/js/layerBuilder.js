@@ -5,7 +5,7 @@
 	 * @param {string} containerId - The id of the container element
 	 * @param {Object} opts - Optional arguments
 	 */
-	function LayerBuilder(containerId, layers, opts) {
+	function LayerBuilder(containerId, opts) {
 		var self = this;
 
 		if (!containerId || typeof containerId !== 'string') {
@@ -25,6 +25,17 @@
 
 		// Optional name for the layer set
 		this.name = typeof opts.name === 'string' ? opts.name.trim() : '';
+
+		// Optional dimensions of the container
+		this.dimensions = null;
+		if (opts.hasOwnProperty('dimensions') && typeof opts.dimensions === 'object' && opts.dimensions.length === 2) {
+			var w = parseInt(opts.dimensions[0]),
+			h = parseInt(opts.dimensions[1]);
+
+			if (!isNaN(w) && !isNaN(h)) {
+				this.dimensions = [w, h];
+			}
+		}
 
 		// An array of layers in the format [{name: 'name', image: url|elem}]
 		this.layers = [];
@@ -102,15 +113,6 @@
 			}
 
 			if (loadedCt === this.layerCount) {
-				var canvas = null;
-
-				for (i = 0; i < len; i++) {
-					canvas = this.layers[i].canvas;
-					canvas.style.transition = 'opacity 1s linear';
-					canvas.style.setProperty('-webkit-transition', 'opacity 1s linear');
-					canvas.style.opacity = 1;
-				}
-
 				self.loaded = true;
 				self.imgLoadPromise.resolve();
 			}
@@ -135,24 +137,21 @@
 			imgs = [],
 			canvasStyle = self.dfltCanvasStyle;
 
-			// Draw the image when loaded and save the layer internally
+			// Set the layer as loaded when the images loads
 			onImgLoad = function() {
-				this.canvas.width = this.width;
-				this.canvas.height = this.height;
-				this.canvas.id = this.wbName;
-				this.ctx.drawImage(this, 0, 0, this.width, this.height);
+				this.canvas.id = this.lbName;
 
-				self.layers[this.wbIdx] = {
-					name: this.wbName,
+				self.layers[this.lbIdx] = {
+					name: this.lbName,
 					img: this,
-					idx: this.wbIdx,
+					idx: this.lbIdx,
 					canvas: this.canvas,
 					ctx: this.ctx, 
 					loaded: true,
-					imgData: this.ctx.getImageData(0, 0, this.width, this.height)
+					readOnly: this.lbReadOnly
 				};
 
-				self.layerHash[this.wbName] = this.wbIdx;
+				self.layerHash[this.lbName] = this.lbIdx;
 
 				self.checkAsyncComplete();
 			};
@@ -178,15 +177,16 @@
 					continue;
 				}
 
-				imgs[i].wbIdx = i;
-				imgs[i].wbName = layers[i].name.trim();
+				imgs[i].lbIdx = i;
+				imgs[i].lbName = layers[i].name.trim();
+				imgs[i].lbReadOnly = !!layers[i].readOnly;
 
 				self.layers[i] = {
-					name: imgs[i].wbName,
+					name: imgs[i].lbName,
 					loaded: false
 				};
 
-				canvasStyle.zIndex = imgs[i].wbIdx + 1;
+				canvasStyle.zIndex = imgs[i].lbIdx + 1;
 				imgs[i].canvas = self.createCanvas(canvasStyle);
 				imgs[i].ctx = imgs[i].canvas.getContext('2d');
 				imgs[i].onload = onImgLoad;
@@ -196,7 +196,71 @@
 			return self.imgLoadPromise;
 		});
 
+		self.imgLoadPromise.done(function() {
+			self.drawImages();
+		});
+
 		return self.imgLoadPromise;
+	};
+
+	/**
+	 * Draw the images on their respective canvases
+	 */
+	LayerBuilder.prototype.drawImages = function() {
+		var canvas = null,
+		len = this.layers.length,
+		imgW = 0,
+		imgH = 0,
+		maxWidth = 0,
+		maxHeight = 0,
+		wScale = 0,
+		hScale = 0,
+		finalScale = 1,
+		layer = null,
+		i = 0;
+
+		if (this.dimensions) {
+			for (i = 0; i < len; i++) {
+				if (this.layers[i].img.width > maxWidth) {
+					maxWidth = this.layers[i].img.width;
+				}
+				if (this.layers[i].img.height > maxHeight) {
+					maxHeight = this.layers[i].img.height;
+				}
+			}
+
+			wScale = parseFloat(this.dimensions[0] / maxWidth);
+			hScale = parseFloat(this.dimensions[1] / maxHeight);
+			finalScale = wScale < hScale ? wScale : hScale;
+
+			if (finalScale > 1) {
+				finalScale = 1;
+			}
+		}
+
+		for (i = 0; i < len; i++) {
+			layer = this.layers[i];
+
+			imgW = Math.floor(layer.img.width * finalScale);
+			imgH = Math.floor(layer.img.height * finalScale);
+
+			layer.canvas.width = imgW;
+			layer.canvas.height = imgH;
+
+			layer.img.origW = layer.img.width;
+			layer.img.origH = layer.img.height;
+
+			layer.img.width = imgW;
+			layer.img.height = imgH;
+
+			layer.ctx.drawImage(layer.img, 0, 0, imgW, imgH);
+
+			layer.canvas.style.transition = 'opacity 1s linear';
+			layer.canvas.style.setProperty('-webkit-transition', 'opacity 1s linear');
+			layer.canvas.style.opacity = 1;
+
+			layer.imgData = layer.ctx.getImageData(0, 0, imgW, imgH);
+		}
 	};
 
 	/**
@@ -217,11 +281,7 @@
 		var self = this,
 		layer = this.getLayer(layerName),
 		colorRgb = hexToRgb(color),
-		rgb = {},
-		newRgb = {},
-		hsl = null,
-		shiftHsl =  null,
-		avg = 0,
+		imgData = null,
 		ctx = layer.ctx;
 
 		if (!layer) {
@@ -244,12 +304,30 @@
 
 		operation = operation.toLowerCase();
 
-		var imgData = new ImageData(layer.img.width, layer.img.height);
+		imgData = ctx.createImageData(layer.img.width, layer.img.height);
 		imgData.data.set(new Uint8ClampedArray(layer.imgData.data));
 
+		this.colorImageData(layer.canvas, imgData, color, operation);
+	};
+
+	/**
+	 * Colorize image data and draw it on a canvas
+	 * @param {object} canvas - The canvas to draw on
+	 * @param {object} imgData - An instance of ImageData
+	 * @param {string} color - Hex code to colorize the image
+	 * @param {string} operation - Optional colorize operation
+	 */
+	LayerBuilder.prototype.colorImageData = function(canvas, imgData, color, operation) {
 		var data = imgData.data,
-		imgDataOrig = new ImageData(layer.img.width, layer.img.height);
-		imgDataOrig.data.set(new Uint8ClampedArray(layer.imgData.data));
+		orgData = null,
+		ctx = canvas.getContext('2d'),
+		imgDataOrig = ctx.createImageData(canvas.width, canvas.height),
+		colorRgb = hexToRgb(color),
+		rgb = {};
+
+		operation = operation ? operation : this.dfltOperation;
+
+		imgDataOrig.data.set(new Uint8ClampedArray(imgData.data));
 		origData = imgDataOrig.data;
 
 		for (var i = 0; i < data.length; i+=4) {
@@ -258,9 +336,6 @@
 			rgb.b = origData[i + 2];
 			rgb.a = origData[i + 3];
 
-			// skip transparent/semiTransparent pixels
-			//if (rgb.a < 100) {continue;}
-
 			switch (operation) {
 				case 'multiply':
 					data[i + 0] = ((rgb.r/255) * (colorRgb.r/255)) * 255;
@@ -268,7 +343,7 @@
 					data[i + 2] = ((rgb.b/255) * (colorRgb.b/255)) * 255;
 					data[i + 3] = rgb.a;
 					break;
-				case 'screen': 
+				case 'screen':
 					hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
 					shiftHsl = rgbToHsl(colorRgb.r, colorRgb.g, colorRgb.b);
 					newRgb = hslToRgb(shiftHsl.h, shiftHsl.s, hsl.l);
@@ -288,9 +363,7 @@
 			}
 		}
 
-		setTimeout(function() {
-			ctx.putImageData(imgData, 0, 0);	
-		}, 0);
+		ctx.putImageData(imgData, 0, 0);	
 	};
 
 	/**
@@ -328,7 +401,7 @@
 	 * @returns {Array} - An array of operation types
 	 */
 	LayerBuilder.prototype.getOperations = function() {
-		return imgOperations;
+		return this.imgOperations;
 	};
 
 	/**
@@ -351,14 +424,12 @@
 	/**
 	 * Export a single image consisting of all canvas layers combined
 	 * @param {string} type - Optional image format. png if omitted
+	 * @returns {string} A data url representing the image
 	 */
 	LayerBuilder.prototype.getImage = function(imgType) {
-		var width = 0,
-		height = 0,
-		len = this.layers.length,
+		var len = this.layers.length,
 		canvas = null,
 		ctx = null,
-		link = null,
 		layer = null,
 		dims = null;
 		style = {display: 'none'};
@@ -369,18 +440,79 @@
 		}
 
 		imgType = typeof imgType === 'string' ? imgType.trim() : 'image/png';
-
 		dims = this.getDimensions();
 		canvas = this.createCanvas(style);
 		canvas.width = dims.width;
 		canvas.height = dims.height;
 		ctx = canvas.getContext('2d');
 
-		for (i = 0; i < len; i++) {
-			ctx.drawImage(this.layers[i].canvas, 0, 0);
+		for (var i = 0; i < len; i++) {
+			layer = this.layers[i];
+			ctx.drawImage(layer.canvas, 0, 0, layer.img.width, layer.img.height);
 		}
 
 		return canvas.toDataURL(imgType);
+	};
+
+	/**
+	 * Export a single, unscaled image for all canvas layers combined
+	 * @param {string} imgType - Optional image format
+	 * @returns {string|object} A data url representing the image
+	 */
+	LayerBuilder.prototype.getUnscaledImage = function(imgType) {
+		var len = this.layers.length,
+		master = null,
+		ctx = null,
+		layer = null,
+		canvas = null,
+		dims = null,
+		img = null,
+		tmpW = 0,
+		tmpH = 0,
+		res = null,
+		style = {display: 'none'};
+
+		if (!this.layers.length) {
+			console.error('Unable to save image: no layers present');
+			return;
+		}
+
+		dims = this.getOrigDimensions();
+		master = this.createCanvas(style);
+		master.width = dims.width;
+		master.height = dims.height;
+
+		for (var i = 0; i < len; i++) {
+			layer = this.layers[i];
+			canvas = this.createCanvas(style);
+			canvas.width = layer.img.origW;
+			canvas.height = layer.img.origH;
+
+			ctx = canvas.getContext('2d');
+
+			tmpW = layer.img.width;
+			tmpH = layer.img.height;
+			layer.img.width = layer.img.origW;
+			layer.img.height = layer.img.origH;
+
+			ctx.drawImage(layer.img, 0, 0, layer.img.origW, layer.img.origH);
+			imgData = ctx.getImageData(0, 0, layer.img.origW, layer.img.origH);
+
+			layer.img.width = tmpW;
+			layer.img.height = tmpH;
+
+			if (layer.currentColor) {
+				this.colorImageData(canvas, imgData, layer.currentColor);
+			}
+
+			master.getContext('2d').drawImage(canvas, 0, 0);
+			this.container.removeChild(canvas);
+		}
+
+		res = master.msToBlob ? master.msToBlob() : master.toDataURL(imgType);
+		this.container.removeChild(master);
+		
+		return res; 
 	};
 
 	/**
@@ -397,6 +529,26 @@
 			}
 			if (layer.canvas.clientHeight > res.height) {
 				res.height = layer.canvas.clientHeight;
+			}
+		}
+
+		return res;
+	};
+
+	/**
+	 * Get the dimensions of the unscaled stack
+	 * @returns {object} - An object representing the stack dimensions
+	 */
+	LayerBuilder.prototype.getOrigDimensions = function() {
+		var res = {width: 0, height: 0};
+
+		for (var i = 0, len = this.layers.length; i < len; i++) {
+			layer = this.layers[i];
+			if (layer.img.origW > res.width) {
+				res.width = layer.img.origW;
+			}
+			if (layer.img.origH > res.height) {
+				res.height = layer.img.origH;
 			}
 		}
 
@@ -442,8 +594,9 @@
 		g /= 255, 
 		b /= 255;
 
-		var max = Math.max(r, g, b), min = Math.min(r, g, b);
-		var h, s, l = (max + min) / 2;
+		var max = Math.max(r, g, b), 
+		min = Math.min(r, g, b),
+		h, s, l = (max + min) / 2;
 
 		if (max == min) {
 			h = s = 0; // achromatic

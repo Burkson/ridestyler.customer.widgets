@@ -35,6 +35,21 @@
 			this.defaultLayerOpts = null;
 		}
 
+		// Set the dimensions of the wheel preview
+		this.dfltWheelDims = [300, 300];
+		if (opts.hasOwnProperty('wheelDims') && typeof opts.wheelDims === 'object' && opts.wheelDims.length === 2) {
+			var w = parseInt(opts.wheelDims[0]),
+			h = parseInt(opts.wheelDims[1]);
+
+			if (!isNaN(w) && !isNaN(h)) {
+				this.wheelDims = [w, h];
+			} else {
+				this.wheelDims = this.dfltWheelDims;
+			}
+		} else {
+			this.wheelDims = this.dfltWheelDims;
+		}
+
 		// The id of the container element
 		this.containerId = containerId;
 
@@ -159,7 +174,9 @@
 	 * Initialize the app
 	 */
 	WheelBuilder.prototype.initApp = function() {
-		var self = this;
+		var self = this,
+		download = null,
+		len = this.dirtyStacks.length;
 
 		if (!this.tplLoaded || !this.cssLoaded) {
 			console.error('Template not loaded, unable to initialize app');
@@ -179,13 +196,12 @@
 		// Event handlers
 		window.addEventListener('resize', function() {self.adjustLayout();});
 
-		var download = this.ctrlEl.getElementsByClassName('wb-download')[0];
+		download = this.ctrlEl.getElementsByClassName('wb-download')[0];
 		download.onclick = function(e) {
-			self.exportSelectedStack(e);
+			self.onDownloadClick(e);
 		};
 
 		// Create our layer stacks
-		var len = this.dirtyStacks.length;
 		for (var i = 0; i < len; i++) {
 			this.addLayerStack(this.dirtyStacks[i]);
 		}
@@ -510,7 +526,7 @@
 			addClass(stackEl, 'wb-wheel');
 
 			// Set up the layer builder for this stack
-			lb = new LayerBuilder(stackEl.id);
+			lb = new LayerBuilder(stackEl.id, {dimensions: self.wheelDims});
 			lb.setLayers(ls.layers).done(function() {
 				dims = lb.getDimensions();
 				stackEl.style.width = dims.width + 'px';
@@ -612,6 +628,7 @@
 		var len = this.layerStacks.length,
 		len2 = null,
 		stack = null,
+		layer = null,
 		layerClass = convertNameToClass(layerName),
 		ctrlColors = this.layerSelectWrap.getElementsByClassName('wb-ctrl-layer-' + layerClass);
 
@@ -622,15 +639,16 @@
 
 		for (var i = 0; i < len; i++) {
 			stack = this.layerStacks[i];
+			layer = stack.lb.getLayer(layerName);
 
-			if (stack.lb.getLayer(layerName)) {
+			if (layer && !layer.readOnly) {
 				stack.lb.setColor(layerName, color, operation);
-			}
 
-			len2 = stack.layers.length;
-			for (var j = 0; j < len2; j++) {
-				if (stack.layers[j].name === layerName) {
-					stack.layers[j].currentColor = color;
+				len2 = stack.layers.length;
+				for (var j = 0; j < len2; j++) {
+					if (stack.layers[j].name === layerName) {
+						stack.layers[j].currentColor = color;
+					}
 				}
 			}
 		}
@@ -810,15 +828,10 @@
 	 */
 	WheelBuilder.prototype.getStackImage = function(stackName) {
 		var stack = this.getLayerStack(stackName),
-		display = null,
 		imgData = null;
 
-		// Hack to get the data url - canvas must be visible
 		if (stack && stack.lb) {
-			display = stack.containEl.style.display;
-			stack.containEl.style.display = 'block';
-			imgData = stack.lb.getImage();
-			stack.containEl.style.display = display;
+			imgData = stack.lb.getUnscaledImage();
 		}
 
 		return imgData;
@@ -828,9 +841,10 @@
 	 * Download an image of the currently selected stack
 	 * @param {object} e - The click event
 	 */
-	WheelBuilder.prototype.exportSelectedStack = function(e) {
+	WheelBuilder.prototype.onDownloadClick = function(e) {
 		var a = e.target,
 		stack = this.layerStacks[this.selectedStack],
+		fileName = convertNameToClass(stack.name) + '.png',
 		imgData = '';
 
 		if (!stack || !stack.lb) {
@@ -839,8 +853,13 @@
 		}
 
 		imgData = this.getStackImage(stack.name);
-		a.href = imgData;
-		a.download = stack.name + '.png';
+
+		if (window.navigator.msSaveBlob) {
+			window.navigator.msSaveBlob(imgData, fileName);
+		} else {
+			a.href = imgData;
+			a.download = fileName;
+		}
 	};
 
 
