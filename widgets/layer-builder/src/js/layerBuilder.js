@@ -278,9 +278,7 @@
 			return;
 		}
 
-		var self = this,
-		layer = this.getLayer(layerName),
-		colorRgb = hexToRgb(color),
+		var layer = this.getLayer(layerName),
 		imgData = null,
 		ctx = layer.ctx;
 
@@ -418,7 +416,7 @@
 			return;
 		}
 
-		return this.layers[this.layerHash[layerName]];
+		return this.layerHash[layerName] ? this.layers[this.layerHash[layerName]] : null;
 	};
 
 	/**
@@ -427,11 +425,12 @@
 	 * @returns {string} A data url representing the image
 	 */
 	LayerBuilder.prototype.getImage = function(imgType) {
-		var len = this.layers.length,
+		var res = '',
+		len = this.layers.length,
 		canvas = null,
 		ctx = null,
 		layer = null,
-		dims = null;
+		dims = null,
 		style = {display: 'none'};
 
 		if (!this.layers.length) {
@@ -451,7 +450,10 @@
 			ctx.drawImage(layer.canvas, 0, 0, layer.img.width, layer.img.height);
 		}
 
-		return canvas.toDataURL(imgType);
+		res = canvas.toDataURL(imgType);
+		this.container.removeChild(canvas);
+
+		return res;
 	};
 
 	/**

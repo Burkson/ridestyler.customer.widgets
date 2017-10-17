@@ -3,19 +3,22 @@ This script allows you to implement the Wheel Builder widget into your website
 
 # Getting Started
 All of the RideStyler Widgets are designed to be as easy as possible to add to your website. Simply follow the step-by-step instructions outlined below.
+
 ## Add Script References
 The first step is simply adding references to the Wheel Builder and Layer Builder scripts into your site.
 ```
-<script src="layer-builder/dist/js/layer-builder.min.js"></script>
-<script src="wheel-builder/dist/js/wheel-builder.min.js"></script>
+<script src="layer-builder/dist/js/layerBuilder.min.js"></script>
+<script src="wheel-builder/dist/js/wheelBuilder.min.js"></script>
 ```
+
 ## Add a Container
 Next, create a container div in your document to store the Wheel Builder widget. Give it an id attribute, for example, "container".
 ```
 <div id="container"></div>
 ```
+
 ## Initialize the Widget
-Now we need to initialize the Wheel Builder widget. To do this, you need to pass it an array of 'lacker stacks'. A layer stack has the following form: 
+Now we need to initialize the Wheel Builder widget. To do this, you need to pass it an array of 'layer stacks'. A layer stack has the following form:
 ```
 {
 	name: 'Wheel Preview',
@@ -55,11 +58,21 @@ var wb = new WheelBuilder('container', layerStacks);
 ```
 This will render a new instance of the Wheel Builder in your chosen container. 
 
-After the wheel builder is instantiated, use the `loaded` function with a callback to further work with the wheel builder:
+## Use the widget
+After the wheel builder is instantiated, use the `loaded` function with a callback to further work with the wheel builder. Here are some examples of operations you might perform with your Wheel Builder:
 ```
 wb.loaded(function() {
+	// Set the color of a layer on all stacks
+	wb.setLayerColor('spoke-face', '#FF0000');
+
+	// Get an data url image representation of a given layer stack
 	var imgdata = wb.getStackImage('Wheel Preview');
-	console.log(imgdata);
+
+	// Reset a layer on all stacks
+	wb.resetLayer('spoke-face');
+
+	// Reset all layers on all stacks
+	wb.resetAllLayers();
 });
 ```
 
@@ -70,7 +83,7 @@ Option | Type | Default | Description
 ------ | ---- | ------- | -----------
 wheelDims | Array | ```[250,250]``` | The dimensions of the wheel preview pane in pixels
 defaultLayerOpts | Array | ```null``` | Default options for each layer. If this option is specified and no explicit options are specified for a given layer, the layer will use these default options. 
-
+cssUrl	| String or Boolean | ```null``` | Specify the url to a custom stylesheet. If omitted, the default stylesheet will be used. If set to false, no stylesheet will be used.
 
 Options example:
 ```
@@ -95,6 +108,7 @@ var defaultLayerOpts = [
 
 var wb = new WheelBuilder('container', layerStacks, {
 	wheelDims: [500, 500], 
-	defaultLayerOpts: defaultLayerOpts
+	defaultLayerOpts: defaultLayerOpts,
+	cssUrl: 'css/mystyle.css'
 });
 ```

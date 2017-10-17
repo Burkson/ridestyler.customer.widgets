@@ -35,8 +35,12 @@
 			this.defaultLayerOpts = null;
 		}
 
+		// Dev or production
+		this.dev = opts.hasOwnProperty('dev') ? !!opts.dev : false;
+
 		// Set the dimensions of the wheel preview
 		this.dfltWheelDims = [300, 300];
+
 		if (opts.hasOwnProperty('wheelDims') && typeof opts.wheelDims === 'object' && opts.wheelDims.length === 2) {
 			var w = parseInt(opts.wheelDims[0]),
 			h = parseInt(opts.wheelDims[1]);
@@ -86,8 +90,14 @@
 		this.cssLoaded = false;
 
 		// Paths to external files
-		this.tplUrl = 'src/html/template.html';
-		this.cssUrl = 'src/css/wheelBuilder.css';
+		this.urlPfx = this.dev ? 'src/' : 'https://gitcdn.xyz/repo/Burkson/com.burkson.ridestyler.widgets/master/widgets/wheel-builder/dist/';
+		this.tplUrl = this.urlPfx + 'html/template.html';
+
+		if (opts.hasOwnProperty('cssUrl')) {
+			this.cssUrl = opts.cssUrl && typeof opts.cssUrl === 'string' ? opts.cssUrl : false;
+		} else {
+			this.cssUrl = this.dev ? this.urlPfx + 'css/wheelBuilder.css' : this.urlPfx + 'css/wheelBuilder.min.css';
+		}
 
 		// Template content
 		this.tplHtml = '';
@@ -506,6 +516,9 @@
 
 			for (var i = 0, len = ls.layers.length; i < len; i++) {
 				ls.layers[i] = self.validateLayer(ls.layers[i]);
+				if (!ls.layers[i]) {
+					ls.layers.splice(i, 1);
+				}
 			}
 
 			if (exists) {
@@ -800,6 +813,11 @@
 	 * @param {function} cb
 	 */
 	WheelBuilder.prototype.loadStyles = function(cb) {
+		if (!this.cssUrl) {
+			this.cssLoaded = true;
+			return;
+		}
+
 		var self = this,
 		css = document.createElement('link'),
 		head = document.getElementsByTagName('head')[0];
@@ -881,13 +899,13 @@
 	 * @param {object} hideEl - Element to hide
 	 */
 	var toggle = function(showEl, hideEl) {
-		if (showEl) {
-			showEl.style.display = 'block';
-			showEl.style.opacity = 1;
-		}
 		if (hideEl) {
 			hideEl.style.display = 'none';
 			hideEl.style.opacity = 0;
+		}
+		if (showEl) {
+			showEl.style.display = 'block';
+			showEl.style.opacity = 1;
 		}
 	};
 
