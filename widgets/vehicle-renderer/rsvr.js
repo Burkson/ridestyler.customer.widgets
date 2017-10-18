@@ -88,9 +88,15 @@ function RideStylerViewport(elem, options) {
         }
 
         // If we didn't make any changes to our internal state we don't need to perform an update
-        if (hasChanges == false) return;        
+        if (hasChanges == false) {
+            var promise = ridestyler.promise();
 
-        renderer.Render(state);
+            promise.resolve();
+
+            return promise;
+        }
+
+        return renderer.Render(state);
     };
 
     function prepareArguments(args) {
@@ -127,11 +133,19 @@ function RideStylerViewport(elem, options) {
         var activeImage = null;
         var retiredImages = [];
 
+        /**
+         * @return {RideStylerPromise}
+         */
         this.Render = function(instructions) {
-            createNewLayer(instructions);
+            return createNewLayer(instructions);
         };
 
+        /**
+         * @return {RideStylerPromise}
+         */
         function createNewLayer(instructions) {
+            var promise = ridestyler.promise();
+
             // Show our loader since we are creating a new layer
             showLoaderElement();
 
@@ -175,18 +189,25 @@ function RideStylerViewport(elem, options) {
                         removedImages[i].style.opacity = 0;
                     }
 
-                    console.log('removing legacy ...');
                     // Remove the elements after they have had a chance to fade out
                     setTimeout(function() {
                         for(var i = 0; i < removedImages.length; i++) {
                             container.removeChild(removedImages[i]);
                         }
+
+                        promise.resolve();
                     }, 300);
                 }
             };
 
+            img.onerror = function () {
+                promise.reject();
+            };
+
             // Start loading our image
             img.src = imageUrl;
+
+            return promise;
         }
     }
 
