@@ -29,6 +29,70 @@ declare namespace ridestyler {
             WheelModelFinishDescription: string;
             WheelModelDataStatus: DataStatus;
         }
+
+        const enum VehiclePaintSchemeType
+        {
+            SingleTone = 1,
+            DualTone = 2,
+            TriTone = 3
+        }
+
+        const enum BaseColor
+        {
+            Red = 1,
+            Green = 2,
+            Blue = 3,
+            Black = 4,
+            White = 5,
+            Gray = 6,
+            Grey = 6,
+            Orange = 7,
+            Yellow = 8,
+            Beige = 9,
+            Brown = 10,
+            Purple = 11
+        }
+
+        const enum VehiclePaintPosition
+        {
+            Default = 1
+        }
+    
+        const enum VehiclePaintAttributes
+        {
+            None        = 0b000,
+            Metallic    = 0b001,
+            Pearlescent = 0b010,
+            Matte       = 0b100
+        }
+    }
+
+    namespace Descriptions {
+        interface VehiclePaintSchemeDescriptionModel {
+            VehiclePaintSchemeID: string;
+            SchemeName: string;
+            Type: DataObjects.VehiclePaintSchemeType;
+            Colors: VehiclePaintColorDescriptionModel[];
+        }
+
+        interface VehiclePaintColorDescriptionModel {
+            VehiclePaintColorID: string;
+            PaintName:string;
+            
+            Red:number;
+            Green:number;
+            Blue:number;
+
+            Hue:number;
+            Saturation:number;
+            Brightness:number;
+            
+            Hex: string;
+
+            BaseColor: DataObjects.BaseColor;
+            Position: DataObjects.VehiclePaintPosition;
+            Attributes: DataObjects.VehiclePaintAttributes;
+        }
     }
 
     namespace Responses {
@@ -40,6 +104,10 @@ declare namespace ridestyler {
 
         interface WheelModelsResultModel extends RideStylerAPIResponse {
             Models: DataObjects.WheelModelDataObject[]
+        }
+
+        interface VehiclePaintSchemeDescriptionResultModel extends RideStylerAPIResponse {
+            Schemes: Descriptions.VehiclePaintSchemeDescriptionModel[];
         }
     }
 
@@ -137,6 +205,48 @@ declare namespace ridestyler {
             WheelFitmentResourceFront?:string;
             WheelFitmentResourceRear?:string;
         }
+
+        interface VehiclePaintFilterModel {
+            VehicleConfiguration?: string;
+            VehicleConfigurations?: string[];
+    
+            VehiclePaintScheme?: string;
+            VehiclePaintSchemes?: string[];
+    
+            SchemeName?: string;
+            SchemeNames?: string[];
+    
+            ColorName?: string;
+            ColorNames?: string[];
+
+            BaseColor?: DataObjects.BaseColor;
+            BaseColors?: DataObjects.BaseColor[];
+
+            Red?: number;
+            RedMin?: number;
+            RedMax?: number;
+            Green?: number;
+            GreenMin?: number;
+            GreenMax?: number;
+            Blue?: number;
+            BlueMin?: number;
+            BlueMax?: number;
+
+            IncludeMultitone?: boolean;
+
+            PaintSchemeType?: DataObjects.VehiclePaintSchemeType;
+            PaintSchemeTypes?: DataObjects.VehiclePaintSchemeType[];
+
+            VehicleFilters?: VehicleFilterModel;
+        }
+
+        interface VehiclePaintSchemeRequestModel extends VehiclePaintFilterModel {
+            /**
+             * If false, don't return default schemes if none are available for a vehicle
+             * @default true
+             */
+            ShowDefaultSchemes?:boolean;
+        }
     }
     
     interface RidestylerAPIActionResponseMapping {
@@ -144,7 +254,8 @@ declare namespace ridestyler {
         "auth/start": Responses.RideStylerAuthStartResponse
         "organization/image": never,
         "wheel/getmodels": Responses.WheelModelsResultModel,
-        "wheel/image": never
+        "wheel/image": never,
+        "vehicle/getpaintschemedescriptions": Responses.VehiclePaintSchemeDescriptionResultModel
     }
 
     interface RidestylerAPIActionRequestMapping {
@@ -152,7 +263,8 @@ declare namespace ridestyler {
         "auth/start": { Username:string; Password:string; },
         "organization/image": { assetKey:string, organization?:number },
         "wheel/getmodels": Requests.WheelFilterModel,
-        "wheel/image": Requests.WheelRenderInstructions
+        "wheel/image": Requests.WheelRenderInstructions,
+        "vehicle/getpaintschemedescriptions": Requests.VehiclePaintSchemeRequestModel
     }
 
     interface ajaxRequestBase {
