@@ -20,14 +20,14 @@
 }
 
 .wb-ctrl {
-    overflow-y: auto;
-    overflow-x: hidden;
+    height: 225px;
+    overflow: auto;
 }
 
 .wb-ctrl-header {
     padding: 5px;
     background-color: #ddd;
-    height: 37px;
+    height: 32px;
     overflow: hidden;
     position: relative;
     width: 300px;
@@ -36,10 +36,10 @@
 .wb-ctrl-title {
     color: #000;
     float: left;
-    font-size: 25px;
+    font-size: 18px;
     left: 0;
     line-height: 25px;
-    padding: 8px 10px 4px;
+    padding: 4px 10px 4px;
     position: absolute;
     text-transform: uppercase;
     width: 280px;
@@ -79,6 +79,7 @@ span.wb-color {
 }
 
 .wb-wheel {
+    margin: auto;
     opacity: 0;
     -webkit-transition: opacity .5s ease-in-out;
     transition: opacity .5s ease-in-out;
@@ -129,4 +130,8 @@ span.wb-color {
 
 .wb-small .wb-ctrl-wrap {
     width: 200px;
+}
+
+.wb-small .wb-ctrl-title {
+    font-size: 20px;
 }
