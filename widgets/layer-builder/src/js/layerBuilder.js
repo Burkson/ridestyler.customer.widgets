@@ -296,14 +296,16 @@
 				console.error('Invalid operation');
 				return;
 			}
+
+			operation = operation.toLowerCase()
 		}
 
 		layer.currentColor = color;
 
-		operation = operation.toLowerCase();
-
 		imgData = ctx.createImageData(layer.img.width, layer.img.height);
-		imgData.data.set(new Uint8ClampedArray(layer.imgData.data));
+		for (var i = 0; i < layer.imgData.data.length; i++) {
+			imgData.data[i] = layer.imgData.data[i];
+		}
 
 		this.colorImageData(layer.canvas, imgData, color, operation);
 	};
@@ -325,10 +327,13 @@
 
 		operation = operation ? operation : this.dfltOperation;
 
-		imgDataOrig.data.set(new Uint8ClampedArray(imgData.data));
+		for (var i = 0; i < imgData.data.length; i++) {
+			imgDataOrig.data[i] = imgData.data[i];
+		}
+
 		origData = imgDataOrig.data;
 
-		for (var i = 0; i < data.length; i+=4) {
+		for (i = 0; i < data.length; i+=4) {
 			rgb.r = origData[i + 0];
 			rgb.g = origData[i + 1];
 			rgb.b = origData[i + 2];

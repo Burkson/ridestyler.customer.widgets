@@ -88,15 +88,21 @@
 		// Flags to indicate individual async requests have completed
 		this.tplLoaded = false;
 		this.cssLoaded = false;
+		this.extJsLoaded = false;
 
 		// Paths to external files
-		this.urlPfx = this.dev ? 'src/' : 'https://gitcdn.xyz/repo/Burkson/com.burkson.ridestyler.widgets/master/widgets/wheel-builder/dist/';
+		this.cdnUrl = 'https://gitcdn.xyz/repo/Burkson/com.burkson.ridestyler.widgets/master/widgets/wheel-builder/dist/';
+		this.urlPfx = this.dev ? 'src/' : this.cdnUrl;
 		this.tplUrl = this.urlPfx + 'html/template.html';
 
 		if (opts.hasOwnProperty('cssUrl')) {
 			this.cssUrl = opts.cssUrl && typeof opts.cssUrl === 'string' ? opts.cssUrl : false;
 		} else {
 			this.cssUrl = this.dev ? this.urlPfx + 'css/wheelBuilder.css' : this.urlPfx + 'css/wheelBuilder.min.css';
+		}
+
+		if (!window.jscolor) {
+			this.jsColorUrl = this.urlPfx + 'js/jscolor.min.js';
 		}
 
 		// Template content
@@ -114,6 +120,9 @@
 
 		// Default color operation
 		this.dfltColorOp = 'multiply';
+
+		// Default color picker color
+		this.dfltPickerColor = 'FFFFFF';
 
 		if (!this.container) {
 			document.addEventListener('DOMContentLoaded', function() {
@@ -166,15 +175,26 @@
 			return;
 		}
 
+		this.loadExternalJs(cb);
 		this.loadStyles(cb);
 		this.loadTemplate(cb);
+	};
+
+	/**
+	 * Check if all async requests have completed
+	 * @returns {boolean} True if all async requests are complete
+	 */
+	WheelBuilder.prototype.isAsyncComplete = function() {
+		return this.tplLoaded &&
+			this.cssLoaded &&
+			this.extJsLoaded;
 	};
 
 	/**
 	 * Resolve asyncPromise after async requests have completed
 	 */
 	WheelBuilder.prototype.onAsyncComplete = function() {
-		if (this.tplLoaded && this.cssLoaded) {
+		if (this.isAsyncComplete()) {
 			this.initApp();
 			this.asyncPromise.resolve();
 		}
@@ -185,10 +205,10 @@
 	 */
 	WheelBuilder.prototype.initApp = function() {
 		var self = this,
-		download = null,
-		len = this.dirtyStacks.length;
+		len = this.dirtyStacks.length,
+		download = null;
 
-		if (!this.tplLoaded || !this.cssLoaded) {
+		if (!this.isAsyncComplete()) {
 			console.error('Template not loaded, unable to initialize app');
 			return;
 		}
@@ -216,6 +236,7 @@
 			this.addLayerStack(this.dirtyStacks[i]);
 		}
 
+		this.showCtrl();
 		this.adjustLayout();
 	};
 
@@ -255,29 +276,15 @@
 		curSelected = this.layerStacks[this.selectedStack],
 		stack = this.getLayerStack(stackName);
 
-		// Hide the current stack's layer selector
-		if (curSelected) {
-			if (curSelected.layerSelectEl) {
-				toggle(null, curSelected.layerSelectEl);
-			}
-		}
-
-		this.selectedStack = this.stackLookup[stackName];
-
-		// Show this stack in the preview pane
-		this.showPreviewStack(stack);
-
-		// Display the stack name in the ctrl header
-		this.setStackTitle(stack.name);
-
-		// Show the layer selector or create if it doesn't exist
-		if (stack.layerSelectEl) {
-			toggle(stack.layerSelectEl);
-		} else {
+		// Create the layer selector for this stack
+		if (!stack.layerSelectEl) {
 			this.createLayerSelector(stack, true);
 		}
 
-		toggle(this.layerSelectWrap, this.layerOptsWrap);
+		// Show this stack in the preview pane
+		this.togglePreviewStack(stack);
+
+		this.selectedStack = this.stackLookup[stackName];
 	};
 
 	/**
@@ -294,6 +301,7 @@
 		a = null,
 		li = null,
 		reset = null,
+		buttonWrap = null,
 		ul = document.createElement('ul'),
 		layerOnclick = function(e) {
 			var tgt = e.target,
@@ -305,7 +313,7 @@
 
 			layerIdx = parseInt(tgt.getAttribute('data-layeridx'));
 
-			self.createLayerOpts(ls, layerIdx);
+			self.showLayerOpts(ls, layerIdx);
 			toggle(self.layerOptsWrap, self.layerSelectWrap);
 		};
 
@@ -352,30 +360,62 @@
 		};
 		addClass(reset, 'wb-reset-all');
 
-		li.appendChild(reset);
-		ul.appendChild(li);
+		buttonWrap = document.createElement('div');
+		buttonWrap.appendChild(reset);
+		addClass(buttonWrap, 'wb-button-wrap');
 
 		ls.layerSelectEl = ul;
 		this.layerSelectWrap.appendChild(ul);
+		this.layerSelectWrap.appendChild(buttonWrap);
 	};
 
 	/**
 	 * Hide the previously selected preview stack and show a new one
 	 * @param {object} stack - The stack we are showing
 	 */
-	WheelBuilder.prototype.showPreviewStack = function(stack) {
-		var selected = this.wrapEl.getElementsByClassName('wb-wheel-selected');
+	WheelBuilder.prototype.togglePreviewStack = function(stack) {
+		var self = this,
+		curSelected = this.layerStacks[this.selectedStack],
+		curSelectEl = null;
 
-		// Hide the previously selected wheel
-		if (selected.length > 0) {
-			selected[0].style.display = 'none';
-			removeClass(selected[0], 'wb-wheel-selected');
+		// Hide the previously selected stack
+		if (curSelected && curSelected !== stack) {
+			curSelectEl = curSelected.containEl;
+			curSelectEl.style.opacity = 0;
+			removeClass(curSelectEl, 'wb-wheel-selected');
+
+			curSelected.layerSelectEl.style.opacity = 0;
 		}
 
-		// Set our new stack as selected and show it
-		addClass(stack.containEl, 'wb-wheel-selected');
-		stack.containEl.style.display = 'block';
-		stack.containEl.style.opacity = 1;
+		setTimeout(function() {
+			if (curSelectEl) {
+				curSelectEl.style.display = 'none';
+				curSelected.layerSelectEl.style.display = 'none';
+			}
+			
+			// Set our new stack as selected and show it
+			addClass(stack.containEl, 'wb-wheel-selected');
+			stack.containEl.style.display = 'block';
+			stack.containEl.clientWidth;
+			stack.containEl.style.opacity = 1;
+
+			stack.layerSelectEl.style.display = 'block';
+			stack.layerSelectEl.clientWidth;
+			stack.layerSelectEl.style.opacity = 1;
+
+			// Show layer selector
+			toggle(self.layerSelectWrap, self.layerOptsWrap);
+
+			self.setStackTitle(stack.name);
+		}, 300);
+	};
+
+	/**
+	 * Show the ctrl pane
+	 */
+	WheelBuilder.prototype.showCtrl = function() {
+		this.ctrlEl.style.opacity = 1;
+		this.ctrlEl.style.display = 'block';
 	};
 
 	/**
@@ -383,7 +423,7 @@
 	 * @param {object} stack - The stack containing the layer we are working with
 	 * @param {number} layerIdx - The index of the layer
 	 */
-	WheelBuilder.prototype.createLayerOpts = function(stack, layerIdx) {
+	WheelBuilder.prototype.showLayerOpts = function(stack, layerIdx) {
 		var self = this,
 		layer = stack.layers[layerIdx],
 		layerClass = convertNameToClass(layer.name),
@@ -391,10 +431,14 @@
 		ul = null,
 		back = null,
 		reset = null,
+		buttonWrap = null,
 		li = null,
 		colorLink = null,
 		colorSpan = null,
 		colorText = null,
+		jscInput = null,
+		jsColor = null,
+		jsColorLink = null,
 		colorOp = '',
 		colorLinkOnclick = function(e) {
 			var tgt = e.target,
@@ -407,6 +451,8 @@
 
 			color = tgt.getAttribute('data-color');
 			operation = tgt.getAttribute('data-operation');
+
+			jsColor.fromString(color);
 
 			self.setLayerColor(layer.name, color, operation);
 		};
@@ -460,20 +506,53 @@
 
 		this.layerOptsWrap.appendChild(ul);
 
-		// Create back button
+		jscInput = document.createElement('input');
+		addClass(jscInput, 'jscolor');
+		colorSpan = document.createElement('span');
+		addClass(colorSpan, 'wb-color');
+		li = document.createElement('li');
+		addClass(li, 'wb-custom-color');
+		jsColorLink = document.createElement('a');
+		addClass(jsColorLink, 'wb-js-color');
+		
+		jsColorLink.innerHTML = '<span>Custom color</span>';
+		jsColorLink.onclick = function() {			
+			jsColor.show();
+		};
+
+		jsColor = new jscolor(jscInput, {hash: true, closable: true});
+		jsColor.fromString(layer.currentColor ? layer.currentColor : this.dfltPickerColor);
+		jsColor.onFineChange = function() {
+			var color = this.toHEXString();
+			self.setLayerColor(layer.name, color);
+			colorSpan.style.backgroundColor = color;
+		};
+
+		jsColorLink.appendChild(jscInput);
+		jsColorLink.insertBefore(colorSpan, jsColorLink.firstElementChild);
+
+		li.appendChild(jsColorLink);
+		ul.appendChild(li);
+
+		// Add buttons to bottom of the pane
+		buttonWrap = document.createElement('div');
+		addClass(buttonWrap, 'wb-button-wrap');
+
 		back.innerText = 'Back';
 		back.onclick = function() {
 			toggle(self.layerSelectWrap, self.layerOptsWrap);
 		};
 
-		// Create reset button
 		reset.innerText = 'Reset';
 		reset.onclick = function() {
+			jsColor.fromString(self.dfltPickerColor);
+			colorSpan.style.backgroundColor = '#' + self.dfltPickerColor;
 			self.resetLayer(layer.name);
 		};
 
-		this.layerOptsWrap.appendChild(back);
-		this.layerOptsWrap.appendChild(reset);
+		buttonWrap.appendChild(back);
+		buttonWrap.appendChild(reset);
+		this.layerOptsWrap.appendChild(buttonWrap);
 
 		// Hide layer selector and show layer opts
 		toggle(this.layerOptsWrap, this.layerSelectWrap);
@@ -780,6 +859,35 @@
 	};
 
 	/**
+	 * Load external js and insert a new script tag into the head
+	 */
+	WheelBuilder.prototype.loadExternalJs = function(cb) {
+		if (this.jsColorUrl) {
+			var self = this,
+			script = document.createElement('script'),
+			head = document.getElementsByTagName('head')[0];
+
+			script.type = 'text/javascript';
+			script.src = this.jsColorUrl;
+
+			script.onload = function() {
+				if (!self.extJsLoaded) {
+					self.extJsLoaded = true;
+
+					if (typeof cb === 'function') {
+						cb.apply(self);
+					}
+				}
+			};
+
+			head.insertBefore(script, head.firstElementChild);
+
+		} else {
+			this.extJsLoaded = true;
+		}
+	};
+
+	/**
 	 * Fetch our html template via xhr
 	 * @param {function} cb
 	 */
@@ -905,6 +1013,7 @@
 		}
 		if (showEl) {
 			showEl.style.display = 'block';
+			showEl.clientWidth;
 			showEl.style.opacity = 1;
 		}
 	};

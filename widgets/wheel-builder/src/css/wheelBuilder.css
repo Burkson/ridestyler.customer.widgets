@@ -7,10 +7,10 @@
     border: 1px solid #ccc;
     float: left;
     width: 300px;
-    opacity: 1;
+    opacity: 0;
     overflow: hidden;
-    -webkit-transition: opacity .5s ease-in-out;
-    transition: opacity .5s ease-in-out;
+    -webkit-transition: opacity .25s ease-in-out;
+    transition: opacity .25s ease-in-out;
 }
 
 .wb-ctrl-wrap a {
@@ -72,17 +72,32 @@ span.wb-color {
     margin-bottom: 0px;
     margin-top: 0px;
     padding: 10px;
+    -webkit-transition: opacity .25s linear; /*ease-in-out; */
+    transition: opacity .25s linear; /*ease-in-out; */
 }
 
-.wb-layer-options button {
+.wb-layer-select ul {
+    display: none;
+}
+
+/*.wb-layer-options button, .wb-layer-options .wb-js-color {
     margin: 0px 0px 10px 10px;
+}*/
+
+.wb-js-color {
+    display: block;
+}
+
+.wb-layer-options input.jscolor {
+    width: 1px;
+    visibility: hidden;
 }
 
 .wb-wheel {
     margin: auto;
     opacity: 0;
-    -webkit-transition: opacity .5s ease-in-out;
-    transition: opacity .5s ease-in-out;
+    -webkit-transition: opacity .25s linear; /*ease-in-out; */
+    transition: opacity .25s linear; /*ease-in-out; */
 }
 
 .wb-wheel-selected {
@@ -120,8 +135,20 @@ span.wb-color {
     border: 1px dotted #1E90FF;
 }
 
-.wb-reset-all {
-    margin-top: 20px;
+.wb-button-wrap {
+    position: absolute;
+    top: 255px;
+    margin-left: 10px;
+}
+
+.wb-button-wrap button {
+    margin-right: 10px;
+}
+
+li.wb-custom-color {
+    border-top: 1px dotted #ccc;
+    margin-top: 10px;
+    padding-top: 10px;
 }
 
 .wb-clear {
@@ -133,5 +160,5 @@ span.wb-color {
 }
 
 .wb-small .wb-ctrl-title {
-    font-size: 20px;
+    font-size: 18px;
 }
