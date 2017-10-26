@@ -25,7 +25,7 @@
 		this.tplHtml = '';
 
 		// Paths to our stylesheet and template
-		this.urlPfx = this.dev ? 'src/' : 'https://gitcdn.xyz/repo/Burkson/com.burkson.ridestyler.widgets/master/widgets/plus-size-calculator/dist/';
+		this.urlPfx = this.dev ? 'src/' : 'https://cdn.rawgit.com/Burkson/com.burkson.ridestyler.widgets/853961fc/widgets/plus-size-calculator/dist/';
 		this.cssFile = this.dev ? 'psc.css' : 'psc.min.css';
 		this.cssUrl = this.urlPfx + 'css/' + this.cssFile;
 		this.tplUrl = this.urlPfx + 'html/psc.tpl';
