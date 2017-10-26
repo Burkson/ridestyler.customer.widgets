@@ -443,6 +443,14 @@
 .vsm-vehicle-display {
 	max-width: 100%;
 }
+
+.vsm-options-select {
+	width: 50%;
+    height: 30px;
+    border-radius: 0;
+    display: block;
+    margin: 10px auto;
+}
 @media screen and (min-width: 480px) and (min-height: 480px) {
 	.vsm-modal {
 		@include middle-center($modal-width, $modal-height);

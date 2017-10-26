@@ -745,6 +745,53 @@ function RideStylerVehicleSelectionModal(options) {
             vehicleLoader.style.display = 'none';
         }
 
+        var tireOptionHandler = function(d) {
+            if (d.Success) {
+                var details = d.Details;
+                //Create select
+                if (details.length > 1) {
+                    var selectELe = document.createElement('select');
+                    selectELe.className = 'vsm-options-select';
+
+                    var initOption = document.createElement('option');
+                    initOption.text = 'Select a Tire Size';
+                    initOption.value = '';
+                    selectELe.appendChild(initOption);
+
+                    for (var i = 0; i < details.length; i++) {
+                        var thisDetail = details[i],
+                        optionEle = document.createElement('option');
+                        var detailString = (function (detail) {
+                            var f = detail.Front['Description'], r = detail.Rear['Description'];
+                            if (f==r) return f;
+                            else return "F: " + f + " R: " + r;
+                        })(thisDetail);
+                        optionEle.text = detailString;
+                        optionEle.value = thisDetail['TireOptionID'];
+                        selectELe.appendChild(optionEle);
+                    }
+                    confirmButton.parentNode.insertBefore(selectELe, confirmButton);
+                }
+                else if (details.length > 0) {
+                    var inputELe = document.createElement('input');
+                    inputELe.className = 'vsm-options-select';
+                    inputELe.type = 'hidden';
+
+                    var detailString = (function (detail) {
+                        var f = detail.Front['Description'], r = detail.Rear['Description'];
+                        if (f==r) return f;
+                        else return "F: " + f + " R: " + r;
+                    })(details[0]);
+
+                    inputELe.setAttribute('data-detail-string', detailString);
+                    inputELe.value = details[0]['TireOptionID'];
+                    confirmButton.parentNode.insertBefore(inputELe, confirmButton);
+                }
+            }
+        }
+
+        var tireOptions = ridestyler.ajax.send({'data': {'VehicleConfiguration': bestConfiguration.Value}, 'action': 'Vehicle/GetTireOptionDetails', 'callback': tireOptionHandler});
+
         var confirmHandler = function (e) {
             e.target.removeEventListener(e.type, confirmHandler);
             //Hide modal
@@ -765,6 +812,23 @@ function RideStylerVehicleSelectionModal(options) {
                     VehicleDescription: vehicleDesc,
                     VehicleConfiguration: bestConfiguration.Value
                 };
+
+                var selectedDetailEle = modal.querySelectorAll('.vsm-options-select')[0];
+                vehicleInfo.TireOptionID = selectedDetailEle.value;
+
+                if (selectedDetailEle.value == '') {
+                    vehicleInfo.TireSizeString = '';
+                }
+                else {
+                    if (selectedDetailEle.getAttribute('data-detail-string')) vehicleInfo.TireSizeString = selectedDetailEle.getAttribute('data-detail-string');
+                    else {
+                        if (selectedDetailEle.selectedIndex == -1)
+                            vehicleInfo.TireSizeString = '';
+                        else 
+                            vehicleInfo.TireSizeString = selectedDetailEle.options[selectedDetailEle.selectedIndex].text;
+                    }
+                }
+                
                 extend(vehicleInfo, infoBaseObj);
                 if (options.callback && typeof options.callback == 'function') {
                     var outObj = {
