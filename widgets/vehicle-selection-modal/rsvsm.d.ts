@@ -96,6 +96,16 @@ declare namespace RideStylerVehicleSelectionModal {
          * A VehicleConfigurationID representing the selected vehicle
          */
         VehicleConfiguration: string;
+
+        /**
+         * The VehicleTireOptionID representing the selected OE tire option
+         */
+        TireOptionID: string;
+
+        /**
+         * A description of the currently selected OE tire option
+         */
+        TireOptionString: string;
     }
 
     export interface VehicleSelectedEvent {
