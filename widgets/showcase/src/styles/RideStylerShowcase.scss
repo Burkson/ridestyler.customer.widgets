@@ -1,0 +1,23 @@
+@import "shared";
+
+.ridestyler-showcase {
+    font-size: 8.5px;
+    overflow: hidden;
+
+    @include baseFont;
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: normal;
+        margin-top: 0;
+        margin-bottom: 0.57em;
+    }
+}
+
+.ridestyler-showcase-content {
+    position: absolute; top: 0; bottom: 0; left: 0; right: 0;
+    padding: 10px;
+}

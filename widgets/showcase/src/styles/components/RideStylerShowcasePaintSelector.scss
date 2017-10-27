@@ -1,0 +1,10 @@
+.ridestyler-showcase-paint-swatch {
+    $size: 30px;
+
+    width: $size;
+    height: $size;
+    border-radius: $size/2;
+
+    box-shadow: 0 1px 2px black;
+    margin: 20px auto 10px;
+}

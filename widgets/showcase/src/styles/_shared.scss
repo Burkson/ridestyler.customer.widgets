@@ -1,0 +1,34 @@
+$primary-color: #ea1921;
+$primary-color-overlaid-text: #fff;
+
+@mixin baseFont {
+    font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    letter-spacing: 0.75px;
+}
+
+@mixin crispImageRendering {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+// Z-Index
+$zLayer1: 1000;
+$zLayer2: 2000;
+$zLayer3: 3000;
+
+// Transitions
+@mixin fadeIn {
+    opacity: 0;
+
+    transition-property: opacity;
+    transition-duration: 0.5s; 
+    
+    &.in {
+        opacity: 1;
+    }
+}
+
+// Animations
+@mixin rotate($duration:1s) {
+    animation: rotation $duration infinite linear;
+}

@@ -1,0 +1,19 @@
+.ridestyler-showcase-modal {
+    &.in {
+        opacity: 1;
+    }
+}
+
+.ridestyler-showcase-modal-backdrop {
+    top: 48px;
+    background-color: #000;
+    
+    &.in {
+        opacity: 0.55;
+    }
+}
+
+.ridestyler-showcase-modal, .ridestyler-showcase-modal-backdrop {
+    transition: opacity 0.3s linear;
+    opacity: 0;
+}

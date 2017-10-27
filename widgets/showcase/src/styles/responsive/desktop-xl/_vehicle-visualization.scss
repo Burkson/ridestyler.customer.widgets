@@ -1,0 +1,28 @@
+$tabBarWidth: 130px;
+
+.ridestyler-showcase-vertical-tab-bar {
+    width: $tabBarWidth;
+}
+
+.ridestyler-showcase-customizations, .ridestyler-showcase-viewport {
+    margin-left: $tabBarWidth;
+}
+
+
+.ridestyler-showcase-pagination-option {
+    font-size: 0.75em;
+
+    &-display {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+.ridestyler-showcase-paint-swatch {
+    $size: 75px;
+
+    width: $size;
+    height: $size;
+
+    border-radius: $size/2;
+}

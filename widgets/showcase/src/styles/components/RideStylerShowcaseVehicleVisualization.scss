@@ -1,0 +1,31 @@
+@import "../_shared";
+
+.ridestyler-showcase-viewport {
+    position: absolute;
+    top: 20%;
+    left: 15%;
+    bottom: 30%;
+    right: 15%;
+
+    margin-left: 50px /* The width of the tab bar to center this in the remaining space */;
+}
+
+.ridestyler-showcase-customizations {
+    position: absolute;
+    bottom: 0%;
+    left: 10%;
+    right: 10%;
+    margin-left: 50px;
+    height: 30%;
+}
+
+.ridestyler-showcase-customization-component {
+    width: 100%;
+    height: 100%;
+
+    display: none;
+
+    &.in {
+        display: block;
+    }
+}

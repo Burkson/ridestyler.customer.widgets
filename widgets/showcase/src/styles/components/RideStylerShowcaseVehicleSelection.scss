@@ -1,0 +1,145 @@
+@import "../../../node_modules/com.burkson.ridestyler.widgets/widgets/vehicle-selection-modal/scss/rsvsm";
+@import "../shared";
+@import "../buttons";
+
+.ridestyler-showcase-vehicle-selection {
+    text-align: center;
+}
+
+#ridestyler-showcase-select-your-vehicle {
+    &-wrapper {
+        position: absolute; 
+        top: 50%;
+        margin-top: -30px;
+        text-align: center;
+        left: 0; right: 0;
+    }
+}
+
+.ridestyler-showcase-vehicle-selection-content {
+    opacity: 0;
+    transform: translate3d(0px,10px,0px);
+
+    transition-duration: 1s;
+    transition-property: opacity, transform;
+
+    top: 10%;
+    bottom: 20%;
+
+    .in & {
+        transform: translate3d(0px,0px,0px);
+        opacity: 1;
+    }
+}
+
+.ridestyler-showcase-vehicle-selection-wheel-showcase {
+    opacity: 0;
+    transition-property: opacity, left;
+    transition-duration: 1000ms;
+
+    position: absolute;
+    bottom: 20%;
+    left: -30%;
+
+    width: 270px;
+    height: 100px;
+    margin-left: -135px;
+    margin-bottom: -40px;
+
+    white-space: nowrap;
+
+    .in & {
+        left: 50%;
+    }
+}
+
+.ridestyler-showcase-vehicle-selection-wheel-showcase-image {
+    width: 100px;
+    height: 100px;
+    
+    & + .ridestyler-showcase-vehicle-selection-wheel-showcase-image {
+        margin-left: -15px;
+    }
+}
+ 
+#vsm-backdrop {
+    top: 0;
+    position: absolute;
+}
+
+.vsm-modal {
+    top: 10px;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    margin: 0;
+    width: auto; height: auto;
+
+    @include baseFont;
+    line-height: 2em;
+
+    box-shadow: 0 0 10px #1d1d1d;
+}
+
+.vsm-modal .vsm-final .scrollable {
+    position: static;
+}
+
+.vsm-line-step .vehicle-result-name {
+    background-color: rgba(255,255,255,0.5);
+    font-size: 2em;
+}
+
+.vsm-modal-body .center-piece.vehicle-result-wrap {
+    z-index: 10;
+}
+
+.vsm-header { 
+    margin: 0.25em auto;
+    font-size: 2em;
+}
+.vsm-modal .vsm-list-body .scrollable { 
+    top: 90px;
+}
+.vsm-modal .scrollable {
+    -webkit-overflow-scrolling: touch;    
+    bottom: 10px;
+}
+.vsm-line-step .dot-info-before {
+    left: -48%;
+    text-align: center;
+}
+.vsm-selected-info {
+    font-size: 2em;
+}
+.vsm-modal-header {
+    font-size: 2em;
+}
+.vsm-back-link {
+    font-size: 2em;
+}
+.vsm-close { 
+    top: 10px;
+    font-size: 1em;
+    color: #999999;
+    line-height: 1em;
+    
+    &:after { content: '\00d7'; font-size: 2em; }
+    img { display: none; }
+}
+.vsm-modal-body .center-piece {
+    max-width: 80%;
+}
+.vsm-modal-body .center-piece.vehicle-result-wrap { margin-top: 35px; }
+.vsm-modal-body .center-piece.vehicle-image-wrap {
+     margin-top: 0; 
+     text-align: center;
+}
+.vsm-modal .vsm-final .vehicle-image-wrap .vsm-btn { 
+    width: auto;
+
+    @include button;
+    @include button-primary;
+    
+    font-size: 1.5em;
+}

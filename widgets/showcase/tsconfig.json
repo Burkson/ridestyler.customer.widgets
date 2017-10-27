@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "target": "es2015",
+        "sourceMap": true,
+        "rootDir": "src",
+        "outDir": "dist",
+        "declaration": true,
+        "module": "none"
+    },
+
+    "compileOnSave": true,
+    
+    "include": [
+        "src/scripts/**/*.ts",
+        "node_modules/com.burkson.ridestyler.widgets/ridestyler.d.ts",
+        "node_modules/com.burkson.ridestyler.widgets/widgets/vehicle-selection-modal/rsvsm.d.ts",
+        "node_modules/com.burkson.ridestyler.widgets/widgets/vehicle-renderer/rsvr.d.ts",
+        "typings/**/*.d.ts"
+    ]
+}

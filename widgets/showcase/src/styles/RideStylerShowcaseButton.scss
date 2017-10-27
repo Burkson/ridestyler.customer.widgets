@@ -1,0 +1,12 @@
+@import "shared";
+@import "buttons";
+
+.ridestyler-showcase-button {
+    @include button;
+}
+.ridestyler-showcase-button-large {
+    @include button-large;
+}
+.ridestyler-showcase-button-primary {
+    @include button-primary;
+}

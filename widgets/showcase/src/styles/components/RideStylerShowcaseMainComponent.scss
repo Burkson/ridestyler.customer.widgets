@@ -1,0 +1,13 @@
+@import "../shared";
+
+.ridestyler-showcase-main-component {
+    position: absolute; top: 0; left: 0;
+    padding-top: 48px;
+    
+    // Allow main components to specify padding and still take up 100% width
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+
+    @include fadeIn;
+}
