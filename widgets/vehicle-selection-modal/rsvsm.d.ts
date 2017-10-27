@@ -29,6 +29,13 @@ declare namespace RideStylerVehicleSelectionModal {
         GroupOptions?: boolean;
 
         /**
+         * If true, guide the user through OE tire option selection after
+         * a vehicle has been selected
+         * @default false
+         */
+        IncludeOETireOption?: boolean;
+
+        /**
          * The container to append modals to, by defualt: document.body
          */
         container?: Node | (()=>Node);
