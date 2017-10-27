@@ -84,6 +84,10 @@ Option | Type | Default | Description
 wheelDims | Array | ```[250,250]``` | The dimensions of the wheel preview pane in pixels
 defaultLayerOpts | Array | ```null``` | Default options for each layer. If this option is specified and no explicit options are specified for a given layer, the layer will use these default options. 
 cssUrl	| String or Boolean | ```null``` | Specify the url to a custom stylesheet. If omitted, the default stylesheet will be used. If set to false, no stylesheet will be used.
+onCancel | Function | null | Provide a callback to be executed when the cancel button is clicked. The button will be hidden if no callback is provided.
+onConfirm | Function | null | Provide a callback to be executed when the confirm button is clicked. The button will be hidden if no callback is provided.
+cancelTeext | String | 'Cancel' | The display text of the cancel button
+confirmText | String | 'Confirm' | The display text of the confirm button
 
 Options example:
 ```
@@ -112,3 +116,7 @@ var wb = new WheelBuilder('container', layerStacks, {
 	cssUrl: 'css/mystyle.css'
 });
 ```
+
+## API
+See the [Wheel Builder Function Reference](wheelBuilder.md)
+

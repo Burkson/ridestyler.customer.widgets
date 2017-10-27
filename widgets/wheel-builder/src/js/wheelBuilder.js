@@ -38,22 +38,6 @@
 		// Dev or production
 		this.dev = opts.hasOwnProperty('dev') ? !!opts.dev : false;
 
-		// Set the dimensions of the wheel preview
-		this.dfltWheelDims = [300, 300];
-
-		if (opts.hasOwnProperty('wheelDims') && typeof opts.wheelDims === 'object' && opts.wheelDims.length === 2) {
-			var w = parseInt(opts.wheelDims[0]),
-			h = parseInt(opts.wheelDims[1]);
-
-			if (!isNaN(w) && !isNaN(h)) {
-				this.wheelDims = [w, h];
-			} else {
-				this.wheelDims = this.dfltWheelDims;
-			}
-		} else {
-			this.wheelDims = this.dfltWheelDims;
-		}
-
 		// The id of the container element
 		this.containerId = containerId;
 
@@ -61,8 +45,8 @@
 		this.container = document.getElementById(containerId);
 
 		// Threshholds for adjusting layout
-		this.smallWidth = 880;
-		this.smallestWidth = 480;
+		this.smallWidth = 900;
+		this.smallestWidth = 500;
 
 		// Stacks prior to validation
 		this.dirtyStacks = layerStacks;
@@ -91,7 +75,7 @@
 		this.extJsLoaded = false;
 
 		// Paths to external files
-		this.cdnUrl = 'https://gitcdn.xyz/repo/Burkson/com.burkson.ridestyler.widgets/master/widgets/wheel-builder/dist/';
+		this.cdnUrl = 'https://cdn.rawgit.com/Burkson/com.burkson.ridestyler.widgets/1386dca6/widgets/wheel-builder/dist/';
 		this.urlPfx = this.dev ? 'src/' : this.cdnUrl;
 		this.tplUrl = this.urlPfx + 'html/template.html';
 
@@ -110,25 +94,55 @@
 
 		// Elements from the template we will be manipulating
 		this.wrapEl = null;
-		this.ctrlEl = null;
+		this.ctrlWrap = null;
 		this.selectorEl = null;
 		this.layerSelectWrap = null;
 		this.layerOptsWrap = null;
+		this.topBar = null;
+		this.ctrlHeader = null;
+		this.ctrlTitle = null;
+		this.ctrl = null;
+		this.backBtn = null;
 
 		// The currently selected stack
 		this.selectedStack = null;
 
-		// Default color operation
-		this.dfltColorOp = 'multiply';
+		// Default values
+		this.dfltColorOp = 'multiply';		// Default colorize operation
+		this.dfltPickerColor = 'FFFFFF';	// Default picker color
+		this.dfltCtrlTitle = 'Customize';	// Default ctrl title text
+		this.dfltWheelDims = [500, 500];	// Default wheel dimensions
 
-		// Default color picker color
-		this.dfltPickerColor = 'FFFFFF';
+		// Set the dimensions of the wheel preview
+		if (opts.hasOwnProperty('wheelDims') && typeof opts.wheelDims === 'object' && opts.wheelDims.length === 2) {
+			var w = parseInt(opts.wheelDims[0]),
+			h = parseInt(opts.wheelDims[1]);
 
+			if (!isNaN(w) && !isNaN(h)) {
+				this.wheelDims = [w, h];
+			} else {
+				this.wheelDims = this.dfltWheelDims;
+			}
+		} else {
+			this.wheelDims = this.dfltWheelDims;
+		}
+
+		// Text and callbacks for top bar buttons
+		this.cancelText = opts.cancelText ? opts.cancelText : 'Cancel';
+		this.confirmText = opts.confirmText ? opts.confirmText : 'Confirm';
+		this.onCancel = typeof opts.onCancel === 'function' ? opts.onCancel : null;
+		this.onConfirm = typeof opts.onConfirm === 'function' ? opts.onConfirm : null;
+
+		// Wait for DOMContentLoaded if the container doesn't exist yet
 		if (!this.container) {
 			document.addEventListener('DOMContentLoaded', function() {
 				self.container = document.getElementById(self.containerId);
-				self.initPromise.resolve();
-				self.onDomReady();
+				if (!self.container) {
+					console.error('Container does not exist');
+				} else {
+					self.initPromise.resolve();
+					self.onDomReady();
+				}
 			});
 		} else {
 			self.initPromise.resolve();
@@ -155,8 +169,8 @@
 	 };
 
 	/**
-	 * When the app is loaded, call a callback
-	 * @param {function} cb - The callback function
+	 * When the app is finished loading, execute a callback
+	 * @param {function} cb - The callback function to execute
 	 */
 	 WheelBuilder.prototype.loaded = function(cb) {
 		this.loadedPromise.done(function() {
@@ -205,8 +219,7 @@
 	 */
 	WheelBuilder.prototype.initApp = function() {
 		var self = this,
-		len = this.dirtyStacks.length,
-		download = null;
+		len = this.dirtyStacks.length;
 
 		if (!this.isAsyncComplete()) {
 			console.error('Template not loaded, unable to initialize app');
@@ -218,26 +231,73 @@
 
 		// Save these elements for later use
 		this.wrapEl = document.getElementById('wb-wrapper');
-		this.ctrlEl = this.wrapEl.getElementsByClassName('wb-ctrl-wrap')[0];
-		this.layerSelectWrap = this.ctrlEl.getElementsByClassName('wb-layer-select')[0];
-		this.layerOptsWrap = this.ctrlEl.getElementsByClassName('wb-layer-options')[0];
+		this.ctrlWrap = this.wrapEl.getElementsByClassName('wb-ctrl-wrap')[0];
+		this.layerSelectWrap = this.ctrlWrap.getElementsByClassName('wb-layer-select')[0];
+		this.layerOptsWrap = this.ctrlWrap.getElementsByClassName('wb-layer-options')[0];
 		this.selectorEl = this.wrapEl.getElementsByClassName('wb-wheel-selector')[0];
+		this.topBar = this.wrapEl.getElementsByClassName('wb-top-bar')[0];
+		this.logo = this.topBar.getElementsByClassName('wb-logo')[0];
+		this.ctrlHeader = this.ctrlWrap.getElementsByClassName('wb-ctrl-header')[0];
+		this.ctrlTitle = this.ctrlWrap.getElementsByClassName('wb-ctrl-title')[0];
+		this.ctrl = this.ctrlWrap.getElementsByClassName('wb-ctrl')[0];
+		this.backBtn = this.ctrlHeader.getElementsByClassName('wb-back-btn')[0];
+
+		this.initTop();
 
 		// Event handlers
 		window.addEventListener('resize', function() {self.adjustLayout();});
 
-		download = this.ctrlEl.getElementsByClassName('wb-download')[0];
-		download.onclick = function(e) {
-			self.onDownloadClick(e);
-		};
-
-		// Create our layer stacks
+		// Create each layer stack
 		for (var i = 0; i < len; i++) {
 			this.addLayerStack(this.dirtyStacks[i]);
 		}
 
-		this.showCtrl();
+		// Perform tasks after all of the stacks have loaded
+		this.loadedPromise.done(function() {
+			self.renderCtrl();
+			self.renderStackSelector();
+			self.renderPreview();
+		});
+
 		this.adjustLayout();
+	};
+
+	/**
+	 * Initialize the top bar
+	 */
+	WheelBuilder.prototype.initTop = function() {
+		var self = this,
+		cancelBtn = this.topBar.getElementsByClassName('wb-top-button-left')[0],
+		confirmBtn = this.topBar.getElementsByClassName('wb-top-button-right')[0];
+
+		if (this.onCancel) {
+			cancelBtn.innerText = this.cancelText;
+			cancelBtn.onclick = function() {
+				self.onCancel.call();
+			};
+		} else {
+			hide(cancelBtn);
+		}
+
+		if (this.onConfirm) {
+			confirmBtn.innerText = this.confirmText;
+			confirmBtn.onclick = function() {
+				self.onConfirm.call();
+			};
+		} else {
+			hide(confirmBtn);
+		}
+
+		download = this.wrapEl.getElementsByClassName('wb-download')[0];
+		download.onclick = function(e) {
+			self.onDownloadClick(e);
+		};
+
+		this.backBtn.onclick = function() {
+			self.onBackClick();
+		};
+
+		show(this.topBar, 'table', true);
 	};
 
 	/**
@@ -269,11 +329,10 @@
 
 	/**
 	 * Select a stack and display it in the preview pane
-	 * @param {string} stackName - The newly selected stack name
+	 * @param {string} stackName - The name of the selected stack
 	 */
 	WheelBuilder.prototype.selectStack = function(stackName) {
-		var self = this,
-		curSelected = this.layerStacks[this.selectedStack],
+		var curSelected = this.layerStacks[this.selectedStack],
 		stack = this.getLayerStack(stackName);
 
 		// Create the layer selector for this stack
@@ -289,7 +348,7 @@
 
 	/**
 	 * Create the layer selector and layer options panes for a layer stack
-	 * @param {object} ls - The layer stack
+	 * @param {object} ls - The layer stack we are displaying layers for
 	 */
 	WheelBuilder.prototype.createLayerSelector = function(ls) {
 		var self = this,
@@ -341,7 +400,7 @@
 				colorSpan.style.backgroundColor = layer.currentColor;
 			}
 
-			textSpan.innerText = layer.name;
+			textSpan.innerText = layer.name + ' +';
 
 			a.appendChild(colorSpan);
 			a.appendChild(textSpan);
@@ -353,6 +412,8 @@
 		}
 
 		li = document.createElement('li');
+
+		/* Uncomment this to enable the reset all button
 		reset = document.createElement('button');
 		reset.innerText = 'Reset All';
 		reset.onclick = function() {
@@ -363,59 +424,11 @@
 		buttonWrap = document.createElement('div');
 		buttonWrap.appendChild(reset);
 		addClass(buttonWrap, 'wb-button-wrap');
+		this.layerSelectWrap.appendChild(buttonWrap);
+		*/
 
 		ls.layerSelectEl = ul;
 		this.layerSelectWrap.appendChild(ul);
-		this.layerSelectWrap.appendChild(buttonWrap);
-	};
-
-	/**
-	 * Hide the previously selected preview stack and show a new one
-	 * @param {object} stack - The stack we are showing
-	 */
-	WheelBuilder.prototype.togglePreviewStack = function(stack) {
-		var self = this,
-		curSelected = this.layerStacks[this.selectedStack],
-		curSelectEl = null;
-
-		// Hide the previously selected stack
-		if (curSelected && curSelected !== stack) {
-			curSelectEl = curSelected.containEl;
-			curSelectEl.style.opacity = 0;
-			removeClass(curSelectEl, 'wb-wheel-selected');
-
-			curSelected.layerSelectEl.style.opacity = 0;
-		}
-
-		setTimeout(function() {
-			if (curSelectEl) {
-				curSelectEl.style.display = 'none';
-				curSelected.layerSelectEl.style.display = 'none';
-			}
-			
-			// Set our new stack as selected and show it
-			addClass(stack.containEl, 'wb-wheel-selected');
-			stack.containEl.style.display = 'block';
-			stack.containEl.clientWidth;
-			stack.containEl.style.opacity = 1;
-
-			stack.layerSelectEl.style.display = 'block';
-			stack.layerSelectEl.clientWidth;
-			stack.layerSelectEl.style.opacity = 1;
-
-			// Show layer selector
-			toggle(self.layerSelectWrap, self.layerOptsWrap);
-
-			self.setStackTitle(stack.name);
-		}, 300);
-	};
-
-	/**
-	 * Show the ctrl pane
-	 */
-	WheelBuilder.prototype.showCtrl = function() {
-		this.ctrlEl.style.opacity = 1;
-		this.ctrlEl.style.display = 'block';
 	};
 
 	/**
@@ -429,13 +442,12 @@
 		layerClass = convertNameToClass(layer.name),
 		opts = layer.options,
 		ul = null,
-		back = null,
 		reset = null,
 		buttonWrap = null,
+		layerName = null,
 		li = null,
 		colorLink = null,
 		colorSpan = null,
-		colorText = null,
 		jscInput = null,
 		jsColor = null,
 		jsColorLink = null,
@@ -459,12 +471,18 @@
 
 		if (typeof opts !== 'object' || !opts.length) return;
 
+		this.setCtrlTitle('Options');
+
 		// Clear out our previous options
 		this.layerOptsWrap.innerHTML = '';
 
 		ul = document.createElement('ul');
-		back = document.createElement('button');
+		layerName = document.createElement('li');
 		reset = document.createElement('button');
+
+		layerName.innerText = layer.name + ' -';
+		show(layerName);
+		ul.appendChild(layerName);
 
 		for (var i = 0, len = opts.length; i < len; i++) {
 			if (typeof opts[i].name !== 'string' || !opts[i].name.trim()) {
@@ -486,19 +504,16 @@
 			li = document.createElement('li');
 
 			colorSpan = document.createElement('span');
-			colorText = document.createElement('span');
 			colorLink = document.createElement('a');
 
 			addClass(colorSpan, 'wb-color');
 			colorSpan.style.backgroundColor = opts[i].color.trim();
 			colorLink.appendChild(colorSpan);
 
-			colorText.innerHTML = opts[i].name.trim();
-			colorLink.appendChild(colorText);
-
 			colorLink.onclick = colorLinkOnclick;
 			colorLink.setAttribute('data-color', opts[i].color.trim());
 			colorLink.setAttribute('data-operation', colorOp);
+			colorLink.setAttribute('title', opts[i].name);
 
 			li.appendChild(colorLink);
 			ul.appendChild(li);
@@ -506,6 +521,7 @@
 
 		this.layerOptsWrap.appendChild(ul);
 
+		// Set up the custom color picker
 		jscInput = document.createElement('input');
 		addClass(jscInput, 'jscolor');
 		colorSpan = document.createElement('span');
@@ -515,8 +531,9 @@
 		jsColorLink = document.createElement('a');
 		addClass(jsColorLink, 'wb-js-color');
 		
-		jsColorLink.innerHTML = '<span>Custom color</span>';
-		jsColorLink.onclick = function() {			
+		jsColorLink.innerHTML = '<span> Custom Color</span>';
+		jsColorLink.setAttribute('title', 'Custom Color');
+		jsColorLink.onclick = function() {
 			jsColor.show();
 		};
 
@@ -534,14 +551,8 @@
 		li.appendChild(jsColorLink);
 		ul.appendChild(li);
 
-		// Add buttons to bottom of the pane
 		buttonWrap = document.createElement('div');
 		addClass(buttonWrap, 'wb-button-wrap');
-
-		back.innerText = 'Back';
-		back.onclick = function() {
-			toggle(self.layerSelectWrap, self.layerOptsWrap);
-		};
 
 		reset.innerText = 'Reset';
 		reset.onclick = function() {
@@ -550,17 +561,17 @@
 			self.resetLayer(layer.name);
 		};
 
-		buttonWrap.appendChild(back);
 		buttonWrap.appendChild(reset);
 		this.layerOptsWrap.appendChild(buttonWrap);
 
-		// Hide layer selector and show layer opts
+		show(this.backBtn, 'inline');
+
 		toggle(this.layerOptsWrap, this.layerSelectWrap);
 	};
 
 	/**
 	 * Add a stack of layers
-	 * @param {object} ls - Data represending the layer stack
+	 * @param {object} ls - Data represending the layer stack - see readme for data format
 	 */
 	WheelBuilder.prototype.addLayerStack = function(ls) {
 		var self = this;
@@ -572,7 +583,7 @@
 
 		this.asyncPromise.done(function() {
 			var exists = self.getLayerStack(ls.name),
-			previewEl = self.wrapEl.getElementsByClassName('wb-wheel-preview')[0],
+			previewEl = self.wrapEl.getElementsByClassName('wb-wheel-preview-inner')[0],
 			stackEl = null,
 			lb = null,
 			className = '';
@@ -629,11 +640,11 @@
 				}
 
 				if (!ls.selected) {
-					toggle(null, stackEl);
+					hide(stackEl);
 				}
 			});
 
-			// Check if all of the stack's layers have loaded
+			// Resolve this promise after all stacks have loaded
 			lb.imgLoadPromise.done(function() {
 				self.checkLoaded();
 			});
@@ -662,7 +673,8 @@
 		var self = this,
 		imgSrc = ls.lb.getImage(),
 		img = new Image(),
-		li = document.createElement('li');
+		li = document.createElement('li'),
+		before = null;
 
 		img.src = imgSrc;
 		li.appendChild(img);
@@ -672,7 +684,7 @@
 			item = tgt,
 			curSelected = self.selectorEl.getElementsByClassName('wb-stack-selected')[0];
 
-			if (tgt.tagName.toLowerCase !== 'li') {
+			if (tgt.tagName.toLowerCase() !== 'li') {
 				item = tgt.parentElement;
 			}
 
@@ -690,7 +702,8 @@
 		if (!this.selectorEl.children.length) {
 			this.selectorEl.appendChild(li);
 		} else {
-			var before = this.selectorEl.children[ls.idx];
+			before = this.selectorEl.children[ls.idx];
+
 			if (before) {
 				this.selectorEl.insertBefore(li, before);
 			} else {
@@ -700,13 +713,6 @@
 					this.selectorEl.insertBefore(li, this.selectorEl.firstChild);
 				}
 			}
-		}
-
-		// Show the selector if we have multiple visible stacks
-		if (this.visibleStacks > 1) {
-			this.selectorEl.style.opacity = 1;
-		} else {
-			this.selectorEl.style.opacity = 0;
 		}
 	};
 
@@ -752,6 +758,100 @@
 	};
 
 	/**
+	 * Hide the previously selected preview stack and show a new one
+	 * @param {object} stack - The stack we are showing
+	 */
+	WheelBuilder.prototype.togglePreviewStack = function(stack) {
+		var self = this,
+		curSelected = this.layerStacks[this.selectedStack],
+		curSelectEl = null;
+
+		// Hide the previously selected stack
+		if (curSelected && curSelected !== stack) {
+			curSelectEl = curSelected.containEl;
+			curSelectEl.style.opacity = 0;
+			removeClass(curSelectEl, 'wb-wheel-selected');
+
+			curSelected.layerSelectEl.style.opacity = 0;
+		}
+
+		setTimeout(function() {
+			if (curSelectEl) {
+				hide(curSelectEl);
+				hide(curSelected.layerSelectEl);
+			}
+
+			// Set our new stack as selected and show it
+			addClass(stack.containEl, 'wb-wheel-selected');
+			stack.containEl.style.display = 'block';
+			stack.containEl.clientWidth;
+			stack.containEl.style.opacity = 1;
+
+			stack.layerSelectEl.style.display = 'block';
+			stack.layerSelectEl.clientWidth;
+			stack.layerSelectEl.style.opacity = 1;
+
+			// Show layer selector
+			toggle(self.layerSelectWrap, self.layerOptsWrap);
+
+			self.setStackTitle(stack.name);
+		}, 250);
+	};
+
+	/**
+	 * Show and style the ctrl pane
+	 */
+	WheelBuilder.prototype.renderCtrl = function() {
+		show(this.ctrlWrap, 'table-cell', true);
+		this.setCtrlTitle();
+
+		// Dynamically set the height of .wb-ctrl
+		var ctrlHeight = parseInt(this.wheelDims[1] - this.ctrlHeader.clientHeight);
+		if (!isNaN(ctrlHeight) && ctrlHeight > 0) {
+			this.ctrl.style.height = ctrlHeight + 'px';
+		}
+	};
+
+	/**
+	 * Show the stack selector pane
+	 */
+	WheelBuilder.prototype.renderStackSelector = function() {
+		if (this.visibleStacks > 1) {
+			show(this.selectorEl, 'table-cell', true);
+		} else {
+			hide(this.selectorEl, true);
+		}
+	};
+
+	/**
+	 * Show the preview pane
+	 */
+	WheelBuilder.prototype.renderPreview = function() {
+		if (this.wheelDims && this.wheelDims.length ) {
+			var preview = this.wrapEl.getElementsByClassName('wb-wheel-preview-inner')[0];
+			preview.style.width = this.wheelDims[0] + 'px';
+			preview.style.height = this.wheelDims[1] + 'px';
+		}
+	};
+
+	/**
+	 * Set the title of the ctrl pane
+	 * @param {string} title - The title section of the ctrl pane
+	 */
+	WheelBuilder.prototype.setCtrlTitle = function(title) {
+		this.ctrlTitle.innerText = title ? title : this.dfltCtrlTitle;
+	};
+
+	/**
+	 * Navigate back to the layer select view
+	 */
+	WheelBuilder.prototype.onBackClick = function() {
+		this.setCtrlTitle();
+		hide(this.backBtn);
+		toggle(this.layerSelectWrap, this.layerOptsWrap);
+	};
+
+	/**
 	 * Reset all layers with the given name to its original state
 	 * @param {string} layerName - The name of the layer to be reset
 	 */
@@ -787,7 +887,7 @@
 		var len = this.layerStacks.length,
 		len2 = null,
 		stack = null,
-		layerColors = this.ctrlEl.getElementsByClassName('wb-color');
+		layerColors = this.ctrlWrap.getElementsByClassName('wb-color');
 
 		for (var i = 0; i < len; i++) {
 			stack = this.layerStacks[i];
@@ -854,7 +954,7 @@
 	 */
 	WheelBuilder.prototype.setStackTitle = function(title) {
 		if (typeof title === 'string') {
-			this.ctrlEl.getElementsByClassName('wb-ctrl-title')[0].innerHTML = title;
+			this.logo.innerText = title;
 		}
 	};
 
@@ -881,7 +981,6 @@
 			};
 
 			head.insertBefore(script, head.firstElementChild);
-
 		} else {
 			this.extJsLoaded = true;
 		}
@@ -1058,6 +1157,25 @@
 		for (var i = 0; i < len; i++) {
 			regex = new RegExp('(?:\\s|^)' + cl[i] + '(?:\\s|$)');
 			el.className = el.className.replace(regex, ' ');
+		}
+    };
+
+    var hide = function(el, opacity) {
+		if (el && typeof el === 'object') {
+			if (opacity) {
+				el.style.opacity = 0;
+			}
+			el.style.display = 'none';
+		}
+    };
+
+	var show = function(el, display, opacity) {
+		if (el && typeof el === 'object') {
+			el.style.display = display ? display : 'block';
+
+			if (opacity) {
+				el.style.opacity = 1;
+			}
 		}
     };
 

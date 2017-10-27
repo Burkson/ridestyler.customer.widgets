@@ -297,7 +297,7 @@
 				return;
 			}
 
-			operation = operation.toLowerCase()
+			operation = operation.toLowerCase();
 		}
 
 		layer.currentColor = color;
@@ -421,7 +421,9 @@
 			return;
 		}
 
-		return this.layerHash[layerName] ? this.layers[this.layerHash[layerName]] : null;
+		return typeof this.layerHash[layerName] !== 'undefined'
+			? this.layers[this.layerHash[layerName]]
+			: null;
 	};
 
 	/**

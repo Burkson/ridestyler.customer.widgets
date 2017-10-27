@@ -1,16 +1,71 @@
 #wb-wrapper {
-    padding: 10px;
+    padding: 20px;
+    color: #929292;
+    letter-spacing: 3px;
+}
+
+#wb-wrapper a {
+    color: #929292;
+}
+
+.wb-top-bar {
+    opacity: 0;
+    -webkit-transition: opacity .25s ease-in-out;
+    transition: opacity .25s ease-in-out;
+    border-bottom: 1px solid #CECECE;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    display: table;
+    width: 100%;
+}
+
+.wb-top-left {
+    display: table-cell;
+    width: 20%;
+}
+
+.wb-top-right {
+    display: table-cell;
+    text-align: right;
+    width: 20%;
+}
+
+.wb-top-center {
+    display: table-cell;
+    text-align: center;
+    overflow: hidden;
+}
+
+.wb-top-button {
+    width: 125px;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    border: 1px solid #CECECE;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.wb-logo {
+    text-transform: uppercase;
+}
+
+.wb-main {
+    display: table;
+    width: 100%;
 }
 
 .wb-ctrl-wrap {
+    display: table-cell;
+    width: 20%;
     background: #fff;
-    border: 1px solid #ccc;
-    float: left;
-    width: 300px;
     opacity: 0;
     overflow: hidden;
     -webkit-transition: opacity .25s ease-in-out;
     transition: opacity .25s ease-in-out;
+    font-size: 14px;
+    margin-right: 20px;
+    vertical-align: top;
 }
 
 .wb-ctrl-wrap a {
@@ -20,36 +75,32 @@
 }
 
 .wb-ctrl {
-    height: 225px;
     overflow: auto;
+    min-height: 400px;
+    min-width: 220px;
+    margin-top: 20px;
 }
 
 .wb-ctrl-header {
-    padding: 5px;
-    background-color: #ddd;
-    height: 32px;
+    margin-right: 40px;
+    color: #4A4A4A;
+    padding-bottom: 20px;
     overflow: hidden;
     position: relative;
-    width: 300px;
+    border-bottom: 1px solid #CECECE;
 }
 
 .wb-ctrl-title {
-    color: #000;
-    float: left;
-    font-size: 18px;
-    left: 0;
+    display: inline-block;
+    font-size: 16px;
     line-height: 25px;
-    padding: 4px 10px 4px;
-    position: absolute;
     text-transform: uppercase;
-    width: 280px;
+    vertical-align: middle;
 }
 
 .wb-ctrl-actions {
-    border-top: 1px solid #ccc;
     padding: 10px;
     top: 280px;
-    width: 280px;
 }
 
 .wb-ctrl-actions a {
@@ -58,31 +109,57 @@
 }
 
 span.wb-color {
-    width: 10px;
-    height: 10px;
+    width: 20px;
+    height: 20px;
     margin-right: 10px;
     border: 1px solid #CCC;
+    border-radius: 50%;
     content: '';
     background-color: #FFF;
     display: inline-block;
+    vertical-align: middle;
 }
 
 .wb-layer-select ul, .wb-layer-options ul {
     list-style-type: none;
     margin-bottom: 0px;
     margin-top: 0px;
-    padding: 10px;
-    -webkit-transition: opacity .25s linear; /*ease-in-out; */
-    transition: opacity .25s linear; /*ease-in-out; */
+    padding: 0px;
+    -webkit-transition: opacity .25s linear;
+    transition: opacity .25s linear;
+    text-transform: uppercase;
 }
 
 .wb-layer-select ul {
     display: none;
 }
 
-/*.wb-layer-options button, .wb-layer-options .wb-js-color {
-    margin: 0px 0px 10px 10px;
-}*/
+.wb-layer-options ul li {
+    display: inline-block;
+    margin: 0px 40px 40px 0px;
+}
+
+.wb-layer-options ul li span.wb-color {
+    margin: 0;
+}
+
+.wb-layer-options ul li span {
+    vertical-align: middle;
+}
+
+li.wb-ctrl-layer {
+    margin-bottom: 40px;
+    line-height: 20px;
+    vertical-align: middle;
+}
+
+li.wb-ctrl-layer:first-child {
+    margin-top: 20px;
+}
+
+li.wb-ctrl-layer span {
+    vertical-align: middle;
+}
 
 .wb-js-color {
     display: block;
@@ -96,8 +173,8 @@ span.wb-color {
 .wb-wheel {
     margin: auto;
     opacity: 0;
-    -webkit-transition: opacity .25s linear; /*ease-in-out; */
-    transition: opacity .25s linear; /*ease-in-out; */
+    -webkit-transition: opacity .25s linear;
+    transition: opacity .25s linear;
 }
 
 .wb-wheel-selected {
@@ -105,50 +182,63 @@ span.wb-color {
 }
 
 .wb-wheel-preview {
-    clear: both;
+    display: table-cell;
+}
+
+.wb-wheel-preview-inner {
+    margin: 0 auto;
 }
 
 .wb-wheel-selector-wrap {
-    float: left;
+    display: table-cell;
+    width: 15%;
+    vertical-align: middle;
 }
 
 .wb-wheel-selector {
-    margin-top: 0px;
-    padding-left: 20px;
+    float: right;
+    margin: 0;
     list-style-type: none;
     opacity: 0;
-    -webkit-transition: opacity .5s ease-in-out;
-    transition: opacity .5s ease-in-out;
+    -webkit-transition: opacity .25s ease-in-out;
+    transition: opacity .25s ease-in-out;
 }
 
 .wb-wheel-selector li {
-    margin-bottom: 5px;
+    margin-bottom: 40px;
+    width: 75px;
+    padding: 5px;
+    border: 1px solid #D3D3D3;
+}
+
+.wb-wheel-selector li:last-child {
+    margin-bottom: 0px;
 }
 
 .wb-wheel-selector li img {
-    width: 100px;
+    width: 75px;
     height: auto;
     cursor: pointer;
 }
 
-.wb-stack-selected {
-    border: 1px dotted #1E90FF;
+li.wb-stack-selected {
+    border: 1px solid #4A4A4A;
 }
 
 .wb-button-wrap {
-    position: absolute;
-    top: 255px;
-    margin-left: 10px;
+    position: relative;
 }
 
 .wb-button-wrap button {
     margin-right: 10px;
 }
 
-li.wb-custom-color {
-    border-top: 1px dotted #ccc;
-    margin-top: 10px;
-    padding-top: 10px;
+.wb-back-btn {
+    display: none;
+    width: 20px;
+    cursor: pointer;
+    font-size: 20px;
+    vertical-align: middle;
 }
 
 .wb-clear {
@@ -161,4 +251,5 @@ li.wb-custom-color {
 
 .wb-small .wb-ctrl-title {
     font-size: 18px;
+    text-transform: uppercase;
 }
