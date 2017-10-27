@@ -917,6 +917,15 @@ declare namespace ridestyler {
             PaddingLeft?: number;
         }
 
+        interface TireRenderInstructions extends TireFilterModel, ImageRenderRequest {
+            Variant?: DataObjects.TireFitmentResourceVariant;
+            FitmentResource?: string;
+            FitmentResources?: string[];
+            Resource?: string;
+            TireFitmentResourceType?: DataObjects.TireFitmentResourceType;
+            TireFitmentResourceTypes?: DataObjects.TireFitmentResourceType[];
+        }
+
         interface WheelRenderInstructions extends WheelFilterModel, ImageRenderRequest {
             ShowCaliper?: boolean;
             Resource?: string;
@@ -1020,6 +1029,7 @@ declare namespace ridestyler {
         "tire/getfitments": Responses.TireFitmentResultModel,
         "tire/getfitmentdescriptions": Responses.TireFitmentDescriptionRequestModel,
         "tire/getfitmentresources": Responses.TireFitmentResourcesResultModel,
+        "tire/image": never,
         "vehicle/getdescriptions": Responses.VehicleDescriptionResultModel,
         "vehicle/gettireoptions": Responses.VehicleTireOptionResultModel,
         "vehicle/gettireoptiondetails": Responses.VehicleTireOptionDetailResultModel,
@@ -1042,6 +1052,7 @@ declare namespace ridestyler {
         "tire/getfitments": Requests.TireFilterModel,
         "tire/getfitmentdescriptions": Requests.TireFitmentDescriptionRequestModel,
         "tire/getfitmentresources": Requests.TireFilterModel,
+        "tire/image": Requests.TireRenderInstructions,
         "vehicle/getdescriptions": Requests.VehicleDescriptionRequestModel,
         "vehicle/gettireoptions": Requests.VehicleFilterModel,
         "vehicle/gettireoptiondetails": Requests.GetTireOptionsRequestModel,
@@ -1078,7 +1089,7 @@ declare namespace ridestyler {
     }
 
     export namespace tire {
-        export function image(filters:Requests.TireFilterModel):string;
+        export function image(filters:Requests.TireRenderInstructions):string;
     }
 
     export namespace wheel {
