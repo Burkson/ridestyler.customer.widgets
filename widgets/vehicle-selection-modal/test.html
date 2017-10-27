@@ -22,10 +22,13 @@
 			GroupOptions: true,
 			IncludeOETireOption: true,
 			afterBackClicked: function(data) {
+				console.log('afterBackClicked', data);
 			},
 			afterOptionSelected: function(data) {
+				console.log('afterOptionSelected', data);
 			},
 			callback: function(data) {
+				console.log('callback', data);
 			}
 		};
 		var rsvsm = new RideStylerVehicleSelectionModal(vsmOptions);
