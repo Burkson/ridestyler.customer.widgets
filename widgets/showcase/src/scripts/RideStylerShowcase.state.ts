@@ -111,6 +111,12 @@ namespace RideStylerShowcase.state {
 
         vehicleHasSideImage: boolean;
         vehicleHasAngledImage: boolean;
+
+        currentPaintScheme: ridestyler.Descriptions.VehiclePaintSchemeDescriptionModel;
+        currentWheel: ridestyler.Descriptions.WheelModelDescriptionModel;
+        currentWheelFitment: ridestyler.Descriptions.WheelFitmentDescriptionModel;
+        currentTire: ridestyler.Descriptions.TireModelDescriptionModel;
+        currentTireOption: ridestyler.Descriptions.VehicleTireOptionDescriptionModel;
     }
     export type PartialStateData = {
         [P in keyof StateData]?: StateData[P];
@@ -133,7 +139,12 @@ namespace RideStylerShowcase.state {
             vehicleHasAngledImage: undefined,
             vehicleHasSideImage: undefined,
             currentVehicleTireOptionDescription: undefined,
-            currentVehicleTireOptionID: undefined
+            currentVehicleTireOptionID: undefined,
+            currentPaintScheme: undefined,
+            currentTire: undefined,
+            currentWheel: undefined,
+            currentWheelFitment: undefined,
+            currentTireOption: undefined
         };
         public getData() { return this.currentData; }
         public setData(newData:StateData) {
@@ -153,7 +164,7 @@ namespace RideStylerShowcase.state {
             this.currentData = newData;
         
             for (let callback of afterCallbacks)
-                callback(newData);
+                callback(this.currentData);
         }
         public extendData(dataExtension:PartialStateData) {
             let hasChanged: boolean = false;
@@ -276,13 +287,13 @@ namespace RideStylerShowcase.state {
             }
 
             // Trigger exit callbacks
-            if (this.callbacksForState(previousState).triggerExitCallbacks(previousState, newState, newData) === false) {
+            if (this.callbacksForState(previousState).triggerExitCallbacks(previousState, newState, this.currentData) === false) {
                 // One of the exit callbacks canceled the state change
                 return;
             }
 
             // Trigger enter callbacks
-            if (this.callbacksForState(newState).triggerEnterCallbacks(previousState, newState, newData) === false) {
+            if (this.callbacksForState(newState).triggerEnterCallbacks(previousState, newState, this.currentData) === false) {
                 // One of the enter callbacks canceled the state change
                 return;
             }

@@ -4,7 +4,7 @@ $tabBarWidth: 130px;
     width: $tabBarWidth;
 }
 
-.ridestyler-showcase-customizations, .ridestyler-showcase-viewport {
+.ridestyler-showcase-customizations, .ridestyler-showcase-viewport, .ridestyler-showcase-rotate-vehicle {
     margin-left: $tabBarWidth;
 }
 
@@ -18,7 +18,7 @@ $tabBarWidth: 130px;
     }
 }
 
-.ridestyler-showcase-paint-swatch {
+.ridestyler-showcase-pagination-option-display.ridestyler-showcase-paint-swatch {
     $size: 75px;
 
     width: $size;

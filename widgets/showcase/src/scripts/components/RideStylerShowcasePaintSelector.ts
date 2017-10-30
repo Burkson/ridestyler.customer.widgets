@@ -87,6 +87,10 @@ namespace RideStylerShowcase {
             if (paintScheme) {
                 super.onOptionClick(optionElement);
 
+                this.state.extendData({
+                    currentPaintScheme: paintScheme
+                });
+
                 if (typeof this.onPaintSchemeSelected === 'function') {
                     this.onPaintSchemeSelected(paintScheme);
                 }

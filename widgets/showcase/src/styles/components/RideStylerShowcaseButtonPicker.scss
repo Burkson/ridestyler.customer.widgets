@@ -1,0 +1,17 @@
+.ridestyler-showcase-button-picker {
+    border: 1px solid #ccc;
+    border-radius: 0.5em;
+    background-color: #efefef;
+    text-align: center;
+    font-size: 1em;
+
+    &-option, &-title {
+        padding: 10px;
+    }
+
+    &-option {
+        &-active {
+            background-color: #999;
+        }
+    }
+}

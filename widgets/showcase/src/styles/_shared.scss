@@ -17,14 +17,14 @@ $zLayer2: 2000;
 $zLayer3: 3000;
 
 // Transitions
-@mixin fadeIn {
+@mixin fadeIn($inOpacity:1) {
     opacity: 0;
 
     transition-property: opacity;
     transition-duration: 0.5s; 
     
     &.in {
-        opacity: 1;
+        opacity: $inOpacity;
     }
 }
 

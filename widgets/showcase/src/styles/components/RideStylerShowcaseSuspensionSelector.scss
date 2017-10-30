@@ -1,0 +1,25 @@
+@import "../../../node_modules/nouislider/distribute/nouislider";
+
+.ridestyler-showcase-suspension-selector-element {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 50%;
+    padding: 30px;
+    margin-top: 30px;
+
+    + .ridestyler-showcase-suspension-selector-element {
+        left: 50%;
+        right: 0;
+    }
+
+    &-label {
+        color: white;
+        margin-bottom: 10px;
+    }
+}
+
+.noUi-value {
+    margin-top: 3px;
+    margin-left: 5px;
+}

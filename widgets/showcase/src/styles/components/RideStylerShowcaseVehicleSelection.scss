@@ -111,6 +111,8 @@
 }
 .vsm-selected-info {
     font-size: 2em;
+    overflow: visible;
+    max-height: none;
 }
 .vsm-modal-header {
     font-size: 2em;

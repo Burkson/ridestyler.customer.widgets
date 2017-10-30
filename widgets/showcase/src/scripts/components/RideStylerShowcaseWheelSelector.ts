@@ -34,7 +34,9 @@ namespace RideStylerShowcase {
             return PromiseHelper.then(api.request("wheel/countmodels", filters), response => response.Count);
         }
         protected getResults(filters: WheelFilterModel): ridestyler.RideStylerPromise<WheelModelDescriptionModel[], ridestyler.RideStylerAPIResponse> {
-            return PromiseHelper.then(api.request("wheel/getmodeldescriptions", filters), response => response.Models);
+            return PromiseHelper.then(api.request("wheel/getmodeldescriptions", ObjectHelper.assign({
+                IncludeResources: true
+            }, filters)), response => response.Models);
         }
         protected productFilter(product: WheelModelDescriptionModel): boolean {
             return product.HasAngleImage && this.supportedVehicleImagery.angled ||

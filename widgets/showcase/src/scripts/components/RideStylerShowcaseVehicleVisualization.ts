@@ -5,6 +5,11 @@ namespace RideStylerShowcase {
     export class RideStylerShowcaseVehicleVisualization extends MainComponentBase {
         private viewport:RideStylerViewport;
         private tabBar:RideStylerShowcaseVerticalTabBar;
+        private changeWheelSize:RideStylerShowcaseChangeWheelSize;
+
+        private titleElement:HTMLElement;
+        private rotateElement:HTMLElement;
+
         private tabs: {
             paint: RideStylerShowcaseVerticalTabBar.Tab,
             wheels: RideStylerShowcaseVerticalTabBar.Tab,
@@ -16,8 +21,33 @@ namespace RideStylerShowcase {
         private customizationComponents:{
             paint: RideStylerShowcasePaintSelector,
             wheels: RideStylerShowcaseWheelSelector,
-            tires: RideStylerShowcaseTireSelector
+            tires: RideStylerShowcaseTireSelector,
+            suspension: RideStylerShowcaseSuspensionSelector
         };
+
+        private customizationComponentSettings: {
+            paint: CustomizationComponentSettings,
+            wheels: CustomizationComponentSettings,
+            tires: CustomizationComponentSettings,
+            suspension: CustomizationComponentSettings,
+
+            [key:string]: CustomizationComponentSettings;
+        } = {
+            paint: {
+                title: strings.getString('select-paint')
+            },
+            wheels: {
+                title: strings.getString('select-wheels')
+            },
+            tires: {
+                title: strings.getString('select-tires')
+            },
+            suspension: {
+                title: strings.getString('adjust-suspension')
+            }
+        }
+
+        private components:IComponent[];
 
         /**
          * The ID of the currently displayed vehicle
@@ -29,6 +59,8 @@ namespace RideStylerShowcase {
          */
         private vehicleDescription:string;
 
+        private imageType:ridestyler.DataObjects.VehicleResourceType;
+
         /**
          * The ID of the currently displayed OE tire option for the vehicle
          */
@@ -38,6 +70,11 @@ namespace RideStylerShowcase {
          * A description of the currently selected OE tire option
          */
         private vehicleTireOptionDescription:string;
+
+        /**
+         * The currently selected OE tire option
+         */
+        private vehicleTireOption:ridestyler.Descriptions.VehicleTireOptionDescriptionModel;
 
         /**
          * The description model of the currently displayed vehicle,
@@ -58,9 +95,46 @@ namespace RideStylerShowcase {
 
             this.setupTabs();
 
-            this.component.appendChild(this.tabBar.component);
+            this.changeWheelSize = new RideStylerShowcaseChangeWheelSize(this.showcase);
+            this.changeWheelSize.optionSelectedCallback = newOption => {
+                console.log(newOption)
+                this.state.extendData({
+                    currentWheelFitment: newOption
+                });
+                this.updateViewport({
+                    WheelFitment: newOption.WheelFitmentID
+                });
+            }
+
+            this.components = [
+                new VehicleDetails(this.showcase),
+                new WheelDetails(this.showcase),
+                new TireDetails(this.showcase),
+                this.tabBar,
+                this.changeWheelSize
+            ];
+
             this.customizationComponentContainer = HTMLHelper.createElement('div', {
                 className: customizationsClass,
+                appendTo: this.component
+            });
+
+            // Append any sub components
+            for (let component of this.components) {
+                this.component.appendChild(component.component);
+            }
+
+            this.rotateElement = HTMLHelper.createElement('div', {
+                className: 'ridestyler-showcase-rotate-vehicle',
+                appendTo: this.component
+            });
+
+            this.rotateElement.addEventListener('click', () => {
+                this.switchAngle();
+            });
+
+            this.titleElement = HTMLHelper.createElement('div', {
+                className: 'ridestyler-showcase-customization-component-title',
                 appendTo: this.component
             });
 
@@ -106,8 +180,10 @@ namespace RideStylerShowcase {
                 const newTab = e.newTab;
                 const key = newTab.key;
 
-                if (this.customizationComponents && key in this.customizationComponents)
-                    this.setActiveCustomizationComponent(this.customizationComponents[key]);
+                if (this.customizationComponents && key in this.customizationComponents) {
+                    let settings = this.customizationComponentSettings[key];
+                    this.setActiveCustomizationComponent(this.customizationComponents[key], settings);
+                }
             };
         }
 
@@ -142,19 +218,40 @@ namespace RideStylerShowcase {
             // Deselect any active tab
             this.tabBar.clearActiveTab();
 
+            this.rotateElement.classList.remove('in');
+
             // Load the vehicle's description model
-            api.request("vehicle/getdescriptions", {
+            let getVehicleDescription = api.request("vehicle/getdescriptions", {
                 Count: 1,
                 VehicleConfiguration: this.vehicleConfigurationID
-            }).done(response => {
-                let vehicleDescription = this.vehicleDescriptionModel = response.Descriptions[0];
+            });
+
+            let getVehicleTireOption = api.request('vehicle/gettireoptiondetails', {
+                VehicleConfiguration: this.vehicleConfigurationID
+            });
+
+            PromiseHelper.all([getVehicleDescription, getVehicleTireOption]).done(responses => {
+                let vehicleDescription = this.vehicleDescriptionModel = responses[0].Descriptions[0];
+                let vehicleTireOption:ridestyler.Descriptions.VehicleTireOptionDescriptionModel;
+                let selectedTireOptionID:Guid = GUIDHelper.parse(this.vehicleTireOptionID);
+
+                for (let tireOption of responses[1].Details) {
+                    if (GUIDHelper.areEqual(tireOption.TireOptionID, selectedTireOptionID)){
+                        vehicleTireOption = tireOption;
+                        break;
+                    }
+                }
+
+                this.vehicleTireOption = vehicleTireOption;
 
                 this.state.extendData({
                     vehicleHasAngledImage: vehicleDescription.HasAngledImage,
-                    vehicleHasSideImage: vehicleDescription.HasSideImage
+                    vehicleHasSideImage: vehicleDescription.HasSideImage,
+                    currentTireOption: vehicleTireOption
                 });
 
                 this.initializeForNewVehicle();
+
             });
         }
 
@@ -165,7 +262,8 @@ namespace RideStylerShowcase {
             this.customizationComponents = {
                 paint: new RideStylerShowcasePaintSelector(this.showcase),
                 wheels: new RideStylerShowcaseWheelSelector(this.showcase),
-                tires: new RideStylerShowcaseTireSelector(this.showcase)
+                tires: new RideStylerShowcaseTireSelector(this.showcase),
+                suspension: new RideStylerShowcaseSuspensionSelector(this.showcase)
             };
 
             this.customizationComponents.paint.onPaintSchemeSelected = paintScheme => {
@@ -180,43 +278,40 @@ namespace RideStylerShowcase {
 
             this.customizationComponents.wheels.productSelectedCallback = model => {
                 this.customizationComponents.wheels.setOptionIsLoading(true);
-                
-                // Get the resources for any fitments within the model, so we can choose
-                // the best fitment to be displayed on the vehicle.
-                api.request("wheel/getfitmentresources", {
-                    WheelModel: model.WheelModelID,
-                    VehicleConfiguration: this.vehicleConfigurationID
+
+                if (this.imageType === ridestyler.DataObjects.VehicleResourceType.Angle && !model.HasAngleImage)
+                    this.switchAngle();
+                else if (this.imageType === ridestyler.DataObjects.VehicleResourceType.Side && !model.HasSideImage)
+                    this.switchAngle();
+
+                api.request('wheel/getfitmentdescriptions', {
+                    VehicleConfiguration: this.vehicleConfigurationID,
+                    WheelModel: model.WheelModelID
                 })
                     .done(response => {
-                        let fitmentIDScores:{
-                            [fitmentID: string]: number;
-                        } = {};
+                        let fitments:ridestyler.Descriptions.WheelFitmentDescriptionModel[] = response.Fitments;
+                        let bestFitment:ridestyler.Descriptions.WheelFitmentDescriptionModel = undefined;
+                        let targetDiameter = this.vehicleTireOption.Front.InsideDiameter;
 
-                        const vehicleHasAngledImage = this.vehicleDescriptionModel.HasAngledImage;
-                        const vehicleHasSideImage   = this.vehicleDescriptionModel.HasSideImage;
-
-                        let highestScore:number = -Infinity;
-                        let highestScoringFitmentID:string;
-
-                        for (let resource of response.Resources) {
-                            const fitmentID = resource.WheelFitmentResource_WheelFitmentID;
-                            const type = resource.WheelFitmentResourceType;
-
-                            let score = fitmentID in fitmentIDScores ? fitmentIDScores[fitmentID] : 0;
+                        fitments.sort(function (a,b) {
+                            const aDiff = Math.abs(a.DiameterMin - targetDiameter);
+                            const bDiff = Math.abs(b.DiameterMin - targetDiameter);
                             
-                            if (type === ridestyler.DataObjects.WheelFitmentResourceType.Angled && vehicleHasAngledImage) score++;
-                            else if (type === ridestyler.DataObjects.WheelFitmentResourceType.Side && vehicleHasSideImage) score++;
+                            return aDiff - bDiff;
+                        });
 
-                            fitmentIDScores[fitmentID] = score;
+                        bestFitment = fitments[0];
 
-                            if (score > highestScore) {
-                                highestScore = score;
-                                highestScoringFitmentID = fitmentID;
-                            }
-                        }
+                        this.state.extendData({
+                            currentWheel: model,
+                            currentWheelFitment: bestFitment
+                        });
 
+                        this.changeWheelSize.setFitmentOptions(fitments, bestFitment);
+                        this.changeWheelSize.component.style.display = '';
+        
                         this.viewport.Update({
-                            WheelFitment: highestScoringFitmentID
+                            WheelFitment: bestFitment.WheelFitmentID
                         }).always(() => {
                             this.customizationComponents.wheels.setOptionIsLoading(false);
                         });
@@ -225,9 +320,16 @@ namespace RideStylerShowcase {
             };
 
             this.customizationComponents.tires.productSelectedCallback = model => {
+                this.state.extendData({
+                    currentTire: model
+                });
             };
 
-            this.setActiveCustomizationComponent(this.customizationComponents.paint);
+            this.customizationComponents.suspension.suspensionChangeCallback = renderUpdate => {
+                this.viewport.Update(renderUpdate);
+            };
+
+            this.setActiveCustomizationComponent(this.customizationComponents.paint, this.customizationComponentSettings.paint);
 
             for (let customizationComponent of ObjectHelper.getValues<IComponent>(this.customizationComponents)) {
                 customizationComponent.component.classList.add('ridestyler-showcase-customization-component');
@@ -235,16 +337,31 @@ namespace RideStylerShowcase {
                 this.customizationComponentContainer.appendChild(customizationComponent.component);
             }
 
+            const canSwitchImageView:boolean = this.vehicleDescriptionModel.HasAngledImage && this.vehicleDescriptionModel.HasSideImage;
+            this.imageType = ridestyler.DataObjects.VehicleResourceType.Angle;
+            
+            if (!this.vehicleDescriptionModel.HasAngledImage) this.imageType = ridestyler.DataObjects.VehicleResourceType.Side;
+
+            this.rotateElement.style.display = canSwitchImageView ? '' : 'none';
+
             this.viewport.Update({
                 VehicleConfiguration: this.vehicleConfigurationID,
                 VehicleTireOption: this.vehicleTireOptionID,
                 PositionX: ridestyler.Requests.ImagePosition.Center,
-                PositionY: ridestyler.Requests.ImagePosition.Far
-            });
+                PositionY: ridestyler.Requests.ImagePosition.Far,
+                Type: this.imageType
+            }).done(() => {
+                this.rotateElement.classList.add('in');
+            })
+
+
+            this.customizationComponentContainer.classList.remove(loadingClass);
         }
 
         private activeCustomizationComponent:IComponent;
-        private setActiveCustomizationComponent(customizationComponent:IComponent|RideStylerShowcasePaginationComponent) {
+        private setActiveCustomizationComponent(customizationComponent:IComponent, settings:CustomizationComponentSettings) {
+            let stateData = this.state.getData();
+
             if (this.activeCustomizationComponent) {
                 this.activeCustomizationComponent.component.classList.remove('in');
             }
@@ -254,15 +371,39 @@ namespace RideStylerShowcase {
 
             if (typeof (customizationComponent as RideStylerShowcasePaginationComponent).update === 'function')
                 (customizationComponent as RideStylerShowcasePaginationComponent).update();
+
+            this.changeWheelSize.component.style.display = 
+                customizationComponent instanceof RideStylerShowcaseWheelSelector && stateData.currentWheel ? 
+                '' : 'none';
+
+            HTMLHelper.setText(this.titleElement, settings.title);
         }
 
         private updateViewport(instructions?:ridestyler.Requests.VehicleRenderInstructions) {
-            this.viewport.Update(instructions);
+            return this.viewport.Update(instructions);
         }
         
-        /**
-         * A callback to bind event listeners to that updates the viewport when called
-         */
-        private updateViewportListenerCallback:()=>void = () => this.updateViewport();
+        private canSwitchAngle():boolean {
+            return this.vehicleDescriptionModel.HasAngledImage && this.vehicleDescriptionModel.HasSideImage;
+        }
+
+        private switchAngle() {
+            if (!this.canSwitchAngle()) return;
+
+            if (this.imageType === ridestyler.DataObjects.VehicleResourceType.Angle)
+                this.imageType = ridestyler.DataObjects.VehicleResourceType.Side;
+            else
+                this.imageType = ridestyler.DataObjects.VehicleResourceType.Angle;
+            
+            this.updateViewport({
+                Type: this.imageType
+            });
+        }
+    }
+
+
+
+    interface CustomizationComponentSettings {
+        title:string;
     }
 }

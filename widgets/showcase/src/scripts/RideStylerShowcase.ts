@@ -6,11 +6,15 @@ namespace RideStylerShowcase {
         };
     }
 
+    export interface RideStylerShowcaseContainer extends HTMLElement {
+        ridestylerShowcase: RideStylerShowcaseInstance;
+    }
+
     export class RideStylerShowcaseInstance {
         /**
          * The main container for the showcase
          */
-        public container: HTMLElement;
+        public container: RideStylerShowcaseContainer;
 
         /**
          * The main components (screens for example) to be rendered in the showcase
@@ -122,7 +126,9 @@ namespace RideStylerShowcase {
         public initialize(container: HTMLElement) : void {
             if (!container) throw "Cannot initialize showcase without a container to put it in.";
 
-            this.container = container;
+            this.container = ObjectHelper.assign(container, {
+                ridestylerShowcase: this
+            });
 
             this.initializeState();
 
@@ -145,12 +151,19 @@ namespace RideStylerShowcase {
             });
 
             this.events.on("vehicle-selected", selection => {
-                this.stateHandler.changeState(States.Visualize, ObjectHelper.assign(this.stateHandler.getData(), {
+                this.stateHandler.changeState(States.Visualize, {
                     currentVehicleConfigurationID: selection.VehicleConfiguration,
                     currentVehicleDescription: selection.VehicleDescription,
                     currentVehicleTireOptionID: selection.TireOptionID,
-                    currentVehicleTireOptionDescription: selection.TireOptionString
-                }));
+                    currentVehicleTireOptionDescription: selection.TireOptionString,
+                    currentPaintScheme: undefined,
+                    vehicleHasAngledImage: undefined,
+                    vehicleHasSideImage: undefined,
+                    currentTire: undefined,
+                    currentWheel: undefined,
+                    currentWheelFitment: undefined,
+                    currentTireOption: undefined
+                });
 
                 return true;
             });
