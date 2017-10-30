@@ -56,16 +56,9 @@ namespace RideStylerShowcase{
 
         /**
          * Compare two Guids to determine if they are equal
-         * @param idA The first ID to parse and then compare
-         * @param idB The second ID to parse and then compare
+         * @param idA The first ID to parse (if needed) and then compare
+         * @param idB The second ID to parse (if needed) and then compare
          */
-        export function areEqual(idA:string, idB:string):boolean;
-        /**
-         * Compare two Guids to determine if they are equal
-         * @param idA The first ID to compare
-         * @param idB The second ID to compare
-         */
-        export function areEqual(idA:Guid,   idB:Guid):boolean;
         export function areEqual(idA:string|Guid, idB:string|Guid):boolean {
             // Handle undefined/unspecified parameters
             {
