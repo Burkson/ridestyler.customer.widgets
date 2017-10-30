@@ -788,7 +788,11 @@ function RideStylerVehicleSelectionModal(options) {
         };
 
         if (options.ImageSettings)
-            extend(imageSettings, options.ImageSettings);
+            extend(imageSettings, 
+                   typeof options.ImageSettings === "function" ?
+                        options.ImageSettings.call(this, options) :
+                        options.ImageSettings);
+        }
 
         imageSettings.VehicleConfiguration = bestConfiguration.Value;
 

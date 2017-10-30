@@ -21,7 +21,7 @@ declare namespace RideStylerVehicleSelectionModal {
         /**
          * Image Settings for vehicle image
          */
-        ImageSettings?: ridestyler.Requests.ImageRenderRequest
+        ImageSettings?: ridestyler.Requests.ImageRenderRequest|ImageSettingsCallback;
 
         /**
          * If true, group the options inside of the vehicle selection menus
@@ -55,6 +55,10 @@ declare namespace RideStylerVehicleSelectionModal {
          * selected vehicle or manually closing the window
          */
         callback?: (data: VehicleSelectedEvent) => void;
+    }
+    
+    export interface ImageSettingsCallback {
+        (this:RideStylerVehicleSelectionModal, options:Options):ridestyler.Requests.ImageRenderRequest;
     }
 
     export interface CurrentSelectionData {
