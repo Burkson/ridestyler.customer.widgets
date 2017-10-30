@@ -20,6 +20,13 @@ declare namespace ridestyler {
             PendingDelete = 4
         }
 
+        const enum VehicleResourceType
+        {
+            Default = 0,
+            Side = 1,
+            Angle = 2
+        }
+
         interface WheelModelDataObject {
             WheelModelID: string;
             WheelModel_WheelBrandID: string;
@@ -933,6 +940,8 @@ declare namespace ridestyler {
         }
 
         interface VehicleRenderInstructions extends ImageRenderRequest {
+            Type?: DataObjects.VehicleResourceType;
+
             VehicleConfiguration?:string;
             VehicleTireOption?:string;
             VehicleFilters?:VehicleFilterModel;
