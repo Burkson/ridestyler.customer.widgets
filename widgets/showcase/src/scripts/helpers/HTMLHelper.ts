@@ -16,16 +16,24 @@ namespace RideStylerShowcase.HTMLHelper {
         return matchingChildren;
     }
 
+    /**
+     * Returns an array of element's children matching the passed in set of 
+     * @param element The element to search the children of
+     * @param classes The set of classes to match children with
+     */
     export function childrenWithClasses<T extends HTMLElement>(element:HTMLElement, ...classes:string[]):T[] {
         classes = StyleHelper.flattenClassList(classes);
         
         return childrenMatching(element, child => StyleHelper.hasClasses(child, classes));
     }
 
+    /**
+     * Removes children from the element matching a class or set of classes
+     * @param element The element to search the children
+     * @param classes The classes to match children to remove
+     */
     export function removeChildrenWithClasses(element:HTMLElement, ...classes:string[]) {
-        classes = StyleHelper.flattenClassList(classes);
-
-        for (let child of childrenMatching(element, child => StyleHelper.hasClasses(child, classes))) {
+        for (let child of childrenWithClasses(element, ...classes)) {
             element.removeChild(child);
         }
     }
@@ -71,7 +79,16 @@ namespace RideStylerShowcase.HTMLHelper {
      * @param classes The class(es) to look for
      */
     export function hasChildWithClass(element: HTMLElement, ...classes: string[]):boolean {
-        return !!firstChildMatching(element, child => StyleHelper.hasClasses(child, classes));
+        return !!firstChildWithClass(element, ...classes);
+    }
+
+    /**
+     * Detects if an element has a sibling with the specified class(es)
+     * @param element The element to search the siblings of
+     * @param classes The class(es) to look for
+     */
+    export function hasSiblingWithClass(element:HTMLElement, ...classes:string[]):boolean {
+        return hasChildWithClass(element.parentElement, ...classes);
     }
 
     export interface createElementOptions<ElementType extends Element> {
