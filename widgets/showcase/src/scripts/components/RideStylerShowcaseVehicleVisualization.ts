@@ -91,6 +91,7 @@ namespace RideStylerShowcase {
                     className: 'ridestyler-showcase-viewport',
                     appendTo: container
                 }));
+                this.viewport = new RideStylerViewport(viewportElement);
             });
 
             this.setupTabs();
@@ -344,7 +345,7 @@ namespace RideStylerShowcase {
 
             this.rotateElement.style.display = canSwitchImageView ? '' : 'none';
 
-            this.viewport.Update({
+            this.updateViewport({
                 VehicleConfiguration: this.vehicleConfigurationID,
                 VehicleTireOption: this.vehicleTireOptionID,
                 PositionX: ridestyler.Requests.ImagePosition.Center,
