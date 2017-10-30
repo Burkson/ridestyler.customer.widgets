@@ -24,13 +24,13 @@
 			YearScreenColumns: 3,
 			MakeScreenColumns: 2,
 			afterBackClicked: function(data) {
-				console.log(data);
+				console.log('afterBackClicked', data);
 			},
 			afterOptionSelected: function(data) {
-				console.log(data);
+				console.log('afterOptionSelected', data);
 			},
 			callback: function(data) {
-				console.log(data);
+				console.log('callback', data);
 			}
 		};
 		var rsvsm = new RideStylerVehicleSelectionModal(vsmOptions);
