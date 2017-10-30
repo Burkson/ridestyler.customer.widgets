@@ -55,7 +55,7 @@ namespace RideStylerShowcase {
                 primary: product.TireBrandName,
                 secondary: product.TireModelName,
                 tertiary: product.Attributes && product.Attributes.length ?
-                    product.Attributes.join(', ') : undefined
+                    product.Attributes.join(', ') : ''
             };
         }
 
