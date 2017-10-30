@@ -87,10 +87,15 @@ namespace RideStylerShowcase {
             // the offset positioning of the viewport element when created and our CSS
             // isn't guaranteed to be loaded until the initialized event
             this.events.on('initialized', () => {
-                this.viewport = new RideStylerViewport(HTMLHelper.createElement('div', {
+                let viewportElement = HTMLHelper.createElement('div', {
                     className: 'ridestyler-showcase-viewport',
                     appendTo: container
-                }));
+                });
+
+                viewportElement.addEventListener('click', () => {
+                    this.switchAngle();
+                });
+
                 this.viewport = new RideStylerViewport(viewportElement);
             });
 
