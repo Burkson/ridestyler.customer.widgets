@@ -110,7 +110,7 @@ namespace RideStylerShowcase {
          * Hide or show the backdrop based off the number of visible modals
          */
         private update() {
-            let hasVisibleModal:boolean = HTMLHelper.hasChildWithClass(this.showcase.container, modalClass, 'in');
+            let hasVisibleModal:boolean = HTMLHelper.hasSiblingWithClass(this.component, modalClass, 'in');
 
             this[hasVisibleModal ? 'show' : 'hide']();
         }
