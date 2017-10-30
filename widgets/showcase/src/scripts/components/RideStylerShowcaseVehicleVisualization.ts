@@ -10,6 +10,8 @@ namespace RideStylerShowcase {
         private titleElement:HTMLElement;
         private rotateElement:HTMLElement;
 
+        private vehicleDetails:VehicleDetails;
+
         private tabs: {
             paint: RideStylerShowcaseVerticalTabBar.Tab,
             wheels: RideStylerShowcaseVerticalTabBar.Tab,
@@ -113,7 +115,7 @@ namespace RideStylerShowcase {
             }
 
             this.components = [
-                new VehicleDetails(this.showcase),
+                this.vehicleDetails = new VehicleDetails(this.showcase),
                 new WheelDetails(this.showcase),
                 new TireDetails(this.showcase),
                 this.tabBar,
@@ -150,10 +152,14 @@ namespace RideStylerShowcase {
                     this.updateViewport();
                 }
             });
+
+            this.vehicleDetails.paintSwatchClickCallback = () => {
+                this.setActiveCustomizationComponent(this.customizationComponents.paint);
+            }
         }
 
         private setupTabs() {
-            this.tabBar = new RideStylerShowcaseVerticalTabBar(this.showcase);
+            this.tabBar  = new RideStylerShowcaseVerticalTabBar(this.showcase);
 
             // Define our tabs
             this.tabs = {

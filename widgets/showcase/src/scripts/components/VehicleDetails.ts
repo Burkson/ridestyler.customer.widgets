@@ -43,7 +43,16 @@ namespace RideStylerShowcase {
             });
 
             this.state.afterDataChange(data => this.onDataChange(data));
+            this.vehiclePaintSwatchElement.addEventListener('click', () => {
+                if (typeof this.paintSwatchClickCallback === 'function') 
+                    this.paintSwatchClickCallback();
+            });
         }
+
+        /**
+         * A call back for when the paint swatch was clicked on
+         */
+        public paintSwatchClickCallback:() => void;
 
         private onDataChange(data:state.StateData) {
             HTMLHelper.setText(this.vehicleDescriptionElement, data.currentVehicleDescription);
