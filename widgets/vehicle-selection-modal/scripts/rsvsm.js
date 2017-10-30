@@ -30,6 +30,8 @@ function RideStylerVehicleSelectionModal(options) {
         ConfirmButtonText: 'Confirm Vehicle',
         GroupOptions: false,
         IncludeOETireOption: false,
+        YearScreenColumns: 3,
+        MakeScreenColumns: 2,
 
         container: document.body,
 
@@ -686,9 +688,17 @@ function RideStylerVehicleSelectionModal(options) {
                     var menuGroup = menuGroups[j];
                     var subGroup = menuGroupedOptions[menuGroup];
                     if (subGroup) {
-                        var groupList = document.createElement('div');
-                        groupList.className = 'vsm-group-list vsm-one-container';
-                        groupList.appendChild(buildListHeader(menuGroup));
+                        var groupList = document.createElement('div'),
+                        columnClass = 'vsm-one-container';
+                        if (menu.Key == 'year' && menuOptions.length > 10) {
+                            if (options.YearScreenColumns == 2) columnClass = 'vsm-half-container';
+                            if (options.YearScreenColumns >= 3) columnClass = 'vsm-third-container';
+                        }
+                        if (menu.Key == 'make' && menuOptions.length > 10) {
+                            if (options.MakeScreenColumns >= 2) columnClass = 'vsm-half-container';
+                        }
+                        groupList.className = 'vsm-group-list ' + columnClass;
+                        groupWrap.appendChild(buildListHeader(menuGroup));
                         groupWrap.appendChild(groupList);
 
                         for (var i = 0; i < subGroup.length; i++) {
@@ -703,9 +713,17 @@ function RideStylerVehicleSelectionModal(options) {
                 }
                 //Check if Ungrouped options exist
                 if (menuGroupedOptions['_ungrouped']) {
-                    var groupList = document.createElement('div');
-                    groupList.className = 'vsm-group-list vsm-one-container';
-                    groupList.appendChild(buildListHeader('Ungrouped'));
+                    var groupList = document.createElement('div'),
+                    columnClass = 'vsm-one-container';
+                    if (menu.Key == 'year' && menuOptions.length > 10) {
+                        if (options.YearScreenColumns == 2) columnClass = 'vsm-half-container';
+                        if (options.YearScreenColumns >= 3) columnClass = 'vsm-third-container';
+                    }
+                    if (menu.Key == 'make' && menuOptions.length > 10) {
+                        if (options.MakeScreenColumns >= 2) columnClass = 'vsm-half-container';
+                    }
+                    groupList.className = 'vsm-group-list ' + columnClass;
+                    groupWrap.appendChild(buildListHeader('Ungrouped'));
                     groupWrap.appendChild(groupList);
 
                     var subGroup = menuGroupedOptions['_ungrouped'];
@@ -720,8 +738,16 @@ function RideStylerVehicleSelectionModal(options) {
                 }
             }
             else {
-                var groupList = document.createElement('div');
-                groupList.className = 'vsm-group-list vsm-one-container';
+                var groupList = document.createElement('div'),
+                columnClass = 'vsm-one-container';
+                if (menu.Key == 'year' && menuOptions.length > 10) {
+                    if (options.YearScreenColumns == 2) columnClass = 'vsm-half-container';
+                    if (options.YearScreenColumns >= 3) columnClass = 'vsm-third-container';
+                }
+                if (menu.Key == 'make' && menuOptions.length > 10) {
+                    if (options.MakeScreenColumns >= 2) columnClass = 'vsm-half-container';
+                }
+                groupList.className = 'vsm-group-list ' + columnClass;
                 groupWrap.appendChild(groupList);
 
                 for (var i = 0; i < menuOptions.length; i++) {

@@ -21,14 +21,16 @@
 			ImageSettings: {},
 			GroupOptions: true,
 			IncludeOETireOption: true,
+			YearScreenColumns: 3,
+			MakeScreenColumns: 2,
 			afterBackClicked: function(data) {
-				console.log('afterBackClicked', data);
+				console.log(data);
 			},
 			afterOptionSelected: function(data) {
-				console.log('afterOptionSelected', data);
+				console.log(data);
 			},
 			callback: function(data) {
-				console.log('callback', data);
+				console.log(data);
 			}
 		};
 		var rsvsm = new RideStylerVehicleSelectionModal(vsmOptions);

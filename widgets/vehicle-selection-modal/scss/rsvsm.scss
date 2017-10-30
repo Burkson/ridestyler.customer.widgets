@@ -352,6 +352,16 @@
 	}
 }
 
+.vsm-half-container > a {
+	width: 49%;
+	margin-right: 2%;
+	margin-bottom: 10px;
+
+	&:nth-child(2n) {
+		margin-right: 0;
+	}
+}
+
 .vsm-one-container > a {
 	width: 100%;
 	margin-bottom: 10px;
@@ -456,5 +466,15 @@
 		@include middle-center($modal-width, $modal-height);
 		right: auto;
 		bottom: auto;
+	}
+}
+@media screen and (min-width: 640px) and (min-height: 520px) {
+	.vsm-modal {
+		@include middle-center($modal-width-lg, $modal-height-lg);
+		right: auto;
+		bottom: auto;
+	}
+	.vsm-modal-body .center-piece {
+		max-width: 480px;
 	}
 }

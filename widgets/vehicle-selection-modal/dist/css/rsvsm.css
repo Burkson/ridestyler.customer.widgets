@@ -335,6 +335,16 @@
     margin-right: 0;
 }
 
+.vsm-half-container > a {
+    width: 49%;
+    margin-right: 2%;
+    margin-bottom: 10px;
+}
+
+.vsm-half-container > a:nth-child(2n) {
+    margin-right: 0;
+}
+
 .vsm-one-container > a {
     width: 100%;
     margin-bottom: 10px;
@@ -447,5 +457,23 @@
         margin-top: -230px;
         right: auto;
         bottom: auto;
+    }
+}
+
+@media screen and (min-width: 640px) and (min-height: 520px) {
+    .vsm-modal {
+        position: absolute;
+        width: 560px;
+        height: 500px;
+        left: 50%;
+        top: 50%;
+        margin-left: -280px;
+        margin-top: -250px;
+        right: auto;
+        bottom: auto;
+    }
+
+    .vsm-modal-body .center-piece {
+        max-width: 480px;
     }
 }
