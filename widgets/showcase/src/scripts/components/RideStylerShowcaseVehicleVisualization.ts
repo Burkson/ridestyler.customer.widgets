@@ -193,8 +193,7 @@ namespace RideStylerShowcase {
                 const key = newTab.key;
 
                 if (this.customizationComponents && key in this.customizationComponents) {
-                    let settings = this.customizationComponentSettings[key];
-                    this.setActiveCustomizationComponent(this.customizationComponents[key], settings);
+                    this.setActiveCustomizationComponent(this.customizationComponents[key]);
                 }
             };
         }
@@ -341,7 +340,7 @@ namespace RideStylerShowcase {
                 this.viewport.Update(renderUpdate);
             };
 
-            this.setActiveCustomizationComponent(this.customizationComponents.paint, this.customizationComponentSettings.paint);
+            this.setActiveCustomizationComponent(this.customizationComponents.paint);
 
             for (let customizationComponent of ObjectHelper.getValues<IComponent>(this.customizationComponents)) {
                 customizationComponent.component.classList.add('ridestyler-showcase-customization-component');
@@ -371,8 +370,24 @@ namespace RideStylerShowcase {
         }
 
         private activeCustomizationComponent:IComponent;
-        private setActiveCustomizationComponent(customizationComponent:IComponent, settings:CustomizationComponentSettings) {
+        private setActiveCustomizationComponent(customizationComponent:IComponent) {
             let stateData = this.state.getData();
+            let componentKey:string;
+
+            for (let key in this.customizationComponents) {
+                let component = this.customizationComponents[key];
+
+                if (component === customizationComponent) {
+                    componentKey = key;
+                }
+            }
+            
+            let settings:CustomizationComponentSettings = this.customizationComponentSettings[componentKey];
+            let tab:RideStylerShowcaseVerticalTabBar.Tab = this.tabs[componentKey];
+
+            if (tab) {
+                this.tabBar.setActiveTab(tab);
+            }
 
             if (this.activeCustomizationComponent) {
                 this.activeCustomizationComponent.component.classList.remove('in');
