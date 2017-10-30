@@ -1,16 +1,11 @@
+@import "../modals";
+
 .ridestyler-showcase-modal {
-    &.in {
-        opacity: 1;
-    }
+    @include modal;
 }
 
 .ridestyler-showcase-modal-backdrop {
-    top: 48px;
-    background-color: #000;
-    
-    &.in {
-        opacity: 0.55;
-    }
+    @include modalBackdrop;
 }
 
 .ridestyler-showcase-modal, .ridestyler-showcase-modal-backdrop {

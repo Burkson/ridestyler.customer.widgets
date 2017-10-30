@@ -13,7 +13,7 @@ namespace RideStylerShowcase {
                         this.onVehicleSelected(selection.Vehicle);
                     }
                 },
-                ImageSettings: this.generateVehiclePreviewSettings(),
+                ImageSettings: options => this.generateVehiclePreviewSettings(),
                 IncludeOETireOption: true
             });
 
@@ -133,10 +133,17 @@ namespace RideStylerShowcase {
 
         private generateVehiclePreviewSettings():ridestyler.Requests.ImageRenderRequest {
             let scale = Math.max(window.devicePixelRatio || 0, 1);
+            let container = this.component;
+            const widthToHeight = .6;
+            let width = container.clientWidth * .80;
+            let height = width * widthToHeight;
+
+            width = width || 500;
+            height = width * widthToHeight;
 
             return {
-                Width: 400 * scale,
-                Height: 200 * scale
+                Width: Math.round(width * scale),
+                Height: Math.round(height * scale)
             };
         }
     }

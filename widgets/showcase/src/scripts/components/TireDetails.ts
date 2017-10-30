@@ -35,7 +35,7 @@ namespace RideStylerShowcase {
             if (currentTire) {
                 HTMLHelper.setText(this.tireNameElement, currentTire.TireBrandName + ' ' + currentTire.TireModelName);
                 HTMLHelper.setText(this.tireDescriptionElement, currentTire.Attributes && currentTire.Attributes.length ?
-                    currentTire.Attributes.join(', ') : undefined)
+                    currentTire.Attributes.join(', ') : '')
             }
         }
     }

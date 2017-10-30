@@ -1,6 +1,9 @@
 .ridestyler-showcase-button-picker {
-    border: 1px solid #ccc;
-    border-radius: 0.5em;
+    $border-radius: 0.5em;
+    $border-width: 0.05em;
+
+    border: $border-width solid #ccc;
+    border-radius: $border-radius;
     background-color: #efefef;
     text-align: center;
     font-size: 1em;
@@ -12,6 +15,11 @@
     &-option {
         &-active {
             background-color: #999;
+
+            &:last-child {
+                border-bottom-left-radius: $border-radius - $border-width;
+                border-bottom-right-radius: $border-radius - $border-width;
+            }
         }
     }
 }
