@@ -2,7 +2,8 @@ namespace RideStylerShowcase.styles {
     let widthBreakpoints:[string, number][] = [
         ['tablet', 768],
         ['desktop', 992],
-        ['desktop-xl', 1200]
+        ['desktop-xl', 1200],
+        ['tv', 1600]
     ];
 
     export class StyleManager {

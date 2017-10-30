@@ -1,0 +1,38 @@
+$tabBarWidth: 130px;
+
+.ridestyler-showcase-vertical-tab-bar {
+    width: $tabBarWidth;
+    font-size: 0.9em;
+
+    &-tab-icon {
+        font-size: 1.3em;
+    }
+}
+
+.ridestyler-showcase-customizations {
+    height: 23%;
+}
+
+.ridestyler-showcase-customizations, .ridestyler-showcase-viewport, .ridestyler-showcase-rotate-vehicle {
+    margin-left: $tabBarWidth;
+}
+
+
+.ridestyler-showcase-pagination-option {
+    font-size: 0.75em;
+
+    &-display {
+        $size: 110px;
+        width: $size;
+        height: $size;
+    }
+}
+
+.ridestyler-showcase-pagination-option-display.ridestyler-showcase-paint-swatch {
+    $size: 100px;
+
+    width: $size;
+    height: $size;
+
+    border-radius: $size/2;
+}
