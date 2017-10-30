@@ -5,6 +5,7 @@ namespace RideStylerShowcase {
     const optionSelectedClass = optionClass + '-selected';
     const optionLoadingClass = optionClass + '-loading';
     const optionLoaderClass = optionClass + '-loader';
+    const noResultsClass = optionClass + '-no-results'
 
     export abstract class RideStylerShowcasePaginationComponent extends ComponentBase {
         protected optionContainer:HTMLElement;
@@ -14,8 +15,22 @@ namespace RideStylerShowcase {
         protected prevButton:HTMLButtonElement;
         protected nextButton:HTMLButtonElement;
 
+        /**
+         * If true, this has more results that it can load
+         */
         protected hasMoreResults: boolean = true;
+        /**
+         * If true, this is loading
+         */
         protected isLoading: boolean = false;
+        /**
+         * If true, the first load is being preformed or hasn't been preformed yet.
+         */
+        protected isFirstLoad:boolean = true;
+        /**
+         * Set this to false to not show the no results message
+         */
+        protected enableShowNoResults:boolean = true;
 
         protected initializeComponent() {
             this.component = HTMLHelper.createElement('div', {
@@ -52,7 +67,7 @@ namespace RideStylerShowcase {
         }
 
         /**
-         * Load additional results
+         * Implement this to load additional results
          */
         protected abstract _loadMore():RideStylerPromise;
         public loadMore():RideStylerPromise {
@@ -107,7 +122,7 @@ namespace RideStylerShowcase {
             const optionContainer = this.optionContainer;
 
             this.prevButton.disabled = optionContainer.scrollLeft === 0;
-            this.nextButton.disabled = optionContainer.scrollLeft === optionContainer.scrollWidth - optionContainer.clientWidth;
+            this.nextButton.disabled = optionContainer.scrollLeft >= optionContainer.scrollWidth - optionContainer.clientWidth - 1;
         }
 
         /**
@@ -124,20 +139,37 @@ namespace RideStylerShowcase {
         }
 
         protected addOptionElements(elements:Node[]|Node) {
-            if ('length' in elements) {
-                for (let element of elements as Node[])
-                    this.optionContainer.appendChild(element);
-            } else {
+            if (elements instanceof Node) {
                 this.optionContainer.appendChild(elements as Node);
+            } else {
+                if (!elements.length && this.enableShowNoResults) {
+                    this.showNoResults();
+                } else {
+                    for (let element of elements as Node[])
+                        this.optionContainer.appendChild(element);
+                }
             }
 
             this.clearOptionLoader();
+
             this.update();
+
+            this.isFirstLoad = false;
+        }
+
+        private noResultsElement:HTMLElement;
+        protected showNoResults() {
+            this.noResultsElement = HTMLHelper.createElement('div', {
+                className: optionClass + ' ' + noResultsClass,
+                text: strings.getString('no-results'),
+                appendTo: this.optionContainer
+            });
         }
 
         public clearOptions() {
             HTMLHelper.empty(this.optionContainer);
             this.addOptionLoader();
+            this.isFirstLoad = true;
         }
 
         public update() {
