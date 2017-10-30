@@ -1,6 +1,7 @@
 @import "../../../node_modules/com.burkson.ridestyler.widgets/widgets/vehicle-selection-modal/scss/rsvsm";
 @import "../shared";
 @import "../buttons";
+@import "../modals";
 
 .ridestyler-showcase-vehicle-selection {
     text-align: center;
@@ -63,22 +64,14 @@
 }
  
 #vsm-backdrop {
-    top: 0;
-    position: absolute;
+    @include modalBackdrop;
 }
 
 .vsm-modal {
-    top: 10px;
-    bottom: 10px;
-    left: 10px;
-    right: 10px;
-    margin: 0;
-    width: auto; height: auto;
+    @include modal;
 
     @include baseFont;
     line-height: 2em;
-
-    box-shadow: 0 0 10px #1d1d1d;
 }
 
 .vsm-modal .vsm-final .scrollable {
@@ -105,9 +98,14 @@
     -webkit-overflow-scrolling: touch;    
     bottom: 10px;
 }
-.vsm-line-step .dot-info-before {
-    left: -48%;
-    text-align: center;
+.vsm-line-step {
+    .dot-info, .dot-info.active {
+        font-size: 1em;
+    }
+    .dot-info-before {
+        left: -48%;
+        text-align: center;
+    }
 }
 .vsm-selected-info {
     font-size: 2em;
@@ -144,4 +142,7 @@
     @include button-primary;
     
     font-size: 1.5em;
+}
+.vsm-btn {
+    font-size: 1em;
 }
