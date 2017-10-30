@@ -15,7 +15,13 @@ namespace RideStylerShowcase.HTMLHelper {
         matchingChildren.length = matchingChildrenIndex;
         return matchingChildren;
     }
-    
+
+    export function childrenWithClasses<T extends HTMLElement>(element:HTMLElement, ...classes:string[]):T[] {
+        classes = StyleHelper.flattenClassList(classes);
+        
+        return childrenMatching(element, child => StyleHelper.hasClasses(child, classes));
+    }
+
     export function removeChildrenWithClasses(element:HTMLElement, ...classes:string[]) {
         classes = StyleHelper.flattenClassList(classes);
 
@@ -227,15 +233,21 @@ namespace RideStylerShowcase.HTMLHelper {
          * If true, create a primary button
          */
         primary?:boolean;
+        /**
+         * If true, create a link button
+         */
+        link?: boolean;
     }
     export function createButton(options:createButtonOptions) {
         var element = createElement('button', options);
 
-        element.classList.add('ridestyler-showcase-button');
+        const buttonClassName = 'ridestyler-showcase-button';
+        element.classList.add(buttonClassName);
 
-        if (options.large) element.classList.add('ridestyler-showcase-button-large');
-        if (options.primary) element.classList.add('ridestyler-showcase-button-primary');
+        if (options.large) element.classList.add(buttonClassName + '-large');
+        if (options.primary) element.classList.add(buttonClassName + '-primary');
         if (options.disabled) element.disabled = true;
+        if (options.link) element.classList.add(buttonClassName + '-link')
 
         return element;
     }
@@ -348,5 +360,17 @@ namespace RideStylerShowcase.HTMLHelper {
      */
     export function getWindow(element:HTMLElement):Window {
         return getDocument(element).defaultView;
+    }
+
+    /**
+     * Sets the content of an element to a string
+     * @param element The element
+     * @param text The text
+     * @returns The element that was passed in
+     */
+    export function setText(element:HTMLElement, text:string):HTMLElement {
+        empty(element);
+        element.appendChild(document.createTextNode(text));
+        return element;
     }
 }
