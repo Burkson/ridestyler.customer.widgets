@@ -7,6 +7,6 @@ namespace RideStylerShowcase {
     }
 
     export interface IComponentConstructable {
-        new (eventHandler:events.EventHandler):IComponent;
+        new (showcaseInterface:RideStylerShowcaseInstance):IComponent;
     }
 }
