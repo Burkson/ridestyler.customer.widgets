@@ -19,7 +19,42 @@
     }
 }
 
+.noUi-target {
+    background: #777;
+    border: none;
+    box-shadow: none;
+}
+
 .noUi-value {
     margin-top: 3px;
     margin-left: 5px;
+    font-size: 1em;
+
+    &-sub {
+        font-size: 0.75em;
+    }
+}
+
+.noUi-horizontal {
+    height: 10px;
+
+    .noUi-handle {
+        $size: 1.5em;
+        left: -$size/2;
+        top: -$size/2.5;
+        width: $size;
+        height: $size;
+        border-radius: $size;
+    }
+}
+
+.noUi-handle {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: none;
+    border: none;
+
+    &:before, &:after {
+        display: none;
+    }
 }
