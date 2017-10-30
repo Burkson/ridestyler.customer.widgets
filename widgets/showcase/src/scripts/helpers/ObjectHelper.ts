@@ -5,8 +5,9 @@ namespace RideStylerShowcase {
          * @param target The target object
          * @param assignObjects The source object(s)
          */
-        export function assign<T1,T2>(target:T1, ...assignObjects:(T1|T2)[]) : T1 & T2;
+        export function assign<T1,T2>(target:T1, ...assignObjects:T2[]) : T1 & T2;
         export function assign<T>(target:T, ...assignObjects:T[]): T;
+        export function assign(target:object, ...assignObjects:object[]):object;
         export function assign(target:object, ...assignObjects:object[]):object {
             if (target == null) throw new TypeError("Cannot convert undefined or null to object");
 
