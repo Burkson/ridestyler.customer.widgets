@@ -6,6 +6,17 @@ namespace RideStylerShowcase.strings {
         "paint":                          "Paint",
         "suspension":                     "Suspension",
         "wheels":                         "Wheels",
-        "tires":                          "Tires"
+        "tires":                          "Tires",
+        "front":                          "Front",
+        "rear":                           "Rear",
+        "vehicle-details":                "Vehicle Details",
+        "change-vehicle":                 "Change Vehicle",
+        "wheel-details":                  "Wheel Details",
+        "tire-details":                   "Tire Details",
+        "select-paint":                   "Select Paint",
+        "select-wheels":                  "Select Wheels",
+        "select-tires":                   "Select Tires",
+        "adjust-suspension":              "Adjust Suspension",
+        "change-wheel-size":              "Change Wheel Size"
     });
 }

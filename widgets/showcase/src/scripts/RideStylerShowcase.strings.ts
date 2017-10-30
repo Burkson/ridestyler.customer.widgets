@@ -9,7 +9,18 @@ namespace RideStylerShowcase {
         "tires" |
         "wheels" |
         "suspension" |
-        "paint";
+        "paint" |
+        "front" |
+        "rear" |
+        "vehicle-details" |
+        "change-vehicle" |
+        "wheel-details" |
+        "tire-details" |
+        'select-paint' |
+        'select-wheels' |
+        'select-tires' |
+        'adjust-suspension' |
+        'change-wheel-size';
 
     /**
      * Defines what a strings dictionary should look like
