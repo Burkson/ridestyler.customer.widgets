@@ -1,0 +1,46 @@
+@mixin modal {
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    margin: 0;
+    width: auto; height: auto;
+    
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 0 10px #1d1d1d;
+    opacity: 0;
+
+    &.in {
+        opacity: 1;
+    }
+
+    @mixin modalBreakPoint($modalWidth:650px, $verticalSpace: 5%) {
+        width: $modalWidth;
+        left: 50%;
+        right: auto;
+        margin-left: -$modalWidth/2;
+        top: $verticalSpace;
+        bottom: $verticalSpace;
+    }
+
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl & {
+        @include modalBreakPoint;
+    }
+    
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-tv & {
+        @include modalBreakPoint(1200px, 5%);
+    }
+}
+
+@mixin modalBackdrop {
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
+
+    background-color: #000;
+    
+    &.in {
+        opacity: 0.55;
+    }
+}
