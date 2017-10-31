@@ -135,7 +135,7 @@
 			var len = layers.length,
 			image = '',
 			imgs = [],
-			canvasStyle = self.dfltCanvasStyle;
+			canvasStyle = self.dfltCanvasStyle,
 
 			// Set the layer as loaded when the images loads
 			onImgLoad = function() {
@@ -303,9 +303,12 @@
 		layer.currentColor = color;
 
 		imgData = ctx.createImageData(layer.img.width, layer.img.height);
+		imgData.data.set(layer.imgData.data);
+		/*
+		Revisit this for IE
 		for (var i = 0; i < layer.imgData.data.length; i++) {
 			imgData.data[i] = layer.imgData.data[i];
-		}
+		}*/
 
 		this.colorImageData(layer.canvas, imgData, color, operation);
 	};
@@ -319,18 +322,25 @@
 	 */
 	LayerBuilder.prototype.colorImageData = function(canvas, imgData, color, operation) {
 		var data = imgData.data,
-		orgData = null,
+		origData = null,
 		ctx = canvas.getContext('2d'),
 		imgDataOrig = ctx.createImageData(canvas.width, canvas.height),
 		colorRgb = hexToRgb(color),
-		rgb = {};
+		rgb = {},
+		hsl = null,
+		shiftHsl = null,
+		newRgb = null,
+		avg = 0;
 
 		operation = operation ? operation : this.dfltOperation;
 
+		/*
+		Revisit for IE
 		for (var i = 0; i < imgData.data.length; i++) {
 			imgDataOrig.data[i] = imgData.data[i];
-		}
+		}*/
 
+		imgDataOrig.data.set(imgData.data);
 		origData = imgDataOrig.data;
 
 		for (i = 0; i < data.length; i+=4) {
@@ -479,6 +489,7 @@
 		tmpW = 0,
 		tmpH = 0,
 		res = null,
+		imgData = null,
 		style = {display: 'none'};
 
 		if (!this.layers.length) {
@@ -529,7 +540,8 @@
 	 * @returns {object} - An object representing the stack dimensions
 	 */
 	LayerBuilder.prototype.getDimensions = function() {
-		var res = {width: 0, height: 0};
+		var res = {width: 0, height: 0},
+		layer = null;
 
 		for (var i = 0, len = this.layers.length; i < len; i++) {
 			layer = this.layers[i];
@@ -549,7 +561,8 @@
 	 * @returns {object} - An object representing the stack dimensions
 	 */
 	LayerBuilder.prototype.getOrigDimensions = function() {
-		var res = {width: 0, height: 0};
+		var res = {width: 0, height: 0},
+		layer = null;
 
 		for (var i = 0, len = this.layers.length; i < len; i++) {
 			layer = this.layers[i];
@@ -599,8 +612,8 @@
 	 * @returns {object} - Corresonding hsl value
 	 */
 	function rgbToHsl(r, g, b) {
-		r /= 255, 
-		g /= 255, 
+		r /= 255;
+		g /= 255;
 		b /= 255;
 
 		var max = Math.max(r, g, b), 

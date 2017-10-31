@@ -268,7 +268,8 @@
 	WheelBuilder.prototype.initTop = function() {
 		var self = this,
 		cancelBtn = this.topBar.getElementsByClassName('wb-top-button-left')[0],
-		confirmBtn = this.topBar.getElementsByClassName('wb-top-button-right')[0];
+		confirmBtn = this.topBar.getElementsByClassName('wb-top-button-right')[0],
+		download = this.wrapEl.getElementsByClassName('wb-download')[0];
 
 		if (this.onCancel) {
 			cancelBtn.innerText = this.cancelText;
@@ -288,7 +289,6 @@
 			hide(confirmBtn);
 		}
 
-		download = this.wrapEl.getElementsByClassName('wb-download')[0];
 		download.onclick = function(e) {
 			self.onDownloadClick(e);
 		};
@@ -586,6 +586,8 @@
 			previewEl = self.wrapEl.getElementsByClassName('wb-wheel-preview-inner')[0],
 			stackEl = null,
 			lb = null,
+			idx = null,
+			dims = null,
 			className = '';
 
 			if (!ls.name || !ls.name.trim()) {
