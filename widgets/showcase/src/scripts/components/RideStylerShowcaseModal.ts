@@ -46,6 +46,13 @@ namespace RideStylerShowcase {
             this.component = HTMLHelper.createElement('div', {
                 className: 'ridestyler-showcase-modal'
             });
+
+            HTMLHelper.createElement('button', {
+                className: 'ridestyler-showcase-modal-close',
+                appendTo: this.component
+            }).addEventListener('click', () => {
+                this.hide();
+            });
         }
 
         public show():RideStylerPromise {
