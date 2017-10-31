@@ -11,14 +11,21 @@ namespace RideStylerShowcase {
                 className: className
             });
 
+            let vehicleDescription = this.state.getData().currentVehicleDescriptionModel;
+
             let suspensionOptions:SuspensionOptions = {
-                min: 0,
-                max: 4,
+                min: -4,
+                max: 0,
                 start: 0,
                 step: 1,
                 decimalPlaces: 1,
                 unitAbbreviation: '″'
             };
+
+            // 4WD Vans & Trucks can raise to 4 inches
+            if (vehicleDescription.DriveType === '4WD' && (vehicleDescription.StyleType === 'Van' || vehicleDescription.StyleType === 'Truck')) {
+                suspensionOptions.max = 4;
+            }
 
             let frontOptions:SuspensionUIElementOptions = ObjectHelper.assign({
                 label: strings.getString('front')
