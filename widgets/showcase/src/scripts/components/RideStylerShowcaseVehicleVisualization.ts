@@ -258,7 +258,8 @@ namespace RideStylerShowcase {
                 this.state.extendData({
                     vehicleHasAngledImage: vehicleDescription.HasAngledImage,
                     vehicleHasSideImage: vehicleDescription.HasSideImage,
-                    currentTireOption: vehicleTireOption
+                    currentTireOption: vehicleTireOption,
+                    currentVehicleDescriptionModel: vehicleDescription
                 });
 
                 this.initializeForNewVehicle();

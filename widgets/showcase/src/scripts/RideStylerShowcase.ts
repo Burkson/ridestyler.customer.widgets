@@ -162,7 +162,8 @@ namespace RideStylerShowcase {
                     currentTire: undefined,
                     currentWheel: undefined,
                     currentWheelFitment: undefined,
-                    currentTireOption: undefined
+                    currentTireOption: undefined,
+                    currentVehicleDescriptionModel: undefined
                 });
 
                 return true;

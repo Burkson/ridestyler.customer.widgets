@@ -105,6 +105,7 @@ namespace RideStylerShowcase.state {
     export interface StateData {
         currentVehicleConfigurationID: string;
         currentVehicleDescription: string;
+        currentVehicleDescriptionModel: ridestyler.Descriptions.VehicleDescriptionModel;
 
         currentVehicleTireOptionID: string;
         currentVehicleTireOptionDescription: string;
@@ -144,7 +145,8 @@ namespace RideStylerShowcase.state {
             currentTire: undefined,
             currentWheel: undefined,
             currentWheelFitment: undefined,
-            currentTireOption: undefined
+            currentTireOption: undefined,
+            currentVehicleDescriptionModel: undefined
         };
         public getData() { return this.currentData; }
         public setData(newData:StateData) {
