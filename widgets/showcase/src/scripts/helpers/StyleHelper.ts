@@ -14,7 +14,7 @@ namespace RideStylerShowcase.StyleHelper {
         let testElement = document.createElement('div');
 
         hasCurrentStyleSupport = 'currentStyle' in testElement;
-        
+
         transitionEndEvent = (function () {
             // Transition event mapping
             var transitions = {
@@ -27,13 +27,13 @@ namespace RideStylerShowcase.StyleHelper {
             for (var k in transitions)
                 if (k in testElement.style)
                     return transitions[k];
-                    
+
             return undefined;
         })();
 
         transitionsSupported = !!transitionEndEvent;
     })();
-    
+
     /**
      * The name of the transition end event for this browser
      */
@@ -43,6 +43,11 @@ namespace RideStylerShowcase.StyleHelper {
      * If false, transitions are not supported by the browser
      */
     export let transitionsSupported:boolean;
+
+    /**
+     * If false, this is not a touch device
+     */
+    export let isTouchDevice:boolean = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
     /**
      * If false, SVGs are not supported by the browser
@@ -56,10 +61,10 @@ namespace RideStylerShowcase.StyleHelper {
     export function getComputedStyle(element:HTMLElement):CSSStyleDeclaration {
         if (hasGetComputedStyle) return window.getComputedStyle(element);
         if (hasCurrentStyleSupport && element['currentStyle'] !== null) return element['currentStyle'];
-        
+
         throw "Unable to get computed style";
     }
-    
+
     let offsetPositionings = ['absolute', 'relative', 'fixed'];
     /**
      * Detects whether or not absolute/relative/fixed positioning is enabled on an element
@@ -78,7 +83,7 @@ namespace RideStylerShowcase.StyleHelper {
         position = position.toLowerCase();
         for (let positioning of offsetPositionings)
             if (position === positioning) return true;
-        
+
         return false;
     }
 
@@ -147,7 +152,7 @@ namespace RideStylerShowcase.StyleHelper {
         } else classes = classArray;
 
         for (let className of classes) {
-            if (!element.classList.contains(className)) 
+            if (!element.classList.contains(className))
                 return false;
         }
 

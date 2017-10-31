@@ -18,6 +18,7 @@ namespace RideStylerShowcase.styles {
             this.watchSize();
             this.initializeCSS();
             this.resolveOnDOMLoad();
+            this.initializeStyleClasses();
         }
 
         public initialized:RideStylerPromise;
@@ -43,7 +44,7 @@ namespace RideStylerShowcase.styles {
                 this.element.style.position = 'relative';
 
             if ('css' in RideStylerShowcase === false) return;
-            
+
             let containerDocument = this.element.ownerDocument;
             let head = containerDocument.getElementsByTagName("head").item(0);
 
@@ -52,7 +53,7 @@ namespace RideStylerShowcase.styles {
                 head = document.createElement('head');
                 containerDocument.documentElement.insertBefore(head, containerDocument.firstChild);
             }
-            
+
             let stylesheet = document.createElement('style');
 
             // Add our CSS to the stylesheet
@@ -63,6 +64,11 @@ namespace RideStylerShowcase.styles {
 
             // Remove the CSS from our object so it's not specified twice
             delete RideStylerShowcase.css;
+        }
+
+        private initializeStyleClasses() {
+            if (StyleHelper.isTouchDevice)
+                this.element.classList.add('is-touch');
         }
 
         private initializeBreakpoints() {
@@ -83,7 +89,7 @@ namespace RideStylerShowcase.styles {
 
         private resize() {
             this.applyBreakpointClasses();
-            
+
             if (typeof this.onResize === 'function') this.onResize();
         }
 
@@ -95,7 +101,7 @@ namespace RideStylerShowcase.styles {
          * A callback each time the element is resized
          */
         public onResize: () => void;
-        
+
         /**
          * A callback for after the user is done resizing the element
          */
@@ -133,7 +139,7 @@ namespace RideStylerShowcase.styles {
 
             }, false);
         }
-        
+
         /**
          * The currently applied breakpoint class
          */
@@ -149,14 +155,14 @@ namespace RideStylerShowcase.styles {
             if (!height || !width) return;
 
             let newBreakpoint:string;
-            
+
             // The new breakpoint is the next lowest value in the array
             {
                 let i:number;
                 for (i = widthBreakpoints.length - 1; i >= 0; i--)
                     if (widthBreakpoints[i][1] < width)
                         break;
-                
+
                 newBreakpoint = i >= 0 ? widthBreakpoints[i][0] : undefined;
             }
 
@@ -170,7 +176,7 @@ namespace RideStylerShowcase.styles {
 
             // Remove any breakpoint classes from the element's class
             className = className.replace(/\bridestyler-showcase-breakpoint-.+?(?= |$)/gi, "").trim();
-            
+
             // Add in the breakpoint class if we have one
             if (newBreakpoint)
                 className += ' ridestyler-showcase-breakpoint-' + newBreakpoint;
