@@ -8,6 +8,10 @@
     @include modalBackdrop;
 }
 
+.ridestyler-showcase-modal-close {
+    @include modalClose;
+}
+
 .ridestyler-showcase-modal, .ridestyler-showcase-modal-backdrop {
     transition: opacity 0.3s linear;
     opacity: 0;

@@ -119,12 +119,7 @@
     font-size: 2em;
 }
 .vsm-close { 
-    top: 10px;
-    font-size: 1em;
-    color: #999999;
-    line-height: 1em;
-    
-    &:after { content: '\00d7'; font-size: 2em; }
+    @include modalClose;
     img { display: none; }
 }
 .vsm-modal-body .center-piece {
