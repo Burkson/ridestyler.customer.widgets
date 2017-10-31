@@ -18,6 +18,7 @@ namespace RideStylerShowcase.strings {
         "select-tires":                   "Select Tires",
         "adjust-suspension":              "Adjust Suspension",
         "change-wheel-size":              "Change Wheel Size",
-        "no-results":                     "No Results Found"
+        "no-results":                     "No Results Found",
+        "wheel-features-specs":           "Wheel Features & Specs"
     });
 }
