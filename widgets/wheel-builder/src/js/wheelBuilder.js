@@ -75,7 +75,7 @@
 		this.extJsLoaded = false;
 
 		// Paths to external files
-		this.cdnUrl = 'https://cdn.rawgit.com/Burkson/com.burkson.ridestyler.widgets/1386dca6/widgets/wheel-builder/dist/';
+		this.cdnUrl = 'https://rawgit.com/Burkson/com.burkson.ridestyler.widgets/master/widgets/wheel-builder/dist/';
 		this.urlPfx = this.dev ? 'src/' : this.cdnUrl;
 		this.tplUrl = this.urlPfx + 'html/template.html';
 
