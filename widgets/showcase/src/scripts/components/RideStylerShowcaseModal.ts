@@ -59,6 +59,10 @@ namespace RideStylerShowcase {
         public hide():RideStylerPromise {
             let promise = VisibilityHelper.hide(this.component);
 
+            if (this.options.removeOnHidden) promise.done(() => {
+                this.parent.removeChild(this.component);
+            });
+
             this.events.trigger('modal-hide', { modal: this });
 
             return promise;
@@ -130,6 +134,8 @@ namespace RideStylerShowcase {
 
     export namespace RideStylerShowcaseModal {
         export interface Options {
+            // If true, the modal will remove itself from the DOM when it's hidden
+            removeOnHidden?: boolean;
         }
     }
 }
