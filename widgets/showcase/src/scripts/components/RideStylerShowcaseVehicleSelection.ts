@@ -134,16 +134,28 @@ namespace RideStylerShowcase {
         private generateVehiclePreviewSettings():ridestyler.Requests.ImageRenderRequest {
             let scale = Math.max(window.devicePixelRatio || 0, 1);
             let container = this.component;
+            
             const widthToHeight = .6;
+            const maxRequestResolution = 1920;
+
+            // Width is 80% of the container width
             let width = container.clientWidth * .80;
+            
+            // Width is 500 if not found
+            if (!width) width = 500;
+
+            // Apply our scale
+            width *= scale;
+
+            // Limit width to max request resolution
+            if (width > maxRequestResolution) width = maxRequestResolution;
+
+            // Determine height
             let height = width * widthToHeight;
 
-            width = width || 500;
-            height = width * widthToHeight;
-
             return {
-                Width: Math.round(width * scale),
-                Height: Math.round(height * scale)
+                Width: width,
+                Height: height
             };
         }
     }
