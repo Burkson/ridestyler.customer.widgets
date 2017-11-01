@@ -1,5 +1,6 @@
 namespace RideStylerShowcase {
     const className = 'ridestyler-showcase-vehicle-details'
+    const firstPaintColor = '#999';
 
     export class VehicleDetails extends ComponentBase {
 
@@ -33,7 +34,10 @@ namespace RideStylerShowcase {
                     
                     // Paint Swatch
                     this.vehiclePaintSwatchElement = HTMLHelper.createElement('div', {
-                        className: className + '-vehicle-swatch ridestyler-showcase-paint-swatch'
+                        className: className + '-vehicle-swatch ridestyler-showcase-paint-swatch',
+                        style: {
+                            backgroundColor: firstPaintColor
+                        }
                     }),
 
                     // Vehicle Description
@@ -78,7 +82,7 @@ namespace RideStylerShowcase {
 
         private onDataChange(data:state.StateData) {
             HTMLHelper.setText(this.vehicleDescriptionElement, data.currentVehicleDescription);
-            this.vehiclePaintSwatchElement.style.backgroundColor = data.currentPaintScheme ? data.currentPaintScheme.Colors[0].Hex : 'white';
+            this.vehiclePaintSwatchElement.style.backgroundColor = data.currentPaintScheme ? data.currentPaintScheme.Colors[0].Hex : firstPaintColor;
             HTMLHelper.setText(this.tireSizeElement, data.currentVehicleTireOptionDescription);
         }
     }
