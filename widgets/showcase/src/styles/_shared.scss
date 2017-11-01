@@ -15,6 +15,7 @@ $primary-color-overlaid-text: #fff;
 $zLayer1: 1000;
 $zLayer2: 2000;
 $zLayer3: 3000;
+$zLayerModal: 5000;
 
 // Transitions
 @mixin fadeIn($inOpacity:1) {

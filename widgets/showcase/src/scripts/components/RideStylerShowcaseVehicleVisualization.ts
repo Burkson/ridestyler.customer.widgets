@@ -84,6 +84,11 @@ namespace RideStylerShowcase {
          */
         private vehicleDescriptionModel: ridestyler.Descriptions.VehicleDescriptionModel;
 
+        /**
+         * The render instructions for the currently displayed vehicle
+         */
+        private currentRenderInstructions: ridestyler.Requests.VehicleRenderInstructions;
+
         protected buildComponent(container: HTMLElement) {
             // Wait for initialization before creating the viewport because it detects
             // the offset positioning of the viewport element when created and our CSS
@@ -105,7 +110,6 @@ namespace RideStylerShowcase {
 
             this.changeWheelSize = new RideStylerShowcaseChangeWheelSize(this.showcase);
             this.changeWheelSize.optionSelectedCallback = newOption => {
-                console.log(newOption)
                 this.state.extendData({
                     currentWheelFitment: newOption
                 });
@@ -145,6 +149,15 @@ namespace RideStylerShowcase {
                 className: 'ridestyler-showcase-customization-component-title',
                 appendTo: this.component
             });
+
+            HTMLHelper.createButton({
+                primary: true,
+                className: 'ridestyler-share-my-vehicle-button',
+                text: strings.getString('share-my-vehicle'),
+                appendTo: this.component
+            }).addEventListener('click', () => {
+                new RideStylerShowcaseShareModal(this.showcase, this.currentRenderInstructions).show();
+            })
 
             // Start listening for resize events
             this.events.on('resized', () => {
@@ -268,6 +281,7 @@ namespace RideStylerShowcase {
         }
 
         private initializeForNewVehicle() {
+            this.currentRenderInstructions = {};
             this.tabBar.setActiveTab(this.tabs.paint);
             
             // Create the components that will be switched with the tabs
@@ -281,7 +295,7 @@ namespace RideStylerShowcase {
             this.customizationComponents.paint.onPaintSchemeSelected = paintScheme => {
                 this.customizationComponents.paint.setOptionIsLoading(true);
 
-                this.viewport.Update({
+                this.updateViewport({
                     PaintColor: paintScheme.Colors[0].Hex
                 }).always(() => {
                     this.customizationComponents.paint.setOptionIsLoading(false);
@@ -322,7 +336,7 @@ namespace RideStylerShowcase {
                         this.changeWheelSize.setFitmentOptions(fitments, bestFitment);
                         this.changeWheelSize.component.style.display = '';
         
-                        this.viewport.Update({
+                        this.updateViewport({
                             WheelFitment: bestFitment.WheelFitmentID
                         }).always(() => {
                             this.customizationComponents.wheels.setOptionIsLoading(false);
@@ -338,7 +352,7 @@ namespace RideStylerShowcase {
             };
 
             this.customizationComponents.suspension.suspensionChangeCallback = renderUpdate => {
-                this.viewport.Update(renderUpdate);
+                this.updateViewport(renderUpdate);
             };
 
             this.setActiveCustomizationComponent(this.customizationComponents.paint);
@@ -349,12 +363,11 @@ namespace RideStylerShowcase {
                 this.customizationComponentContainer.appendChild(customizationComponent.component);
             }
 
-            const canSwitchImageView:boolean = this.vehicleDescriptionModel.HasAngledImage && this.vehicleDescriptionModel.HasSideImage;
             this.imageType = ridestyler.DataObjects.VehicleResourceType.Angle;
             
             if (!this.vehicleDescriptionModel.HasAngledImage) this.imageType = ridestyler.DataObjects.VehicleResourceType.Side;
 
-            this.rotateElement.style.display = canSwitchImageView ? '' : 'none';
+            this.rotateElement.style.display = this.canSwitchAngle() ? '' : 'none';
 
             this.updateViewport({
                 VehicleConfiguration: this.vehicleConfigurationID,
@@ -408,6 +421,9 @@ namespace RideStylerShowcase {
         }
 
         private updateViewport(instructions?:ridestyler.Requests.VehicleRenderInstructions) {
+            Object.assign(this.currentRenderInstructions, instructions);
+            
+
             return this.viewport.Update(instructions);
         }
         

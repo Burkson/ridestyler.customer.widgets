@@ -19,6 +19,8 @@ namespace RideStylerShowcase.strings {
         "adjust-suspension":              "Adjust Suspension",
         "change-wheel-size":              "Change Wheel Size",
         "no-results":                     "No Results Found",
-        "wheel-features-specs":           "Wheel Features & Specs"
+        "wheel-features-specs":           "Wheel Features & Specs",
+        "share-my-vehicle":               "Share My Vehicle",
+        "share-instructions":             "Scan the QR code or use the link to share or save your vehicle configuration."
     });
 }

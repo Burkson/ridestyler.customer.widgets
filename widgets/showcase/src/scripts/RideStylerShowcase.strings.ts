@@ -22,7 +22,9 @@ namespace RideStylerShowcase {
         'adjust-suspension' |
         'change-wheel-size' |
         'no-results' |
-        'wheel-features-specs';
+        'wheel-features-specs' |
+        'share-my-vehicle' |
+        'share-instructions';
 
     /**
      * Defines what a strings dictionary should look like

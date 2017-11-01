@@ -2,6 +2,34 @@
 
 .ridestyler-showcase-modal {
     @include modal;
+
+    &-full {
+        left: 5% !important;
+        right: 5% !important;
+        margin: 0 !important;
+        width: auto !important;
+    }
+
+    .ridestyler-showcase & {
+        .ridestyler-showcase-background {
+            height: 40%;
+        }
+
+        .ridestyler-showcase-viewport, .ridestyler-showcase-rotate-vehicle {
+            margin-left: 0;
+        }
+        .ridestyler-showcase-rotate-vehicle {
+            bottom: 5%;
+
+            &.in {
+                opacity: 1;
+            }
+        }
+        .ridestyler-showcase-viewport {
+            bottom: 10%;
+            top: 35%;
+        }
+    }
 }
 
 .ridestyler-showcase-modal-backdrop {

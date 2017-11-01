@@ -1,0 +1,16 @@
+@import "../shared";
+
+.ridestyler-showcase-share {
+    padding-top: 1em;
+
+    .ridestyler-showcase-qr-display {
+        display: inline-block;
+        z-index: $zLayer1;
+        position: relative;
+
+        &-image {
+            margin-bottom: 10px;
+        }
+
+    }
+}
