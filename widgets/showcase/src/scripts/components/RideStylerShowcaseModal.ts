@@ -44,8 +44,10 @@ namespace RideStylerShowcase {
          */
         protected buildModal() {
             this.component = HTMLHelper.createElement('div', {
-                className: 'ridestyler-showcase-modal'
+                className: modalClass
             });
+
+            if (this.options.full) this.component.classList.add(modalClass + '-full')
 
             HTMLHelper.createElement('button', {
                 className: 'ridestyler-showcase-modal-close',
@@ -55,10 +57,41 @@ namespace RideStylerShowcase {
             });
         }
 
+        /**
+         * Called when this modal is layed-out and about to transition in
+         * @virtual
+         */
+        protected onShow() {
+            this.events.trigger('modal-show', { modal: this });
+        }
+        /**
+         * Called when this modal is visible
+         * @virtual
+         */
+        protected onShown() {
+        }
+        /**
+         * Called when this modal is about to transition out
+         * @virtual
+         */
+        protected onHide() {
+            this.events.trigger('modal-hide', { modal: this });
+        }
+        /**
+         * Called when this modal is hidden
+         * @virtual
+         */
+        protected onHidden() {
+            if (this.options.removeOnHidden) {
+                this.parent.removeChild(this.component);
+            }
+        }
+
         public show():RideStylerPromise {
             let promise = VisibilityHelper.show(this.component);
 
-            this.events.trigger('modal-show', { modal: this });
+            this.onShow();
+            promise.done(() => this.onShown());
 
             return promise;
         }
@@ -66,11 +99,8 @@ namespace RideStylerShowcase {
         public hide():RideStylerPromise {
             let promise = VisibilityHelper.hide(this.component);
 
-            if (this.options.removeOnHidden) promise.done(() => {
-                this.parent.removeChild(this.component);
-            });
-
-            this.events.trigger('modal-hide', { modal: this });
+            this.onHide();
+            promise.done(() => this.onHidden());
 
             return promise;
         }
@@ -143,6 +173,9 @@ namespace RideStylerShowcase {
         export interface Options {
             // If true, the modal will remove itself from the DOM when it's hidden
             removeOnHidden?: boolean;
+
+            // If true, display this modal should take up the full size of the showcase
+            full?: boolean;
         }
     }
 }
