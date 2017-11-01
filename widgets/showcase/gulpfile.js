@@ -53,7 +53,8 @@ var polyfills = [
     './node_modules/ie8/build/ie8.max.js'
 ];
 var libraries = [
-    './node_modules/nouislider/distribute/nouislider.js'
+    './node_modules/nouislider/distribute/nouislider.js',
+    './lib/qrcode.js'
 ];
 var widgets = [
     './node_modules/com.burkson.ridestyler.widgets/widgets/vehicle-selection-modal/scripts/rsvsm.js',
