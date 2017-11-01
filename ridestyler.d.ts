@@ -668,6 +668,10 @@ declare namespace ridestyler {
         interface VehicleTireOptionDetailResultModel extends RideStylerAPIResponse {
             Details: Descriptions.VehicleTireOptionDescriptionModel[];
         }
+
+        interface LinkCreateResponse extends RideStylerAPIResponse {
+            ShortURL: string
+        }
     }
 
     namespace Requests {
@@ -1030,7 +1034,8 @@ declare namespace ridestyler {
     
     interface RidestylerAPIActionResponseMapping {
         "auth/validate": RideStylerAPIResponse,
-        "auth/start": Responses.RideStylerAuthStartResponse
+        "auth/start": Responses.RideStylerAuthStartResponse,
+        "link/create": Responses.LinkCreateResponse,
         "organization/image": never,
         "tire/countmodels": Responses.ActionCountResultModel,
         "tire/getmodels": Responses.TireModelsResultModel,
@@ -1054,7 +1059,8 @@ declare namespace ridestyler {
     interface RidestylerAPIActionRequestMapping {
         "auth/validate": object,
         "auth/start": { Username:string; Password:string; },
-        "organization/image": { assetKey:string, organization?:number },
+        "link/create": { URL: string },
+        "organization/image": { AssetKey:string, Organization?:number },
         "tire/countmodels": Requests.TireFilterModel,
         "tire/getmodels": Requests.TireFilterModel,
         "tire/getmodeldescriptions": Requests.TireModelDescriptionRequestModel,
