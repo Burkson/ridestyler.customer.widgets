@@ -340,6 +340,9 @@
 			this.createLayerSelector(stack, true);
 		}
 
+		// Colorize any layers that haven't been colored
+		this.colorInvalidLayers(stack);
+
 		// Show this stack in the preview pane
 		this.togglePreviewStack(stack);
 
@@ -729,6 +732,7 @@
 		len2 = null,
 		stack = null,
 		layer = null,
+		selStack = this.layerStacks[this.selectedStack],
 		layerClass = convertNameToClass(layerName),
 		ctrlColors = this.layerSelectWrap.getElementsByClassName('wb-ctrl-layer-' + layerClass);
 
@@ -737,18 +741,30 @@
 			return;
 		}
 
+		color = color.toUpperCase();
+		layer = selStack.lb.getLayer(layerName);
+		if (layer && !layer.readOnly) {
+			selStack.lb.setColor(layerName, color, operation);
+		} else {
+			console.error('Invalid or read only layer');
+			return;
+		}
+
 		for (var i = 0; i < len; i++) {
 			stack = this.layerStacks[i];
-			layer = stack.lb.getLayer(layerName);
+			len2 = stack.layers.length;
 
-			if (layer && !layer.readOnly) {
-				stack.lb.setColor(layerName, color, operation);
-
-				len2 = stack.layers.length;
-				for (var j = 0; j < len2; j++) {
-					if (stack.layers[j].name === layerName) {
-						stack.layers[j].currentColor = color;
+			for (var j = 0; j < len2; j++) {
+				layer = stack.lb.getLayer(layerName);
+				if (layer && !layer.readOnly &&
+					stack.layers[j].name === layerName &&
+					stack.layers[j].currentColor !== color
+				) {
+					if (stack !== selStack) {
+						stack.layers[j].invalid = true;
 					}
+					stack.layers[j].currentColor = color;
+					stack.layers[j].currentOp = operation;
 				}
 			}
 		}
@@ -757,6 +773,30 @@
 		for (i = 0; i < len; i++) {
 			ctrlColors[i].getElementsByTagName('span')[0].style.backgroundColor = color;
 		}
+	};
+
+	/**
+	 * Colorize any uncolored layers for a given stack
+	 * @param {object} stack - The stack to colorize
+	 */
+	WheelBuilder.prototype.colorInvalidLayers = function(stack) {
+		var layer = null,
+		len = stack.layers.length,
+		idx = 0;
+
+		function iterate() {
+			layer = stack.layers[idx];
+			if (layer.invalid) {
+				stack.lb.setColor(layer.name, layer.currentColor, layer.currentOp);
+				layer.invalid = false;
+			}
+
+			if (++idx < len) {
+				window.setTimeout(iterate, 0);
+			}
+		}
+
+		iterate();
 	};
 
 	/**

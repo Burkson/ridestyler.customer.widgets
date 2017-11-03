@@ -139,7 +139,7 @@
 
 			// Set the layer as loaded when the images loads
 			onImgLoad = function() {
-				this.canvas.id = this.lbName;
+				this.canvas.setAttribute('data-layername', this.lbName);
 
 				self.layers[this.lbIdx] = {
 					name: this.lbName,
@@ -161,7 +161,7 @@
 
 			for (var i = 0; i < len; i++) {
 				if (typeof layers[i] !== 'object' ||
-					typeof layers[i].name !== 'string' || 
+					typeof layers[i].name !== 'string' ||
 					!layers[i].name,
 					!layers[i].img
 				) {
@@ -258,8 +258,10 @@
 			layer.canvas.style.transition = 'opacity 1s linear';
 			layer.canvas.style.setProperty('-webkit-transition', 'opacity 1s linear');
 			layer.canvas.style.opacity = 1;
+		}
 
-			layer.imgData = layer.ctx.getImageData(0, 0, imgW, imgH);
+		for (i = 0; i < len; i++) {
+			this.layers[i].imgData = this.layers[i].ctx.getImageData(0, 0, imgW, imgH);
 		}
 	};
 
@@ -304,11 +306,6 @@
 
 		imgData = ctx.createImageData(layer.img.width, layer.img.height);
 		imgData.data.set(layer.imgData.data);
-		/*
-		Revisit this for IE
-		for (var i = 0; i < layer.imgData.data.length; i++) {
-			imgData.data[i] = layer.imgData.data[i];
-		}*/
 
 		this.colorImageData(layer.canvas, imgData, color, operation);
 	};
@@ -321,7 +318,8 @@
 	 * @param {string} operation - Optional colorize operation
 	 */
 	LayerBuilder.prototype.colorImageData = function(canvas, imgData, color, operation) {
-		var data = imgData.data,
+		var self = this,
+		data = imgData.data,
 		origData = null,
 		ctx = canvas.getContext('2d'),
 		imgDataOrig = ctx.createImageData(canvas.width, canvas.height),
@@ -333,13 +331,6 @@
 		avg = 0;
 
 		operation = operation ? operation : this.dfltOperation;
-
-		/*
-		Revisit for IE
-		for (var i = 0; i < imgData.data.length; i++) {
-			imgDataOrig.data[i] = imgData.data[i];
-		}*/
-
 		imgDataOrig.data.set(imgData.data);
 		origData = imgDataOrig.data;
 
@@ -376,7 +367,7 @@
 			}
 		}
 
-		ctx.putImageData(imgData, 0, 0);	
+		ctx.putImageData(imgData, 0, 0);
 	};
 
 	/**
