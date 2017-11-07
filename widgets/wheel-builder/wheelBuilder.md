@@ -21,7 +21,7 @@ Select a stack and display it in the preview pane
 **stackName**: `string`, The newly selected stack name
 
 
-### WheelBuilder.addLayerStack(ls) 
+### WheelBuilder.addStack(ls) 
 
 Add a stack of layers
 
@@ -66,7 +66,7 @@ Reset all layers with the given name to its original state
 Reset all layers to their original state
 
 
-### WheelBuilder.getLayerStack(stackname) 
+### WheelBuilder.getStack(stackname) 
 
 Get a layer stack by name
 
@@ -85,13 +85,15 @@ Set the title of the control pane
 **title**: `string`, The title to set
 
 
-### WheelBuilder.getStackImage(stackName) 
+### WheelBuilder.getImage(stackName, imgType) 
 
 Get the image data for the specified stack
 
 **Parameters**
 
 **stackName**: `string`, The name of the stack to export
+
+**imgType**: `string`, Optional image type. Default is 'image/png'
 
 **Returns**: `string`, A data:image string representing the stack
 

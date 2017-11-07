@@ -50,10 +50,10 @@
 		this.loaded = false;
 
 		// Resolves after all image layers are done loading
-		this.imgLoadPromise = new promise();
+		this.imgLoadPromise = new LBUtil.promise();
 
 		// Resolves after the container is loaded
-		this.initPromise = new promise();
+		this.initPromise = new LBUtil.promise();
 
 		// Valid image color operations
 		this.imgOperations = ['multiply', 'screen', 'grayscale'];
@@ -304,8 +304,9 @@
 
 		layer.currentColor = color;
 
+		// Copy the original (uncolored) image data into a new object
 		imgData = ctx.createImageData(layer.img.width, layer.img.height);
-		imgData.data.set(layer.imgData.data);
+		this.copyImageData(imgData.data, layer.imgData.data);
 
 		this.colorImageData(layer.canvas, imgData, color, operation);
 	};
@@ -323,7 +324,7 @@
 		origData = null,
 		ctx = canvas.getContext('2d'),
 		imgDataOrig = ctx.createImageData(canvas.width, canvas.height),
-		colorRgb = hexToRgb(color),
+		colorRgb = LBUtil.hexToRgb(color),
 		rgb = {},
 		hsl = null,
 		shiftHsl = null,
@@ -331,10 +332,11 @@
 		avg = 0;
 
 		operation = operation ? operation : this.dfltOperation;
-		imgDataOrig.data.set(imgData.data);
+
+		this.copyImageData(imgDataOrig.data, imgData.data);
 		origData = imgDataOrig.data;
 
-		for (i = 0; i < data.length; i+=4) {
+		for (var i = 0; i < data.length; i+=4) {
 			rgb.r = origData[i + 0];
 			rgb.g = origData[i + 1];
 			rgb.b = origData[i + 2];
@@ -348,9 +350,9 @@
 					data[i + 3] = rgb.a;
 					break;
 				case 'screen':
-					hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
-					shiftHsl = rgbToHsl(colorRgb.r, colorRgb.g, colorRgb.b);
-					newRgb = hslToRgb(shiftHsl.h, shiftHsl.s, hsl.l);
+					hsl = LBUtil.rgbToHsl(rgb.r, rgb.g, rgb.b);
+					shiftHsl = LBUtil.rgbToHsl(colorRgb.r, colorRgb.g, colorRgb.b);
+					newRgb = LBUtil.hslToRgb(shiftHsl.h, shiftHsl.s, hsl.l);
 				
 					data[i + 0] = newRgb.r;
 					data[i + 1] = newRgb.g;
@@ -507,12 +509,12 @@
 			layer.img.height = layer.img.origH;
 
 			ctx.drawImage(layer.img, 0, 0, layer.img.origW, layer.img.origH);
-			imgData = ctx.getImageData(0, 0, layer.img.origW, layer.img.origH);
 
 			layer.img.width = tmpW;
 			layer.img.height = tmpH;
 
 			if (layer.currentColor) {
+				imgData = ctx.getImageData(0, 0, layer.img.origW, layer.img.origH);
 				this.colorImageData(canvas, imgData, layer.currentColor);
 			}
 
@@ -568,9 +570,26 @@
 		return res;
 	};
 
+	/**
+	 * Copy image data from src to dest
+	 * @param {object} dest - The image data destination
+	 * @param {object} src - The image data source
+	 */
+	LayerBuilder.prototype.copyImageData = function(dest, src) {
+		if (typeof dest.set === 'function') {
+			dest.set(src);
+		} else {
+			for (var i = 0, len = src.length; i < len; i++) {
+				dest[i] = src[i];
+			}
+		}
+	};
+
 	/****************************************************************************
 		Utility functions
 	****************************************************************************/
+
+	var LBUtil = {};
 
 	/**
 	 * Convert hex color to rgb
@@ -578,7 +597,7 @@
 	 * @param {string} hex - Hex color
 	 * @returns {object} Converted rgb color
 	 */
-	function hexToRgb(hex) {
+	LBUtil.hexToRgb = function(hex) {
 		var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i,
 		result = null;
 
@@ -592,7 +611,7 @@
 			g: parseInt(result[2], 16),
 			b: parseInt(result[3], 16)
 		} : null;
-	}
+	};
 
 	/** 
 	 * Converts rgb to hsl
@@ -602,7 +621,8 @@
 	 * @param {number} b - Blue value
 	 * @returns {object} - Corresonding hsl value
 	 */
-	function rgbToHsl(r, g, b) {
+
+	LBUtil.rgbToHsl = function(r, g, b) {
 		r /= 255;
 		g /= 255;
 		b /= 255;
@@ -625,7 +645,7 @@
 		}
 
 		return({h:h, s:s, l:l});
-	}
+	};
 
 	/** 
 	 * Converts hsl to rgb
@@ -635,7 +655,7 @@
 	 * @param {number} l - Lightness value
 	 * @returns {object} The corresponding rgb value
 	 */
-	function hslToRgb(h, s, l) {
+	LBUtil.hslToRgb = function(h, s, l) {
 		var r, g, b;
 
 		if (s == 0) {
@@ -653,7 +673,7 @@
 			g:Math.round(g * 255),
 			b:Math.round(b * 255)
 		};
-	}
+	};
 
 	/** 
 	 * Converts hue to rgb
@@ -663,20 +683,20 @@
 	 * @param t {number}
 	 * @returns {number}
 	 */
-	function hue2rgb(p, q, t) {
+	LBUtil.hue2rgb = function(p, q, t) {
 		if (t < 0) t += 1;
 		if (t > 1) t -= 1;
 		if (t < 1/6) return p + (q - p) * 6 * t;
 		if (t < 1/2) return q;
 		if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
 		return p;
-	}
+	};
 
 	/**
 	 * Promise implementation taken from RideStyler
 	 * @returns {object} A promise object
      */
-	function promise() {
+	LBUtil.promise = function() {
         var states = {
             pending: 0,
             resolved: 1,
@@ -758,15 +778,103 @@
                 }
             }
         }
-    }
+    };
 
-    /**
+	/**
      * True if arg is an array
      * @returns {boolean} Boolean indication of whether arg is an array
      */
-	function isArray(arg) {
+	LBUtil.isArray = function(arg) {
 		return Object.prototype.toString.call(arg) === '[object Array]';
-	}
+	};
 
+	/**
+	 * Convert non alphanumeric chars to dashes
+	 * @param {string} name - String to convert
+	 */
+	LBUtil.nonAlpha2Dash = function(name) {
+		return name.replace(/\W+/g, '-');
+	};
+
+	/**
+	 * Swap visibility for two elements
+	 * @param {object} showEl - Element to show
+	 * @param {object} hideEl - Element to hide
+	 */
+	LBUtil.toggle = function(showEl, hideEl) {
+		if (hideEl) {
+			hideEl.style.display = 'none';
+			hideEl.style.opacity = 0;
+		}
+		if (showEl) {
+			showEl.style.display = 'block';
+			showEl.clientWidth;
+			showEl.style.opacity = 1;
+		}
+	};
+
+	/**
+	 * Determines if element el has class cl
+	 * @param {Element} el
+	 * @param {string} cl
+	 * @return {boolean}
+	 */
+	LBUtil.hasClass = function (el, cl) {
+		var regex = new RegExp('(?:\\s|^)' + cl + '(?:\\s|$)');
+		return !!el.className.match(regex);
+	};
+
+	/**
+	 * Add class cl to element el
+	 * @param {Element} el
+	 * @param {string} cl
+	 */
+	LBUtil.addClass = function (el, cl) {
+		if (el.className.indexOf(cl) === -1) {
+			el.className += ' ' + cl;
+			el.className = el.className.trim();
+		}
+	};
+
+	/**
+	 * Remove class(es) from element el
+	 * @param {Element} el
+	 * @param {string|Array} cl
+	 */
+	LBUtil.removeClass = function (el, cl) {
+		var regex = null,
+		len = 0;
+
+		if (typeof cl !== 'object') {
+			cl = [cl];
+		}
+
+		len = cl.length;
+		for (var i = 0; i < len; i++) {
+			regex = new RegExp('(?:\\s|^)' + cl[i] + '(?:\\s|$)');
+			el.className = el.className.replace(regex, ' ');
+		}
+	};
+
+	LBUtil.hide = function(el, opacity) {
+		if (el && typeof el === 'object') {
+			if (opacity) {
+				el.style.opacity = 0;
+			}
+			el.style.display = 'none';
+		}
+	};
+
+	LBUtil.show = function(el, display, opacity) {
+		if (el && typeof el === 'object') {
+			el.style.display = display ? display : 'block';
+
+			if (opacity) {
+				el.style.opacity = 1;
+			}
+		}
+	};
+
+	window.LBUtil = LBUtil;
 	window.LayerBuilder = LayerBuilder;
 })();

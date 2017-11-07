@@ -1,7 +1,7 @@
 #wb-wrapper {
-    padding: 20px;
     color: #929292;
     letter-spacing: 3px;
+    margin: 0 auto;
 }
 
 #wb-wrapper a {
@@ -12,22 +12,24 @@
     opacity: 0;
     -webkit-transition: opacity .25s ease-in-out;
     transition: opacity .25s ease-in-out;
-    border-bottom: 1px solid #CECECE;
-    margin-bottom: 40px;
-    padding-bottom: 20px;
+    padding: 20px 0px;
     display: table;
     width: 100%;
+    border-bottom: 1px solid #CECECE;
+    margin-bottom: 40px;
 }
 
 .wb-top-left {
     display: table-cell;
     width: 20%;
+    padding-left: 20px;
 }
 
 .wb-top-right {
     display: table-cell;
     text-align: right;
     width: 20%;
+    padding-right: 20px;
 }
 
 .wb-top-center {
@@ -51,6 +53,12 @@
 }
 
 .wb-main {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+}
+
+.wb-main-inner {
     display: table;
     width: 100%;
 }
@@ -65,6 +73,7 @@
     transition: opacity .25s ease-in-out;
     font-size: 14px;
     margin-right: 20px;
+    padding-left: 20px;
     vertical-align: top;
 }
 
@@ -168,6 +177,7 @@ li.wb-ctrl-layer span {
 .wb-layer-options input.jscolor {
     width: 1px;
     visibility: hidden;
+    display: inline;
 }
 
 .wb-wheel {
@@ -183,16 +193,20 @@ li.wb-ctrl-layer span {
 
 .wb-wheel-preview {
     display: table-cell;
+    width: 65%;
+    vertical-align: middle;
 }
 
 .wb-wheel-preview-inner {
     margin: 0 auto;
+    position: relative;
 }
 
 .wb-wheel-selector-wrap {
     display: table-cell;
     width: 15%;
     vertical-align: middle;
+    padding-right: 20px;
 }
 
 .wb-wheel-selector {
@@ -241,6 +255,29 @@ li.wb-stack-selected {
     vertical-align: middle;
 }
 
+.wb-layer-options ul li.wb-custom-color-wrap {
+    display: block;
+}
+
+.wb-layer-options ul li.wb-reset-wrap {
+    display: block;
+}
+
+.wb-color-custom {
+    background: rgba(226,226,226,1);
+    background: -moz-linear-gradient(-45deg, rgba(226,226,226,1) 0%, rgba(209,209,209,1) 51%, rgba(219,219,219,1) 57%, rgba(254,254,254,1) 100%);
+    background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(226,226,226,1)), color-stop(51%, rgba(209,209,209,1)), color-stop(57%, rgba(219,219,219,1)), color-stop(100%, rgba(254,254,254,1)));
+    background: -webkit-linear-gradient(-45deg, rgba(226,226,226,1) 0%, rgba(209,209,209,1) 51%, rgba(219,219,219,1) 57%, rgba(254,254,254,1) 100%);
+    background: -o-linear-gradient(-45deg, rgba(226,226,226,1) 0%, rgba(209,209,209,1) 51%, rgba(219,219,219,1) 57%, rgba(254,254,254,1) 100%);
+    background: -ms-linear-gradient(-45deg, rgba(226,226,226,1) 0%, rgba(209,209,209,1) 51%, rgba(219,219,219,1) 57%, rgba(254,254,254,1) 100%);
+    background: linear-gradient(135deg, rgba(226,226,226,1) 0%, rgba(209,209,209,1) 51%, rgba(219,219,219,1) 57%, rgba(254,254,254,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe', GradientType=1 );
+}
+
+.wb-color-reset {
+    background-color: #FFFFFF;
+}
+
 .wb-clear {
     clear: both;
 }
@@ -249,7 +286,20 @@ li.wb-stack-selected {
     width: 200px;
 }
 
+.wb-small .wb-ctrl {
+    font-size: 12px;
+}
+
 .wb-small .wb-ctrl-title {
-    font-size: 18px;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.wb-smallest .wb-ctrl {
+    font-size: 11px;
+}
+
+.wb-smallest .wb-ctrl-title {
+    font-size: 14px;
     text-transform: uppercase;
 }

@@ -29,10 +29,23 @@
 			opts = {};
 		}
 
-		if (opts.hasOwnProperty('defaultLayerOpts') && opts.defaultLayerOpts.length) {
-			this.defaultLayerOpts = opts.defaultLayerOpts;
-		} else {
-			this.defaultLayerOpts = null;
+		// Default values
+		this.colorOp = 'multiply';			// colorize operation
+		this.pickerColor = 'FFFFFF';		// picker color
+		this.ctrlTitleText = 'Customize';	// ctrl title text
+		this.wheelDims = [500, 500];		// wheel dimensions
+		this.imageType = 'image/png';		// image export type
+		this.defaultLayerOpts = null;		// layer options
+		this.cancelText = 'Cancel';
+		this.confirmText = 'Confirm';
+		this.onCancel = null;
+		this.onConfirm = null;
+
+		// Override defaults. Everything below this block cannot be overridden
+		for (var i in opts) {
+			if (this.hasOwnProperty(i)) {
+				this[i] = opts[i];
+			}
 		}
 
 		// Dev or production
@@ -43,6 +56,9 @@
 
 		// The container element
 		this.container = document.getElementById(containerId);
+
+		// Ids and class names of template elements
+		this.wrapId = 'wb-wrapper';
 
 		// Threshholds for adjusting layout
 		this.smallWidth = 900;
@@ -61,13 +77,13 @@
 		this.visibleStacks = 0;
 
 		// Resolves after the container is loaded
-		this.initPromise = new promise();
+		this.initPromise = new LBUtil.promise();
 
 		// Resolves after async calls complete
-		this.asyncPromise = new promise();
+		this.asyncPromise = new LBUtil.promise();
 
 		// Resolves after all layers are set
-		this.loadedPromise = new promise();
+		this.loadedPromise = new LBUtil.promise();
 
 		// Flags to indicate individual async requests have completed
 		this.tplLoaded = false;
@@ -80,7 +96,7 @@
 		this.tplUrl = this.urlPfx + 'html/template.html';
 
 		if (opts.hasOwnProperty('cssUrl')) {
-			this.cssUrl = opts.cssUrl && typeof opts.cssUrl === 'string' ? opts.cssUrl : false;
+			this.cssUrl = typeof opts.cssUrl === 'string' ? opts.cssUrl : false;
 		} else {
 			this.cssUrl = this.dev ? this.urlPfx + 'css/wheelBuilder.css' : this.urlPfx + 'css/wheelBuilder.min.css';
 		}
@@ -107,31 +123,15 @@
 		// The currently selected stack
 		this.selectedStack = null;
 
-		// Default values
-		this.dfltColorOp = 'multiply';		// Default colorize operation
-		this.dfltPickerColor = 'FFFFFF';	// Default picker color
-		this.dfltCtrlTitle = 'Customize';	// Default ctrl title text
-		this.dfltWheelDims = [500, 500];	// Default wheel dimensions
-
 		// Set the dimensions of the wheel preview
-		if (opts.hasOwnProperty('wheelDims') && typeof opts.wheelDims === 'object' && opts.wheelDims.length === 2) {
+		if (typeof opts.wheelDims === 'object' && opts.wheelDims.length === 2) {
 			var w = parseInt(opts.wheelDims[0]),
 			h = parseInt(opts.wheelDims[1]);
 
 			if (!isNaN(w) && !isNaN(h)) {
 				this.wheelDims = [w, h];
-			} else {
-				this.wheelDims = this.dfltWheelDims;
 			}
-		} else {
-			this.wheelDims = this.dfltWheelDims;
 		}
-
-		// Text and callbacks for top bar buttons
-		this.cancelText = opts.cancelText ? opts.cancelText : 'Cancel';
-		this.confirmText = opts.confirmText ? opts.confirmText : 'Confirm';
-		this.onCancel = typeof opts.onCancel === 'function' ? opts.onCancel : null;
-		this.onConfirm = typeof opts.onConfirm === 'function' ? opts.onConfirm : null;
 
 		// Wait for DOMContentLoaded if the container doesn't exist yet
 		if (!this.container) {
@@ -222,15 +222,25 @@
 		len = this.dirtyStacks.length;
 
 		if (!this.isAsyncComplete()) {
-			console.error('Template not loaded, unable to initialize app');
+			console.error('Template not loaded');
 			return;
 		}
 
 		// Set the template html inside the container
+		if (!this.tplHtml) {
+			console.error('No template specified');
+			return;
+		}
+
 		this.container.innerHTML = this.tplHtml;
 
 		// Save these elements for later use
-		this.wrapEl = document.getElementById('wb-wrapper');
+		this.wrapEl = document.getElementById(this.wrapId);
+		if (!this.wrapEl) {
+			console.error('Unable to select wrapper element #' + this.wrapId);
+			return;
+		}
+
 		this.ctrlWrap = this.wrapEl.getElementsByClassName('wb-ctrl-wrap')[0];
 		this.layerSelectWrap = this.ctrlWrap.getElementsByClassName('wb-layer-select')[0];
 		this.layerOptsWrap = this.ctrlWrap.getElementsByClassName('wb-layer-options')[0];
@@ -242,18 +252,17 @@
 		this.ctrl = this.ctrlWrap.getElementsByClassName('wb-ctrl')[0];
 		this.backBtn = this.ctrlHeader.getElementsByClassName('wb-back-btn')[0];
 
-		this.initTop();
-
 		// Event handlers
 		window.addEventListener('resize', function() {self.adjustLayout();});
 
 		// Create each layer stack
 		for (var i = 0; i < len; i++) {
-			this.addLayerStack(this.dirtyStacks[i]);
+			this.addStack(this.dirtyStacks[i]);
 		}
 
 		// Perform tasks after all of the stacks have loaded
 		this.loadedPromise.done(function() {
+			self.initTop();
 			self.renderCtrl();
 			self.renderStackSelector();
 			self.renderPreview();
@@ -277,7 +286,7 @@
 				self.onCancel.call();
 			};
 		} else {
-			hide(cancelBtn);
+			LBUtil.hide(cancelBtn);
 		}
 
 		if (this.onConfirm) {
@@ -286,18 +295,20 @@
 				self.onConfirm.call();
 			};
 		} else {
-			hide(confirmBtn);
+			LBUtil.hide(confirmBtn);
 		}
 
-		download.onclick = function(e) {
-			self.onDownloadClick(e);
-		};
+		if (download) {
+			download.onclick = function(e) {
+				self.onDownloadClick(e);
+			};
+		}
 
 		this.backBtn.onclick = function() {
 			self.onBackClick();
 		};
 
-		show(this.topBar, 'table', true);
+		LBUtil.show(this.topBar, 'table', true);
 	};
 
 	/**
@@ -310,19 +321,19 @@
 
 		if (this.wrapEl) {
 			if (cWidth <= this.smallestWidth) {
-				if (!hasClass(this.wrapEl, 'wb-small')) {
-					addClass(this.wrapEl, 'wb-small');
+				if (!LBUtil.hasClass(this.wrapEl, 'wb-small')) {
+					LBUtil.addClass(this.wrapEl, 'wb-small');
 				}
-				if (!hasClass(this.wrapEl, 'wb-smallest')) {
-					addClass(this.wrapEl, 'wb-smallest');
+				if (!LBUtil.hasClass(this.wrapEl, 'wb-smallest')) {
+					LBUtil.addClass(this.wrapEl, 'wb-smallest');
 				}
 			} else if (cWidth <= this.smallWidth) {
-				if (!hasClass(this.wrapEl, 'wb-small')) {
-					addClass(this.wrapEl, 'wb-small');
+				if (!LBUtil.hasClass(this.wrapEl, 'wb-small')) {
+					LBUtil.addClass(this.wrapEl, 'wb-small');
 				}
-				removeClass(this.wrapEl, 'wb-smallest');
+				LBUtil.removeClass(this.wrapEl, 'wb-smallest');
 			} else {
-				removeClass(this.wrapEl, ['wb-small', 'wb-smallest']);
+				LBUtil.removeClass(this.wrapEl, ['wb-small', 'wb-smallest']);
 			}
 		}
 	};
@@ -333,7 +344,7 @@
 	 */
 	WheelBuilder.prototype.selectStack = function(stackName) {
 		var curSelected = this.layerStacks[this.selectedStack],
-		stack = this.getLayerStack(stackName);
+		stack = this.getStack(stackName);
 
 		// Create the layer selector for this stack
 		if (!stack.layerSelectEl) {
@@ -376,10 +387,10 @@
 			layerIdx = parseInt(tgt.getAttribute('data-layeridx'));
 
 			self.showLayerOpts(ls, layerIdx);
-			toggle(self.layerOptsWrap, self.layerSelectWrap);
+			LBUtil.toggle(self.layerOptsWrap, self.layerSelectWrap);
 		};
 
-		addClass(ul, 'wb-layer-selector');
+		LBUtil.addClass(ul, 'wb-layer-selector');
 
 		// Loop through layers and create the control pane
 		for (var i = 0; i < len; i++) {
@@ -389,15 +400,15 @@
 				continue;
 			}
 
-			layerClass = convertNameToClass(layer.name);
+			layerClass = LBUtil.nonAlpha2Dash(layer.name);
 			a = document.createElement('a');
 			li = document.createElement('li');
 			colorSpan = document.createElement('span');
 			textSpan = document.createElement('span');
 
-			addClass(li, 'wb-ctrl-layer');
-			addClass(li, 'wb-ctrl-layer-' + layerClass);
-			addClass(colorSpan, 'wb-color');
+			LBUtil.addClass(li, 'wb-ctrl-layer');
+			LBUtil.addClass(li, 'wb-ctrl-layer-' + layerClass);
+			LBUtil.addClass(colorSpan, 'wb-color');
 
 			if (layer.currentColor) {
 				colorSpan.style.backgroundColor = layer.currentColor;
@@ -422,11 +433,11 @@
 		reset.onclick = function() {
 			self.resetAllLayers();
 		};
-		addClass(reset, 'wb-reset-all');
+		LBUtil.addClass(reset, 'wb-reset-all');
 
 		buttonWrap = document.createElement('div');
 		buttonWrap.appendChild(reset);
-		addClass(buttonWrap, 'wb-button-wrap');
+		LBUtil.addClass(buttonWrap, 'wb-button-wrap');
 		this.layerSelectWrap.appendChild(buttonWrap);
 		*/
 
@@ -442,13 +453,12 @@
 	WheelBuilder.prototype.showLayerOpts = function(stack, layerIdx) {
 		var self = this,
 		layer = stack.layers[layerIdx],
-		layerClass = convertNameToClass(layer.name),
+		layerClass = LBUtil.nonAlpha2Dash(layer.name),
 		opts = layer.options,
 		ul = null,
-		reset = null,
-		buttonWrap = null,
-		layerName = null,
 		li = null,
+		resetLink = null,
+		layerName = null,
 		colorLink = null,
 		colorSpan = null,
 		jscInput = null,
@@ -481,10 +491,9 @@
 
 		ul = document.createElement('ul');
 		layerName = document.createElement('li');
-		reset = document.createElement('button');
 
 		layerName.innerText = layer.name + ' -';
-		show(layerName);
+		LBUtil.show(layerName);
 		ul.appendChild(layerName);
 
 		for (var i = 0, len = opts.length; i < len; i++) {
@@ -499,17 +508,16 @@
 			}
 
 			if (typeof opts[i].operation !== 'string' || stack.lb.getOperations().indexOf(opts[i].operation.toLowerCase()) === -1) {
-				colorOp = this.dfltColorOp;
+				colorOp = this.colorOp;
 			} else {
 				colorOp = opts[i].operation.trim().toLowerCase();
 			}
 
 			li = document.createElement('li');
-
 			colorSpan = document.createElement('span');
 			colorLink = document.createElement('a');
 
-			addClass(colorSpan, 'wb-color');
+			LBUtil.addClass(colorSpan, 'wb-color');
 			colorSpan.style.backgroundColor = opts[i].color.trim();
 			colorLink.appendChild(colorSpan);
 
@@ -526,57 +534,73 @@
 
 		// Set up the custom color picker
 		jscInput = document.createElement('input');
-		addClass(jscInput, 'jscolor');
+		LBUtil.addClass(jscInput, 'jscolor');
+
 		colorSpan = document.createElement('span');
-		addClass(colorSpan, 'wb-color');
+		LBUtil.addClass(colorSpan, 'wb-color');
+		LBUtil.addClass(colorSpan, 'wb-color-custom');
+
 		li = document.createElement('li');
-		addClass(li, 'wb-custom-color');
+		LBUtil.addClass(li, 'wb-custom-color-wrap');
+
 		jsColorLink = document.createElement('a');
-		addClass(jsColorLink, 'wb-js-color');
+		LBUtil.addClass(jsColorLink, 'wb-js-color');
 		
-		jsColorLink.innerHTML = '<span> Custom Color</span>';
+		jsColorLink.innerHTML = '<span>&nbsp;Custom</span>';
 		jsColorLink.setAttribute('title', 'Custom Color');
 		jsColorLink.onclick = function() {
 			jsColor.show();
 		};
 
 		jsColor = new jscolor(jscInput, {hash: true, closable: true});
-		jsColor.fromString(layer.currentColor ? layer.currentColor : this.dfltPickerColor);
+		jsColor.fromString(layer.currentColor ? layer.currentColor : this.pickerColor);
+
 		jsColor.onFineChange = function() {
-			var color = this.toHEXString();
+			var parent = this.valueElement.parentElement,
+			wbColor = parent.getElementsByClassName('wb-color-custom')[0],
+			color = this.toHEXString();
+
 			self.setLayerColor(layer.name, color);
-			colorSpan.style.backgroundColor = color;
+			wbColor.style.backgroundColor = color;
 		};
 
-		jsColorLink.appendChild(jscInput);
 		jsColorLink.insertBefore(colorSpan, jsColorLink.firstElementChild);
+		jsColorLink.appendChild(jscInput);
 
 		li.appendChild(jsColorLink);
 		ul.appendChild(li);
 
-		buttonWrap = document.createElement('div');
-		addClass(buttonWrap, 'wb-button-wrap');
+		// Set up reset button
+		li = document.createElement('li');
+		colorSpan = document.createElement('span');
+		resetLink = document.createElement('a');
+		resetLink.innerHTML = '<span> Reset</span>';
 
-		reset.innerText = 'Reset';
-		reset.onclick = function() {
-			jsColor.fromString(self.dfltPickerColor);
-			colorSpan.style.backgroundColor = '#' + self.dfltPickerColor;
+		LBUtil.addClass(colorSpan, 'wb-color');
+		LBUtil.addClass(colorSpan, 'wb-color-reset');
+		LBUtil.addClass(li, 'wb-reset-wrap');
+
+		resetLink.insertBefore(colorSpan, resetLink.firstElementChild);
+		li.appendChild(resetLink);
+
+		resetLink.onclick = function() {
+			jsColor.fromString(self.pickerColor);
+			colorSpan.style.backgroundColor = '#' + self.pickerColor;
 			self.resetLayer(layer.name);
 		};
 
-		buttonWrap.appendChild(reset);
-		this.layerOptsWrap.appendChild(buttonWrap);
+		ul.appendChild(li);
 
-		show(this.backBtn, 'inline');
+		LBUtil.show(this.backBtn, 'inline');
 
-		toggle(this.layerOptsWrap, this.layerSelectWrap);
+		LBUtil.toggle(this.layerOptsWrap, this.layerSelectWrap);
 	};
 
 	/**
 	 * Add a stack of layers
 	 * @param {object} ls - Data represending the layer stack - see readme for data format
 	 */
-	WheelBuilder.prototype.addLayerStack = function(ls) {
+	WheelBuilder.prototype.addStack = function(ls) {
 		var self = this;
 
 		if (!ls || typeof ls !== 'object') {
@@ -585,7 +609,7 @@
 		}
 
 		this.asyncPromise.done(function() {
-			var exists = self.getLayerStack(ls.name),
+			var exists = self.getStack(ls.name),
 			previewEl = self.wrapEl.getElementsByClassName('wb-wheel-preview-inner')[0],
 			stackEl = null,
 			lb = null,
@@ -598,7 +622,7 @@
 				return;
 			} else {
 				ls.name = ls.name.trim();
-				className = convertNameToClass(ls.name.toLowerCase());
+				className = LBUtil.nonAlpha2Dash(ls.name.toLowerCase());
 			}
 
 			ls.visible = !!ls.visible;
@@ -631,7 +655,7 @@
 				self.stackLookup[ls.name] = idx;
 				self.layerStacks[idx] = ls;
 			}
-			addClass(stackEl, 'wb-wheel');
+			LBUtil.addClass(stackEl, 'wb-wheel');
 
 			// Set up the layer builder for this stack
 			lb = new LayerBuilder(stackEl.id, {dimensions: self.wheelDims});
@@ -645,7 +669,7 @@
 				}
 
 				if (!ls.selected) {
-					hide(stackEl);
+					LBUtil.hide(stackEl);
 				}
 			});
 
@@ -662,7 +686,7 @@
 				self.visibleStacks++;
 
 				if (ls.selected) {
-					addClass(stackEl, 'wb-wheel-selected');
+					LBUtil.addClass(stackEl, 'wb-wheel-selected');
 					self.selectedStack = idx;
 					self.selectStack(ls.name);
 				}
@@ -693,15 +717,15 @@
 				item = tgt.parentElement;
 			}
 
-			removeClass(curSelected, 'wb-stack-selected');
+			LBUtil.removeClass(curSelected, 'wb-stack-selected');
 
 			self.selectStack(ls.name);
 
-			addClass(item, 'wb-stack-selected');
+			LBUtil.addClass(item, 'wb-stack-selected');
 		};
 
 		if (ls.selected) {
-			addClass(li, 'wb-stack-selected');
+			LBUtil.addClass(li, 'wb-stack-selected');
 		}
 
 		if (!this.selectorEl.children.length) {
@@ -733,7 +757,7 @@
 		stack = null,
 		layer = null,
 		selStack = this.layerStacks[this.selectedStack],
-		layerClass = convertNameToClass(layerName),
+		layerClass = LBUtil.nonAlpha2Dash(layerName),
 		ctrlColors = this.layerSelectWrap.getElementsByClassName('wb-ctrl-layer-' + layerClass);
 
 		if (typeof layerName !== 'string' || !layerName.trim()) {
@@ -812,19 +836,19 @@
 		if (curSelected && curSelected !== stack) {
 			curSelectEl = curSelected.containEl;
 			curSelectEl.style.opacity = 0;
-			removeClass(curSelectEl, 'wb-wheel-selected');
+			LBUtil.removeClass(curSelectEl, 'wb-wheel-selected');
 
 			curSelected.layerSelectEl.style.opacity = 0;
 		}
 
 		setTimeout(function() {
 			if (curSelectEl) {
-				hide(curSelectEl);
-				hide(curSelected.layerSelectEl);
+				LBUtil.hide(curSelectEl);
+				LBUtil.hide(curSelected.layerSelectEl);
 			}
 
 			// Set our new stack as selected and show it
-			addClass(stack.containEl, 'wb-wheel-selected');
+			LBUtil.addClass(stack.containEl, 'wb-wheel-selected');
 			stack.containEl.style.display = 'block';
 			stack.containEl.clientWidth;
 			stack.containEl.style.opacity = 1;
@@ -834,7 +858,7 @@
 			stack.layerSelectEl.style.opacity = 1;
 
 			// Show layer selector
-			toggle(self.layerSelectWrap, self.layerOptsWrap);
+			LBUtil.toggle(self.layerSelectWrap, self.layerOptsWrap);
 
 			self.setStackTitle(stack.name);
 		}, 250);
@@ -844,7 +868,7 @@
 	 * Show and style the ctrl pane
 	 */
 	WheelBuilder.prototype.renderCtrl = function() {
-		show(this.ctrlWrap, 'table-cell', true);
+		LBUtil.show(this.ctrlWrap, 'table-cell', true);
 		this.setCtrlTitle();
 
 		// Dynamically set the height of .wb-ctrl
@@ -859,9 +883,9 @@
 	 */
 	WheelBuilder.prototype.renderStackSelector = function() {
 		if (this.visibleStacks > 1) {
-			show(this.selectorEl, 'table-cell', true);
+			LBUtil.show(this.selectorEl, 'table-cell', true);
 		} else {
-			hide(this.selectorEl, true);
+			LBUtil.hide(this.selectorEl, true);
 		}
 	};
 
@@ -869,7 +893,7 @@
 	 * Show the preview pane
 	 */
 	WheelBuilder.prototype.renderPreview = function() {
-		if (this.wheelDims && this.wheelDims.length ) {
+		if (this.wheelDims && this.wheelDims.length) {
 			var preview = this.wrapEl.getElementsByClassName('wb-wheel-preview-inner')[0];
 			preview.style.width = this.wheelDims[0] + 'px';
 			preview.style.height = this.wheelDims[1] + 'px';
@@ -881,7 +905,7 @@
 	 * @param {string} title - The title section of the ctrl pane
 	 */
 	WheelBuilder.prototype.setCtrlTitle = function(title) {
-		this.ctrlTitle.innerText = title ? title : this.dfltCtrlTitle;
+		this.ctrlTitle.innerText = title ? title : this.ctrlTitleText;
 	};
 
 	/**
@@ -889,8 +913,9 @@
 	 */
 	WheelBuilder.prototype.onBackClick = function() {
 		this.setCtrlTitle();
-		hide(this.backBtn);
-		toggle(this.layerSelectWrap, this.layerOptsWrap);
+
+		LBUtil.hide(this.backBtn);
+		LBUtil.toggle(this.layerSelectWrap, this.layerOptsWrap);
 	};
 
 	/**
@@ -901,7 +926,7 @@
 		var len = this.layerStacks.length,
 		len2 = null,
 		stack = null,
-		layerClass = convertNameToClass(layerName),
+		layerClass = LBUtil.nonAlpha2Dash(layerName),
 		ctrlColors = this.layerSelectWrap.getElementsByClassName('wb-ctrl-layer-' + layerClass);
 
 		for (var i = 0; i < len; i++) {
@@ -986,7 +1011,7 @@
 	 * @param {string} stackname - Name of the stack to select
 	 * @returns {object} The layer stack corresponding to stackName
 	 */
-	WheelBuilder.prototype.getLayerStack = function(stackName) {
+	WheelBuilder.prototype.getStack = function(stackName) {
 		return this.stackLookup.hasOwnProperty(stackName) ? this.layerStacks[this.stackLookup[stackName]] : null;
 	};
 
@@ -1091,14 +1116,16 @@
 	/**
 	 * Get the image data for the specified stack
 	 * @param {string} stackName - The name of the stack to export
+	 * @param {string} imgType - Optional type of image to export. 'image/png' by default
 	 * @returns {string} A data:image string representing the stack
 	 */
-	WheelBuilder.prototype.getStackImage = function(stackName) {
-		var stack = this.getLayerStack(stackName),
+	WheelBuilder.prototype.getImage = function(stackName, imgType) {
+		var stack = this.getStack(stackName),
 		imgData = null;
 
 		if (stack && stack.lb) {
-			imgData = stack.lb.getUnscaledImage();
+			imgType = typeof imgType === 'string' ? imgType.trim() : this.imageType;
+			imgData = stack.lb.getUnscaledImage(imgType);
 		}
 
 		return imgData;
@@ -1111,7 +1138,7 @@
 	WheelBuilder.prototype.onDownloadClick = function(e) {
 		var a = e.target,
 		stack = this.layerStacks[this.selectedStack],
-		fileName = convertNameToClass(stack.name) + '.png',
+		fileName = LBUtil.nonAlpha2Dash(stack.name) + '.png',
 		imgData = '';
 
 		if (!stack || !stack.lb) {
@@ -1119,7 +1146,7 @@
 			return;
 		}
 
-		imgData = this.getStackImage(stack.name);
+		imgData = this.getImage(stack.name, this.imageType);
 
 		if (window.navigator.msSaveBlob) {
 			window.navigator.msSaveBlob(imgData, fileName);
@@ -1128,186 +1155,6 @@
 			a.download = fileName;
 		}
 	};
-
-
-	/*************************************************************************************************
-	 UTILITY FUNCTIONS
-	**************************************************************************************************/
-
-	/**
-	 * Convert a stack or layer name to a valid class name
-	 * @param {string} name - String to convert
-	 */
-	var convertNameToClass = function(name) {
-		return name.replace(/\W+/g, '-');
-	};
-
-	/**
-	 * Swap visibility for two elements
-	 * @param {object} showEl - Element to show
-	 * @param {object} hideEl - Element to hide
-	 */
-	var toggle = function(showEl, hideEl) {
-		if (hideEl) {
-			hideEl.style.display = 'none';
-			hideEl.style.opacity = 0;
-		}
-		if (showEl) {
-			showEl.style.display = 'block';
-			showEl.clientWidth;
-			showEl.style.opacity = 1;
-		}
-	};
-
-	/**
-	 * Determines if element el has class cl
-	 * @param {Element} el
-	 * @param {string} cl
-	 * @return {boolean}
-	 */
-	var hasClass = function (el, cl) {
-		var regex = new RegExp('(?:\\s|^)' + cl + '(?:\\s|$)');
-		return !!el.className.match(regex);
-	};
-
-	/**
-	 * Add class cl to element el
-	 * @param {Element} el
-	 * @param {string} cl
-	 */
-	var addClass = function (el, cl) {
-		if (el.className.indexOf(cl) === -1) {
-			el.className += ' ' + cl;
-			el.className = el.className.trim();
-		}
-	};
-
-	/**
-	 * Remove class(es) from element el
-	 * @param {Element} el
-	 * @param {string|Array} cl
-	 */
-	var removeClass = function (el, cl) {
-		var regex = null,
-		len = 0;
-
-		if (typeof cl !== 'object') {
-			cl = [cl];
-		}
-
-		len = cl.length;
-		for (var i = 0; i < len; i++) {
-			regex = new RegExp('(?:\\s|^)' + cl[i] + '(?:\\s|$)');
-			el.className = el.className.replace(regex, ' ');
-		}
-    };
-
-    var hide = function(el, opacity) {
-		if (el && typeof el === 'object') {
-			if (opacity) {
-				el.style.opacity = 0;
-			}
-			el.style.display = 'none';
-		}
-    };
-
-	var show = function(el, display, opacity) {
-		if (el && typeof el === 'object') {
-			el.style.display = display ? display : 'block';
-
-			if (opacity) {
-				el.style.opacity = 1;
-			}
-		}
-    };
-
-	/**
-	 * Promise implementation taken from RideStyler
-	 * @returns {object} A promise object
-     */
-	function promise() {
-        var states = {
-            pending: 0,
-            resolved: 1,
-            rejected: 2
-        },
-        currentState = states.pending,
-        currentValue = null,
-        callbacks = [];
-
-        return {
-            state: function() {
-                return currentState;
-            },
-            value: function() {
-                return currentValue;
-            },
-            changeState: function(state,  value) {
-                if (currentState === state) {
-                    return console.error('Cannot changeState to same state: ' + state);
-                }
-                if (currentState !== states.pending) {
-                    return console.error('Cannot changeState when promise is finalized.');
-                }
-
-                currentState = state;
-                currentValue = value;
-                resolve();
-
-                return currentState;
-            },
-            resolve: function(value) {
-                this.changeState(states.resolved, value);
-            },
-            reject: function(value) {
-                this.changeState(states.rejected, value);
-            },
-            always: function(callback) {
-                addCallback({ always: callback });
-                return this;
-            },
-            done: function(callback) {
-                addCallback({ done: callback });
-                return this;
-            },
-            fail: function(callback) {
-                addCallback({ fail: callback });
-                return this;
-            },
-            isResolved: function() {
-                return currentState === states.resolved;
-            },
-            isRejected: function() {
-                return currentState === states.rejected;
-            }
-        };
-
-        function addCallback(callback) {
-            callbacks.push(callback);
-            resolve();
-        }
-
-        function resolve() {
-            if (currentState === states.pending) {
-                return;
-            }
-
-            while (callbacks.length > 0) {
-                var c = callbacks.shift();
-
-                if (currentState === states.resolved &&
-                    typeof c.done == 'function') {
-                    c.done(currentValue);
-                } else if (currentState === states.rejected && typeof c.fail === 'function') {
-                    c.fail(currentValue);
-                }
-
-                if (typeof c.always == 'function') {
-                    c.always(currentValue);
-                }
-            }
-        }
-    }
 
 	window.WheelBuilder = WheelBuilder;
 })();
