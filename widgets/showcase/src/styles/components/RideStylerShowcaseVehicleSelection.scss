@@ -101,6 +101,7 @@
 .vsm-line-step {
     .dot-info, .dot-info.active {
         font-size: 1em;
+        overflow-y: hidden;
     }
     .dot-info-before {
         left: -48%;
