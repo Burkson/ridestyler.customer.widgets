@@ -8,6 +8,19 @@ namespace RideStylerShowcase.StringHelper {
         return string.trim().substr(0, string.indexOf(' '));
     }
 
+    /**
+     * Returns true if the sequence of elements of searchString converted to a String is the
+     * same as the corresponding elements of this object (converted to a String) starting at
+     * endPosition – length(this). Otherwise returns false.
+     */
+    export function endsWith(string:string, ending:string, index?:number) {
+        if (!(index < this.length)) index = this.length;
+        else index |= 0;
+        
+        let endingLength = ending.length;
+        return string.substr(index - endingLength, endingLength) === ending;
+    }
+
     export function escapeRegExp(string:string):string {
         /**
          * Used to match `RegExp`

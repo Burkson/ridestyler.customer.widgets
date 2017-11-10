@@ -1,7 +1,12 @@
 namespace RideStylerShowcase.VisibilityHelper {
-    export function show(element:HTMLElement):RideStylerPromise {
+    const defaultTransitionInClass = 'in'
+
+    export function show(element:HTMLElement, transitionClass:string = defaultTransitionInClass):RideStylerPromise {
         setVisibility(element, true);
-        element.classList.add('in');
+
+        StyleHelper.triggerReflow(element);
+
+        element.classList.add(transitionClass);
 
         let promise = ridestyler.promise();
 
@@ -11,8 +16,8 @@ namespace RideStylerShowcase.VisibilityHelper {
         return promise;
     }
 
-    export function hide(element:HTMLElement):RideStylerPromise {
-        element.classList.remove('in');
+    export function hide(element:HTMLElement, transitionClass:string = defaultTransitionInClass):RideStylerPromise {
+        element.classList.remove(transitionClass);
 
         let promise = ridestyler.promise();
 

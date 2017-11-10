@@ -158,4 +158,30 @@ namespace RideStylerShowcase.StyleHelper {
 
         return true;
     }
+
+    export function parsePixels(pixels:string):number {
+        if (!StringHelper.endsWith(pixels, 'px')) return undefined;
+
+        return parseInt(pixels);
+    }
+
+    export function calculatePadding(element:HTMLElement) {
+        let {
+            paddingBottom,
+            paddingTop,
+            paddingLeft,
+            paddingRight
+        } = getComputedStyle(element);
+
+        let width = parsePixels(paddingLeft) + parsePixels(paddingRight);
+        let height = parsePixels(paddingTop) + parsePixels(paddingBottom);
+
+        if (isNaN(width)) width = 0;
+        if (isNaN(height)) height = 0;
+
+        return {
+            width: width,
+            height: height
+        };
+    }
 }
