@@ -55,7 +55,6 @@
 .wb-main {
     display: inline-block;
     position: relative;
-    width: 100%;
 }
 
 .wb-main-inner {
@@ -291,8 +290,17 @@ li.wb-stack-selected {
 }
 
 .wb-small .wb-ctrl-title {
-    font-size: 16px;
+    font-size: 14px;
     text-transform: uppercase;
+}
+
+.wb-small .wb-top-bar {
+    font-size: 14px;
+}
+
+.wb-small .wb-top-button {
+    width: 75px;
+    padding: 5px 10px;
 }
 
 .wb-smallest .wb-ctrl {

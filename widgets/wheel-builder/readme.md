@@ -5,10 +5,16 @@ This script allows you to implement the Wheel Builder widget into your website
 All of the RideStyler Widgets are designed to be as easy as possible to add to your website. Simply follow the step-by-step instructions outlined below.
 
 ## Add Script References
-The first step is simply adding references to the Wheel Builder and Layer Builder scripts into your site.
+The first step is simply adding references to the Wheel Builder and Layer Builder scripts into your site. You can host the scripts yourself and include them like this:
 ```
 <script src="layer-builder/dist/js/layerBuilder.min.js"></script>
 <script src="wheel-builder/dist/js/wheelBuilder.min.js"></script>
+```
+
+Or you can load them from a CDN like this:
+```
+<script src="https://rawgit.com/Burkson/com.burkson.ridestyler.widgets/master/widgets/layer-builder/dist/js/layerBuilder.min.js"></script>
+<script src="https://rawgit.com/Burkson/com.burkson.ridestyler.widgets/master/widgets/wheel-builder/dist/js/wheelBuilder.min.js"></script>
 ```
 
 ## Add a Container
@@ -18,14 +24,16 @@ Next, create a container div in your document to store the Wheel Builder widget.
 ```
 
 ## Initialize the Widget
-Now we need to initialize the Wheel Builder widget. To do this, you need to pass it an array of 'layer stacks'. A layer stack has the following form:
+Now we need to initialize the Wheel Builder widget. To do this, you need to pass it an array of 'layer stacks'. An example layer stack resembles the following:
 ```
-{
+var layerStacks = [];
+
+layerStacks.push({
 	name: 'Wheel Preview',
 	visible: true,
 	selected: true,
 	layers: [
-		{name: 'base', label: 'Base', img: 'layers/base.png'},
+		{name: 'base', label: 'Base', img: 'layers/base.png', readOnly: true},
 		{name: 'bolts', img: 'layers/bolts.png'},
 		{name: 'cap', img: 'layers/cap.png'},
 		{name: 'cap-text', img: 'layers/cap-text.png'},
@@ -47,12 +55,13 @@ Now we need to initialize the Wheel Builder widget. To do this, you need to pass
 			]
 		}
 	]
-}
+});
 ```
 
-The 'name' and 'layers' attributes are required. Each layer must have a name and an img attribute which specifies the path to the image to be displayed. 'visible' specifies whether the layer should be displayed in the stack selector and 'selected' determines whether the stack is initially selected in the preview pane. 
+The `name` and `layers` attributes are required. The `visible` property specifies whether the layer should be displayed in the stack selector, `selected` determines whether the stack is initially selected in the preview pane.
+Each element in the `layers` array is an object and must specify `name` and `img` attributes. `name` must be a unique string, `img` specifies the url to the image for the layer. Optionally you may specify a `label` which will display in the options pane instead of the default `name`. The optional `readOnly` attribute determines if the layer is configurable via the options pane. A read only layer will be displayed in the layer stack, but cannot be modified.
 
-Pass the id attribute of the container specified above to the constructor along with your layer stacks
+Next, pass the id attribute of the container specified above to the constructor along with a reference to your array of layer stacks.
 ```
 var wb = new WheelBuilder('container', layerStacks);
 ```
@@ -126,6 +135,10 @@ var wb = new WheelBuilder('container', layerStacks, {
 	onConfirm: confirmCb,
 	cancelText: 'Back',
 	confirmText: 'Done'
+});
+
+wb.loaded(function() {
+	// ...
 });
 ```
 

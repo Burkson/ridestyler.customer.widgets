@@ -76,14 +76,6 @@ Get a layer stack by name
 
 **Returns**: `object`, The layer stack corresponding to stackName
 
-### WheelBuilder.setStackTitle(title) 
-
-Set the title of the control pane
-
-**Parameters**
-
-**title**: `string`, The title to set
-
 
 ### WheelBuilder.getImage(stackName, imgType) 
 
@@ -95,7 +87,7 @@ Get the image data for the specified stack
 
 **imgType**: `string`, Optional image type. Default is 'image/png'
 
-**Returns**: `string`, A data:image string representing the stack
+**Returns**: `string`, A data uri representation of the image
 
 
 

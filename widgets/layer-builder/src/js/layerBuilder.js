@@ -140,6 +140,7 @@
 			// Set the layer as loaded when the images loads
 			onImgLoad = function() {
 				this.canvas.setAttribute('data-layername', this.lbName);
+				this.canvas.setAttribute('data-idx', this.lbIdx);
 
 				self.layers[this.lbIdx] = {
 					name: this.lbName,
