@@ -1,6 +1,7 @@
 namespace RideStylerShowcase {
     import WheelFilterModel = ridestyler.Requests.WheelFilterModel;
     import WheelModelDescriptionModel = ridestyler.Descriptions.WheelModelDescriptionModel;
+    import WheelModelRequest = ridestyler.Requests.WheelModelDescriptionRequestModel;
 
     export class RideStylerShowcaseWheelSelector extends RideStylerShowcaseProductSelector<WheelModelDescriptionModel, WheelFilterModel> {
         private readonly vehicleConfigurationID:string;
@@ -25,7 +26,8 @@ namespace RideStylerShowcase {
             this.vehicleConfigurationID = stateData.currentVehicleConfigurationID;
             this.defaultFilters = {
                 VehicleConfiguration: stateData.currentVehicleConfigurationID,
-                HasCatalogImage: true
+                HasCatalogImage: true,
+                HasFitments: true
             };
             this.currentFilters = ObjectHelper.assign({}, this.defaultFilters);
         }
@@ -34,8 +36,12 @@ namespace RideStylerShowcase {
             return PromiseHelper.then(api.request("wheel/countmodels", filters), response => response.Count);
         }
         protected getResults(filters: WheelFilterModel): ridestyler.RideStylerPromise<WheelModelDescriptionModel[], ridestyler.RideStylerAPIResponse> {
-            return PromiseHelper.then(api.request("wheel/getmodeldescriptions", ObjectHelper.assign({
-                IncludeResources: true
+            return PromiseHelper.then(api.request("wheel/getmodeldescriptions", ObjectHelper.assign<WheelModelRequest>({
+                IncludeMetaKeys: [
+                    'Description',
+                    'Highlights'
+                ],
+                HasFitments: true
             }, filters)), response => response.Models);
         }
         protected productFilter(product: WheelModelDescriptionModel): boolean {

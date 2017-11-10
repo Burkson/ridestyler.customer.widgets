@@ -23,8 +23,23 @@ namespace RideStylerShowcase {
                 className: className + '-description ridestyler-showcase-details-secondary',
                 appendTo: this.component
             });
+            
+            HTMLHelper.createButton({
+                className: className + '-features-specs',
+                appendTo: this.component,
+                text: strings.getString('wheel-features-specs'),
+                link: true
+            }).addEventListener('click', () => {
+                this.showWheelModal();
+            });
 
             this.state.afterDataChange(data => this.onDataChange(data));
+        }
+
+        private showWheelModal() {
+            let stateData = this.state.getData();
+
+            new RideStylerShowcaseWheelModal(this.showcase, stateData.currentWheel).show();
         }
 
         private onDataChange(data:state.StateData) {
