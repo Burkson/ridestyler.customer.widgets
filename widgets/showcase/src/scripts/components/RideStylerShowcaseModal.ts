@@ -2,6 +2,9 @@ namespace RideStylerShowcase {
     const modalClass = 'ridestyler-showcase-modal';
     const backdropClass = modalClass + '-backdrop';
 
+    import Action = RideStylerShowcaseModal.Action;
+    import Options = RideStylerShowcaseModal.Options;
+
     export class RideStylerShowcaseModal extends ComponentBase {
         /**
          * The main modal element
@@ -18,9 +21,9 @@ namespace RideStylerShowcase {
         /**
          * The options that the modal was created with
          */
-        private readonly options: RideStylerShowcaseModal.Options;
+        protected readonly options: Options;
 
-        constructor(showcaseInstance:RideStylerShowcaseInstance, options: RideStylerShowcaseModal.Options) {
+        constructor(showcaseInstance:RideStylerShowcaseInstance, options: Options) {
             super(showcaseInstance);
 
             this.options = options;
@@ -50,11 +53,34 @@ namespace RideStylerShowcase {
             if (this.options.full) this.component.classList.add(modalClass + '-full')
 
             HTMLHelper.createElement('button', {
-                className: 'ridestyler-showcase-modal-close',
+                className: modalClass + '-close',
                 appendTo: this.component
             }).addEventListener('click', () => {
                 this.hide();
             });
+
+            if (this.options.actions)
+                this.buildActions(this.options.actions);
+        }
+
+        private buildActions(actions: Action[]) {
+            let actionContainer = HTMLHelper.createElement('div', {
+                className: modalClass + '-actions',
+                appendTo: this.component
+            });
+
+            for (let action of actions) {
+                let actionButton = HTMLHelper.createButton(ObjectHelper.assign<HTMLHelper.createButtonOptions>({
+                    appendTo: actionContainer
+                }, action));
+
+                actionButton.addEventListener('click', () => {
+                    if (typeof action.action === 'function') action.action();
+                    else if (action.action === 'hide-modal') {
+                        this.hide();
+                    }
+                });
+            }
         }
 
         /**
@@ -170,12 +196,21 @@ namespace RideStylerShowcase {
     }
 
     export namespace RideStylerShowcaseModal {
+        export interface Action extends HTMLHelper.createButtonOptions {
+            /**
+             * The action to preform when this button is clicked
+             */
+            action: 'hide-modal'|Function;
+        }
+
         export interface Options {
             // If true, the modal will remove itself from the DOM when it's hidden
             removeOnHidden?: boolean;
 
             // If true, display this modal should take up the full size of the showcase
             full?: boolean;
+
+            actions?: Action[];
         }
     }
 }
