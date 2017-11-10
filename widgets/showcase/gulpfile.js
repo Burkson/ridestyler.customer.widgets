@@ -298,6 +298,7 @@ gulp.task('run', ['build'], function () {
         },
         middleware: [
             function (req, res, next) {
+                // Log any requests to the console;
                 console.log(req.url);
                 return next();
             }
@@ -311,10 +312,14 @@ gulp.task('run', ['build'], function () {
     gulp.watch(paths.sources.icons, ['icons']);
 
     gulp.watch(paths.sources.typescript, function () {
+        browserSync.notify("<span color='goldenrod'>Compiling TypeScript to JS...</span>", 10 * 1000);
+        
         return compiler.javascript().pipe(browserSync.reload({stream: true}));
     });
-
+    
     gulp.watch(paths.sources.sass, function () {
+        browserSync.notify("<span color='goldenrod'>Compiling SASS to CSS...</span>", 10 * 1000);
+
         if (bundleCSS) return compiler.javascript().pipe(browserSync.reload({stream: true}));
 
         return compiler.css(false).pipe(browserSync.stream({match: '**/*.css'}));
