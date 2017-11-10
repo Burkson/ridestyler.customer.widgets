@@ -181,14 +181,32 @@ namespace RideStylerShowcase.HTMLHelper {
         }
     }
 
-    export function createElement<K extends keyof HTMLElementTagNameMap>(tagName: K, options?:createElementOptions<HTMLElementTagNameMap[K]>): HTMLElementTagNameMap[K];
-    export function createElement(tagName: string, options?:createElementOptions<HTMLElement>): HTMLElement;
+    /**
+     * Create a DIV
+     * @param options Additional operations to perform on the element
+     */
+    export function createElement(options?:createElementOptions<HTMLDivElement>): HTMLDivElement;
     /**
      * Create an element
      * @param tagName The tag of the element to create
      * @param options Additional operations to perform on the element
      */
-    export function createElement(tagName:string, options?:createElementOptions<HTMLElement>): HTMLElement {
+    export function createElement<K extends keyof HTMLElementTagNameMap>(tagName: K, options?:createElementOptions<HTMLElementTagNameMap[K]>): HTMLElementTagNameMap[K];
+    /**
+     * Create an element
+     * @param tagName The tag of the element to create
+     * @param options Additional operations to perform on the element
+     */
+    export function createElement(tagName: string, options?:createElementOptions<HTMLElement>): HTMLElement;
+    export function createElement(tagNameOrDivOptions:string|createElementOptions<HTMLDivElement>, options?:createElementOptions<HTMLElement>): HTMLElement {
+        let tagName:string;
+        
+        if (typeof tagNameOrDivOptions === 'string') tagName = tagNameOrDivOptions;
+        else {
+            tagName = 'div';
+            options = tagNameOrDivOptions;
+        }
+
         let element = document.createElement(tagName);
 
         applyOptions(element, options);
