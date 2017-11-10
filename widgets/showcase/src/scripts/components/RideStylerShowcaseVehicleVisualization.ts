@@ -16,7 +16,7 @@ namespace RideStylerShowcase {
         private tabs: {
             paint: RideStylerShowcaseVerticalTabBar.Tab,
             wheels: RideStylerShowcaseVerticalTabBar.Tab,
-            tires: RideStylerShowcaseVerticalTabBar.Tab,
+            // tires: RideStylerShowcaseVerticalTabBar.Tab,
             suspension: RideStylerShowcaseVerticalTabBar.Tab
         };
 
@@ -203,11 +203,11 @@ namespace RideStylerShowcase {
                     key: 'wheels',
                     label: strings.getString('wheels')
                 }),
-                tires: new RideStylerShowcaseVerticalTabBar.Tab({
-                    icon: 'tire',
-                    key: 'tires',
-                    label: strings.getString('tires')
-                }),
+                // tires: new RideStylerShowcaseVerticalTabBar.Tab({
+                //     icon: 'tire',
+                //     key: 'tires',
+                //     label: strings.getString('tires')
+                // }),
                 suspension: new RideStylerShowcaseVerticalTabBar.Tab({
                     icon: 'suspension',
                     key: 'suspension',
