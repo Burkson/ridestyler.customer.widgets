@@ -1,15 +1,18 @@
-.ridestyler-showcase-button-picker {
-    $border-radius: 0.5em;
-    $border-width: 0.05em;
+@import "../buttons";
 
-    border: $border-width solid #ccc;
-    border-radius: $border-radius;
-    background-color: #efefef;
+.ridestyler-showcase-button-picker {
+    @include button;
+    @include button-skinny;
+
+    padding: 0;
     text-align: center;
-    font-size: 1em;
 
     &-option, &-title {
         padding: 10px;
+    }
+
+    &-title {
+        font-size: 1em;
     }
 
     &-option {
@@ -17,8 +20,8 @@
             background-color: #999;
 
             &:last-child {
-                border-bottom-left-radius: $border-radius - $border-width;
-                border-bottom-right-radius: $border-radius - $border-width;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
             }
         }
     }
