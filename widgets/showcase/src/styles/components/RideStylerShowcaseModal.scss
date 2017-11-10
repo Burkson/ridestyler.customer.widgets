@@ -30,16 +30,21 @@
             top: 35%;
         }
     }
+
+    & &-close { @include modalClose; }
+    &-backdrop { @include modalBackdrop; }
+    &-actions {
+        position: absolute;
+
+        bottom: $modalPadding;
+        left: $modalPadding;
+        right: $modalPadding;
+
+        text-align: right;
+    }
 }
 
-.ridestyler-showcase-modal-backdrop {
-    @include modalBackdrop;
-}
-
-.ridestyler-showcase-modal-close {
-    @include modalClose;
-}
-
+// Modal transitions
 .ridestyler-showcase-modal, .ridestyler-showcase-modal-backdrop {
     transition: opacity 0.3s linear;
     opacity: 0;

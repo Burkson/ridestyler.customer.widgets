@@ -1,5 +1,7 @@
 @import "shared";
 
+$modalPadding: 3em;
+
 @mixin modal {
     position: absolute;
     top: 10px;
@@ -9,7 +11,7 @@
     margin: 0;
     width: auto; height: auto;
 
-    padding: 3em;
+    padding: $modalPadding;
     
     border-radius: 5px;
     background-color: #fff;
