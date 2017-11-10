@@ -14,7 +14,7 @@ namespace RideStylerShowcase {
         constructor(showcaseInstance:RideStylerShowcaseInstance) {
             super(showcaseInstance);
 
-            const {currentVehicleConfigurationID} = showcaseInstance.stateHandler.getData();
+            const {currentVehicleConfigurationID} = showcaseInstance.state.getData();
 
             this.vehicleConfigurationID = currentVehicleConfigurationID;
         }

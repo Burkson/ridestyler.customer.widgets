@@ -15,7 +15,7 @@ namespace RideStylerShowcase {
         constructor(showcaseInstance:RideStylerShowcaseInstance) {
             super(showcaseInstance);
 
-            let stateData = showcaseInstance.stateHandler.getData();
+            let stateData = showcaseInstance.state.getData();
 
             this.supportedVehicleImagery = {
                 angled: stateData.vehicleHasAngledImage,

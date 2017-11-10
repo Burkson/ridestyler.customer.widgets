@@ -39,12 +39,12 @@ namespace RideStylerShowcase {
         /**
          * The state handler
          */
-        public stateHandler:state.RideStylerShowcaseState;
+        public state:state.RideStylerShowcaseState;
 
         /**
          * The style manager
          */
-        public styleManager:styles.StyleManager;
+        public style:styles.StyleManager;
 
         /**
          * The event handler
@@ -55,6 +55,11 @@ namespace RideStylerShowcase {
          * Settings specified when the showcase was created
          */
         public settings:RideStylerShowcaseSettings;
+
+        /**
+         * The filter controller
+         */
+        public filters:filters.FilterController;
         
         /**
          * Create a RideStyler Showcase instance and do not initialize it
@@ -138,6 +143,8 @@ namespace RideStylerShowcase {
 
             this.initializeStyle();
 
+            this.initializeFilters();
+
             for (let component of this.otherComponents)
                 container.appendChild(component.component);
 
@@ -146,12 +153,12 @@ namespace RideStylerShowcase {
                 container.appendChild(component.component);
             }
             
-            this.stateHandler.onChange((e) => {
+            this.state.onChange((e) => {
                 return this.events.trigger("state-changed", e) && this.onStateChanged(e);
             });
 
             this.events.on("vehicle-selected", selection => {
-                this.stateHandler.changeState(States.Visualize, {
+                this.state.changeState(States.Visualize, {
                     currentVehicleConfigurationID: selection.VehicleConfiguration,
                     currentVehicleDescription: selection.VehicleDescription,
                     currentVehicleTireOptionID: selection.TireOptionID,
@@ -163,28 +170,29 @@ namespace RideStylerShowcase {
                     currentWheel: undefined,
                     currentWheelFitment: undefined,
                     currentTireOption: undefined,
-                    currentVehicleDescriptionModel: undefined
+                    currentVehicleDescriptionModel: undefined,
+                    currentFitmentFilters: undefined
                 });
 
                 return true;
             });
 
             this.events.on("home", ev => {
-                this.stateHandler.changeState(States.ChooseVehicle);
+                this.state.changeState(States.ChooseVehicle);
                 return true;
             });
 
             this.onStateChanged({
-                newState: this.stateHandler.currentState,
+                newState: this.state.currentState,
                 oldState: undefined,
                 newData: undefined
             });
         }
 
         private initializeState() {
-            this.stateHandler = new state.RideStylerShowcaseState(States.ChooseVehicle);
+            this.state = new state.RideStylerShowcaseState(States.ChooseVehicle);
 
-            if (this.settings.debug.state === true) this.stateHandler.debugCallback = function(e, finished) {
+            if (this.settings.debug.state === true) this.state.debugCallback = function(e, finished) {
                 let finishedString = finished ? 'Finished' : 'Beginning';
                 let stateChange = "to " + States[e.newState];
 
@@ -197,13 +205,24 @@ namespace RideStylerShowcase {
         }
 
         private initializeStyle() {
-            this.styleManager = new styles.StyleManager(this.container);
-            this.styleManager.initialized.done(() => this.events.trigger('initialized', undefined));
-            this.styleManager.onResize = () => this.events.trigger('resize', undefined);
-            this.styleManager.onResized = () => this.events.trigger('resized', undefined);
+            this.style = new styles.StyleManager(this.container);
+            this.style.initialized.done(() => this.events.trigger('initialized', undefined));
+            this.style.onResize = () => this.events.trigger('resize', undefined);
+            this.style.onResized = () => this.events.trigger('resized', undefined);
 
             if (!this.container.classList.contains('ridestyler-showcase'))
                 this.container.classList.add('ridestyler-showcase');
+        }
+
+        private initializeFilters() {
+            this.filters = new filters.FilterController();
+
+            this.events.on("vehicle-selected", selection => {
+                this.filters.setVehicle({
+                    vehicleConfigurationID: selection.VehicleConfiguration,
+                    vehicleTireOptionID: selection.TireOptionID
+                });
+            });
         }
         
         private onStateChanged(ev: state.StateChangedEvent):boolean {

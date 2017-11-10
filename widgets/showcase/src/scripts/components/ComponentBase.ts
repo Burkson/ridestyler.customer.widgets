@@ -3,7 +3,7 @@ namespace RideStylerShowcase {
         constructor (showcaseInstance: RideStylerShowcaseInstance) {
             this.showcase = showcaseInstance;
             this.events = showcaseInstance.events;
-            this.state = showcaseInstance.stateHandler;
+            this.state = showcaseInstance.state;
             
             this.initializeComponent();
         }
