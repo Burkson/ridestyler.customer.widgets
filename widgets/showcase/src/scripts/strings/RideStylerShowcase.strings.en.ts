@@ -21,6 +21,27 @@ namespace RideStylerShowcase.strings {
         "no-results":                     "No Results Found",
         "wheel-features-specs":           "Wheel Features & Specs",
         "share-my-vehicle":               "Share My Vehicle",
-        "share-instructions":             "Scan the QR code or use the link to share or save your vehicle configuration."
+        "share-instructions":             "Scan the QR code or use the link to share or save your vehicle configuration.",
+        "no-description-wheel":           "We don't have a description for this wheel yet",
+        'show-specs':                     "Show Specs",
+        'call':                           "Call",
+        'size':                           "Size",
+        'offset':                         "Offset",
+        'bolt-pattern':                   "Bolt Pattern",
+        'centerbore':                     "Centerbore",
+        'price':                          "Price",
+        'item-number':                    "Item #",
+        'brands':                         "Brands",
+        'finishes':                       "Finishes",
+        'sizes':                          "Sizes",
+        'all':                            "All",
+        'all-brands':                     "All Brands",
+        'all-finishes':                   "All Finishes",
+        'all-sizes':                      "All Sizes",
+        'filter-results':                 "Filter Results",
+        'loading-ellipsis':               "Loading...",
+        'show-count-format-tires':        "Show {count} Tires",
+        'show-count-format-wheels':       "Show {count} Wheels",
+        'specifications':                 "Specifications"
     });
 }

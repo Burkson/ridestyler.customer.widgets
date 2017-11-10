@@ -24,13 +24,49 @@ namespace RideStylerShowcase {
         'no-results' |
         'wheel-features-specs' |
         'share-my-vehicle' |
-        'share-instructions';
+        'share-instructions' |
+        'no-description-wheel' |
+        'show-specs' |
+        'call' | 
+        'size' |
+        'offset' |
+        'bolt-pattern' |
+        'centerbore' | 
+        'price' |
+        'item-number' |
+        'brands' |
+        'finishes' | 
+        'sizes' | 
+        'all' |
+        'all-brands' |
+        'all-finishes' | 
+        'all-sizes' | 
+        'filter-results' |
+        'loading-ellipsis' |
+        'show-count-format-wheels' |
+        'show-count-format-tires' |
+        'specifications';
 
+    let defaultLanguageFormatProvider:IStringsLanguageFormatProvider = {
+        currency: (number, symbol) => {
+            return symbol + (+number.toFixed(2)).toLocaleString();
+        }
+    };
+    
     /**
      * Defines what a strings dictionary should look like
      */
     export type IStringsLanguageDictionary = {
         [stringKey in StringKeys]:string;
+    }
+
+    export interface IStringsLanguageFormatProvider {
+        currency?: (amount:number, symbol:string) => string;
+    }
+
+
+    export interface IStringsLanguage extends IStringsLanguageDictionary {
+        format?: IStringsLanguageFormatProvider;
     }
 
     /**
@@ -44,14 +80,16 @@ namespace RideStylerShowcase {
      * An internal structure for holding language data
      */
     class LanguageRegister {
-        languageDictionary: IStringsLanguageDictionary;
+        private readonly language: IStringsLanguage;
+        public readonly format: IStringsLanguageFormatProvider;
 
         /**
          * Create a register for a language
-         * @param languageDictionary The strings for the language
+         * @param language The language definition
          */
-        constructor(languageDictionary:IStringsLanguageDictionary) {
-            this.languageDictionary = languageDictionary;
+        constructor(language:IStringsLanguage) {
+            this.language = language;
+            this.format = language.format;
         }
 
         /**
@@ -59,7 +97,7 @@ namespace RideStylerShowcase {
          * @param key The string key
          */
         getString(key:StringKeys):string {
-            return this.languageDictionary[key];
+            return this.language[key];
         }
     }
 
@@ -77,12 +115,22 @@ namespace RideStylerShowcase {
         /**
          * Register a language to be used in the showcase
          * @param languageKey The key of the language you are registering
-         * @param languageDictionary The strings for the language
+         * @param language The language provider
          */
-        export function registerLanguage(languageKey:LanguageKeys, languageDictionary:IStringsLanguageDictionary) {
-            let languageRegister = languageRegisters[languageKey] = new LanguageRegister(languageDictionary);
+        export function registerLanguage(languageKey:LanguageKeys, language:IStringsLanguage, setAsDefault?: boolean) {
+            // Set default format provider
+            if (!language.format) language.format = defaultLanguageFormatProvider;
+            else for (let key in defaultLanguageFormatProvider) {
+                // If the defaultLanguageProvider has a format function that is missing on the language's format provider,
+                // implement it in the language's format provider
+                if (defaultLanguageFormatProvider.hasOwnProperty(key) && key in language.format === false) {
+                    language.format[key] = defaultLanguageFormatProvider[key];
+                }
+            }
 
-            if (!defaultLanguage) defaultLanguage = languageRegister;
+            let languageRegister = languageRegisters[languageKey] = new LanguageRegister(language);
+
+            if (setAsDefault || !defaultLanguage) defaultLanguage = languageRegister;
         }
 
         /**
@@ -108,22 +156,33 @@ namespace RideStylerShowcase {
         }
 
         /**
+         * Returns the specified language, or the default language if it could not be found
+         * @param languageKey The key of the language to retrieve
+         */
+        function getLanguage(languageKey?:LanguageKeys):LanguageRegister {
+            return languageKey in languageRegisters ?
+                languageRegisters[languageKey] :
+                defaultLanguage;
+        }
+
+        /**
          * Get a string from the registered strings
          * @param key The string key to return a string for
          * @param languageKey The language you want to use
          */
         export function getString(key:StringKeys, languageKey?:LanguageKeys):string {
-            let languageRegister = languageKey in languageRegisters ?
-                languageRegisters[languageKey] :
-                defaultLanguage;
-            
+            let languageRegister:LanguageRegister = getLanguage(languageKey);
             let string:string;
-
+            
             // If we don't have a language, or could not get the string from the register 
-            if (!languageRegister || !(string = languageRegister.getString(key)))
-                return key;
+            if (!(string = languageRegister.getString(key)))
+            return key;
             
             return string;
+        }
+        
+        export function format(languageKey?:LanguageKeys):IStringsLanguageFormatProvider {
+            return getLanguage(languageKey).format;
         }
     }
 }
