@@ -272,6 +272,10 @@ namespace RideStylerShowcase.HTMLHelper {
          * If true, create a link button
          */
         link?: boolean;
+        /**
+         * If true, create a skinny button
+         */
+        skinny?: boolean;
     }
     export function createButton(options:createButtonOptions) {
         var element = createElement('button', options);
@@ -283,6 +287,7 @@ namespace RideStylerShowcase.HTMLHelper {
         if (options.primary) element.classList.add(buttonClassName + '-primary');
         if (options.disabled) element.disabled = true;
         if (options.link) element.classList.add(buttonClassName + '-link')
+        if (options.skinny) element.classList.add(buttonClassName + '-skinny');
 
         return element;
     }

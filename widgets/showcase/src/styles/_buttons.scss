@@ -34,6 +34,10 @@
         box-shadow: inset 0 0 10px 0 darken($background-color, 20%);
     }
 }
+@mixin button-skinny {
+    padding: 10px;
+    color: red;
+}
 @mixin button-large {
     font-size: 1.5em;
     border-radius: 10px;
@@ -55,6 +59,9 @@
     &:focus {
         border-color: #aaa;
     }
+}
+@mixin button-skinny {
+    padding: 10px;
 }
 
 @mixin button-link {

@@ -3,13 +3,17 @@
 
 .ridestyler-showcase-button {
     @include button;
-}
-.ridestyler-showcase-button-large {
-    @include button-large;
-}
-.ridestyler-showcase-button-primary {
-    @include button-primary;
-}
-.ridestyler-showcase-button-link {
-    @include button-link;
+
+    &-large {
+        @include button-large;
+    }
+    &-primary {
+        @include button-primary;
+    }
+    &-link {
+        @include button-link;
+    }
+    &-skinny {
+        @include button-skinny;
+    }
 }
