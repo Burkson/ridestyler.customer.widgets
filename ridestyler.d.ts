@@ -27,6 +27,31 @@ declare namespace ridestyler {
             Angle = 2
         }
 
+        const enum WheelBrandFlags
+        {
+            None = 0,
+            PreferProprietaryInstallationKits = 1,
+            RequireProprietaryInstallationKits = 2
+        }
+
+        interface WheelFinishCategoryDataObject
+        {
+            WheelFinishCategoryID: string;
+            WheelFinishCategoryUpdated: string;
+            WheelFinishCategoryArchived: boolean;
+            WheelFinishCategoryName: string;
+        }
+
+        interface WheelBrandDataObject {
+            WheelBrandID: string;
+            WheelBrand_DataSourceID: number;
+            WheelBrand_OrganizationPermissionID: number;
+            WheelBrandUpdated: string;
+            WheelBrandArchived: boolean
+            WheelBrandName: string;
+            WheelBrandFlags: WheelBrandFlags;
+        }
+
         interface WheelModelDataObject {
             WheelModelID: string;
             WheelModel_WheelBrandID: string;
@@ -613,12 +638,24 @@ declare namespace ridestyler {
             Count: number;
         }
 
+        interface DiameterResultModel extends RideStylerAPIResponse {
+            Diameters: number[];
+        }
+
+        interface WheelBrandsResultModel extends RideStylerAPIResponse {
+            Brands: DataObjects.WheelBrandDataObject[];
+        }
+
         interface WheelModelsResultModel extends RideStylerAPIResponse {
-            Models: DataObjects.WheelModelDataObject[]
+            Models: DataObjects.WheelModelDataObject[];
         }
 
         interface WheelModelDescriptionResultModel extends RideStylerAPIResponse {
             Models: Descriptions.WheelModelDescriptionModel[];
+        }
+
+        interface WheelFinishCategoriesResultModel extends RideStylerAPIResponse {
+            Finishes: DataObjects.WheelFinishCategoryDataObject[];
         }
 
         interface VehiclePaintSchemeDescriptionResultModel extends RideStylerAPIResponse {
@@ -824,15 +861,119 @@ declare namespace ridestyler {
             RequiredFitmentResourceTypes?: DataObjects.TireFitmentResourceType[];
         }
 
+        const enum InclusionState
+        {
+            None     = 0b00000, // 0
+            Optional = 0b00001, // 1
+            Excluded = 0b00010, // 2
+            Required = 0b00101, // 5
+            ByChild =  0b01000, // 8
+            ByParent = 0b10000, // 16
+        }
+        
+        const enum PromotionType
+        {
+            Sale = 1,
+            Closeout = 2,
+            Feature = 3,
+            Special = 4
+        }
+        
+        const enum WheelBrandResourceType
+        {
+            Logo = 1
+        }
+
+        const enum WheelFitmentResourceType
+        {
+            Side = 1,
+            Angled = 2,
+            Catalog = 3
+        }
+        
+        const enum VehicleFitmentPositionType
+        {
+            Both = 0,
+            Front = 1,
+            Rear = 2
+        }
+
         interface WheelFilterModel extends ActionRequestPagedModel {
+            HasFitments?: boolean;
+            
             HasSideImage?:boolean;
             HasAngledImage?:boolean;
             HasCatalogImage?:boolean;
 
-            WheelModel?: string;
-            WheelModels?: string;
+            HasLogo?: boolean;
 
+            SelectBrandsOnly?: boolean;
+            UsePromotionOrder?: boolean;
+            UseBrandPriorities?: boolean;
+
+            WheelBrandStatus?: InclusionState;
+            WheelBrandStatuses?: InclusionState[];
+
+            Promotion?: number;
+            Promotions?: number[];
+    
+            PromotionType?: PromotionType;
+            PromotionTypes?: PromotionType[];
+    
+            WheelBrand?: string;
+            WheelBrands?: string[];
+    
+            WheelModel?: string;
+            WheelModels?: string[];
+    
+            WheelFitment?: string;
+            WheelFitments?: string[];
+    
+            WheelFinishCategory?: string;
+            WheelFinishCategories?: string[];
+    
+            BrandResourceType?: WheelBrandResourceType;
+            BrandResourceTypes?: WheelBrandResourceType[];
+    
+            FitmentResourceType?: WheelFitmentResourceType;
+            FitmentResourceTypes?: WheelFitmentResourceType[];
+    
+            FitmentFilters?: FitmentFilterModel[];
+    
+            PartNumber?: string;
+            PartNumbers?: string[];
+    
+            DataSource?: number;
+            DataSources?: number[];
+    
+            IgnoredWheelModelAttributes?: number[];
+    
+            RequiredWheelModelAttribute?: number;
+            RequiredWheelModelAttributes?: number[];
+            
+            RequiredWheelModelAttributeGroups?: {
+                [groupKey: string]: number[]
+            };
+    
             VehicleConfiguration?: string;
+            VehicleType?: number;
+            VehicleFitmentPosition?: VehicleFitmentPositionType;
+            ApplyGlobalFilters?: boolean;
+    
+            HasPricing?: boolean;
+    
+            WheelPricingID?: number;
+            WheelPricingIDs?: number[];
+    
+            Price?: number;
+    
+            PriceMin?: number;
+            PriceMax?: number;
+    
+            GetPricingGroupID?: string;
+            PricingGroupID?: string;
+    
+            PricingGroupName?: string;
         }
 
         interface VehicleFilterModel extends ActionRequestPagedModel {
@@ -1049,8 +1190,12 @@ declare namespace ridestyler {
         "vehicle/gettireoptiondetails": Responses.VehicleTireOptionDetailResultModel,
         "vehicle/getpaintschemedescriptions": Responses.VehiclePaintSchemeDescriptionResultModel,
         "wheel/countmodels": Responses.ActionCountResultModel,
+        "wheel/countbrands": Responses.ActionCountResultModel,
+        "wheel/getdiameters": Responses.DiameterResultModel,
+        "wheel/getbrands": Responses.WheelBrandsResultModel,
         "wheel/getmodels": Responses.WheelModelsResultModel,
         "wheel/getmodeldescriptions": Responses.WheelModelDescriptionResultModel,
+        "wheel/getfinishes": Responses.WheelFinishCategoriesResultModel,
         "wheel/getfitments": Responses.WheelFitmentResultModel,
         "wheel/getfitmentdescriptions": Responses.WheelFitmentDescriptionResultModel,
         "wheel/getfitmentresources": Responses.WheelFitmentResourcesResultModel,
@@ -1073,8 +1218,12 @@ declare namespace ridestyler {
         "vehicle/gettireoptiondetails": Requests.GetTireOptionsRequestModel,
         "vehicle/getpaintschemedescriptions": Requests.VehiclePaintSchemeRequestModel,
         "wheel/countmodels": Requests.WheelFilterModel,
+        "wheel/countbrands": Requests.WheelFilterModel,
+        "wheel/getdiameters": Requests.WheelFilterModel,
+        "wheel/getbrands": Requests.WheelFilterModel,
         "wheel/getmodels": Requests.WheelFilterModel,
         "wheel/getmodeldescriptions": Requests.WheelModelDescriptionRequestModel,
+        "wheel/getfinishes": Requests.WheelFilterModel,
         "wheel/getfitments": Requests.WheelFilterModel,
         "wheel/getfitmentdescriptions": Requests.WheelFitmentDescriptionRequestModel,
         "wheel/getfitmentresources": Requests.WheelFilterModel,
