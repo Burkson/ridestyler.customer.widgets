@@ -1,0 +1,34 @@
+.ridestyler-showcase-filter-modal {
+    &-menus {
+        overflow-x: auto;
+        overflow-y: hidden;
+        height: 85%;
+    }
+
+    &-menu-container {
+        width: (100% )/ 3;
+        height: 100%;
+        vertical-align: top;
+        display: inline-block;
+        position: relative;
+
+        .ridestyler-showcase-option-menu {
+            position: absolute;
+            top: 2.5em; left: 0; bottom: 0; right: 0;
+        }
+    }
+
+    &-menu {
+        &-title {
+            font-size: 1.5em;
+            line-height: 1.5em;
+            text-align: center;
+        }
+    }
+
+    .ridestyler-showcase-button-large {
+        margin: 0 auto;
+        display: block;
+        margin-top: 20px;
+    }
+}

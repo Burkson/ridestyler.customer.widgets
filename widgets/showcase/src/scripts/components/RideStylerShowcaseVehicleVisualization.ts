@@ -9,6 +9,7 @@ namespace RideStylerShowcase {
 
         private titleElement:HTMLElement;
         private rotateElement:HTMLElement;
+        private filterButton:HTMLButtonElement;
 
         private vehicleDetails:VehicleDetails;
 
@@ -31,21 +32,23 @@ namespace RideStylerShowcase {
             paint: CustomizationComponentSettings,
             wheels: CustomizationComponentSettings,
             tires: CustomizationComponentSettings,
-            suspension: CustomizationComponentSettings,
-
-            [key:string]: CustomizationComponentSettings;
+            suspension: CustomizationComponentSettings
         } = {
             paint: {
-                title: strings.getString('select-paint')
+                title: strings.getString('select-paint'),
+                showFilterButton: false
             },
             wheels: {
-                title: strings.getString('select-wheels')
+                title: strings.getString('select-wheels'),
+                showFilterButton: true
             },
             tires: {
-                title: strings.getString('select-tires')
+                title: strings.getString('select-tires'),
+                showFilterButton: false
             },
             suspension: {
-                title: strings.getString('adjust-suspension')
+                title: strings.getString('adjust-suspension'),
+                showFilterButton: false
             }
         }
 
@@ -145,10 +148,24 @@ namespace RideStylerShowcase {
                 this.switchAngle();
             });
 
-            this.titleElement = HTMLHelper.createElement('div', {
-                className: 'ridestyler-showcase-customization-component-title',
-                appendTo: this.component
+            HTMLHelper.createElement({
+                className: 'ridestyler-showcase-customization-component-title-container',
+                appendTo: this.component,
+                append: [
+                    this.titleElement = HTMLHelper.createElement({
+                        className: 'ridestyler-showcase-customization-component-title',
+                        appendTo: this.component
+                    }),
+                    this.filterButton = HTMLHelper.createButton({
+                        text: strings.getString('filter-results'),
+                        skinny: true
+                    })
+                ]
             });
+            
+            this.filterButton.addEventListener('click', () => {
+                this.showFilters();
+            })
 
             HTMLHelper.createButton({
                 primary: true,
@@ -292,6 +309,14 @@ namespace RideStylerShowcase {
                 suspension: new RideStylerShowcaseSuspensionSelector(this.showcase)
             };
 
+            this.showcase.filters.wheelFilters.onFiltersChanged = filters => {
+                this.customizationComponents.wheels.setFilters(filters);
+            };
+            
+            this.showcase.filters.tireFilters.onFiltersChanged = filters => {
+                this.customizationComponents.tires.setFilters(filters);
+            };
+
             this.customizationComponents.paint.onPaintSchemeSelected = paintScheme => {
                 this.customizationComponents.paint.setOptionIsLoading(true);
 
@@ -305,10 +330,11 @@ namespace RideStylerShowcase {
             this.customizationComponents.wheels.productSelectedCallback = model => {
                 this.customizationComponents.wheels.setOptionIsLoading(true);
 
-                if (this.imageType === ridestyler.DataObjects.VehicleResourceType.Angle && !model.HasAngleImage)
-                    this.switchAngle();
-                else if (this.imageType === ridestyler.DataObjects.VehicleResourceType.Side && !model.HasSideImage)
-                    this.switchAngle();
+                const canRenderOnCurrentAngle =
+                    this.imageType === ridestyler.DataObjects.VehicleResourceType.Angle && model.HasAngleImage ||
+                    this.imageType === ridestyler.DataObjects.VehicleResourceType.Side && model.HasSideImage;
+
+                if (!canRenderOnCurrentAngle) this.switchAngle();
 
                 api.request('wheel/getfitmentdescriptions', {
                     VehicleConfiguration: this.vehicleConfigurationID,
@@ -386,15 +412,7 @@ namespace RideStylerShowcase {
         private activeCustomizationComponent:IComponent;
         private setActiveCustomizationComponent(customizationComponent:IComponent) {
             let stateData = this.state.getData();
-            let componentKey:string;
-
-            for (let key in this.customizationComponents) {
-                let component = this.customizationComponents[key];
-
-                if (component === customizationComponent) {
-                    componentKey = key;
-                }
-            }
+            let componentKey:string = this.getComponentKey(customizationComponent);
             
             let settings:CustomizationComponentSettings = this.customizationComponentSettings[componentKey];
             let tab:RideStylerShowcaseVerticalTabBar.Tab = this.tabs[componentKey];
@@ -417,18 +435,50 @@ namespace RideStylerShowcase {
                 customizationComponent instanceof RideStylerShowcaseWheelSelector && stateData.currentWheel ? 
                 '' : 'none';
 
+            this.filterButton.style.display = settings.showFilterButton ? '' : 'none';
+
             HTMLHelper.setText(this.titleElement, settings.title);
+        }
+
+        private getComponentKey(customizationComponent:IComponent):string {
+            for (let key in this.customizationComponents) {
+                let component = this.customizationComponents[key];
+
+                if (component === customizationComponent) {
+                    return key;
+                }
+            }
         }
 
         private updateViewport(instructions?:ridestyler.Requests.VehicleRenderInstructions) {
             Object.assign(this.currentRenderInstructions, instructions);
             
-
             return this.viewport.Update(instructions);
         }
         
         private canSwitchAngle():boolean {
             return this.vehicleDescriptionModel.HasAngledImage && this.vehicleDescriptionModel.HasSideImage;
+        }
+
+        private showFilters() {
+            const activeCustomizationComponent = this.activeCustomizationComponent;
+            let filterModal:RideStylerShowcaseFilterModal<any, any>;
+
+            if (activeCustomizationComponent === this.customizationComponents.tires) {
+                filterModal = new RideStylerShowcaseFilterModal(this.showcase, {
+                    filterProvider: this.showcase.filters.tireFilters,
+                    showCountTextFormat: strings.getString('show-count-format-tires')
+                });
+            } else if (activeCustomizationComponent === this.customizationComponents.wheels) {
+                filterModal = new RideStylerShowcaseFilterModal(this.showcase, {
+                    filterProvider: this.showcase.filters.wheelFilters,
+                    showCountTextFormat: strings.getString('show-count-format-wheels')
+                });
+            }
+            
+            if (filterModal) {
+                filterModal.show();
+            }
         }
 
         private switchAngle() {
@@ -449,5 +499,6 @@ namespace RideStylerShowcase {
 
     interface CustomizationComponentSettings {
         title:string;
+        showFilterButton: boolean;
     }
 }

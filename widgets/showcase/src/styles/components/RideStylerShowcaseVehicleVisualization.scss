@@ -8,6 +8,10 @@
     right: 18%;
 
     margin-left: 50px /* The width of the tab bar to center this in the remaining space */;
+
+    img {
+        @include crispImageRendering;
+    }
 }
 
 .ridestyler-showcase-customizations {
@@ -84,12 +88,19 @@
 }
 
 .ridestyler-showcase-customization-component-title {
-    position: absolute;
-    bottom: 50%;
-    left: 30px;
     font-size: 1.6em;
     font-weight: bold;
-    margin-bottom: 15px;
+
+    & + .ridestyler-showcase-button {
+        margin-top: 10px;
+    }
+    
+    &-container {
+        position: absolute;
+        bottom: 50%;
+        left: 30px;
+        margin-bottom: 15px;
+    }
 }
 
 .ridestyler-share-my-vehicle-button {
