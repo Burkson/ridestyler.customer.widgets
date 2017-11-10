@@ -154,8 +154,8 @@ namespace RideStylerShowcase {
             let height = width * widthToHeight;
 
             return {
-                Width: width,
-                Height: height
+                Width: ~~width,
+                Height: ~~height
             };
         }
     }
