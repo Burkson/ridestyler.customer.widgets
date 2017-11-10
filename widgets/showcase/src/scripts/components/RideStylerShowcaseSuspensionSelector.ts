@@ -3,8 +3,9 @@ namespace RideStylerShowcase {
     const elementClassName = 'ridestyler-showcase-suspension-selector-element';
 
     export class RideStylerShowcaseSuspensionSelector extends ComponentBase {
-        private front:SuspensionUIElement;
-        private rear:SuspensionUIElement;
+        // private front:SuspensionUIElement;
+        // private rear:SuspensionUIElement;
+        private frontAndRear:SuspensionUIElement;
 
         protected initializeComponent() {
             this.component = HTMLHelper.createElement('div', {
@@ -27,29 +28,42 @@ namespace RideStylerShowcase {
                 suspensionOptions.max = 4;
             }
 
-            let frontOptions:SuspensionUIElementOptions = ObjectHelper.assign({
-                label: strings.getString('front')
-            }, suspensionOptions);
+            this.frontAndRear = new NoUISuspensionElement(this.showcase, ObjectHelper.assign({
+                label: strings.getString('suspension')
+            }, suspensionOptions));
 
-            this.front = new NoUISuspensionElement(this.showcase, frontOptions);
-
-            let rearOptions:SuspensionUIElementOptions = ObjectHelper.assign({
-                label: strings.getString('rear')
-            }, suspensionOptions);
-            
-            this.rear = new NoUISuspensionElement(this.showcase, rearOptions);
-
-            this.component.appendChild(this.front.component);
-            this.component.appendChild(this.rear.component);
-
-            this.front.suspensionChangedCallback = this.rear.suspensionChangedCallback = () => {
-                if (typeof this.suspensionChangeCallback === 'function') {
+            this.frontAndRear.suspensionChangedCallback = () => {
+                if (typeof this.suspensionChangeCallback === 'function')
                     this.suspensionChangeCallback({
-                        SuspensionFront: this.front.value,
-                        SuspensionRear: this.rear.value
+                        Suspension: this.frontAndRear.value
                     });
-                }
             };
+
+            this.component.appendChild(this.frontAndRear.component);
+
+            // let frontOptions:SuspensionUIElementOptions = ObjectHelper.assign({
+            //     label: strings.getString('front')
+            // }, suspensionOptions);
+
+            // this.front = new NoUISuspensionElement(this.showcase, frontOptions);
+
+            // let rearOptions:SuspensionUIElementOptions = ObjectHelper.assign({
+            //     label: strings.getString('rear')
+            // }, suspensionOptions);
+            
+            // this.rear = new NoUISuspensionElement(this.showcase, rearOptions);
+
+            // this.component.appendChild(this.front.component);
+            // this.component.appendChild(this.rear.component);
+
+            // this.front.suspensionChangedCallback = this.rear.suspensionChangedCallback = () => {
+            //     if (typeof this.suspensionChangeCallback === 'function') {
+            //         this.suspensionChangeCallback({
+            //             SuspensionFront: this.front.value,
+            //             SuspensionRear: this.rear.value
+            //         });
+            //     }
+            // };
         }
         
         public suspensionChangeCallback: (renderRequestChange:ridestyler.Requests.VehicleRenderInstructions) => void;
