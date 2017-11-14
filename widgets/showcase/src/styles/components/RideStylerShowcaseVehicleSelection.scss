@@ -152,12 +152,15 @@
      text-align: center;
 }
 .vsm-modal .vsm-final .vehicle-image-wrap .vsm-btn { 
-    width: auto;
-
     @include button;
     @include button-primary;
     
     font-size: 1.5em;
+
+    position: absolute;
+    left: 20%; right: 20%;
+    width: auto;
+    bottom: 5%;
 }
 .vsm-btn {
     font-size: 1em;
