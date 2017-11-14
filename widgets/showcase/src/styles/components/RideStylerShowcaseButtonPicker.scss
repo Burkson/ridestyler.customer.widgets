@@ -1,4 +1,5 @@
 @import "../buttons";
+@import "../shared";
 
 .ridestyler-showcase-button-picker {
     @include button;
@@ -16,12 +17,20 @@
     }
 
     &-option {
+        &-container {
+            background-color: #fff;
+            color: $primary-color;
+            border-bottom-left-radius: 0.1em;
+            border-bottom-right-radius: 0.1em;
+        }
+
         &-active {
-            background-color: #999;
+            background-color: lighten($primary-color, 10%);
+            color: $primary-color-overlaid-text;
 
             &:last-child {
-                border-bottom-left-radius: 0;
-                border-bottom-right-radius: 0;
+                border-bottom-left-radius: 0.1em;
+                border-bottom-right-radius: 0.1em;
             }
         }
     }
