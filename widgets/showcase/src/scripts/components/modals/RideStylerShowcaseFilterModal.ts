@@ -105,11 +105,10 @@ namespace RideStylerShowcase {
             let values: filters.FilterValue[] = [];
 
             for (const menu of this.menus) {
-                if (menu.value)
-                    values.push({
-                        key: menu.name,
-                        value: menu.value
-                    });
+                values.push({
+                    key: menu.name,
+                    value: menu.value
+                });
             }
 
             return values;
