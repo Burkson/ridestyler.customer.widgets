@@ -64,7 +64,7 @@ namespace RideStylerShowcase {
                 let menuLoadedPromise = filterProvider.retrieveMenuOptions(filterOption)
                     .done(options => {
                         options.unshift({
-                            label: filterOption.allOptionLabel || strings.getString('all'),
+                            label: filterOption.unselectedOptionLabel || strings.getString('all'),
                             value: undefined
                         });
 

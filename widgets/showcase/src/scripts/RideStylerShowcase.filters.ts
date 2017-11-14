@@ -43,7 +43,7 @@ namespace RideStylerShowcase.filters {
     export interface IFilter<ValueType, FilterType> {
         key: string;
         label?: string;
-        allOptionLabel?: string;
+        unselectedOptionLabel?: string;
         visible?: boolean;
 
         retrieveOptions?: (globalFilters:GlobalFilterModel) => RideStylerPromise<IFilterOption<ValueType>[], ridestyler.RideStylerAPIResponse>;
@@ -277,7 +277,7 @@ namespace RideStylerShowcase.filters {
                 // Brand
                 {
                     label: strings.getString('brands'),
-                    allOptionLabel: strings.getString('all-brands'),
+                    unselectedOptionLabel: strings.getString('all-brands'),
                     key: 'wheel-brand',
                     retrieveOptions: globalFilters => {
                         // Request Brands
@@ -299,7 +299,7 @@ namespace RideStylerShowcase.filters {
                 // Finish
                 {
                     label: strings.getString('finishes'),
-                    allOptionLabel: strings.getString('all-finishes'),
+                    unselectedOptionLabel: strings.getString('all-finishes'),
                     key: 'wheel-finish',
                     retrieveOptions: globalFilters => {
                         // Request finishes
@@ -321,7 +321,7 @@ namespace RideStylerShowcase.filters {
                 // Diameter
                 {
                     label: strings.getString('sizes'),
-                    allOptionLabel: strings.getString('all-sizes'),
+                    unselectedOptionLabel: strings.getString('all-sizes'),
                     key: 'wheel-size',
                     retrieveOptions: globalFilters => {
                         // Request diameters
