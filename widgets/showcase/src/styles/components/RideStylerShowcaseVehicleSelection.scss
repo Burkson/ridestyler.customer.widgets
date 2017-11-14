@@ -88,7 +88,8 @@
 }
 
 .vsm-option-item {
-    @include button-primary;
+    @include button;
+    @include button-skinny;
 
     background-color: desaturate($primary-color, 15%);
     color: $primary-color-overlaid-text;
@@ -153,7 +154,6 @@
 }
 .vsm-modal .vsm-final .vehicle-image-wrap .vsm-btn { 
     @include button;
-    @include button-primary;
     
     font-size: 1.5em;
 

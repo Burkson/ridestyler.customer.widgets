@@ -168,7 +168,6 @@ namespace RideStylerShowcase {
             })
 
             let shareButton = HTMLHelper.createButton({
-                primary: true,
                 className: 'ridestyler-share-my-vehicle-button',
                 text: strings.getString('share-my-vehicle'),
                 appendTo: this.component

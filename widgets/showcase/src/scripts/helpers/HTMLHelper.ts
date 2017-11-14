@@ -265,10 +265,6 @@ namespace RideStylerShowcase.HTMLHelper {
          */
         large?:boolean;
         /**
-         * If true, create a primary button
-         */
-        primary?:boolean;
-        /**
          * If true, create a link button
          */
         link?: boolean;
@@ -284,7 +280,6 @@ namespace RideStylerShowcase.HTMLHelper {
         element.classList.add(buttonClassName);
 
         if (options.large) element.classList.add(buttonClassName + '-large');
-        if (options.primary) element.classList.add(buttonClassName + '-primary');
         if (options.disabled) element.disabled = true;
         if (options.link) element.classList.add(buttonClassName + '-link')
         if (options.skinny) element.classList.add(buttonClassName + '-skinny');

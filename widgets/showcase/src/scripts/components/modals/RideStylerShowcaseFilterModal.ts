@@ -89,7 +89,6 @@ namespace RideStylerShowcase {
 
         private buildShowButton():void {
             this.showButton = HTMLHelper.createButton({
-                primary: true,
                 large: true,
                 disabled: true,
                 text: strings.getString('loading-ellipsis'),

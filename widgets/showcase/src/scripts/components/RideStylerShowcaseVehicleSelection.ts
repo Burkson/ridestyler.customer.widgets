@@ -33,7 +33,6 @@ namespace RideStylerShowcase {
             this.chooseVehicleButton = HTMLHelper.createButton({
                 text: strings.getString('select-your-vehicle'),
                 appendTo: this.contentContainer,
-                primary: true,
                 disabled: true,
                 large: true,
                 id: 'ridestyler-showcase-select-your-vehicle',

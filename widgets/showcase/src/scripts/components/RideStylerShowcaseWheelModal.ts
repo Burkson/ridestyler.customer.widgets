@@ -17,7 +17,6 @@ namespace RideStylerShowcase {
                         action: () => {
                             new RideStylerShowcaseWheelSpecsModal(this.showcase, wheelModel).show()
                         },
-                        primary: true,
                         text: strings.getString('show-specs')
                     }
                 ]
