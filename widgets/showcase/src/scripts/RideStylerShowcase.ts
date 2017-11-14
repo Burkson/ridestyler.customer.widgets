@@ -176,11 +176,6 @@ namespace RideStylerShowcase {
                 return true;
             });
 
-            this.events.on("home", ev => {
-                this.state.changeState(States.ChooseVehicle);
-                return true;
-            });
-
             this.onStateChanged({
                 newState: this.state.currentState,
                 oldState: undefined,

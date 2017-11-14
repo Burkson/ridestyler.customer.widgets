@@ -5,7 +5,6 @@ namespace RideStylerShowcase.events {
     export interface RideStylerShowcaseEventParameterMapping {
         "state-changed": state.StateChangedEvent,
         "initialized": undefined,
-        "home": undefined,
         "vehicle-selected": RideStylerVehicleSelectionModal.SelectedVehicleData;
         "modal-show": { modal: RideStylerShowcaseModal },
         "modal-hide": { modal: RideStylerShowcaseModal },
