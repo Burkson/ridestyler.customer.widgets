@@ -387,7 +387,7 @@ namespace RideStylerShowcase {
                 this.updateViewport(renderUpdate);
             };
 
-            this.setActiveCustomizationComponent(this.customizationComponents.paint);
+            this.setActiveCustomizationComponent(this.customizationComponents.wheels);
 
             for (let customizationComponent of ObjectHelper.getValues<IComponent>(this.customizationComponents)) {
                 customizationComponent.component.classList.add('ridestyler-showcase-customization-component');
