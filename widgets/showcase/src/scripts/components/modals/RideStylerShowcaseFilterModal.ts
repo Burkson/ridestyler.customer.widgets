@@ -23,11 +23,13 @@ namespace RideStylerShowcase {
 
             this.component.classList.add(filterModalClass);
 
+            this.buildShowButton();
+
             this.buildFilterMenus().done(() => {
                 this.updateCount();
             });
             
-            this.buildShowButton();
+            this.component.appendChild(this.showButton);
         }
 
         private buildFilterMenus():RideStylerPromise {
@@ -91,8 +93,7 @@ namespace RideStylerShowcase {
             this.showButton = HTMLHelper.createButton({
                 large: true,
                 disabled: true,
-                text: strings.getString('loading-ellipsis'),
-                appendTo: this.component
+                text: strings.getString('loading-ellipsis')
             });
 
             this.showButton.addEventListener('click', () => {
