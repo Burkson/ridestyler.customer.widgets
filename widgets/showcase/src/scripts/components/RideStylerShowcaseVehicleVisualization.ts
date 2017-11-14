@@ -167,14 +167,16 @@ namespace RideStylerShowcase {
                 this.showFilters();
             })
 
-            HTMLHelper.createButton({
+            let shareButton = HTMLHelper.createButton({
                 primary: true,
                 className: 'ridestyler-share-my-vehicle-button',
                 text: strings.getString('share-my-vehicle'),
                 appendTo: this.component
-            }).addEventListener('click', () => {
+            });
+            
+            shareButton.addEventListener('click', () => {
                 new RideStylerShowcaseShareModal(this.showcase, this.currentRenderInstructions).show();
-            })
+            });
 
             // Start listening for resize events
             this.events.on('resized', () => {
@@ -186,6 +188,12 @@ namespace RideStylerShowcase {
             this.vehicleDetails.paintSwatchClickCallback = () => {
                 this.setActiveCustomizationComponent(this.customizationComponents.paint);
             }
+
+            this.events.on('initialized', () =>  {
+                // Hide the share button if sharing is disabled
+                if (!this.showcase.settingsFromAPI.EnableSharing)
+                    shareButton.style.display = 'none';
+            })
         }
 
         private setupTabs() {
@@ -293,7 +301,6 @@ namespace RideStylerShowcase {
                 });
 
                 this.initializeForNewVehicle();
-
             });
         }
 
