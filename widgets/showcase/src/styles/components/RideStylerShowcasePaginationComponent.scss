@@ -98,8 +98,9 @@
         }
     }
 
-    $nextPreviousMargin: 10px;
-    $nextPreviousSize: 30px;
+    $nextPreviousMargin: 0.5em;
+    $nextPreviousWidth: 0.9em;
+    $nextPreviousHeight: 1.1em;
 
     &-next, &-prev {
         color: white;
@@ -107,10 +108,8 @@
         position: absolute;
         bottom: 100px;
 
-        width: $nextPreviousSize;
-        height: $nextPreviousSize;
-
-        font-size: 1em;
+        width: $nextPreviousWidth;
+        height: $nextPreviousHeight;
 
         border: none;
         background: none;
@@ -121,14 +120,19 @@
         &:disabled {
             opacity: 0.25;
         }
+
+        // Default button style overrides
+        .ridestyler-showcase & {
+            font-size: 1.5em;
+        }
     }
 
     &-next {
-        right: -$nextPreviousSize - $nextPreviousMargin;
+        right: -$nextPreviousWidth - $nextPreviousMargin;
     }
 
     &-prev {
-        left: -$nextPreviousSize - $nextPreviousMargin;
+        left: -$nextPreviousWidth - $nextPreviousMargin;
     }
 }
 
