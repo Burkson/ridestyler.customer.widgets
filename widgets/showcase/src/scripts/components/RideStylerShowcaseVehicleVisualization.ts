@@ -46,7 +46,7 @@ namespace RideStylerShowcase {
             },
             tires: {
                 title: strings.getString('select-tires'),
-                showFilterButton: false,
+                showFilterButton: true,
                 enabled: true
             },
             suspension: {

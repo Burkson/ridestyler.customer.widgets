@@ -257,7 +257,74 @@ namespace RideStylerShowcase.filters {
         constructor(globalFilterProvider:GlobalFilterProvider) {
             super('tire', globalFilterProvider);
             
-            this.filterOptions = [];
+            this.filterOptions = [
+                // Brand
+                {
+                    label: strings.getString('brands'),
+                    unselectedOptionLabel: strings.getString('all-brands'),
+                    key: 'tire-brand',
+                    retrieveOptions: globalFilters => {
+                        // Request Brands
+                        return PromiseHelper.then(api.request('tire/getbrands', globalFilters), response => {
+                            // Map brands to IFilterOptions
+                            return ArrayHelper.map(response.Brands, brand => {
+                                return {
+                                    label: brand.TireBrandName,
+                                    value: brand.TireBrandID
+                                }
+                            });
+                        });
+                    },
+                    getValueFromFilters: filters => filters.TireBrand,
+                    apply: (filters, tireBrandID:string) => {
+                        filters.TireBrand = tireBrandID;
+                    }
+                },
+                // Attributes
+                {
+                    label: strings.getString('features'),
+                    unselectedOptionLabel: strings.getString('any-features'),
+                    key: 'tire-model-attribute',
+                    retrieveOptions: globalFilters => {
+                        // Request Speed Ratings
+                        return PromiseHelper.then(api.request('tire/getmodelattributes', globalFilters), response => {
+                            // Map brands to IFilterOptions
+                            return ArrayHelper.map(response.Attributes, attribute => {
+                                return {
+                                    label: attribute.TireModelAttributeName,
+                                    value: attribute.TireModelAttributeID
+                                }
+                            });
+                        });
+                    },
+                    getValueFromFilters: filters => filters.RequiredTireModelAttribute,
+                    apply: (filters, attributeID: number) => {
+                        filters.RequiredTireModelAttribute = attributeID;
+                    }
+                },
+                // Speed Rating
+                {
+                    label: strings.getString('speed-rating'),
+                    unselectedOptionLabel: strings.getString('any-speed-ratings'),
+                    key: 'tire-speed-rating',
+                    retrieveOptions: globalFilters => {
+                        // Request Speed Ratings
+                        return PromiseHelper.then(api.request('tire/getspeedratings', globalFilters), response => {
+                            // Map brands to IFilterOptions
+                            return ArrayHelper.map(response.SpeedRatings, brand => {
+                                return {
+                                    label: brand.TireSpeedRatingCode,
+                                    value: brand.TireSpeedRatingID
+                                }
+                            });
+                        });
+                    },
+                    getValueFromFilters: filters => filters.SpeedRating,
+                    apply: (filters, speedRatingID: number) => {
+                        filters.SpeedRating = speedRatingID;
+                    }
+                }
+            ];
         }
 
         public getCount(filters:TireFilterModel):RideStylerPromise<number, ridestyler.RideStylerAPIResponse> {

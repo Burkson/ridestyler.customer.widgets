@@ -45,7 +45,11 @@ namespace RideStylerShowcase {
         'loading-ellipsis' |
         'show-count-format-wheels' |
         'show-count-format-tires' |
-        'specifications';
+        'specifications' | 
+        'speed-rating' | 
+        'any-speed-ratings' | 
+        'features' | 
+        'any-features';
 
     let defaultLanguageFormatProvider:IStringsLanguageFormatProvider = {
         currency: (number, symbol) => {

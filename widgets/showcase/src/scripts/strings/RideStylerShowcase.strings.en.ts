@@ -42,6 +42,10 @@ namespace RideStylerShowcase.strings {
         'loading-ellipsis':               "Loading...",
         'show-count-format-tires':        "Show {count} Tires",
         'show-count-format-wheels':       "Show {count} Wheels",
-        'specifications':                 "Specifications"
+        'specifications':                 "Specifications",
+        'speed-rating':                   "Speed Rating",
+        'any-speed-ratings':              "Any Speed Ratings",
+        'features':                       "Features",
+        'any-features':                   "Any Features"
     });
 }
