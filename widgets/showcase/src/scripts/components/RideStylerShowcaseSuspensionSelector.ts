@@ -2,6 +2,11 @@ namespace RideStylerShowcase {
     const className = 'ridestyler-showcase-suspension-selector';
     const elementClassName = 'ridestyler-showcase-suspension-selector-element';
 
+    const defaultSuspensionRange = {
+        Min: -4,
+        Max: 0
+    }
+
     export class RideStylerShowcaseSuspensionSelector extends ComponentBase {
         // private front:SuspensionUIElement;
         // private rear:SuspensionUIElement;
@@ -15,17 +20,25 @@ namespace RideStylerShowcase {
             let vehicleDescription = this.state.getData().currentVehicleDescriptionModel;
 
             let suspensionOptions:SuspensionOptions = {
-                min: -4,
-                max: 0,
+                min: defaultSuspensionRange.Min,
+                max: defaultSuspensionRange.Max,
                 start: 0,
                 step: 1,
                 decimalPlaces: 1,
                 unitAbbreviation: '″'
             };
 
-            // 4WD Vans & Trucks can raise to 4 inches
-            if (vehicleDescription.DriveType === '4WD' && (vehicleDescription.StyleType === 'Van' || vehicleDescription.StyleType === 'Truck')) {
-                suspensionOptions.max = 4;
+            // Retrieve suspension from API settings
+            {
+                let suspensionRanges = this.showcase.settingsFromAPI.SuspensionRanges;
+                let {StyleType,DriveType} = vehicleDescription;
+                let suspensionRangeKey = StyleType + DriveType;
+
+                if (suspensionRangeKey in suspensionRanges === false) suspensionRangeKey = 'Default';
+                let suspensionRange = suspensionRanges[suspensionRangeKey] || defaultSuspensionRange;
+                
+                suspensionOptions.min = suspensionRange.Min;
+                suspensionOptions.max = suspensionRange.Max;
             }
 
             this.frontAndRear = new NoUISuspensionElement(this.showcase, ObjectHelper.assign({
