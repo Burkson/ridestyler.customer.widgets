@@ -246,6 +246,16 @@ declare namespace ridestyler {
             Mileage = 3
         }
 
+        interface TireBrandDataObject
+        {
+            TireBrandID: string;
+            TireBrand_DataSourceID: number;
+            TireBrand_OrganizationPermissionID: number;
+            TireBrandUpdated: string;
+            TireBrandArchived: boolean;
+            TireBrandName: string;
+        }
+
         interface TireModelDataObject {
             TireModelID: string;
             TireModel_TireBrandID: string;
@@ -253,6 +263,12 @@ declare namespace ridestyler {
             TireModelArchived: boolean;
             TireModelName: string;
             TireModelDataStatus: DataStatus;
+        }
+
+        interface TireModelAttributeDataObject {
+            TireModelAttributeID: number;
+            TireModelAttributeName: string;
+            TireModelAttributeDescription: string;
         }
 
         const enum TireUseTypeFlags {
@@ -678,8 +694,16 @@ declare namespace ridestyler {
             Descriptions: Descriptions.VehicleDescriptionModel[];
         }
 
+        interface TireBrandsResultModel extends RideStylerAPIResponse {
+            Brands: DataObjects.TireBrandDataObject[]
+        }
+
         interface TireModelsResultModel extends RideStylerAPIResponse {
             Models: DataObjects.TireModelDataObject[]
+        }
+
+        interface TireModelAttributesResultModel extends RideStylerAPIResponse {
+            Attributes: DataObjects.TireModelAttributeDataObject[];
         }
 
         interface TireModelDescriptionResultModel extends RideStylerAPIResponse {
@@ -690,12 +714,16 @@ declare namespace ridestyler {
             Fitments: DataObjects.TireFitmentDataObject[];
         }
 
-        interface TireFitmentDescriptionRequestModel extends RideStylerAPIResponse {
+        interface TireFitmentDescriptionResultModel extends RideStylerAPIResponse {
             Fitments: Descriptions.TireFitmentDescriptionModel[];
         }
 
         interface TireFitmentResourcesResultModel extends RideStylerAPIResponse {
             Resources: DataObjects.TireFitmentResourceDataObject[];
+        }
+
+        interface TireSpeedRatingsResultModel extends RideStylerAPIResponse {
+            SpeedRatings: DataObjects.TireSpeedRatingDataObject[];
         }
 
         interface VehicleTireOptionResultModel extends RideStylerAPIResponse {
@@ -1195,21 +1223,29 @@ declare namespace ridestyler {
     interface RidestylerAPIActionResponseMapping {
         "auth/validate": RideStylerAPIResponse,
         "auth/start": Responses.RideStylerAuthStartResponse,
+        
         "link/create": Responses.LinkCreateResponse,
+
         "organization/image": never,
         "organization/getsettings": Responses.SettingsResultModel,
+
         "tire/countbrands": Responses.ActionCountResultModel,
         "tire/countmodels": Responses.ActionCountResultModel,
+        "tire/getbrands": Responses.TireBrandsResultModel,
+        "tire/getmodelattributes": Responses.TireModelAttributesResultModel,
         "tire/getmodels": Responses.TireModelsResultModel,
         "tire/getmodeldescriptions": Responses.TireModelDescriptionResultModel,
         "tire/getfitments": Responses.TireFitmentResultModel,
-        "tire/getfitmentdescriptions": Responses.TireFitmentDescriptionRequestModel,
+        "tire/getfitmentdescriptions": Responses.TireFitmentDescriptionResultModel,
         "tire/getfitmentresources": Responses.TireFitmentResourcesResultModel,
         "tire/image": never,
+        "tire/getspeedratings": Responses.TireSpeedRatingsResultModel,
+
         "vehicle/getdescriptions": Responses.VehicleDescriptionResultModel,
         "vehicle/gettireoptions": Responses.VehicleTireOptionResultModel,
         "vehicle/gettireoptiondetails": Responses.VehicleTireOptionDetailResultModel,
         "vehicle/getpaintschemedescriptions": Responses.VehiclePaintSchemeDescriptionResultModel,
+
         "wheel/countmodels": Responses.ActionCountResultModel,
         "wheel/countbrands": Responses.ActionCountResultModel,
         "wheel/getdiameters": Responses.DiameterResultModel,
@@ -1225,21 +1261,29 @@ declare namespace ridestyler {
     interface RidestylerAPIActionRequestMapping {
         "auth/validate": object,
         "auth/start": { Username:string; Password:string; },
+
         "link/create": { URL: string },
+
         "organization/image": { AssetKey:string, Organization?:number },
         "organization/getsettings": Requests.OrganizationSettingsRequestModel,
+
+        "tire/getbrands": Requests.TireFilterModel,
         "tire/countbrands": Requests.TireFilterModel,
         "tire/countmodels": Requests.TireFilterModel,
+        "tire/getmodelattributes": Requests.TireFilterModel,
         "tire/getmodels": Requests.TireFilterModel,
         "tire/getmodeldescriptions": Requests.TireModelDescriptionRequestModel,
         "tire/getfitments": Requests.TireFilterModel,
         "tire/getfitmentdescriptions": Requests.TireFitmentDescriptionRequestModel,
         "tire/getfitmentresources": Requests.TireFilterModel,
+        "tire/getspeedratings": Requests.TireFilterModel,
         "tire/image": Requests.TireRenderInstructions,
+
         "vehicle/getdescriptions": Requests.VehicleDescriptionRequestModel,
         "vehicle/gettireoptions": Requests.VehicleFilterModel,
         "vehicle/gettireoptiondetails": Requests.GetTireOptionsRequestModel,
         "vehicle/getpaintschemedescriptions": Requests.VehiclePaintSchemeRequestModel,
+
         "wheel/countmodels": Requests.WheelFilterModel,
         "wheel/countbrands": Requests.WheelFilterModel,
         "wheel/getdiameters": Requests.WheelFilterModel,
