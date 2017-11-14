@@ -57,6 +57,11 @@ namespace RideStylerShowcase {
         public settings:RideStylerShowcaseSettings;
 
         /**
+         * Settings loaded from the API
+         */
+        public settingsFromAPI:api.settings.RideStylerShowcaseSettingsFromAPI;
+
+        /**
          * The filter controller
          */
         public filters:filters.FilterController;
@@ -166,6 +171,16 @@ namespace RideStylerShowcase {
                 return true;
             });
 
+            let settingsRetrieved = PromiseHelper.then(api.authenticated, () => {
+                return api.settings.getSettings().done(settingsFromAPI => {
+                    this.settingsFromAPI = settingsFromAPI;
+                });
+            });
+            
+            PromiseHelper.all([this.style.initialized, settingsRetrieved]).done(() => {
+                this.events.trigger('initialized', undefined);
+            });
+
             this.onStateChanged({
                 newState: this.state.currentState,
                 oldState: undefined,
@@ -194,7 +209,6 @@ namespace RideStylerShowcase {
 
         private initializeStyle() {
             this.style = new styles.StyleManager(this.container);
-            this.style.initialized.done(() => this.events.trigger('initialized', undefined));
             this.style.onResize = () => this.events.trigger('resize', undefined);
             this.style.onResized = () => this.events.trigger('resized', undefined);
 
