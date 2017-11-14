@@ -10,7 +10,12 @@ namespace RideStylerShowcase {
     }
 
     export namespace api {
-        export function initialize(settings?:RideStylerShowcaseAPIInitializeSettingsKeyToken|RideStylerShowcaseAPIInitializeSettingsUser) {
+        /**
+         * Initialize the RideStyler API by passing in a user/password combination, a user token, or a key.
+         * @param settings The API initialization settings
+         * @returns A promise that is resolved (or rejected) when the API is authenticated (or fails authentication)
+         */
+        export function initialize(settings?:RideStylerShowcaseAPIInitializeSettingsKeyToken|RideStylerShowcaseAPIInitializeSettingsUser):RideStylerPromise {
             // If authentication information was passed in, let's use that
             if (settings) {
                 if ('username' in settings && 'password' in settings) {
@@ -40,6 +45,8 @@ namespace RideStylerShowcase {
             auth.validate()
                 .done(() => authenticated.resolve())
                 .fail(() => authenticated.reject());
+
+            return authenticated;
         }
 
         export let authenticated = ridestyler.promise();
