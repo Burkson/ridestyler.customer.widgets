@@ -1,10 +1,14 @@
 namespace RideStylerShowcase {
-    export interface RideStylerShowcaseSettings extends RideStylerShowcaseAPIInitializeSettingsKeyToken {
+    export interface RideStylerShowcaseOptions {
         debug?: {
             events?:boolean;
             state?:boolean;
         };
     }
+
+    export type RideStylerShowcaseSettings = 
+        (RideStylerShowcaseOptions & RideStylerShowcaseAPIInitializeSettingsKeyToken) | 
+        (RideStylerShowcaseOptions & RideStylerShowcaseAPIInitializeSettingsUser);
 
     export interface RideStylerShowcaseContainer extends HTMLElement {
         ridestylerShowcase: RideStylerShowcaseInstance;
@@ -176,7 +180,7 @@ namespace RideStylerShowcase {
                     this.settingsFromAPI = settingsFromAPI;
                 });
             });
-            
+
             PromiseHelper.all([this.style.initialized, settingsRetrieved]).done(() => {
                 this.events.trigger('initialized', undefined);
             });
