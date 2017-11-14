@@ -1,6 +1,10 @@
 namespace RideStylerShowcase {
+    import Tab = RideStylerShowcaseVerticalTabBar.Tab;
+
     const customizationsClass = 'ridestyler-showcase-customizations';
     const loadingClass = customizationsClass + '-loading';
+
+    type customizationComponentKeys = 'paint' | 'wheels' | 'tires' | 'suspension';
 
     export class RideStylerShowcaseVehicleVisualization extends MainComponentBase {
         private viewport:RideStylerViewport;
@@ -14,41 +18,41 @@ namespace RideStylerShowcase {
         private vehicleDetails:VehicleDetails;
 
         private tabs: {
-            paint: RideStylerShowcaseVerticalTabBar.Tab,
-            wheels: RideStylerShowcaseVerticalTabBar.Tab,
-            tires: RideStylerShowcaseVerticalTabBar.Tab,
-            suspension: RideStylerShowcaseVerticalTabBar.Tab
+            [key in customizationComponentKeys]: Tab;
         };
-
+        
+        private customizationComponentOrder:customizationComponentKeys[] = ['paint', 'wheels', 'tires', 'suspension'];
+        
         private customizationComponentContainer:HTMLElement;
         private customizationComponents:{
-            paint: RideStylerShowcasePaintSelector,
-            wheels: RideStylerShowcaseWheelSelector,
-            tires: RideStylerShowcaseTireSelector,
-            suspension: RideStylerShowcaseSuspensionSelector
+            paint: RideStylerShowcasePaintSelector;
+            wheels: RideStylerShowcaseWheelSelector;
+            tires: RideStylerShowcaseTireSelector;
+            suspension: RideStylerShowcaseSuspensionSelector;
         };
 
         private customizationComponentSettings: {
-            paint: CustomizationComponentSettings,
-            wheels: CustomizationComponentSettings,
-            tires: CustomizationComponentSettings,
-            suspension: CustomizationComponentSettings
+            [key in customizationComponentKeys]: CustomizationComponentSettings;
         } = {
             paint: {
                 title: strings.getString('select-paint'),
-                showFilterButton: false
+                showFilterButton: false,
+                enabled: true
             },
             wheels: {
                 title: strings.getString('select-wheels'),
-                showFilterButton: true
+                showFilterButton: true,
+                enabled: true
             },
             tires: {
                 title: strings.getString('select-tires'),
-                showFilterButton: false
+                showFilterButton: false,
+                enabled: true
             },
             suspension: {
                 title: strings.getString('adjust-suspension'),
-                showFilterButton: false
+                showFilterButton: false,
+                enabled: true
             }
         }
 
@@ -192,7 +196,33 @@ namespace RideStylerShowcase {
                 // Hide the share button if sharing is disabled
                 if (!this.showcase.settingsFromAPI.EnableSharing)
                     shareButton.style.display = 'none';
+                
+                let countTireBrands = api.request("tire/countbrands", this.showcase.filters.tireFilters.getFilters());
+                let countWheelBrands = api.request("wheel/countbrands", this.showcase.filters.wheelFilters.getFilters());
+
+                PromiseHelper.all([countTireBrands, countWheelBrands]).done(results => {
+                    let tireBrandCount = results[0].Count;
+                    let wheelBrandCount = results[1].Count;
+
+                    if (!tireBrandCount) this.customizationComponentSettings.tires.enabled = false;
+                    if (!wheelBrandCount) this.customizationComponentSettings.wheels.enabled = false;
+
+                    this.updateTabs();
+                });
             })
+        }
+
+        private updateTabs() {
+            let tabs:Tab[] = [];
+
+            for (const key of this.customizationComponentOrder) {
+                // Skip disabled components
+                if (!this.customizationComponentSettings[key].enabled) continue;
+
+                tabs.push(this.tabs[key]);
+            }
+
+            this.tabBar.setTabs(tabs);
         }
 
         private setupTabs() {
@@ -222,13 +252,11 @@ namespace RideStylerShowcase {
                 })
             };
 
-            this.tabBar.setTabs(ObjectHelper.getValues(this.tabs));
-
             // Switch the bottom view, the customization component when a tab is clicked on
             this.tabBar.tabSwitchedCallback = e => {
                 const newTab = e.newTab;
                 const key = newTab.key;
-
+                
                 if (this.customizationComponents && key in this.customizationComponents) {
                     this.setActiveCustomizationComponent(this.customizationComponents[key]);
                 }
@@ -262,6 +290,8 @@ namespace RideStylerShowcase {
             // Set the customization container as loading while we're loading additional information
             // about the vehicle
             this.customizationComponentContainer.classList.add(loadingClass);
+            
+            this.updateTabs();
 
             // Deselect any active tab
             this.tabBar.clearActiveTab();
@@ -506,5 +536,6 @@ namespace RideStylerShowcase {
     interface CustomizationComponentSettings {
         title:string;
         showFilterButton: boolean;
+        enabled: boolean;
     }
 }
