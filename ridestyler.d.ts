@@ -709,6 +709,12 @@ declare namespace ridestyler {
         interface LinkCreateResponse extends RideStylerAPIResponse {
             ShortURL: string
         }
+
+        interface SettingsResultModel {
+            Settings: {
+                [key: string]: string;
+            }
+        }
     }
 
     namespace Requests {
@@ -1171,6 +1177,19 @@ declare namespace ridestyler {
             IncludeReferenceCounts?: boolean;
             IncludePaintSchemes?: boolean;
         }
+
+        interface OrganizationFilterModel {
+            Organization?: number;
+            Organizations?: number[];
+            ParentOrganization?: number;
+            ParentOrganizations?: number[];
+            IncludeNetwork?: boolean;
+            IncludeActiveOrganization?: boolean;
+        }
+
+        interface OrganizationSettingsRequestModel extends OrganizationFilterModel {
+            Keys: string[];
+        }
     }
     
     interface RidestylerAPIActionResponseMapping {
@@ -1178,6 +1197,7 @@ declare namespace ridestyler {
         "auth/start": Responses.RideStylerAuthStartResponse,
         "link/create": Responses.LinkCreateResponse,
         "organization/image": never,
+        "organization/getsettings": Responses.SettingsResultModel,
         "tire/countmodels": Responses.ActionCountResultModel,
         "tire/getmodels": Responses.TireModelsResultModel,
         "tire/getmodeldescriptions": Responses.TireModelDescriptionResultModel,
@@ -1206,6 +1226,7 @@ declare namespace ridestyler {
         "auth/start": { Username:string; Password:string; },
         "link/create": { URL: string },
         "organization/image": { AssetKey:string, Organization?:number },
+        "organization/getsettings": Requests.OrganizationSettingsRequestModel,
         "tire/countmodels": Requests.TireFilterModel,
         "tire/getmodels": Requests.TireFilterModel,
         "tire/getmodeldescriptions": Requests.TireModelDescriptionRequestModel,
