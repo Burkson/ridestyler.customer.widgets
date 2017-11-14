@@ -45,8 +45,7 @@ namespace RideStylerShowcase {
             }, filters)), response => response.Models);
         }
         protected productFilter(product: WheelModelDescriptionModel): boolean {
-            return product.HasAngleImage && this.supportedVehicleImagery.angled ||
-                   product.HasSideImage  && this.supportedVehicleImagery.side;
+            return true;
         }
         protected productImageSource(product: WheelModelDescriptionModel): string {
             return ridestyler.wheel.image({
