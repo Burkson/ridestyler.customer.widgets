@@ -6,4 +6,10 @@
         margin: 0 0 0 5px;
         float: right;
     }
+
+    &-details {
+        overflow: hidden;
+        word-wrap: break-word;
+        text-overflow: ellipsis;
+    }
 }
