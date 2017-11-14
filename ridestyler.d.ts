@@ -710,7 +710,7 @@ declare namespace ridestyler {
             ShortURL: string
         }
 
-        interface SettingsResultModel {
+        interface SettingsResultModel extends RideStylerAPIResponse{
             Settings: {
                 [key: string]: string;
             }
