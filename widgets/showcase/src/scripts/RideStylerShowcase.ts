@@ -144,18 +144,8 @@ namespace RideStylerShowcase {
             this.initializeStyle();
 
             this.initializeFilters();
-
-            for (let component of this.otherComponents)
-                container.appendChild(component.component);
-
-            for (let component of this.mainComponents) {
-                component.setVisible(false);
-                container.appendChild(component.component);
-            }
             
-            this.state.onChange((e) => {
-                return this.events.trigger("state-changed", e) && this.onStateChanged(e);
-            });
+            this.initializeComponents();
 
             this.events.on("vehicle-selected", selection => {
                 this.state.changeState(States.Visualize, {
@@ -196,6 +186,10 @@ namespace RideStylerShowcase {
 
                 console.log(`[RideStylerShowcase State] ${stateChange} ${finishedString}`, e);
             };
+            
+            this.state.onChange((e) => {
+                return this.events.trigger("state-changed", e) && this.onStateChanged(e);
+            });
         }
 
         private initializeStyle() {
@@ -217,6 +211,18 @@ namespace RideStylerShowcase {
                     vehicleTireOptionID: selection.TireOptionID
                 });
             });
+        }
+
+        private initializeComponents() {
+            let container = this.container;
+
+            for (let component of this.otherComponents)
+                container.appendChild(component.component);
+
+            for (let component of this.mainComponents) {
+                component.setVisible(false);
+                container.appendChild(component.component);
+            }
         }
         
         private onStateChanged(ev: state.StateChangedEvent):boolean {
