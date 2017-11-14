@@ -46,8 +46,10 @@ namespace RideStylerShowcase {
          * Build the modal DOM structure
          */
         protected buildModal() {
-            this.component = HTMLHelper.createElement('div', {
+            this.component = Object.assign(HTMLHelper.createElement('div', {
                 className: modalClass
+            }), {
+                modal: this
             });
 
             if (this.options.full) this.component.classList.add(modalClass + '-full')
@@ -161,6 +163,14 @@ namespace RideStylerShowcase {
 
         private buildBackdrop() {
             this.component = HTMLHelper.createElementWithClass('div', backdropClass);
+
+            this.component.addEventListener('click', () => {
+                let topVisibleModal = HTMLHelper.lastSiblingWithClass<RideStylerShowcaseModal.ModalElement>(this.component, modalClass, 'in');
+
+                if (topVisibleModal) {
+                    topVisibleModal.modal.hide();
+                }
+            });
         }
 
         protected initializeComponent() {
@@ -196,6 +206,10 @@ namespace RideStylerShowcase {
     }
 
     export namespace RideStylerShowcaseModal {
+        export interface ModalElement extends HTMLElement{
+            modal: RideStylerShowcaseModal
+        };
+
         export interface Action extends HTMLHelper.createButtonOptions {
             /**
              * The action to preform when this button is clicked

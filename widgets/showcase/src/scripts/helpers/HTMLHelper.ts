@@ -1,19 +1,72 @@
 namespace RideStylerShowcase.HTMLHelper {
+    export interface ElementList<T extends Element = HTMLElement> {
+        length: number;
+        [index: number]: T;
+    }
 
-    export function childrenMatching<T extends HTMLElement>(element:HTMLElement, match: (element:HTMLElement)=>boolean): T[] {
-        let matchingChildren: T[] = new Array(element.children.length);
 
-        let matchingChildrenIndex = 0;
-        for (let index = 0; index < element.children.length; index++) {
-            let child = element.children[index] as T;
+    /**
+     * Returns a new set of elements matched from the original set
+     * @param elements The elements to match
+     * @param match The matching function
+     */
+    export function elementsMatching<T extends Element>(elements:ElementList<T>, match: (element:Element)=>boolean): T[] {
+        let matchingElements: T[] = new Array(elements.length);
+
+        let matchingElementsIndex = 0;
+        for (let index = 0; index < elements.length; index++) {
+            let child = elements[index] as T;
 
             if (match(child)) {
-                matchingChildren[matchingChildrenIndex++] = child;
+                matchingElements[matchingElementsIndex++] = child;
             }
         }
 
-        matchingChildren.length = matchingChildrenIndex;
-        return matchingChildren;
+        matchingElements.length = matchingElementsIndex;
+        return matchingElements;
+    }
+
+    /**
+     * Returns the first element in the set to match the function
+     * @param elements The set of elements to search in
+     * @param match The matching function
+     */
+    export function firstElementMatching<T extends Element>(elements:ElementList<T>, match: (element:Element)=>boolean): T {
+        for (let index = 0; index < elements.length; index++) {
+            let child = elements[index];
+            
+            if (match(child)) return child as T;
+        }
+        
+        return null;
+    }
+    
+    /**
+     * Returns the last element in the set to match the function
+     * @param elements The set of elements to search in
+     * @param match The matching function
+     */
+    export function lastElementMatching<T extends Element>(elements:ElementList<T>, match: (element:Element)=>boolean): T {
+        for (let index = elements.length - 1; index >= 0; index--) {
+            let child = elements[index];
+            
+            if (match(child)) return child as T;
+        }
+        
+        return null;
+    }
+
+    export function childrenMatching<T extends Element>(element:Element, match: (element:Element)=>boolean): T[] {
+        return elementsMatching(element.children, match) as T[];
+    }
+    
+    /**
+     * Search an element for the first child matching the match function
+     * @param element The element to search children of
+     * @param match The match function
+     */
+    export function firstChildMatching<T extends Element>(element:Element, match: (element:Element)=>boolean):T {
+        return firstElementMatching(element.children, match) as T;
     }
 
     /**
@@ -21,10 +74,10 @@ namespace RideStylerShowcase.HTMLHelper {
      * @param element The element to search the children of
      * @param classes The set of classes to match children with
      */
-    export function childrenWithClasses<T extends HTMLElement>(element:HTMLElement, ...classes:string[]):T[] {
+    export function childrenWithClasses<T extends Element>(element:Element, ...classes:string[]):T[] {
         classes = StyleHelper.flattenClassList(classes);
         
-        return childrenMatching(element, child => StyleHelper.hasClasses(child, classes));
+        return childrenMatching(element, child => StyleHelper.hasClasses(child as HTMLElement, classes));
     }
 
     /**
@@ -36,21 +89,6 @@ namespace RideStylerShowcase.HTMLHelper {
         for (let child of childrenWithClasses(element, ...classes)) {
             element.removeChild(child);
         }
-    }
-
-    /**
-     * Search an element for the first child matching the match function
-     * @param element The element to search children of
-     * @param match The match function
-     */
-    export function firstChildMatching<T extends HTMLElement>(element:HTMLElement, match: (element:HTMLElement)=>boolean):T {
-        for (let index = 0; index < element.children.length; index++) {
-            let child = element.children[index] as HTMLElement;
-            
-            if (match(child)) return child as T;
-        }
-
-        return null;
     }
 
     /**
@@ -69,8 +107,8 @@ namespace RideStylerShowcase.HTMLHelper {
      * @param element The element to search children of
      * @param classes The classes to look for
      */
-    export function firstChildWithClass<T extends HTMLElement>(element: HTMLElement, ...classes: string[]):T {
-        return firstChildMatching(element, child => StyleHelper.hasClasses(child, classes));
+    export function firstChildWithClass<T extends Element>(element: Element, ...classes: string[]):T {
+        return firstChildMatching(element, child => StyleHelper.hasClasses(child as HTMLElement, classes));
     }
 
     /**
@@ -87,8 +125,17 @@ namespace RideStylerShowcase.HTMLHelper {
      * @param element The element to search the siblings of
      * @param classes The class(es) to look for
      */
-    export function hasSiblingWithClass(element:HTMLElement, ...classes:string[]):boolean {
+    export function hasSiblingWithClass(element:Element, ...classes:string[]):boolean {
         return hasChildWithClass(element.parentElement, ...classes);
+    }
+
+    /**
+     * Returns the last sibling of an element matching a specified class (or specified classes)
+     * @param element The element to search siblings
+     * @param classes The classes to look for
+     */
+    export function lastSiblingWithClass<T extends Element>(element:Element, ...classes:string[]):T {
+        return lastElementMatching(element.parentElement.children, sibling => sibling !== element && StyleHelper.hasClasses(sibling as HTMLElement, classes)) as T;
     }
 
     export interface createElementOptions<ElementType extends Element> {
