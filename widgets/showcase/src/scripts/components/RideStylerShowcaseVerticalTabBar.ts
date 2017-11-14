@@ -172,6 +172,15 @@ namespace RideStylerShowcase {
                 let background = HTMLHelper.createElementWithClass('div', tabBackgroundClass);
                 
                 if (StyleHelper.svgSupported) {
+                    /**
+                     * The height in percentage of the triangle size
+                     */
+                    const triangleHeight = 30;
+                    /**
+                     * The width in percentage of the triangle size
+                     */
+                    const triangleWidth = 15;
+
                     HTMLHelper.createSVGElement('svg', {
                         attributes: {
                             width: '100%',
@@ -182,7 +191,7 @@ namespace RideStylerShowcase {
                         append: HTMLHelper.createSVGElement('polygon', {
                             attributes: {
                                 fill: 'black',
-                                points: '0,0 100,0 100,30 80,50 100,70 100,100 0,100'
+                                points: `0,0 100,0 100,${50-triangleHeight/2} ${100-triangleWidth},50 100,${50+triangleHeight/2} 100,100 0,100`
                             }
                         }),
                         appendTo: background
