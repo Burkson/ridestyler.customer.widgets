@@ -87,6 +87,22 @@
     z-index: 10;
 }
 
+.vsm-option-item {
+    @include button-primary;
+
+    background-color: desaturate($primary-color, 15%);
+    color: $primary-color-overlaid-text;
+    border-color: $primary-color;
+
+    border-radius: 0.25em;
+
+    transition: background-color 500ms;
+
+    &:hover {
+        background-color: $primary-color;
+    }
+}
+
 .vsm-header { 
     margin: 0.25em auto;
     font-size: 2em;
@@ -99,6 +115,10 @@
     bottom: 10px;
 }
 .vsm-line-step {
+    .dot-style.active {
+        background-color: $primary-color;
+    }
+
     .dot-info, .dot-info.active {
         font-size: 1em;
         overflow-y: hidden;
