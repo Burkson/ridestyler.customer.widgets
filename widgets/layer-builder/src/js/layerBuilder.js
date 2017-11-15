@@ -259,10 +259,15 @@
 			layer.canvas.style.transition = 'opacity 1s linear';
 			layer.canvas.style.setProperty('-webkit-transition', 'opacity 1s linear');
 			layer.canvas.style.opacity = 1;
-		}
 
-		for (i = 0; i < len; i++) {
-			this.layers[i].imgData = this.layers[i].ctx.getImageData(0, 0, imgW, imgH);
+			layer.imgData = layer.ctx.getImageData(0, 0, imgW, imgH);
+			layer.masterCvs = layer.canvas.cloneNode(false);
+			layer.masterCvs.getContext('2d').drawImage(layer.img, 0, 0, imgW, imgH);
+
+			layer.unscaledCvs = document.createElement('canvas');
+			layer.unscaledCvs.width = layer.img.origW;
+			layer.unscaledCvs.height = layer.img.origH;
+			layer.unscaledCvs.getContext('2d').drawImage(layer.img, 0, 0, layer.img.origW, layer.img.origH);
 		}
 	};
 
@@ -305,26 +310,23 @@
 
 		layer.currentColor = color;
 
-		// Copy the original (uncolored) image data into a new object
-		imgData = ctx.createImageData(layer.img.width, layer.img.height);
-		this.copyImageData(imgData.data, layer.imgData.data);
-
-		this.colorImageData(layer.canvas, imgData, color, operation);
+		this.colorLayer(layer, color, operation);
 	};
 
 	/**
-	 * Colorize image data and draw it on a canvas
-	 * @param {object} canvas - The canvas to draw on
-	 * @param {object} imgData - An instance of ImageData
+	 * Colorize a layer and draw it on a canvas
+	 * @param {object} layer - Object representing a layer
 	 * @param {string} color - Hex code to colorize the image
 	 * @param {string} operation - Optional colorize operation
 	 */
-	LayerBuilder.prototype.colorImageData = function(canvas, imgData, color, operation) {
+	LayerBuilder.prototype.colorLayer = function(layer, color, operation) {
 		var self = this,
-		data = imgData.data,
-		origData = null,
+		canvas = layer.masterCvs,
 		ctx = canvas.getContext('2d'),
-		imgDataOrig = ctx.createImageData(canvas.width, canvas.height),
+		imgData = ctx.getImageData(0, 0, canvas.width, canvas.height),
+		data = imgData.data,
+		imgDataOrig = ctx.getImageData(0, 0, canvas.width, canvas.height),
+		origData = imgDataOrig.data,
 		colorRgb = LBUtil.hexToRgb(color),
 		rgb = {},
 		hsl = null,
@@ -333,9 +335,6 @@
 		avg = 0;
 
 		operation = operation ? operation : this.dfltOperation;
-
-		this.copyImageData(imgDataOrig.data, imgData.data);
-		origData = imgDataOrig.data;
 
 		for (var i = 0; i < data.length; i+=4) {
 			rgb.r = origData[i + 0];
@@ -370,7 +369,7 @@
 			}
 		}
 
-		ctx.putImageData(imgData, 0, 0);
+		layer.ctx.putImageData(imgData, 0, 0);
 	};
 
 	/**
@@ -477,6 +476,7 @@
 		master = null,
 		ctx = null,
 		layer = null,
+		tmpLayer = null,
 		canvas = null,
 		dims = null,
 		img = null,
@@ -503,20 +503,15 @@
 			canvas.height = layer.img.origH;
 
 			ctx = canvas.getContext('2d');
-
-			tmpW = layer.img.width;
-			tmpH = layer.img.height;
-			layer.img.width = layer.img.origW;
-			layer.img.height = layer.img.origH;
-
-			ctx.drawImage(layer.img, 0, 0, layer.img.origW, layer.img.origH);
-
-			layer.img.width = tmpW;
-			layer.img.height = tmpH;
+			ctx.drawImage(layer.unscaledCvs, 0, 0);
 
 			if (layer.currentColor) {
-				imgData = ctx.getImageData(0, 0, layer.img.origW, layer.img.origH);
-				this.colorImageData(canvas, imgData, layer.currentColor);
+				tmpLayer = {
+					masterCvs: canvas,
+					ctx: ctx,
+					currentColor: layer.currentColor
+				};
+				this.colorLayer(tmpLayer, layer.currentColor);
 			}
 
 			master.getContext('2d').drawImage(canvas, 0, 0);
@@ -569,21 +564,6 @@
 		}
 
 		return res;
-	};
-
-	/**
-	 * Copy image data from src to dest
-	 * @param {object} dest - The image data destination
-	 * @param {object} src - The image data source
-	 */
-	LayerBuilder.prototype.copyImageData = function(dest, src) {
-		if (typeof dest.set === 'function') {
-			dest.set(src);
-		} else {
-			for (var i = 0, len = src.length; i < len; i++) {
-				dest[i] = src[i];
-			}
-		}
 	};
 
 	/****************************************************************************
@@ -866,12 +846,12 @@
 		}
 	};
 
-	LBUtil.show = function(el, display, opacity) {
+	LBUtil.show = function(el, display, setOpacity, opVal) {
 		if (el && typeof el === 'object') {
 			el.style.display = display ? display : 'block';
 
-			if (opacity) {
-				el.style.opacity = 1;
+			if (setOpacity) {
+				el.style.opacity = opVal ? opVal : 1;
 			}
 		}
 	};

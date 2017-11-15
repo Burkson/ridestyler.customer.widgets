@@ -2,6 +2,9 @@
     color: #929292;
     letter-spacing: 3px;
     margin: 0 auto;
+    overflow: auto;
+    border: 1px solid #CECECE;
+    opacity: 0;
 }
 
 #wb-wrapper a {
@@ -55,6 +58,7 @@
 .wb-main {
     display: inline-block;
     position: relative;
+    width: 100%;
 }
 
 .wb-main-inner {
@@ -68,8 +72,8 @@
     background: #fff;
     opacity: 0;
     overflow: hidden;
-    -webkit-transition: opacity .25s ease-in-out;
-    transition: opacity .25s ease-in-out;
+    -webkit-transition: opacity .5s ease-in-out;
+    transition: opacity .5s ease-in-out;
     font-size: 14px;
     margin-right: 20px;
     padding-left: 20px;
@@ -84,8 +88,8 @@
 
 .wb-ctrl {
     overflow: auto;
-    min-height: 400px;
-    min-width: 220px;
+    /*min-height: 400px;*/
+    min-width: 180px;
     margin-top: 20px;
 }
 
@@ -101,7 +105,6 @@
 .wb-ctrl-title {
     display: inline-block;
     font-size: 16px;
-    line-height: 25px;
     text-transform: uppercase;
     vertical-align: middle;
 }
@@ -133,8 +136,8 @@ span.wb-color {
     margin-bottom: 0px;
     margin-top: 0px;
     padding: 0px;
-    -webkit-transition: opacity .25s linear;
-    transition: opacity .25s linear;
+    -webkit-transition: opacity .5s linear;
+    transition: opacity .5s linear;
     text-transform: uppercase;
 }
 
@@ -153,6 +156,10 @@ span.wb-color {
 
 .wb-layer-options ul li span {
     vertical-align: middle;
+}
+
+.wb-ctrl li {
+    white-space: nowrap;
 }
 
 li.wb-ctrl-layer {
@@ -182,8 +189,8 @@ li.wb-ctrl-layer span {
 .wb-wheel {
     margin: auto;
     opacity: 0;
-    -webkit-transition: opacity .25s linear;
-    transition: opacity .25s linear;
+    -webkit-transition: opacity .5s linear;
+    transition: opacity .5s linear;
 }
 
 .wb-wheel-selected {
@@ -281,8 +288,42 @@ li.wb-stack-selected {
     clear: both;
 }
 
+.wb-close-btn {
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    float: right;
+}
+
+.wb-closed .wb-ctrl {
+    display: none;
+}
+
+.wb-closed .wb-ctrl-header {
+    border: 0;
+}
+
+
+/**** Small ****/
+
+.wb-small .wb-ctrl {
+    margin-top: 10px;
+}
+
 .wb-small .wb-ctrl-wrap {
     width: 200px;
+    position: absolute;
+    border-top: 1px solid #CECECE;
+    border-bottom: 1px solid #CECECE;
+    border-right: 1px solid #CECECE;
+    z-index: 100;
+    padding-left: 10px;
+    margin-right: 10px;
+}
+
+.wb-small .wb-ctrl-header {
+    margin: 10px 10px 0 0;
+    padding-bottom: 10px;
 }
 
 .wb-small .wb-ctrl {
@@ -301,10 +342,46 @@ li.wb-stack-selected {
 .wb-small .wb-top-button {
     width: 75px;
     padding: 5px 10px;
+    font-size: 12px;
 }
+
+.wb-small li.wb-ctrl-layer {
+    margin-bottom: 20px;
+}
+
+.wb-small .wb-layer-options ul li {
+    margin: 0 20px 20px 0;
+}
+
+.wb-small .wb-top-bar {
+    margin-bottom: 20px;
+}
+
+.wb-small .wb-main {
+    width: auto;
+}
+
+.wb-small .wb-wheel-selector-wrap {
+    padding-right: 10px;
+}
+
+/**** Smallest ****/
 
 .wb-smallest .wb-ctrl {
     font-size: 11px;
+}
+
+.wb-smallest .wb-ctrl-wrap {
+    width: 175px;
+    padding-left: 10px;
+}
+
+.wb-smallest .wb-top-left {
+    padding-left: 10px;
+}
+
+.wb-smallest .wb-top-right {
+    padding-right: 10px;
 }
 
 .wb-smallest .wb-ctrl-title {

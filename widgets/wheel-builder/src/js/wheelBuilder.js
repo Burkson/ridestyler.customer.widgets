@@ -33,7 +33,7 @@
 		this.colorOp = 'multiply';			// colorize operation
 		this.pickerColor = 'FFFFFF';		// picker color
 		this.ctrlTitleText = 'Customize';	// ctrl title text
-		this.wheelDims = [500, 500];		// wheel dimensions
+		this.wheelDims = [];				// wheel dimensions
 		this.imageType = 'image/png';		// image export type
 		this.defaultLayerOpts = null;		// layer options
 		this.cancelText = 'Cancel';
@@ -85,6 +85,9 @@
 		// Resolves after all layers are set
 		this.loadedPromise = new LBUtil.promise();
 
+		// Resolves after the app has initialized
+		this.appLoadedPromise = new LBUtil.promise();
+
 		// Flags to indicate individual async requests have completed
 		this.tplLoaded = false;
 		this.cssLoaded = false;
@@ -119,6 +122,7 @@
 		this.ctrlTitle = null;
 		this.ctrl = null;
 		this.backBtn = null;
+		this.closeBtn = null;
 
 		// The currently selected stack
 		this.selectedStack = null;
@@ -173,7 +177,7 @@
 	 * @param {function} cb - The callback function to execute
 	 */
 	 WheelBuilder.prototype.loaded = function(cb) {
-		this.loadedPromise.done(function() {
+		this.appLoadedPromise.done(function() {
 			cb.call();
 		});
 	 };
@@ -251,9 +255,24 @@
 		this.ctrlTitle = this.ctrlWrap.getElementsByClassName('wb-ctrl-title')[0];
 		this.ctrl = this.ctrlWrap.getElementsByClassName('wb-ctrl')[0];
 		this.backBtn = this.ctrlHeader.getElementsByClassName('wb-back-btn')[0];
+		this.closeBtn = this.ctrlHeader.getElementsByClassName('wb-close-btn')[0];
 
 		// Event handlers
 		window.addEventListener('resize', function() {self.adjustLayout();});
+
+		this.backBtn.onclick = function() {
+			self.onBackClick();
+		};
+
+		this.closeBtn.onclick = function() {
+			if (LBUtil.hasClass(self.ctrlWrap, 'wb-closed')) {
+				LBUtil.removeClass(self.ctrlWrap, 'wb-closed');
+				this.innerHTML = '[-]';
+			} else {
+				LBUtil.addClass(self.ctrlWrap, 'wb-closed');
+				this.innerHTML = '[+]';
+			}
+		};
 
 		// Create each layer stack
 		for (var i = 0; i < len; i++) {
@@ -266,6 +285,11 @@
 			self.renderCtrl();
 			self.renderStackSelector();
 			self.renderPreview();
+			self.appLoadedPromise.resolve();
+		});
+
+		this.appLoadedPromise.done(function() {
+			LBUtil.show(self.wrapEl, 'block', true);
 		});
 
 		this.adjustLayout();
@@ -303,10 +327,6 @@
 				self.onDownloadClick(e);
 			};
 		}
-
-		this.backBtn.onclick = function() {
-			self.onBackClick();
-		};
 
 		LBUtil.show(this.topBar, 'table', true);
 	};
@@ -350,9 +370,6 @@
 		if (!stack.layerSelectEl) {
 			this.createLayerSelector(stack, true);
 		}
-
-		// Colorize any layers that haven't been colored
-		this.colorInvalidLayers(stack);
 
 		// Show this stack in the preview pane
 		this.togglePreviewStack(stack);
@@ -706,6 +723,7 @@
 		before = null;
 
 		img.src = imgSrc;
+		li.setAttribute('data-stackname', ls.name);
 		li.appendChild(img);
 
 		li.onclick = function(e) {
@@ -785,7 +803,7 @@
 					stack.layers[j].currentColor !== color
 				) {
 					if (stack !== selStack) {
-						stack.layers[j].invalid = true;
+						stack.lb.setColor(layerName, color, operation);
 					}
 					stack.layers[j].currentColor = color;
 					stack.layers[j].currentOp = operation;
@@ -797,30 +815,36 @@
 		for (i = 0; i < len; i++) {
 			ctrlColors[i].getElementsByTagName('span')[0].style.backgroundColor = color;
 		}
+
+		this.updateStackSelector();
 	};
 
 	/**
-	 * Colorize any uncolored layers for a given stack
-	 * @param {object} stack - The stack to colorize
+	 * Generate new thumbnails for the stack selector
 	 */
-	WheelBuilder.prototype.colorInvalidLayers = function(stack) {
-		var layer = null,
-		len = stack.layers.length,
-		idx = 0;
+	WheelBuilder.prototype.updateStackSelector = function() {
+		var lis = this.selectorEl.getElementsByTagName('li'),
+		len = lis.length,
+		stack = null,
+		img = null,
+		stackName = '',
+		dataUrl = '',
+		display = '';
 
-		function iterate() {
-			layer = stack.layers[idx];
-			if (layer.invalid) {
-				stack.lb.setColor(layer.name, layer.currentColor, layer.currentOp);
-				layer.invalid = false;
-			}
+		for (var i = 0; i < len; i++) {
+			stackName = lis[i].getAttribute('data-stackname');
+			stack = this.getStack(stackName);
+			img = lis[i].getElementsByTagName('img')[0];
 
-			if (++idx < len) {
-				window.setTimeout(iterate, 0);
+			display = stack.containEl.style.display;
+			if (display === 'none') {
+				stack.containEl.style.display = 'block';
 			}
+			dataUrl = stack.lb.getImage();
+			stack.containEl.style.display = display;
+
+			img.setAttribute('src', dataUrl);
 		}
-
-		iterate();
 	};
 
 	/**
@@ -868,14 +892,8 @@
 	 * Show and style the ctrl pane
 	 */
 	WheelBuilder.prototype.renderCtrl = function() {
-		LBUtil.show(this.ctrlWrap, 'table-cell', true);
+		LBUtil.show(this.ctrlWrap, 'table-cell', true, 0.87);
 		this.setCtrlTitle();
-
-		// Dynamically set the height of .wb-ctrl
-		var ctrlHeight = parseInt(this.wheelDims[1] - this.ctrlHeader.clientHeight);
-		if (!isNaN(ctrlHeight) && ctrlHeight > 0) {
-			this.ctrl.style.height = ctrlHeight + 'px';
-		}
 	};
 
 	/**
@@ -945,6 +963,8 @@
 		for (i = 0; i < len; i++) {
 			ctrlColors[i].getElementsByTagName('span')[0].style.backgroundColor = '';
 		}
+
+		this.updateStackSelector();
 	};
 
 	/**
@@ -954,7 +974,7 @@
 		var len = this.layerStacks.length,
 		len2 = null,
 		stack = null,
-		layerColors = this.ctrlWrap.getElementsByClassName('wb-color');
+		layerColors = this.layerSelectWrap.getElementsByClassName('wb-color');
 
 		for (var i = 0; i < len; i++) {
 			stack = this.layerStacks[i];
@@ -970,6 +990,8 @@
 		for (i = 0; i < len; i++) {
 			layerColors[i].style.backgroundColor = '';
 		}
+
+		this.updateStackSelector();
 	};
 
 	/**
