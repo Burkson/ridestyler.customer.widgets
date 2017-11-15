@@ -17,7 +17,7 @@ To build a copy of the showcase use the following command:
 ```gulp build```
 
 Whenever you run or build the showcase, a copy will be created in `dist` folder. By default, certain non-production build steps (such as minification and autoprefixer) are disabled and source maps are enabled. To enable the production build steps (and disable source maps) run the build command with the production flag:
-```gulp build --production```
+```gulp build --production=true```
 
 ## Updating Packages
 To update NPM packages (such as references to other widgets in `com.burkson.ridestyler.widgets`) run the following command:

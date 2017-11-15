@@ -33,6 +33,9 @@ if (gulpOptions.has('production') || gulpOptions.has('prod')) {
         production = production || 'false';
         production = production === 'true';
 
+    if (!production) console.log('Build using dev mode');
+    else console.log('Build using production mode');
+
     dev = !production;
 }
 
