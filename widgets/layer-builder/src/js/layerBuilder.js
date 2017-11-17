@@ -55,6 +55,9 @@
 		// Resolves after the container is loaded
 		this.initPromise = new LBUtil.promise();
 
+		// Resolves after all images have been drawn to canvases
+		this.imgDrawPromise = new LBUtil.promise();
+
 		// Valid image color operations
 		this.imgOperations = ['multiply', 'screen', 'grayscale'];
 
@@ -201,7 +204,7 @@
 			self.drawImages();
 		});
 
-		return self.imgLoadPromise;
+		return self.imgDrawPromise;
 	};
 
 	/**
@@ -256,9 +259,7 @@
 
 			layer.ctx.drawImage(layer.img, 0, 0, imgW, imgH);
 
-			layer.canvas.style.transition = 'opacity 1s linear';
-			layer.canvas.style.setProperty('-webkit-transition', 'opacity 1s linear');
-			layer.canvas.style.opacity = 1;
+			LBUtil.show(layer.canvas, 'block', true);
 
 			layer.imgData = layer.ctx.getImageData(0, 0, imgW, imgH);
 			layer.masterCvs = layer.canvas.cloneNode(false);
@@ -269,6 +270,8 @@
 			layer.unscaledCvs.height = layer.img.origH;
 			layer.unscaledCvs.getContext('2d').drawImage(layer.img, 0, 0, layer.img.origW, layer.img.origH);
 		}
+
+		this.imgDrawPromise.resolve();
 	};
 
 	/**
@@ -534,11 +537,11 @@
 
 		for (var i = 0, len = this.layers.length; i < len; i++) {
 			layer = this.layers[i];
-			if (layer.canvas.clientWidth > res.width) {
-				res.width = layer.canvas.clientWidth;
+			if (layer.canvas.width > res.width) {
+				res.width = layer.canvas.width;
 			}
-			if (layer.canvas.clientHeight > res.height) {
-				res.height = layer.canvas.clientHeight;
+			if (layer.canvas.height > res.height) {
+				res.height = layer.canvas.height;
 			}
 		}
 

@@ -73,6 +73,9 @@
 		// Lookup stack by name
 		this.stackLookup = {};
 
+		// Current layer colors
+		this.layerColors = {};
+
 		// Number of visible stacks
 		this.visibleStacks = 0;
 
@@ -113,6 +116,7 @@
 
 		// Elements from the template we will be manipulating
 		this.wrapEl = null;
+		this.wheelPreview = null;
 		this.ctrlWrap = null;
 		this.selectorEl = null;
 		this.layerSelectWrap = null;
@@ -123,6 +127,12 @@
 		this.ctrl = null;
 		this.backBtn = null;
 		this.closeBtn = null;
+
+		// Width of our wheel preview wrapper
+		this.previewWidth = 0;
+
+		// Container width, used to determine if reinit is needed
+		this.containerWidth = 0;
 
 		// The currently selected stack
 		this.selectedStack = null;
@@ -245,10 +255,17 @@
 			return;
 		}
 
+		this.containerWidth = this.container.offsetWidth;
+		if (!this.containerWidth) {
+			console.error('Container element has no width');
+			return;
+		}
+
 		this.ctrlWrap = this.wrapEl.getElementsByClassName('wb-ctrl-wrap')[0];
+		this.wheelPreview = this.wrapEl.getElementsByClassName('wb-wheel-preview')[0];
+		this.selectorEl = this.wrapEl.getElementsByClassName('wb-wheel-selector')[0];
 		this.layerSelectWrap = this.ctrlWrap.getElementsByClassName('wb-layer-select')[0];
 		this.layerOptsWrap = this.ctrlWrap.getElementsByClassName('wb-layer-options')[0];
-		this.selectorEl = this.wrapEl.getElementsByClassName('wb-wheel-selector')[0];
 		this.topBar = this.wrapEl.getElementsByClassName('wb-top-bar')[0];
 		this.logo = this.topBar.getElementsByClassName('wb-logo')[0];
 		this.ctrlHeader = this.ctrlWrap.getElementsByClassName('wb-ctrl-header')[0];
@@ -258,6 +275,17 @@
 		this.closeBtn = this.ctrlHeader.getElementsByClassName('wb-close-btn')[0];
 
 		// Event handlers
+		addResizeListener(this.container, function() {
+			var newWidth = self.container.offsetWidth;
+			if (self.containerWidth !== newWidth) {
+				self.containerWidth = newWidth;
+
+				self.appLoadedPromise.done(function() {
+					self.reinitialize();
+				});
+			}
+		});
+
 		window.addEventListener('resize', function() {self.adjustLayout();});
 
 		this.backBtn.onclick = function() {
@@ -274,7 +302,10 @@
 			}
 		};
 
+		this.adjustLayout();
+
 		// Create each layer stack
+		this.previewWidth = this.wheelPreview.clientWidth;
 		for (var i = 0; i < len; i++) {
 			this.addStack(this.dirtyStacks[i]);
 		}
@@ -291,8 +322,6 @@
 		this.appLoadedPromise.done(function() {
 			LBUtil.show(self.wrapEl, 'block', true);
 		});
-
-		this.adjustLayout();
 	};
 
 	/**
@@ -375,6 +404,9 @@
 		this.togglePreviewStack(stack);
 
 		this.selectedStack = this.stackLookup[stackName];
+
+		// Highlight the stack in the selector
+		this.toggleSelectedStyle(stackName);
 	};
 
 	/**
@@ -406,6 +438,8 @@
 			self.showLayerOpts(ls, layerIdx);
 			LBUtil.toggle(self.layerOptsWrap, self.layerSelectWrap);
 		};
+
+		ul.innerHTML = '';
 
 		LBUtil.addClass(ul, 'wb-layer-selector');
 
@@ -495,7 +529,6 @@
 			operation = tgt.getAttribute('data-operation');
 
 			jsColor.fromString(color);
-
 			self.setLayerColor(layer.name, color, operation);
 		};
 
@@ -627,7 +660,7 @@
 
 		this.asyncPromise.done(function() {
 			var exists = self.getStack(ls.name),
-			previewEl = self.wrapEl.getElementsByClassName('wb-wheel-preview-inner')[0],
+			previewInner = self.wrapEl.getElementsByClassName('wb-wheel-preview-inner')[0],
 			stackEl = null,
 			lb = null,
 			idx = null,
@@ -658,7 +691,7 @@
 			}
 
 			if (exists) {
-				stackEl = self.wrapEl.getElementById('wb-wheel-' + className);
+				stackEl = document.getElementById('wb-wheel-' + className);
 				stackEl.innerHTML = '';
 
 				idx = self.stackLookup[ls.name];
@@ -666,7 +699,7 @@
 			} else {
 				stackEl = document.createElement('div');
 				stackEl.id = 'wb-wheel-' + className;
-				previewEl.appendChild(stackEl);
+				previewInner.appendChild(stackEl);
 
 				idx = self.layerStacks.length;
 				self.stackLookup[ls.name] = idx;
@@ -675,7 +708,7 @@
 			LBUtil.addClass(stackEl, 'wb-wheel');
 
 			// Set up the layer builder for this stack
-			lb = new LayerBuilder(stackEl.id, {dimensions: self.wheelDims});
+			lb = new LayerBuilder(stackEl.id, {dimensions: [self.previewWidth, self.previewWidth]});
 			lb.setLayers(ls.layers).done(function() {
 				dims = lb.getDimensions();
 				stackEl.style.width = dims.width + 'px';
@@ -723,6 +756,8 @@
 		before = null;
 
 		img.src = imgSrc;
+
+		LBUtil.addClass(li, 'wb-ss-' + LBUtil.nonAlpha2Dash(ls.name.toLowerCase()));
 		li.setAttribute('data-stackname', ls.name);
 		li.appendChild(img);
 
@@ -734,12 +769,7 @@
 			if (tgt.tagName.toLowerCase() !== 'li') {
 				item = tgt.parentElement;
 			}
-
-			LBUtil.removeClass(curSelected, 'wb-stack-selected');
-
 			self.selectStack(ls.name);
-
-			LBUtil.addClass(item, 'wb-stack-selected');
 		};
 
 		if (ls.selected) {
@@ -787,9 +817,6 @@
 		layer = selStack.lb.getLayer(layerName);
 		if (layer && !layer.readOnly) {
 			selStack.lb.setColor(layerName, color, operation);
-		} else {
-			console.error('Invalid or read only layer');
-			return;
 		}
 
 		for (var i = 0; i < len; i++) {
@@ -799,14 +826,15 @@
 			for (var j = 0; j < len2; j++) {
 				layer = stack.lb.getLayer(layerName);
 				if (layer && !layer.readOnly &&
-					stack.layers[j].name === layerName &&
-					stack.layers[j].currentColor !== color
+					stack.layers[j].name === layerName
 				) {
 					if (stack !== selStack) {
 						stack.lb.setColor(layerName, color, operation);
 					}
 					stack.layers[j].currentColor = color;
 					stack.layers[j].currentOp = operation;
+
+					this.layerColors[layerName] = color;
 				}
 			}
 		}
@@ -845,6 +873,63 @@
 
 			img.setAttribute('src', dataUrl);
 		}
+	};
+
+	/**
+	 * Highlight the correct stack in the selector
+	 */
+	WheelBuilder.prototype.toggleSelectedStyle = function(stackName) {
+		var curSelected = this.selectorEl.getElementsByClassName('wb-stack-selected')[0],
+		nextSelected = this.selectorEl.getElementsByClassName('wb-ss-' + LBUtil.nonAlpha2Dash(stackName.toLowerCase()))[0];
+
+		if (curSelected) {
+			LBUtil.removeClass(curSelected, 'wb-stack-selected');
+		}
+
+		if (nextSelected) {
+			LBUtil.addClass(nextSelected, 'wb-stack-selected');
+		}
+	};
+
+	/**
+	 * Reinitialize the app
+	 */
+	WheelBuilder.prototype.reinitialize = function() {
+		var self = this,
+		len = this.layerStacks.length,
+		stack = null,
+		parent = null,
+		selectedStack = this.layerStacks[this.selectedStack].name;
+
+		this.loadedPromise = new LBUtil.promise();
+
+		for (var i = 0; i < len; i++) {
+			stack = this.layerStacks[i];
+			parent = stack.containEl.parentElement;
+			parent.removeChild(stack.containEl);
+		}
+
+		this.layerStacks = [];
+		this.selectorEl.innerHTML = '';
+
+		this.adjustLayout();
+		this.previewWidth = this.wheelPreview.clientWidth;
+
+		for (i = 0; i < len; i++) {
+			if (this.dirtyStacks[i].name === selectedStack) {
+				this.dirtyStacks[i].selected = true;
+			} else {
+				this.dirtyStacks[i].selected = false;
+			}
+
+			this.addStack(this.dirtyStacks[i]);
+		}
+
+		this.loadedPromise.done(function() {
+			for (i in self.layerColors) {
+				self.setLayerColor(i, self.layerColors[i]);
+			}
+		});
 	};
 
 	/**
@@ -901,7 +986,7 @@
 	 */
 	WheelBuilder.prototype.renderStackSelector = function() {
 		if (this.visibleStacks > 1) {
-			LBUtil.show(this.selectorEl, 'table-cell', true);
+			this.selectorEl.style.opacity = 1;
 		} else {
 			LBUtil.hide(this.selectorEl, true);
 		}
@@ -955,6 +1040,7 @@
 			for (var j = 0; j < len2; j++) {
 				if (stack.layers[j].name === layerName) {
 					stack.layers[j].currentColor = '';
+					this.layerColors[layerName] = '';
 				}
 			}
 		}
@@ -983,6 +1069,7 @@
 			len2 = stack.layers.length;
 			for (var j = 0; j < len2; j++) {
 				stack.layers[j].currentColor = '';
+				this.layerColors[stack.layers[j].name] = '';
 			}
 		}
 
@@ -1179,4 +1266,71 @@
 	};
 
 	window.WheelBuilder = WheelBuilder;
+
+	// Element resize polyfill from
+	// http://www.backalleycoder.com/2013/03/18/cross-browser-event-based-element-resize-detection/
+	(function(){
+	  var attachEvent = document.attachEvent;
+	  var isIE = navigator.userAgent.match(/Trident/);
+	  var requestFrame = (function(){
+	    var raf = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame ||
+	        function(fn){ return window.setTimeout(fn, 20); };
+	    return function(fn){ return raf(fn); };
+	  })();
+
+	  var cancelFrame = (function(){
+	    var cancel = window.cancelAnimationFrame || window.mozCancelAnimationFrame || window.webkitCancelAnimationFrame ||
+	           window.clearTimeout;
+	    return function(id){ return cancel(id); };
+	  })();
+
+	  function resizeListener(e){
+	    var win = e.target || e.srcElement;
+	    if (win.__resizeRAF__) cancelFrame(win.__resizeRAF__);
+	    win.__resizeRAF__ = requestFrame(function(){
+	      var trigger = win.__resizeTrigger__;
+	      trigger.__resizeListeners__.forEach(function(fn){
+	        fn.call(trigger, e);
+	      });
+	    });
+	  }
+
+	  function objectLoad(e){
+	    this.contentDocument.defaultView.__resizeTrigger__ = this.__resizeElement__;
+	    this.contentDocument.defaultView.addEventListener('resize', resizeListener);
+	  }
+
+	  window.addResizeListener = function(element, fn){
+	    if (!element.__resizeListeners__) {
+	      element.__resizeListeners__ = [];
+	      if (attachEvent) {
+	        element.__resizeTrigger__ = element;
+	        element.attachEvent('onresize', resizeListener);
+	      }
+	      else {
+	        if (getComputedStyle(element).position == 'static') element.style.position = 'relative';
+	        var obj = element.__resizeTrigger__ = document.createElement('object'); 
+	        obj.setAttribute('style', 'display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%; overflow: hidden; pointer-events: none; z-index: -1;');
+	        obj.__resizeElement__ = element;
+	        obj.onload = objectLoad;
+	        obj.type = 'text/html';
+	        if (isIE) element.appendChild(obj);
+	        obj.data = 'about:blank';
+	        if (!isIE) element.appendChild(obj);
+	      }
+	    }
+	    element.__resizeListeners__.push(fn);
+	  };
+
+	  window.removeResizeListener = function(element, fn){
+	    element.__resizeListeners__.splice(element.__resizeListeners__.indexOf(fn), 1);
+	    if (!element.__resizeListeners__.length) {
+	      if (attachEvent) element.detachEvent('onresize', resizeListener);
+	      else {
+	        element.__resizeTrigger__.contentDocument.defaultView.removeEventListener('resize', resizeListener);
+	        element.__resizeTrigger__ = !element.removeChild(element.__resizeTrigger__);
+	      }
+	    }
+	  };
+	})();
 })();

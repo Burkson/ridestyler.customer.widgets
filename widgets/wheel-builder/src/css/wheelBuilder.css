@@ -56,7 +56,7 @@
 }
 
 .wb-main {
-    display: inline-block;
+    display: block;
     position: relative;
     width: 100%;
 }
@@ -193,13 +193,17 @@ li.wb-ctrl-layer span {
     transition: opacity .5s linear;
 }
 
+.wb-wheel canvas {
+    transition: opacity 1s linear;
+    -webkit-transition: opacity 1s linear;
+}
+
 .wb-wheel-selected {
     display: block;
 }
 
 .wb-wheel-preview {
     display: table-cell;
-    width: 65%;
     vertical-align: middle;
 }
 
@@ -213,11 +217,13 @@ li.wb-ctrl-layer span {
     width: 15%;
     vertical-align: middle;
     padding-right: 20px;
+    z-index: 10;
 }
 
 .wb-wheel-selector {
     float: right;
     margin: 0;
+    padding-left: 0;
     list-style-type: none;
     opacity: 0;
     -webkit-transition: opacity .25s ease-in-out;
@@ -289,7 +295,7 @@ li.wb-stack-selected {
 }
 
 .wb-close-btn {
-    display: inline-block;
+    display: none;
     vertical-align: middle;
     cursor: pointer;
     float: right;
@@ -306,9 +312,6 @@ li.wb-stack-selected {
 
 /**** Small ****/
 
-.wb-small .wb-ctrl {
-    margin-top: 10px;
-}
 
 .wb-small .wb-ctrl-wrap {
     width: 200px;
@@ -327,6 +330,7 @@ li.wb-stack-selected {
 }
 
 .wb-small .wb-ctrl {
+    margin-top: 0px;
     font-size: 12px;
 }
 
@@ -349,6 +353,10 @@ li.wb-stack-selected {
     margin-bottom: 20px;
 }
 
+.wb-small .wb-layer-options {
+    margin-top: 10px;
+}
+
 .wb-small .wb-layer-options ul li {
     margin: 0 20px 20px 0;
 }
@@ -362,7 +370,35 @@ li.wb-stack-selected {
 }
 
 .wb-small .wb-wheel-selector-wrap {
-    padding-right: 10px;
+    margin: 20px 0;
+    width: auto;
+    display: block;
+    text-align: center;
+}
+
+.wb-small .wb-wheel-selector {
+    padding-left: 0px;
+    display: block;
+    float: none;
+}
+
+.wb-small .wb-wheel-selector li {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 0;
+}
+
+.wb-small .wb-wheel-selector li:last-child {
+    margin-right: 0;
+}
+
+.wb-small .wb-wheel-preview {
+    display: block;
+    width: auto;
+}
+
+.wb-small .wb-close-btn {
+    display: inline-block;
 }
 
 /**** Smallest ****/
