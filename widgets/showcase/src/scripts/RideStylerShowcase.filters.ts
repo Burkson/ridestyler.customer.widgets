@@ -24,7 +24,7 @@ namespace RideStylerShowcase.filters {
         }
 
         public clearFilters(triggerChange?: boolean) {
-            this.globalFilters.clear();
+            this.globalFilters.clear(triggerChange);
             this.tireFilters.clear(triggerChange);
             this.wheelFilters.clear(triggerChange);
         }
@@ -60,7 +60,15 @@ namespace RideStylerShowcase.filters {
         public readonly type:FilterProviderType;
         public readonly filterOptions:IFilter<any, FilterType>[];
 
+        /**
+         * The currently applied filters
+         */
         protected currentFilters:FilterType;
+
+        /**
+         * Overridable in deriving classes to set base filters for requests
+         */
+        protected readonly baseFilters:FilterType;
         
         protected readonly globalFilterProvider: GlobalFilterProvider;
 
@@ -89,28 +97,49 @@ namespace RideStylerShowcase.filters {
          * without actually setting them
          */
         public previewFilters(filterValues:FilterValue[]):FilterType {
-            let globalFilters:GlobalFilterModel = this.globalFilterProvider ? this.globalFilterProvider.getFilters() : {};
-            let filters:FilterType = {} as FilterType;
+            const globalFilters:FilterType = (this.globalFilterProvider ? 
+                this.globalFilterProvider.getFilters() : 
+                {}
+            ) as FilterType;
+            const filters:FilterType = {} as FilterType;
+            const baseFilters:FilterType = this.baseFilters;
 
             for (const filterValue of filterValues) {
-                let {key, value} = filterValue;
+                const {key, value} = filterValue;
 
                 this.setFilter(key, value, filters);
             }
 
-            return ObjectHelper.assign<FilterType>({} as FilterType, globalFilters as FilterType, filters);
+            return ObjectHelper.assign<FilterType>(
+                {} as FilterType,
+                this.baseFilters, 
+                globalFilters as FilterType, 
+                filters
+            );
         }
 
         /**
          * Returns the currently applied filters
          */
         public getFilters():FilterType {
-            let globalFilters:GlobalFilterModel = this.globalFilterProvider ? this.globalFilterProvider.getFilters() : {};
+            const globalFilters:FilterType = (this.globalFilterProvider ? 
+                this.globalFilterProvider.getFilters() : 
+                {}
+            ) as FilterType;
 
-            return ObjectHelper.assign<FilterType>({} as FilterType, globalFilters as FilterType, this.currentFilters);
+            return ObjectHelper.assign<FilterType>(
+                {} as FilterType,
+                this.baseFilters,
+                globalFilters,
+                this.currentFilters
+            );
         }
 
-        public retrieveMenuOptions<ValueType>(filter:IFilter<ValueType, FilterType>):RideStylerPromise<IFilterOption<ValueType>[], ridestyler.RideStylerAPIResponse> {
+        /**
+         * Retrieve the options for a filter
+         * @param filter The filter
+         */
+        public retrieveOptions<ValueType>(filter:IFilter<ValueType, FilterType>):RideStylerPromise<IFilterOption<ValueType>[], ridestyler.RideStylerAPIResponse> {
             return filter.retrieveOptions(this.globalFilterProvider.getFilters());
         }
         
@@ -204,14 +233,14 @@ namespace RideStylerShowcase.filters {
     const vehicleConfigFilterKey = 'vehicle-config';
     export class GlobalFilterProvider extends FilterProvider<GlobalFilterModel> {
         public readonly filterOptions:IFilter<any, GlobalFilterModel>[];
-        private readonly defaultFilters: GlobalFilterModel = {
+        protected readonly baseFilters: GlobalFilterModel = {
             HasFitments: true
         };
         
         constructor() {
             super('global', undefined);
 
-            this.currentFilters = ObjectHelper.assign({}, this.defaultFilters);
+            this.currentFilters = {};
 
             this.filterOptions = [
                 // VehicleConfiguration & VehicleTireOption
@@ -231,28 +260,27 @@ namespace RideStylerShowcase.filters {
             ];
         }
 
-        public clear() {
-            this.currentFilters = ObjectHelper.assign({}, this.defaultFilters);
-            console.log('clear');
-        }
-
         /**
          * Applies a vehicle selection to all 
          * @param vehicle The vehicle to apply to filter queries
          */
         public setVehicle(vehicle:Vehicle) {
             this.setFilter(vehicleConfigFilterKey, vehicle);
-            console.log('setVehicle');
         }
 
-        public getCount():RideStylerPromise<number, ridestyler.RideStylerAPIResponse> {
+        public getCount():never {
             // We'll never call getCount on the GlobalFilterModel
-            return undefined;
+            throw 'Cannot count GlobalFilterModel';
         }
     }
 
     export class TireFilterProvider extends FilterProvider<TireFilterModel> {
         public readonly filterOptions:IFilter<any, TireFilterModel>[];
+        protected readonly baseFilters:TireFilterModel = {
+            RequiredFitmentResourceTypes: [
+                ridestyler.DataObjects.TireFitmentResourceType.Catalog
+            ]
+        };
 
         constructor(globalFilterProvider:GlobalFilterProvider) {
             super('tire', globalFilterProvider);
@@ -336,6 +364,13 @@ namespace RideStylerShowcase.filters {
 
     export class WheelFilterProvider extends FilterProvider<WheelFilterModel> {
         public readonly filterOptions:IFilter<any, WheelFilterModel>[];
+        protected readonly baseFilters:WheelFilterModel = {
+            FitmentResourceTypes: [ // At least one image
+                ridestyler.Requests.WheelFitmentResourceType.Angled,
+                ridestyler.Requests.WheelFitmentResourceType.Catalog,
+                ridestyler.Requests.WheelFitmentResourceType.Side
+            ]
+        };
 
         constructor(globalFilterProvider:GlobalFilterProvider) {
             super('wheel', globalFilterProvider);
