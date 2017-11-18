@@ -1,45 +1,31 @@
 namespace RideStylerShowcase {
-    import Column = RideStylerShowcaseTableModal.Column;
-    import Options = RideStylerShowcaseTableModal.Options;
+    import Column = RideStylerShowcaseTable.Column;
+    import Options = RideStylerShowcaseTable.Options;
 
-    const modalClass = 'ridestyler-showcase-table-modal';
-    const tableClass = modalClass + '-table';
+    const tableClass = 'ridestyler-showcase-table';
     const headClass = tableClass + '-head';
     const bodyClass = tableClass + '-body';
-    const bodyLoadingClass = bodyClass + '-body';
+    const bodyLoadingClass = bodyClass + '-loading';
+    const containerClass = tableClass + '-container';
 
-    export abstract class RideStylerShowcaseTableModal<RowType> extends RideStylerShowcaseModal {
+    export class RideStylerShowcaseTable<RowType> extends ComponentBase {
         protected readonly options:Options<RowType>;
         protected readonly columns:Column<RowType>[];
 
         protected tbody:HTMLTableSectionElement;
+
+        public static emptyCellString:string = '-';
 
         constructor(showcaseInstance:RideStylerShowcaseInstance, options:Options<RowType>) {
             options = ObjectHelper.assign({
 
             }, options) 
 
-            super(showcaseInstance, options);
-
-            this.component.classList.add(modalClass);
+            super(showcaseInstance);
 
             this.options = options;
             this.columns = options.columns;
-
-            if (options.title) {
-                HTMLHelper.createElement('h1', {
-                    text: options.title,
-                    appendTo: this.component
-                });
-            }
-
-            this.buildTable();
-
-            if (options.rows) this.appendRows(options.rows);
-            else if (options.startLoading) this.setLoading(true);
-        }
-
-        protected buildTable() {
+            
             let table = HTMLHelper.createElement('table', {
                 appendTo: this.component,
                 className: tableClass
@@ -56,6 +42,11 @@ namespace RideStylerShowcase {
             });
 
             this.generateHeaders(thead);
+
+            this.component = table;
+
+            if (options.rows) this.appendRows(options.rows);
+            else if (options.startLoading) this.setLoading(true);
         }
 
         protected generateHeaderCell(column:Column<RowType>):HTMLTableHeaderCellElement {
@@ -90,7 +81,7 @@ namespace RideStylerShowcase {
             let cell = column.cell;
 
             if (typeof cell === 'function') {
-                let generatedCell = (cell as RideStylerShowcaseTableModal.CellGenerator<RowType>)(row, column);
+                let generatedCell = (cell as RideStylerShowcaseTable.CellGenerator<RowType>)(row, column);
 
                 return typeof generatedCell === 'string' ? HTMLHelper.createElement('td', {
                     text: generatedCell
@@ -115,6 +106,8 @@ namespace RideStylerShowcase {
         }
 
         public appendRows(rows:RowType[]) {
+            this.setLoading(false);
+
             let rowsFragment = document.createDocumentFragment();
 
             for (let row of rows) {
@@ -127,9 +120,17 @@ namespace RideStylerShowcase {
         protected setLoading(loading:boolean) {
             this.tbody.classList.toggle(bodyLoadingClass, loading);
         }
+
+        public static formatCell<T>(object: T, key:keyof T, postfix?:string):HTMLTableCellElement {
+            let string:string = object[key].toString();
+            
+            return HTMLHelper.createElement('td', {
+                text: string ? (postfix ? string + postfix : string) : RideStylerShowcaseTable.emptyCellString
+            });
+        }
     }
 
-    export namespace RideStylerShowcaseTableModal {
+    export namespace RideStylerShowcaseTable {
         export interface HeaderGenerator<RowType> {
             (column:Column<RowType>):HTMLTableHeaderCellElement|string;
         }
@@ -143,12 +144,7 @@ namespace RideStylerShowcase {
             cell: keyof RowType|CellGenerator<RowType>;
         }
 
-        export interface Options<RowType> extends RideStylerShowcaseModal.Options {
-            /** 
-             * A title for the modal
-             */
-            title?: string;
-
+        export interface Options<RowType> {
             /**
              * Column settings
              */
