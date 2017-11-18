@@ -14,7 +14,7 @@ namespace RideStylerShowcase {
             let to:object = Object(target);
 
             for (let source of assignObjects) {
-                if (source == null) continue;
+                if (!source) continue;
 
                 for (var key in source) 
                     if (Object.prototype.hasOwnProperty.call(source, key))
@@ -22,6 +22,10 @@ namespace RideStylerShowcase {
             }
 
             return to;
+        }
+
+        export function copy<T>(target:T):T {
+            return assign({}, target);
         }
 
         /**
