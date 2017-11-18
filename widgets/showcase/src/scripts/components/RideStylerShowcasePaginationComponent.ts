@@ -56,14 +56,21 @@ namespace RideStylerShowcase {
             // Listen for clicks on options
             this.component.addEventListener('click', event => this.onComponentClick(event));
 
-            // Our custom scroll event
-            this.optionContainer.addEventListener('scroll', event => this.onScroll(event));
-
             // Run clear options to get the loader
             this.clearOptions();
 
             // Load pagination after this component has been setup
             setTimeout(() => this.loadMore(), 0);
+
+            ScrollHelper.attachWheelListener(this.component, event => {
+                const delta = event.deltaX || event.deltaY;
+                const {scrollLeft, scrollWidth, offsetWidth} = this.optionContainer;
+
+                const newValue = Math.min(scrollLeft + delta, scrollWidth - offsetWidth);
+                this.optionContainer.scrollLeft = newValue;
+
+                this.onScroll();
+            });
         }
 
         /**
@@ -76,7 +83,7 @@ namespace RideStylerShowcase {
             });
         }
 
-        private onScroll(event:UIEvent) {
+        private onScroll() {
             this.updatePaginationButtons();
 
             let optionContainer = this.optionContainer;
@@ -176,12 +183,21 @@ namespace RideStylerShowcase {
             this.updatePaginationButtons();
         }
 
+        public scrollTo(newLeft:number) {
+            const startLeft = this.optionContainer.scrollLeft;
+            const duration = Math.abs(startLeft - newLeft) / 2
+
+            TinyAnimate.animate(startLeft, newLeft, duration, currentLeft => {
+                this.optionContainer.scrollLeft = currentLeft
+            }, 'easeOutCubic', () => this.update());
+        }
+
         public previousPage() {
-            this.optionContainer.scrollLeft -= this.optionContainer.clientWidth;
+            this.scrollTo(this.optionContainer.scrollLeft - this.optionContainer.clientWidth);
         }
 
         public nextPage() {
-            this.optionContainer.scrollLeft += this.optionContainer.clientWidth;
+            this.scrollTo(this.optionContainer.scrollLeft + this.optionContainer.clientWidth);
         }
 
         public selectOption(optionElement:HTMLElement) {
@@ -190,7 +206,7 @@ namespace RideStylerShowcase {
             let oldOptionElement = this.selectedOption;
 
             if (oldOptionElement)
-                oldOptionElement.classList.remove(optionSelectedClass);
+                oldOptionElement.classList.remove(optionSelectedClass, optionLoadingClass);
             
             optionElement.classList.add(optionSelectedClass);
 
