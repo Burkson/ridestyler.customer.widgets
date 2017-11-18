@@ -389,6 +389,30 @@ namespace RideStylerShowcase.HTMLHelper {
         return element;
     }
 
+    export function createDescriptionList(values?:{label: string, description: string}[]):HTMLDListElement {
+        let descriptionList = HTMLHelper.createElement('dl', {
+            className: 'ridestyler-showcase-description-list',
+            appendTo: this.summaryElement
+        });
+
+        if (values) appendDescriptionListValues(descriptionList, values);
+
+        return descriptionList;
+    }
+
+    export function appendDescriptionListValues(descriptionList:HTMLDListElement, values?:{label: string, description: string}[]) {
+        for (const value of values) {
+            HTMLHelper.createElement('dt', {
+                text: value.label,
+                appendTo: descriptionList
+            });
+            HTMLHelper.createElement('dd', {
+                text: value.description,
+                appendTo: descriptionList
+            });
+        } 
+    }
+
     /**
      * Removes all children from an element
      * @param element The element to empty

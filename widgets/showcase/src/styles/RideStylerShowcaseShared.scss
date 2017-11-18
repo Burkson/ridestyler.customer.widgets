@@ -1,3 +1,20 @@
 .ridestyler-showcase-no-transition {
     transition: none !important;
 }
+
+.ridestyler-showcase-description-list {
+    dt {
+        font-size: 0.8em;
+        text-align: left;
+        font-weight: bold;
+        color: $secondary-text-color;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+    }
+
+    dd {
+        font-size: 1em;
+        text-align: left;
+        margin-left: 0;
+    }
+}
