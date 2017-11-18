@@ -25,6 +25,9 @@
 }
 
 .ridestyler-showcase-customization-component {
+    position: absolute;
+    top: 0; left: 0;
+
     width: 100%;
     height: 100%;
 
@@ -41,10 +44,10 @@
     background-repeat: no-repeat;
     position: absolute;
     left: 10%;
-    bottom: 0%;
+    bottom: 30% - 10%;
     right: 10%;
     margin-left: 50px;
-    height: 320px;
+    height: 33%;
     opacity: 0.5;
 
     @include fadeIn(0.5);
@@ -52,7 +55,7 @@
 
 .ridestyler-showcase-details {
     max-width: 20%;
-    padding: 10px 20px;
+    padding: $screen-padding;
     position: relative;
     float: left;
     z-index: $zLayer3;
@@ -98,12 +101,12 @@
     &-container {
         position: absolute;
         bottom: 50%;
-        left: 30px;
-        margin-bottom: 15px;
+        left: $screen-padding;
+        margin-bottom: $screen-padding;
     }
 }
 
 .ridestyler-share-my-vehicle-button {
     position: absolute;
-    top: 20px; right: 20px;
+    top: $screen-padding; right: $screen-padding;
 }

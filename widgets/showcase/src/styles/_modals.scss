@@ -1,6 +1,7 @@
 @import "shared";
 
 $modalPadding: 3em;
+$modalPaddingTop: 4em;
 
 @mixin modal {
     position: absolute;
@@ -11,7 +12,7 @@ $modalPadding: 3em;
     margin: 0;
     width: auto; height: auto;
 
-    padding: $modalPadding;
+    padding: $modalPaddingTop $modalPadding $modalPadding;
     
     border-radius: 5px;
     background-color: #fff;
@@ -34,11 +35,11 @@ $modalPadding: 3em;
     }
 
     .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl & {
-        @include modalBreakPoint;
+        @include modalBreakPoint(800px);
     }
     
     .ridestyler-showcase.ridestyler-showcase-breakpoint-tv & {
-        @include modalBreakPoint(1200px, 5%);
+        @include modalBreakPoint(1200px);
     }
 }
 

@@ -1,6 +1,8 @@
+@import "../shared";
+
 .ridestyler-showcase-change-wheel-size {
     position: absolute;
-    right: 20px;
+    right: $screen-padding;
     bottom: 50%;
-    margin-bottom: 20px;
+    margin-bottom: $screen-padding;
 }

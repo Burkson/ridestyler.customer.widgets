@@ -11,10 +11,18 @@ $tabBarWidth: 130px;
 
 .ridestyler-showcase-pagination-option {
     font-size: 0.75em;
+    margin-bottom: 3.5em;
+
+    $displaySize: 100px;
 
     &-display {
-        width: 100px;
-        height: 100px;
+        width: $displaySize;
+        height: $displaySize;
+    }
+
+    &-loader {
+        min-width: $displaySize;
+        height: $displaySize;
     }
 }
 
@@ -25,4 +33,10 @@ $tabBarWidth: 130px;
     height: $size;
 
     border-radius: $size/2;
+}
+
+.ridestyler-showcase-suspension-selector-element {
+    .noUi-value {
+        margin-top: 1em;
+    }
 }

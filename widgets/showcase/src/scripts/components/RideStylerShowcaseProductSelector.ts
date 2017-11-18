@@ -95,7 +95,7 @@ namespace RideStylerShowcase {
                 if (!this.productFilter(product)) continue;
 
                 let option = HTMLHelper.createElement('div', {
-                    className: 'ridestyler-showcase-pagination-option ridestyler-showcase-paint-option',
+                    className: 'ridestyler-showcase-pagination-option',
                     appendTo: fragment
                 }) as ProductElement<DataType>;
 

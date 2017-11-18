@@ -26,7 +26,7 @@ namespace RideStylerShowcase {
             
             HTMLHelper.createButton({
                 className: className + '-features-specs',
-                // appendTo: this.component,
+                appendTo: this.component,
                 text: strings.getString('wheel-features-specs'),
                 link: true
             }).addEventListener('click', () => {

@@ -1,6 +1,11 @@
 $primary-color: #ea1921;
 $primary-color-overlaid-text: #fff;
 
+$secondary-background-color: #eee;
+$secondary-text-color: #444;
+
+$screen-padding: 10px;
+
 @mixin baseFont {
     font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
     letter-spacing: 0.75px;

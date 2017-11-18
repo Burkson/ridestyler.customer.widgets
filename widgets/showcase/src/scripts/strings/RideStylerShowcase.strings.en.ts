@@ -46,6 +46,8 @@ namespace RideStylerShowcase.strings {
         'speed-rating':                   "Speed Rating",
         'any-speed-ratings':              "Any Speed Ratings",
         'features':                       "Features",
-        'any-features':                   "Any Features"
+        'any-features':                   "Any Features",
+        'finish':                         "Finish",
+        'summary':                        "Summary"
     });
 }

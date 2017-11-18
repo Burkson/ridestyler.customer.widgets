@@ -1,15 +1,57 @@
 @import "../shared";
+@import "../modals";
 
 .ridestyler-showcase-product-modal {
-    &-image {
-        float: left;
+    $titleBottom: $modalPaddingTop + 4.75em;
+
+    &-title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &-page {
+        position: absolute !important;
+        left: $modalPadding;
+        right: $modalPadding;
+        top: $titleBottom;
+        bottom: $modalPadding;
+
+        overflow: hidden;
+    }
+
+    &-summary {
+        background-color: $secondary-background-color;
+        padding: 0.5em 1em;
+        position: absolute;
+        left: 0;
         width: 40%;
-        height: 50%;
+        top: 0;
+        bottom: 0;
+        overflow-y: auto;
+    }
+
+    &-image {
+        position: absolute;
+        right: 0;
+        width: 50%;
+        top: 0;
+        bottom: 0;
 
         img {
             max-width: 100%;
 
             @include crispImageRendering;
         }
+    }
+
+    .ridestyler-showcase-toggle-button {
+        float: right;
+    }
+
+    .subtitle {
+        display: block;
+        font-size: 0.8em;
+        color: $secondary-text-color;
     }
 }

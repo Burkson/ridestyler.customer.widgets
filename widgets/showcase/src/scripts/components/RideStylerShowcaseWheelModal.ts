@@ -1,71 +1,151 @@
 namespace RideStylerShowcase {
-    const wheelModalClass = 'ridestyler-showcase-wheel-modal';
-    const productModalClass = 'ridestyler-showcase-product-modal';
-
     import WheelModelDescriptionModel = ridestyler.Descriptions.WheelModelDescriptionModel
+    import WheelFitmentDescriptionModel = ridestyler.Descriptions.WheelFitmentDescriptionModel;
+    import WheelPricingDataObject = ridestyler.DataObjects.WheelPricingDataObject;
+    export class RideStylerShowcaseWheelModal extends RideStylerShowcaseProductModal {
+        protected image:ResizeableResourceImage<"wheel/image">;
 
-    export class RideStylerShowcaseWheelModal extends RideStylerShowcaseModal {
-        private image:ResizeableResourceImage<"wheel/image">;
-        private titleElement:HTMLElement;
-        private descriptionElement:HTMLElement;
+        private specsTable: RideStylerShowcaseTable<WheelFitmentDescriptionModel>;
+        private summaryTable:RideStylerShowcaseTable<WheelFitmentDescriptionModel>;
 
         constructor(showcaseInstance:RideStylerShowcaseInstance, wheelModel:WheelModelDescriptionModel) {
-            super(showcaseInstance, {
-                removeOnHidden: true,
-                actions: [
-                    {
-                        action: () => {
-                            new RideStylerShowcaseWheelSpecsModal(this.showcase, wheelModel).show()
-                        },
-                        text: strings.getString('show-specs')
-                    }
-                ]
-            });
+            super(showcaseInstance);
 
-            this.update(wheelModel);
-        }
-
-        protected buildModal() {
-            super.buildModal();
-
-            this.component.classList.add(wheelModalClass);
-
-            let imageContainer = HTMLHelper.createElement('div', {
-                className: productModalClass + '-image',
-                appendTo: this.component
-            });
-
-            this.image = new ResizeableResourceImage<"wheel/image">(imageContainer, {
-                action: "wheel/image"
-            });
-
-            this.titleElement = HTMLHelper.createElement('h1', {
-                className: productModalClass + '-title',
-                appendTo: this.component
-            })
-
-            this.descriptionElement = HTMLHelper.createElement('div', {
-                className: productModalClass + '-body',
-                appendTo: this.component
-            });
-        }
-
-        public update(wheelModel:WheelModelDescriptionModel) {
             // Image
             this.image.update({
                 WheelFitmentResourceType: ridestyler.DataObjects.WheelFitmentResourceType.Catalog,
                 WheelModel: wheelModel.WheelModelID
             });
 
-            // Title
-            HTMLHelper.setText(this.titleElement, wheelModel.WheelBrandName + ' ' + wheelModel.WheelModelName + ' ' + wheelModel.WheelModelFinishDescription);
+            // Brand
+            HTMLHelper.setText(this.brandTitleElement, wheelModel.WheelBrandName);
 
-            // Description
-            HTMLHelper.setText(this.descriptionElement, RideStylerShowcaseWheelModal.getDescription(wheelModel));
+            // Model Name
+            HTMLHelper.setText(this.titleElement, wheelModel.WheelModelName);
+
+            // Finish
+            this.summaryElement.appendChild(HTMLHelper.createDescriptionList([
+                {
+                    label: strings.getString('finish'),
+                    description: wheelModel.WheelModelFinishDescription
+                }
+            ]));
+
+            // Summary Table
+            this.summaryTable = new RideStylerShowcaseTable<WheelFitmentDescriptionModel>(this.showcase, {
+                columns: [
+                    {
+                        header: strings.getString('size'),
+                        cell: RideStylerShowcaseWheelModal.getFitmentSizeDescription
+                    },
+                    {
+                        header: strings.getString('price'),
+                        cell: RideStylerShowcaseWheelModal.getFitmentPrice
+                    }
+                ],
+                startLoading: true
+            });
+            
+            this.summaryElement.appendChild(this.summaryTable.component);
+
+            this.buildSpecsPage();
+
+            api.request('wheel/getfitmentdescriptions', {
+                WheelModel: wheelModel.WheelModelID,
+                IncludePromotions: true,
+                IncludePricing: true
+            }).done(response => {
+                this.summaryTable.appendRows(response.Fitments);
+                this.specsTable.appendRows(response.Fitments);
+            });
         }
 
-        public static getDescription(wheelModel:WheelModelDescriptionModel):string {
-            return wheelModel.Meta && wheelModel.Meta.Description || strings.getString('no-description-wheel');
+        private buildSpecsPage() {
+            this.specsTable = new RideStylerShowcaseTable<WheelFitmentDescriptionModel>(this.showcase, {
+                columns: [
+                    {
+                        header: strings.getString('size'),
+                        cell: RideStylerShowcaseWheelModal.getFitmentSizeDescription
+                    }, 
+                    {
+                        header: strings.getString('offset'),
+                        cell: fitment => RideStylerShowcaseTable.formatCell(fitment, 'OffsetMin', 'mm')
+                    },
+                    {
+                        header: strings.getString('bolt-pattern'),
+                        cell: 'BoltPatternDescription'
+                    },
+                    {
+                        header: strings.getString('centerbore'),
+                        cell: fitment => RideStylerShowcaseTable.formatCell(fitment, 'CenterboreMM', 'mm')
+                    },
+                    {
+                        header: 'Price',
+                        cell: RideStylerShowcaseWheelModal.getFitmentPrice
+                    },
+                    {
+                        header: strings.getString('item-number'),
+                        cell: RideStylerShowcaseWheelModal.getFitmentItemNumber
+                    }
+                ]
+            });
+
+            const specsContainer = HTMLHelper.createElement({
+                className: 'scrollable',
+                append: this.specsTable.component
+            });
+
+            this.addPage({
+                container: specsContainer,
+                label: strings.getString('specifications')
+            });
+        }
+
+        protected createImage():ResizeableResourceImage<"wheel/image"> {
+            return new ResizeableResourceImage<"wheel/image">(this.imageContainer, {
+                action: "wheel/image",
+                baseInstructions: {
+                    PositionX: ridestyler.Requests.ImagePosition.Center,
+                    PositionY: ridestyler.Requests.ImagePosition.Far,
+                    IncludeShadow: true
+                }
+            });
+        }
+
+        private static getFitmentRetailPriceDataObject(fitment: WheelFitmentDescriptionModel):WheelPricingDataObject {
+            return fitment.Pricing && fitment.Pricing['Retail'] || undefined;
+        }
+
+        private static getFitmentSizeDescription(fitment:WheelFitmentDescriptionModel):string {
+            let {DiameterMin, WidthMin} = fitment;
+
+            if (!DiameterMin || !WidthMin) return RideStylerShowcaseTable.emptyCellString;
+
+            return `${DiameterMin}″ x ${WidthMin}″`;
+        }
+
+        private static getFitmentPrice(fitment: WheelFitmentDescriptionModel):string {
+            const noPriceString = strings.getString('call');
+            let retailPriceDataObject:WheelPricingDataObject = RideStylerShowcaseWheelModal.getFitmentRetailPriceDataObject(fitment);
+    
+            if (!retailPriceDataObject) return noPriceString;
+    
+            let price:number = retailPriceDataObject.WheelPricingAmount;
+    
+            return price ? strings.format().currency(price, '$') : noPriceString;
+        }
+
+        private static getFitmentItemNumber(fitment: WheelFitmentDescriptionModel):string {
+            let retailPriceDataObject:WheelPricingDataObject = RideStylerShowcaseWheelModal.getFitmentRetailPriceDataObject(fitment);
+
+            let itemNumber:string;
+
+            // Item number is the retail pricing item number by default
+            if (retailPriceDataObject) itemNumber = retailPriceDataObject.WheelPricingItemNumber;
+            // If there's no retail pricing, or the retail price doesn't have a item number use the fitment's part number
+            if (!itemNumber) itemNumber = fitment.PartNumber;
+
+            return itemNumber || RideStylerShowcaseTable.emptyCellString;
         }
     }
 }

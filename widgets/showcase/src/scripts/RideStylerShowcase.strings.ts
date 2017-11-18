@@ -49,7 +49,9 @@ namespace RideStylerShowcase {
         'speed-rating' | 
         'any-speed-ratings' | 
         'features' | 
-        'any-features';
+        'any-features' |
+        'finish' |
+        'summary';
 
     let defaultLanguageFormatProvider:IStringsLanguageFormatProvider = {
         currency: (number, symbol) => {

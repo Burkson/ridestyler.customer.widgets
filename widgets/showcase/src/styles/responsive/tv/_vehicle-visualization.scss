@@ -18,16 +18,23 @@ $tabBarWidth: 150px;
 }
 
 .ridestyler-showcase-rotate-vehicle {
-    bottom: 20%;
+    bottom: 22%;
 }
 
 .ridestyler-showcase-pagination-option {
     font-size: 0.75em;
+    margin-bottom: 2.5em;
 
+    $displaySize: 110px;
+    
     &-display {
-        $size: 110px;
-        width: $size;
-        height: $size;
+        width: $displaySize;
+        height: $displaySize;
+    }
+
+    &-loader {
+        min-width: $displaySize;
+        height: $displaySize;
     }
 }
 
@@ -38,4 +45,10 @@ $tabBarWidth: 150px;
     height: $size;
 
     border-radius: $size/2;
+}
+
+.ridestyler-showcase-suspension-selector-element {
+    .noUi-value {
+        margin-top: 5px;
+    }
 }
