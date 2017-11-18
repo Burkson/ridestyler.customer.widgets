@@ -46,6 +46,11 @@ namespace RideStylerShowcase {
          * The RideStyler API action to call to render the image
          */
         private readonly action:Endpoint;
+        
+        /**
+         * A set of base instructions to render the vehicle with
+         */
+        private baseInstructions:ImageRenderingInstructions;
 
         /**
          * The current instructions/parameters to render the image with
@@ -101,6 +106,11 @@ namespace RideStylerShowcase {
              * Instructions for rendering the image
              */
             instructions?: ImageRenderingInstructions,
+
+            /**
+             * Base instructions for rendering the image
+             */
+            baseInstructions?: ImageRenderingInstructions,
 
             /**
              * If true, load the image when first created
@@ -175,6 +185,8 @@ namespace RideStylerShowcase {
 
             this.image.addEventListener('error', error => this.onImageError(error));
             this.image.addEventListener('load', event => this.onImageLoad(event));
+
+            if (typeof options.baseInstructions === 'object') this.baseInstructions = options.baseInstructions
 
             if (this.instructions && options.loadInitially !== false)
                 this.update(this.instructions);
@@ -271,7 +283,7 @@ namespace RideStylerShowcase {
             let needsUpdate:boolean = false;
 
             // Update instructions
-            if (this.instructions !== instructions) {
+            if (instructions && this.instructions !== instructions) {
                 this.instructions = instructions;
                 needsUpdate = true;
             }
@@ -292,7 +304,7 @@ namespace RideStylerShowcase {
                 this.image.src = ridestyler.ajax.url(this.action, ObjectHelper.assign({
                     Width: width,
                     Height: height
-                }, defaultPosition, instructions));
+                }, defaultPosition, this.baseInstructions, this.instructions));
             }
         }
     }
