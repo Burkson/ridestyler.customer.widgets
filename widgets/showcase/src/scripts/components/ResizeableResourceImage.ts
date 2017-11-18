@@ -92,6 +92,8 @@ namespace RideStylerShowcase {
          */
         private readonly padding: Box|ResizeableResourceImage.PaddingCalculator;
 
+        private readonly events:[EventTarget,string,EventListener][];
+
         /**
          * @param container The container to render the image in
          * @param options
@@ -117,6 +119,12 @@ namespace RideStylerShowcase {
              * @default false
              */
             loadInitially?: boolean;
+
+            /**
+             * If true, listen to the window resize event
+             * @default true
+             */
+            listenToWindowResize?: boolean;
 
             /**
              * A function to call each time the image is loaded
@@ -169,6 +177,8 @@ namespace RideStylerShowcase {
             this.image = document.createElement('img');
             this.container.appendChild(this.image);
 
+            this.events = [];
+
             if (options.transitionClass) {
                 this.image.classList.add(options.transitionClass);
                 this.useTransitions = true;
@@ -190,6 +200,38 @@ namespace RideStylerShowcase {
 
             if (this.instructions && options.loadInitially !== false)
                 this.update(this.instructions);
+
+            if (options.listenToWindowResize !== false) {
+                let timeout:number;
+                const waitMs = 500;
+    
+                const resizeCallback = () => {
+                    clearTimeout(timeout);
+    
+                    timeout = setTimeout(() => {
+                        this.update();
+                    }, waitMs);
+                };
+    
+                window.addEventListener('resize', resizeCallback, false);
+                this.events.push([window, 'resize', resizeCallback]);
+            }
+        }
+
+        /**
+         * Call this function after the component will no longer be used
+         * to remove any internally attached event handlers
+         */
+        public destroy() {
+            for (const registeredEvent of this.events) {
+                let [target, eventType, listener] = registeredEvent;
+
+                target.removeEventListener(eventType, listener);
+            }
+        }
+
+        private resizeCallback = () => {
+            this.update();
         }
 
         /**
