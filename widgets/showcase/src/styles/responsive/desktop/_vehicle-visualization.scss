@@ -1,0 +1,3 @@
+@import "../responsive-mixins";
+
+@include responsiveTabBar($tabBarWidth: 100px, $iconFontSize: 0.9em, $iconTextFontSize: 1.9em);

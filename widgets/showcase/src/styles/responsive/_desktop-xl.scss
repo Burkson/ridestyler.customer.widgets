@@ -1,6 +1,7 @@
 &.ridestyler-showcase-breakpoint-desktop-xl {
     font-size: 18px;
     
+    @import "desktop-xl/pagination";
     @import "desktop-xl/vehicle-selection";
     @import "desktop-xl/vehicle-visualization";
 }

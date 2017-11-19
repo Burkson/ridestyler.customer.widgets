@@ -1,20 +1,9 @@
-$tabBarWidth: 150px;
+@import "../responsive-mixins";
 
-.ridestyler-showcase-vertical-tab-bar {
-    width: $tabBarWidth;
-    font-size: 0.9em;
-
-    &-tab-icon {
-        font-size: 1.9em;
-    }
-}
+@include responsiveTabBar($tabBarWidth: 150px, $iconFontSize: 0.9em, $iconTextFontSize: 1.9em);
 
 .ridestyler-showcase-customizations {
     height: 28%;
-}
-
-.ridestyler-showcase-customizations, .ridestyler-showcase-viewport, .ridestyler-showcase-rotate-vehicle {
-    margin-left: $tabBarWidth;
 }
 
 .ridestyler-showcase-rotate-vehicle {

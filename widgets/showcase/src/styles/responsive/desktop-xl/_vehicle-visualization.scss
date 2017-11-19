@@ -1,12 +1,6 @@
-$tabBarWidth: 130px;
+@import "../responsive-mixins";
 
-.ridestyler-showcase-vertical-tab-bar {
-    width: $tabBarWidth;
-}
-
-.ridestyler-showcase-customizations, .ridestyler-showcase-viewport, .ridestyler-showcase-rotate-vehicle {
-    margin-left: $tabBarWidth;
-}
+@include responsiveTabBar($tabBarWidth: 130px);
 
 
 .ridestyler-showcase-pagination-option {
