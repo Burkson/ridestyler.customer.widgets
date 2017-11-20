@@ -2,12 +2,23 @@
 @import "../modals";
 
 .ridestyler-showcase-product-modal {
-    $titleBottom: $modalPaddingTop + 7.5em;
+    $titleBottom: $modalPaddingTop + 5.5em;
 
     &-title {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+
+        &-brand {
+            display: block;
+            font-size: 0.8em;
+            color: $secondary-text-color;
+        }
+
+        &-subtitle {
+            display: block;
+            font-size: 0.5em;
+        }
     }
 
     &-page {

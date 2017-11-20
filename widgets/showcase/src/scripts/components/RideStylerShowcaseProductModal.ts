@@ -2,11 +2,13 @@ namespace RideStylerShowcase {
     import Page = RideStylerShowcaseProductModal.Page;
 
     const productModalClass = 'ridestyler-showcase-product-modal';
+    const titleClass = productModalClass + '-title';
     const pageClass = productModalClass + '-page';
 
     export abstract class RideStylerShowcaseProductModal extends RideStylerShowcaseModal {
         protected titleElement:HTMLElement;
         protected brandTitleElement:HTMLElement;
+        protected subtitleElement:HTMLElement;
         protected summaryElement:HTMLElement;
         protected summaryContainer:HTMLElement;
 
@@ -41,11 +43,12 @@ namespace RideStylerShowcase {
             this.component.appendChild(this.toggleButton.component);
             
             HTMLHelper.createElement('h1', {
-                className: productModalClass + '-title',
+                className: titleClass,
                 appendTo: this.component,
                 append: [
-                    this.brandTitleElement = HTMLHelper.createElementWithClass('span', 'subtitle'),
-                    this.titleElement = HTMLHelper.createElement('span')
+                    this.brandTitleElement = HTMLHelper.createElementWithClass('span', titleClass + '-brand'),
+                    this.titleElement = HTMLHelper.createElement('span'),
+                    this.subtitleElement = HTMLHelper.createElementWithClass('span', titleClass + '-subtitle')
                 ]
             });
 

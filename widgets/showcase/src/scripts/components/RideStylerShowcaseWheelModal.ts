@@ -24,10 +24,7 @@ namespace RideStylerShowcase {
             HTMLHelper.setText(this.titleElement, wheelModel.WheelModelName);
 
             // Finish
-            this.titleElement.appendChild(HTMLHelper.createElement('br'));
-            this.titleElement.appendChild(HTMLHelper.createElement('span', {
-                text: wheelModel.WheelModelFinishDescription
-            }));
+            HTMLHelper.setText(this.subtitleElement, wheelModel.WheelModelFinishDescription);
 
             // Summary Table
             this.summaryTable = new RideStylerShowcaseTable<WheelFitmentDescriptionModel>(this.showcase, {
