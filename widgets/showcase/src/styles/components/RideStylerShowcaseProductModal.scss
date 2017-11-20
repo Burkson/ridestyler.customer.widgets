@@ -21,8 +21,6 @@
     }
 
     &-summary {
-        background-color: $secondary-background-color;
-        padding: 0.5em 1em;
         position: absolute;
         right: 0;
         width: 40%;
@@ -47,11 +45,5 @@
 
     .ridestyler-showcase-toggle-button {
         float: right;
-    }
-
-    .subtitle {
-        display: block;
-        font-size: 0.8em;
-        color: $secondary-text-color;
     }
 }
