@@ -2,7 +2,7 @@
 @import "../modals";
 
 .ridestyler-showcase-product-modal {
-    $titleBottom: $modalPaddingTop + 4.75em;
+    $titleBottom: $modalPaddingTop + 7.5em;
 
     &-title {
         white-space: nowrap;
@@ -24,7 +24,7 @@
         background-color: $secondary-background-color;
         padding: 0.5em 1em;
         position: absolute;
-        left: 0;
+        right: 0;
         width: 40%;
         top: 0;
         bottom: 0;
@@ -33,7 +33,7 @@
 
     &-image {
         position: absolute;
-        right: 0;
+        left: 0;
         width: 50%;
         top: 0;
         bottom: 0;
