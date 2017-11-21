@@ -6,7 +6,7 @@ namespace RideStylerShowcase {
         protected image:ResizeableResourceImage<"wheel/image">;
 
         private specsTable: RideStylerShowcaseTable<WheelFitmentDescriptionModel>;
-        private summaryTable:RideStylerShowcaseTable<WheelFitmentDescriptionModel>;
+        private summaryTable:RideStylerShowcaseTable<SummaryTableRow>;
 
         constructor(showcaseInstance:RideStylerShowcaseInstance, wheelModel:WheelModelDescriptionModel) {
             super(showcaseInstance);
@@ -27,15 +27,15 @@ namespace RideStylerShowcase {
             HTMLHelper.setText(this.subtitleElement, wheelModel.WheelModelFinishDescription);
 
             // Summary Table
-            this.summaryTable = new RideStylerShowcaseTable<WheelFitmentDescriptionModel>(this.showcase, {
+            this.summaryTable = new RideStylerShowcaseTable<SummaryTableRow>(this.showcase, {
                 columns: [
                     {
                         header: strings.getString('size'),
-                        cell: RideStylerShowcaseWheelModal.getFitmentSizeDescription
+                        cell: 'size'
                     },
                     {
                         header: strings.getString('price'),
-                        cell: RideStylerShowcaseWheelModal.getFitmentPrice
+                        cell: 'price'
                     }
                 ],
                 startLoading: true
@@ -50,9 +50,98 @@ namespace RideStylerShowcase {
                 IncludePromotions: true,
                 IncludePricing: true
             }).done(response => {
-                this.summaryTable.appendRows(response.Fitments);
+                this.summaryTable.appendRows(this.buildSummaryTable(response.Fitments));
                 this.specsTable.appendRows(response.Fitments);
             });
+        }
+
+        private buildSummaryTable(fitments: WheelFitmentDescriptionModel[]):SummaryTableRow[] {
+            const allSizePriceCombinations:{diameter: number, width: number, price:number}[] = [];
+
+            // Get a list of each fitment size/price combination
+            for (const fitment of fitments) {
+                let fitmentPrice = RideStylerShowcaseWheelModal.getFitmentRetailPriceDataObject(fitment);
+                let fitmentPriceAmount = fitmentPrice ? fitmentPrice.WheelPricingAmount : undefined;
+                
+                allSizePriceCombinations.push({
+                    diameter: fitment.DiameterMin,
+                    width: fitment.WidthMin,
+                    price: fitmentPriceAmount
+                });
+                
+                allSizePriceCombinations.push({
+                    diameter: fitment.DiameterMin,
+                    width: fitment.WidthMax,
+                    price: fitmentPriceAmount
+                });
+                
+                allSizePriceCombinations.push({
+                    diameter: fitment.DiameterMax,
+                    width: fitment.WidthMin,
+                    price: fitmentPriceAmount
+                });
+                
+                allSizePriceCombinations.push({
+                    diameter: fitment.DiameterMax,
+                    width: fitment.WidthMax,
+                    price: fitmentPriceAmount
+                });
+            }
+
+            const sizePriceRanges:{
+                [size:string]:PriceRange
+            } = {};
+            
+            // Generate price ranges for each unique size description created above
+            for (const sizePriceCombo of allSizePriceCombinations) {
+                const {diameter, price, width} = sizePriceCombo;
+                const size:string = diameter + '″ x ' + width;
+
+                let priceRange:PriceRange;
+
+                if (size in sizePriceRanges === false) {
+                    priceRange = sizePriceRanges[size] = {
+                        min: Infinity,
+                        max: -Infinity
+                    };
+                } else {
+                    priceRange = sizePriceRanges[size];
+                }
+
+                if (price) {
+                    NumberHelper.extendRange(price, priceRange);
+                }
+            }
+
+            // Translate sizePriceRanges into SummaryTableRows
+            let summaryTableRows:SummaryTableRow[] = [];
+
+            const priceIsUnspecified = (price:number) => {
+                // Price must be a number, and not +- infinity
+                return typeof price !== 'number' || isNaN(price) || price === Infinity || price === -Infinity;
+            };
+
+            for (const size in sizePriceRanges) {
+                if (!sizePriceRanges.hasOwnProperty(size)) continue;
+
+                const priceRange = sizePriceRanges[size];
+
+                let priceString:string;
+
+                if (priceIsUnspecified(priceRange.min) || priceIsUnspecified(priceRange.max)) {
+                    priceString = strings.getString('call');
+                } else {
+                    if (priceRange.min === priceRange.max) priceString = strings.format().currency(priceRange.min, '$');
+                    else priceString = strings.format().currency(priceRange.min, '$') + ' - ' + strings.format().currency(priceRange.max, '$');
+                }
+
+                summaryTableRows.push({
+                    size: size,
+                    price: priceString
+                });
+            }
+
+            return summaryTableRows;
         }
 
         private buildSpecsPage() {
@@ -116,7 +205,7 @@ namespace RideStylerShowcase {
 
             if (!DiameterMin || !WidthMin) return RideStylerShowcaseTable.emptyCellString;
 
-            return `${DiameterMin}″ x ${WidthMin}″`;
+            return `${DiameterMin}″ x ${WidthMin}`;
         }
 
         private static getFitmentPrice(fitment: WheelFitmentDescriptionModel):string {
@@ -142,5 +231,15 @@ namespace RideStylerShowcase {
 
             return itemNumber || RideStylerShowcaseTable.emptyCellString;
         }
+    }
+
+    interface PriceRange {
+        min: number,
+        max: number
+    }
+
+    interface SummaryTableRow {
+        size: string;
+        price: string;
     }
 }
