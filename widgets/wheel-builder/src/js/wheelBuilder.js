@@ -274,16 +274,17 @@
 		this.backBtn = this.ctrlHeader.getElementsByClassName('wb-back-btn')[0];
 		this.closeBtn = this.ctrlHeader.getElementsByClassName('wb-close-btn')[0];
 
-		// Event handlers
-		addResizeListener(this.container, function() {
-			var newWidth = self.container.offsetWidth;
-			if (self.containerWidth !== newWidth) {
-				self.containerWidth = newWidth;
+		// Container resize handler
+		this.appLoadedPromise.done(function() {
+			self.containerWidth = self.container.offsetWidth;
 
-				self.appLoadedPromise.done(function() {
+			addResizeListener(self.container, function() {
+				var newWidth = self.container.offsetWidth;
+				if (self.containerWidth !== newWidth) {
+					self.containerWidth = newWidth;
 					self.reinitialize();
-				});
-			}
+				}
+			});
 		});
 
 		window.addEventListener('resize', function() {self.adjustLayout();});
@@ -835,16 +836,17 @@
 					stack.layers[j].currentOp = operation;
 
 					this.layerColors[layerName] = color;
+					break;
 				}
 			}
 		}
+
+		this.updateStackSelector();
 
 		len = ctrlColors.length;
 		for (i = 0; i < len; i++) {
 			ctrlColors[i].getElementsByTagName('span')[0].style.backgroundColor = color;
 		}
-
-		this.updateStackSelector();
 	};
 
 	/**
@@ -903,18 +905,24 @@
 
 		this.loadedPromise = new LBUtil.promise();
 
+		// Remove all of the preview containers
 		for (var i = 0; i < len; i++) {
 			stack = this.layerStacks[i];
 			parent = stack.containEl.parentElement;
 			parent.removeChild(stack.containEl);
 		}
-
 		this.layerStacks = [];
-		this.selectorEl.innerHTML = '';
 
+		// Adjust layout and fetch new width of the preview pane
 		this.adjustLayout();
 		this.previewWidth = this.wheelPreview.clientWidth;
 
+		// Empty the layer selector and hide it
+		this.selectorEl.innerHTML = '';
+		LBUtil.hide(this.selectorEl, true);
+		LBUtil.hide(this.ctrlWrap, true);
+
+		// Loop through the raw data and recreate each stack
 		for (i = 0; i < len; i++) {
 			if (this.dirtyStacks[i].name === selectedStack) {
 				this.dirtyStacks[i].selected = true;
@@ -926,7 +934,10 @@
 		}
 
 		this.loadedPromise.done(function() {
-			for (i in self.layerColors) {
+			LBUtil.show(self.selectorEl, 'block', true);
+			LBUtil.show(self.ctrlWrap, 'table-cell', true);
+
+			for (var i in self.layerColors) {
 				self.setLayerColor(i, self.layerColors[i]);
 			}
 		});

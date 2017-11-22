@@ -311,9 +311,11 @@
 			operation = operation.toLowerCase();
 		}
 
-		layer.currentColor = color;
 
-		this.colorLayer(layer, color, operation);
+		if (layer.currentColor !== color) {
+			layer.currentColor = color;
+			this.colorLayer(layer, color, operation);
+		}
 	};
 
 	/**

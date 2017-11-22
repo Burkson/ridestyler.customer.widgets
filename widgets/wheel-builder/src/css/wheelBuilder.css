@@ -88,8 +88,7 @@
 
 .wb-ctrl {
     overflow: auto;
-    /*min-height: 400px;*/
-    min-width: 180px;
+    min-width: 160px;
     margin-top: 20px;
 }
 
@@ -232,7 +231,6 @@ li.wb-ctrl-layer span {
 
 .wb-wheel-selector li {
     margin-bottom: 40px;
-    width: 75px;
     padding: 5px;
     border: 1px solid #D3D3D3;
 }
@@ -374,6 +372,7 @@ li.wb-stack-selected {
     width: auto;
     display: block;
     text-align: center;
+    padding-right: 0;
 }
 
 .wb-small .wb-wheel-selector {
@@ -401,6 +400,10 @@ li.wb-stack-selected {
     display: inline-block;
 }
 
+.wb-small .wb-wheel-selector li img {
+    width: 65px;
+}
+
 /**** Smallest ****/
 
 .wb-smallest .wb-ctrl {
@@ -423,4 +426,21 @@ li.wb-stack-selected {
 .wb-smallest .wb-ctrl-title {
     font-size: 14px;
     text-transform: uppercase;
+}
+
+.wb-smallest .wb-color {
+    height: 15px;
+    width: 15px;
+}
+
+.wb-smallest li.wb-ctrl-layer {
+    margin-bottom: 10px;
+}
+
+.wb-smallest .wb-wheel-selector-wrap {
+    margin: 10px 0;
+}
+
+.wb-smallest .wb-wheel-selector li img {
+    width: 50px;
 }
