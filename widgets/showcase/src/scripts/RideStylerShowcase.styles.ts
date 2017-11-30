@@ -162,7 +162,7 @@ namespace RideStylerShowcase.styles {
             {
                 let i:number;
                 for (i = widthBreakpoints.length - 1; i >= 0; i--)
-                    if (widthBreakpoints[i][1] < width)
+                    if (widthBreakpoints[i][1] <= width)
                         break;
 
                 newBreakpoint = i >= 0 ? widthBreakpoints[i][0] : undefined;
