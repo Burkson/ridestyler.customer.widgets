@@ -1,6 +1,7 @@
 namespace RideStylerShowcase.styles {
-    export type Breakpoint = [string, number];
-
+    export type BreakpointKey = 'phone-portrait' | 'phone-landscape' | 'tablet' | 'desktop' | 'desktop-xl' | 'tv';
+    export type Breakpoint = [BreakpointKey, number];
+    
     let widthBreakpoints:Breakpoint[] = [
         ['phone-portrait', 319],
         ['phone-landscape', 420],
@@ -157,6 +158,10 @@ namespace RideStylerShowcase.styles {
          * The currently applied breakpoint
          */
         private currentBreakpoint:Breakpoint;
+
+        public getCurrentBreakpoint():Breakpoint {
+            return this.currentBreakpoint;
+        }
 
         private applyBreakpointClasses() {
             let element:HTMLElement = this.element;
