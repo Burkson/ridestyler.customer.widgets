@@ -1,5 +1,7 @@
 namespace RideStylerShowcase.styles {
     let widthBreakpoints:[string, number][] = [
+        ['phone-portrait', 319],
+        ['phone-landscape', 420],
         ['tablet', 768],
         ['desktop', 992],
         ['desktop-xl', 1200],
