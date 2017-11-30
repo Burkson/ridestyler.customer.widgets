@@ -73,7 +73,7 @@ var paths = {
             'src/styles/**/*.scss'
         ],
         resources: [
-            'src/images/**/*.{png,gif,jpg}'
+            'src/images/**/*.{png,gif,jpg,svg}'
         ],
         folder: 'src/',
         icons: 'src/images/icons/**/*.svg'
