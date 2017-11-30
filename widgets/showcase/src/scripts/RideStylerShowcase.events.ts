@@ -3,13 +3,14 @@ namespace RideStylerShowcase.events {
      * A mapping of events that can be triggered, mapped to their event parameter type
      */
     export interface RideStylerShowcaseEventParameterMapping {
-        "state-changed": state.StateChangedEvent,
-        "initialized": undefined,
+        "state-changed": state.StateChangedEvent;
+        "initialized": undefined;
         "vehicle-selected": RideStylerVehicleSelectionModal.SelectedVehicleData;
-        "modal-show": { modal: RideStylerShowcaseModal },
-        "modal-hide": { modal: RideStylerShowcaseModal },
-        "resize": undefined,
-        "resized": undefined
+        "modal-show": { modal: RideStylerShowcaseModal };
+        "modal-hide": { modal: RideStylerShowcaseModal };
+        "resize": undefined;
+        "resized": undefined;
+        "breakpoint-changed": RideStylerShowcase.styles.Breakpoint;
     }
 
     export interface RideStylerShowcaseEventHandler<DataType = any> {

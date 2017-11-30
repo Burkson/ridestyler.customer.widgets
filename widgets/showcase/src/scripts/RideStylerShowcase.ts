@@ -215,6 +215,7 @@ namespace RideStylerShowcase {
             this.style = new styles.StyleManager(this.container);
             this.style.onResize = () => this.events.trigger('resize', undefined);
             this.style.onResized = () => this.events.trigger('resized', undefined);
+            this.style.onBreakpointChanged = newBreakpoint => this.events.trigger('breakpoint-changed', newBreakpoint);
 
             if (!this.container.classList.contains('ridestyler-showcase'))
                 this.container.classList.add('ridestyler-showcase');

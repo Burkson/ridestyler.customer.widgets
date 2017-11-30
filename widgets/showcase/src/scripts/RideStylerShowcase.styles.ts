@@ -1,5 +1,7 @@
 namespace RideStylerShowcase.styles {
-    let widthBreakpoints:[string, number][] = [
+    export type Breakpoint = [string, number];
+
+    let widthBreakpoints:Breakpoint[] = [
         ['phone-portrait', 319],
         ['phone-landscape', 420],
         ['tablet', 768],
@@ -99,6 +101,10 @@ namespace RideStylerShowcase.styles {
             if (typeof this.onResized === 'function') this.onResized();
         }
 
+        private breakpointChanged(newBreakpoint:Breakpoint) {
+            if (typeof this.onBreakpointChanged === 'function') this.onBreakpointChanged(newBreakpoint);
+        }
+
         /**
          * A callback each time the element is resized
          */
@@ -108,6 +114,11 @@ namespace RideStylerShowcase.styles {
          * A callback for after the user is done resizing the element
          */
         public onResized: () => void;
+
+        /**
+         * A callback for after the breakpoint has changed
+         */
+        public onBreakpointChanged: (newBreakpoint:Breakpoint) => void;
 
         private watchSize() {
             let element:HTMLElement = this.element;
@@ -143,9 +154,9 @@ namespace RideStylerShowcase.styles {
         }
 
         /**
-         * The currently applied breakpoint class
+         * The currently applied breakpoint
          */
-        private currentBreakpoint:string;
+        private currentBreakpoint:Breakpoint;
 
         private applyBreakpointClasses() {
             let element:HTMLElement = this.element;
@@ -156,7 +167,7 @@ namespace RideStylerShowcase.styles {
             // Don't run if we don't have a height or width yet
             if (!height || !width) return;
 
-            let newBreakpoint:string;
+            let newBreakpoint:Breakpoint;
 
             // The new breakpoint is the next lowest value in the array
             {
@@ -165,7 +176,7 @@ namespace RideStylerShowcase.styles {
                     if (widthBreakpoints[i][1] <= width)
                         break;
 
-                newBreakpoint = i >= 0 ? widthBreakpoints[i][0] : undefined;
+                newBreakpoint = i >= 0 ? widthBreakpoints[i] : undefined;
             }
 
             // If the current breakpoint hasn't changed, don't run the rest of this logic
@@ -174,16 +185,22 @@ namespace RideStylerShowcase.styles {
             // Set our current breakpoint to the newly defined one
             this.currentBreakpoint = newBreakpoint;
 
-            let className = element.className;
+            const originalClassName = element.className
+            let className = originalClassName;
 
             // Remove any breakpoint classes from the element's class
             className = className.replace(/\bridestyler-showcase-breakpoint-.+?(?= |$)/gi, "").trim();
 
             // Add in the breakpoint class if we have one
-            if (newBreakpoint)
-                className += ' ridestyler-showcase-breakpoint-' + newBreakpoint;
+            if (newBreakpoint) {
+                className += ' ridestyler-showcase-breakpoint-' + newBreakpoint[0];
+            }
+
+            // If the className hasn't changed do nothing
+            if (className === originalClassName) return;
 
             element.className = className;
+            this.breakpointChanged(newBreakpoint);
         }
     }
 }
