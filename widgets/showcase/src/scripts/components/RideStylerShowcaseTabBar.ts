@@ -16,17 +16,17 @@ namespace RideStylerShowcase {
             this.component.addEventListener("click", e => this.onClick(e));
         }
 
-        private mode: 'vertical'|'horizontal';
+        private mode: RideStylerShowcaseTabBar.Mode;
 
         public tabSwitchedCallback: RideStylerShowcaseTabBar.TabSwitchedCallback;
         public tabs:RideStylerShowcaseTabBar.Tab[];
         public currentTab:RideStylerShowcaseTabBar.Tab;
 
-        public setMode(mode: RideStylerShowcaseTabBar['mode']) {
+        public setMode(mode: RideStylerShowcaseTabBar.Mode) {
             // Do nothing if the modes are the same
             if (this.mode === mode) return;
 
-            const toggle = this.component.classList.toggle;
+            const toggle = (className:string, force:boolean) => this.component.classList.toggle(className, force);
 
             // Remove the current mode class
             if (typeof this.mode === 'string') toggle(modeClass + this.mode, false);
@@ -36,6 +36,27 @@ namespace RideStylerShowcase {
 
             // Add the current mode class
             toggle(modeClass + mode, true);
+
+            // Update the tabs' mode
+            this.updateTabDisplay();
+        }
+        
+        private updateTabDisplay() {
+            if (!this.tabs) return;
+            
+            const tabPercent = (100/this.tabs.length) + '%';
+            const mode = this.mode;
+            for (const tab of this.tabs) {
+                if (mode === 'vertical') {
+                    tab.element.style.height = tabPercent;
+                    tab.element.style.width = '';
+                } else {
+                    tab.element.style.height = '';
+                    tab.element.style.width = tabPercent;
+                }
+                
+                tab.updateBackgroundPolygon(mode);
+            }
         }
 
         public setTabs(tabs:RideStylerShowcaseTabBar.TabCreateOptions[]);
@@ -63,13 +84,10 @@ namespace RideStylerShowcase {
             let tabPercent = (100/tabs.length) + '%';
 
             for (let tab of tabs) {
-                if (this.mode === 'vertical') 
-                    tab.element.style.height = tabPercent;
-                else
-                    tab.element.style.width = tabPercent;
-                
                 this.component.appendChild(tab.element);
             }
+            
+            this.updateTabDisplay();
 
             this.currentTab = undefined;
             this.setActiveTab(tabs[0]);
@@ -145,8 +163,10 @@ namespace RideStylerShowcase {
             return undefined;
         }
     }
-    
+
     export namespace RideStylerShowcaseTabBar {
+        export type Mode = 'horizontal' | 'vertical';
+
         export interface TabSwitchedEvent {
             newTab:Tab;
             oldTab:Tab;
@@ -167,45 +187,33 @@ namespace RideStylerShowcase {
             public readonly label:string;
             public readonly element:HTMLElement;
             public readonly key:string;
+                        
+            private backgroundMode:RideStylerShowcaseTabBar.Mode;
+            private readonly backgroundPolygon:SVGPolygonElement;
 
             constructor(createOptions:TabCreateOptions) {
                 this.label = createOptions.label;
                 this.iconClass = createOptions.icon;
-                this.element = Tab.create(createOptions);
                 this.key = createOptions.key;
-            }
 
-            private static create(createOptions:TabCreateOptions):HTMLElement {
-                let element = HTMLHelper.createElement('div', {
+                this.backgroundMode = 'horizontal';
+
+                this.element = HTMLHelper.createElement('div', {
                     className: tabClass
                 });
 
-                let icon = HTMLHelper.createIcon({
+                HTMLHelper.createIcon({
                     icon: createOptions.icon,
-                    appendTo: element,
+                    appendTo: this.element,
                     wrap: HTMLHelper.createElementWithClass('div', tabClass + '-icon')
                 });
 
-                element.appendChild(Tab.createBackground());
+                const background = HTMLHelper.createElement({
+                    className: tabBackgroundClass,
+                    appendTo: this.element
+                });
 
-                element.title = createOptions.label;
-
-                return element;
-            }
-
-            private static createBackground():HTMLElement {
-                let background = HTMLHelper.createElementWithClass('div', tabBackgroundClass);
-                
                 if (StyleHelper.svgSupported) {
-                    /**
-                     * The height in percentage of the triangle size
-                     */
-                    const triangleHeight = 30;
-                    /**
-                     * The width in percentage of the triangle size
-                     */
-                    const triangleWidth = 15;
-
                     HTMLHelper.createSVGElement('svg', {
                         attributes: {
                             width: '100%',
@@ -213,20 +221,36 @@ namespace RideStylerShowcase {
                             preserveAspectRatio: 'none',
                             viewBox: '0 0 100 100'
                         },
-                        append: HTMLHelper.createSVGElement('polygon', {
+                        append: (this.backgroundPolygon = HTMLHelper.createSVGElement('polygon', {
                             attributes: {
-                                fill: 'black',
-                                points: `0,0 100,0 100,${50-triangleHeight/2} ${100-triangleWidth},50 100,${50+triangleHeight/2} 100,100 0,100`
+                                fill: 'black'
                             }
-                        }),
+                        })),
                         appendTo: background
                     });
                 } else {
                     background.classList.add(tabBackgroundClass + '-nosvg');
                 }
 
+                this.element.title = createOptions.label;
+            }
 
-                return background;
+            public updateBackgroundPolygon(mode: RideStylerShowcaseTabBar.Mode) {
+                if (!this.backgroundPolygon) return;
+
+                /**
+                 * The height in percentage of the triangle size
+                 */
+                const triangleHeight = mode === 'vertical' ? 30 : 15;
+                /**
+                 * The width in percentage of the triangle size
+                 */
+                const triangleWidth = mode === 'vertical' ? 15 : 30;
+
+                this.backgroundPolygon.setAttribute('points', mode === 'vertical' ? 
+                    `0,0 100,0 100,${50-triangleHeight/2} ${100-triangleWidth},50 100,${50+triangleHeight/2} 100,100 0,100` :
+                    `0,0 ${50-triangleHeight/2},0 50,${triangleHeight} ${50+triangleHeight/2},0 100,0 100,100, 0,100`
+                );
             }
         }
     }

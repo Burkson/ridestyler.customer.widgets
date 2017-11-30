@@ -101,16 +101,27 @@ namespace RideStylerShowcase {
             // the offset positioning of the viewport element when created and our CSS
             // isn't guaranteed to be loaded until the initialized event
             this.events.on('initialized', () => {
-                let viewportElement = HTMLHelper.createElement('div', {
-                    className: 'ridestyler-showcase-viewport',
-                    appendTo: container
-                });
+                this.setupViewport(container);
 
-                viewportElement.addEventListener('click', () => {
-                    this.switchAngle();
-                });
+                // Setup initial tab layout
+                this.updateTabLayout();
 
-                this.viewport = new RideStylerViewport(viewportElement);
+                // Hide the share button if sharing is disabled
+                if (!this.showcase.settingsFromAPI.EnableSharing)
+                    shareButton.style.display = 'none';
+                
+                let countTireBrands = api.request("tire/countbrands", this.showcase.filters.tireFilters.getFilters());
+                let countWheelBrands = api.request("wheel/countbrands", this.showcase.filters.wheelFilters.getFilters());
+
+                PromiseHelper.all([countTireBrands, countWheelBrands]).done(results => {
+                    let tireBrandCount = results[0].Count;
+                    let wheelBrandCount = results[1].Count;
+
+                    if (!tireBrandCount) this.customizationComponentSettings.tires.enabled = false;
+                    if (!wheelBrandCount) this.customizationComponentSettings.wheels.enabled = false;
+
+                    this.updateTabs();
+                });
             });
 
             this.setupTabs();
@@ -188,28 +199,27 @@ namespace RideStylerShowcase {
                 }
             });
 
+            // Start listening for breakpoint changes
+            this.events.on('breakpoint-changed', newBreakpoint => {
+                this.updateTabLayout();
+            });
+
             this.vehicleDetails.paintSwatchClickCallback = () => {
                 this.setActiveCustomizationComponent(this.customizationComponents.paint);
             }
+        }
 
-            this.events.on('initialized', () =>  {
-                // Hide the share button if sharing is disabled
-                if (!this.showcase.settingsFromAPI.EnableSharing)
-                    shareButton.style.display = 'none';
-                
-                let countTireBrands = api.request("tire/countbrands", this.showcase.filters.tireFilters.getFilters());
-                let countWheelBrands = api.request("wheel/countbrands", this.showcase.filters.wheelFilters.getFilters());
+        private setupViewport(container: HTMLElement) {
+            let viewportElement = HTMLHelper.createElement('div', {
+                className: 'ridestyler-showcase-viewport',
+                appendTo: container
+            });
 
-                PromiseHelper.all([countTireBrands, countWheelBrands]).done(results => {
-                    let tireBrandCount = results[0].Count;
-                    let wheelBrandCount = results[1].Count;
+            viewportElement.addEventListener('click', () => {
+                this.switchAngle();
+            });
 
-                    if (!tireBrandCount) this.customizationComponentSettings.tires.enabled = false;
-                    if (!wheelBrandCount) this.customizationComponentSettings.wheels.enabled = false;
-
-                    this.updateTabs();
-                });
-            })
+            this.viewport = new RideStylerViewport(viewportElement);
         }
 
         private updateTabs() {
@@ -223,6 +233,14 @@ namespace RideStylerShowcase {
             }
 
             this.tabBar.setTabs(tabs);
+            this.updateTabLayout();
+        }
+
+        private updateTabLayout() {
+            const [currentBreakpointKey] = this.showcase.style.getCurrentBreakpoint();
+            const horizontal:boolean = currentBreakpointKey === 'phone-portrait';
+            
+            this.tabBar.setMode(horizontal ? 'horizontal' : 'vertical');
         }
 
         private setupTabs() {

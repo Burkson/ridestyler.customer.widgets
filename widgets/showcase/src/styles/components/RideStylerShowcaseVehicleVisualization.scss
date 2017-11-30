@@ -14,6 +14,21 @@
     }
 }
 
+.ridestyler-showcase-tab-bar {
+    height: 50%; width: 60px;
+    position: absolute;
+    left: 0; bottom: 0;
+
+    &-horizontal {
+        width: 100%;
+        height: 60px;
+
+        .ridestyler-showcase-tab-bar-tab {
+            height: 100%;
+        }
+    }
+}
+
 .ridestyler-showcase-customizations {
     position: absolute;
     bottom: 1%;
