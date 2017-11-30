@@ -1,37 +1,58 @@
 namespace RideStylerShowcase {
-    const barClass = 'ridestyler-showcase-vertical-tab-bar';
-    const tabClass = 'ridestyler-showcase-vertical-tab-bar-tab';
+    const barClass = 'ridestyler-showcase-tab-bar';
+    const tabClass = barClass + '-tab';
     const tabBackgroundClass = tabClass + '-background';
     const activeTabClass = tabClass + '-active';
+    const modeClass = barClass + '-';
 
-    export class RideStylerShowcaseVerticalTabBar extends ComponentBase {
+    export class RideStylerShowcaseTabBar extends ComponentBase {
         protected initializeComponent() {
             this.component = HTMLHelper.createElement('div', {
                 className: barClass
             });
+            
+            this.setMode('vertical');
 
             this.component.addEventListener("click", e => this.onClick(e));
         }
 
-        public tabSwitchedCallback: RideStylerShowcaseVerticalTabBar.TabSwitchedCallback;
-        public tabs:RideStylerShowcaseVerticalTabBar.Tab[];
-        public currentTab:RideStylerShowcaseVerticalTabBar.Tab;
+        private mode: 'vertical'|'horizontal';
 
-        public setTabs(tabs:RideStylerShowcaseVerticalTabBar.TabCreateOptions[]);
-        public setTabs(tabs:RideStylerShowcaseVerticalTabBar.Tab[]);
-        public setTabs(tabsOrTabCreateOptions:RideStylerShowcaseVerticalTabBar.Tab[]|RideStylerShowcaseVerticalTabBar.TabCreateOptions[]) {
-            let tabs:RideStylerShowcaseVerticalTabBar.Tab[];
+        public tabSwitchedCallback: RideStylerShowcaseTabBar.TabSwitchedCallback;
+        public tabs:RideStylerShowcaseTabBar.Tab[];
+        public currentTab:RideStylerShowcaseTabBar.Tab;
+
+        public setMode(mode: RideStylerShowcaseTabBar['mode']) {
+            // Do nothing if the modes are the same
+            if (this.mode === mode) return;
+
+            const toggle = this.component.classList.toggle;
+
+            // Remove the current mode class
+            if (typeof this.mode === 'string') toggle(modeClass + this.mode, false);
+
+            // Set the new mode
+            this.mode = mode;
+
+            // Add the current mode class
+            toggle(modeClass + mode, true);
+        }
+
+        public setTabs(tabs:RideStylerShowcaseTabBar.TabCreateOptions[]);
+        public setTabs(tabs:RideStylerShowcaseTabBar.Tab[]);
+        public setTabs(tabsOrTabCreateOptions:RideStylerShowcaseTabBar.Tab[]|RideStylerShowcaseTabBar.TabCreateOptions[]) {
+            let tabs:RideStylerShowcaseTabBar.Tab[];
 
             if (tabsOrTabCreateOptions.length === 0) {
                 tabs = [];
-            } else if (tabsOrTabCreateOptions[0] instanceof RideStylerShowcaseVerticalTabBar.Tab) {
-                tabs = tabsOrTabCreateOptions as RideStylerShowcaseVerticalTabBar.Tab[];
+            } else if (tabsOrTabCreateOptions[0] instanceof RideStylerShowcaseTabBar.Tab) {
+                tabs = tabsOrTabCreateOptions as RideStylerShowcaseTabBar.Tab[];
             } else {
                 tabs = new Array(tabsOrTabCreateOptions.length);
 
                 for (var index = 0; index < tabsOrTabCreateOptions.length; index++) {
-                    let createOptions = tabsOrTabCreateOptions[index] as RideStylerShowcaseVerticalTabBar.TabCreateOptions;
-                    tabs[index] = new RideStylerShowcaseVerticalTabBar.Tab(createOptions);
+                    let createOptions = tabsOrTabCreateOptions[index] as RideStylerShowcaseTabBar.TabCreateOptions;
+                    tabs[index] = new RideStylerShowcaseTabBar.Tab(createOptions);
                 }
             }
 
@@ -39,10 +60,14 @@ namespace RideStylerShowcase {
 
             HTMLHelper.empty(this.component);
 
-            let tabHeightPercent = 100/tabs.length;
+            let tabPercent = (100/tabs.length) + '%';
 
             for (let tab of tabs) {
-                tab.element.style.height = tabHeightPercent + '%';
+                if (this.mode === 'vertical') 
+                    tab.element.style.height = tabPercent;
+                else
+                    tab.element.style.width = tabPercent;
+                
                 this.component.appendChild(tab.element);
             }
 
@@ -54,7 +79,7 @@ namespace RideStylerShowcase {
             this.setActiveTab(undefined);
         }
 
-        public setActiveTab(newTab:RideStylerShowcaseVerticalTabBar.Tab) {
+        public setActiveTab(newTab:RideStylerShowcaseTabBar.Tab) {
             let oldTab = this.currentTab;
 
             if (oldTab === newTab) return;
@@ -94,13 +119,13 @@ namespace RideStylerShowcase {
             }
         }
 
-        private onTabClick(tab:RideStylerShowcaseVerticalTabBar.Tab) {
+        private onTabClick(tab:RideStylerShowcaseTabBar.Tab) {
             if (!tab) return;
 
             this.setActiveTab(tab);
         }
 
-        public tabForLabel(label:string):RideStylerShowcaseVerticalTabBar.Tab {
+        public tabForLabel(label:string):RideStylerShowcaseTabBar.Tab {
             for (let tab of this.tabs) {
                 if (tab.label === label) {
                     return tab;
@@ -110,7 +135,7 @@ namespace RideStylerShowcase {
             return undefined;
         }
 
-        public tabForElement(element:HTMLElement):RideStylerShowcaseVerticalTabBar.Tab {
+        public tabForElement(element:HTMLElement):RideStylerShowcaseTabBar.Tab {
             for (let tab of this.tabs) {
                 if (tab.element === element) {
                     return tab;
@@ -121,14 +146,14 @@ namespace RideStylerShowcase {
         }
     }
     
-    export namespace RideStylerShowcaseVerticalTabBar {
+    export namespace RideStylerShowcaseTabBar {
         export interface TabSwitchedEvent {
             newTab:Tab;
             oldTab:Tab;
         }
 
         export interface TabSwitchedCallback {
-            (this:RideStylerShowcaseVerticalTabBar, event:TabSwitchedEvent):void;
+            (this:RideStylerShowcaseTabBar, event:TabSwitchedEvent):void;
         }
 
         export interface TabCreateOptions {

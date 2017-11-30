@@ -1,5 +1,5 @@
 namespace RideStylerShowcase {
-    import Tab = RideStylerShowcaseVerticalTabBar.Tab;
+    import Tab = RideStylerShowcaseTabBar.Tab;
 
     const customizationsClass = 'ridestyler-showcase-customizations';
     const loadingClass = customizationsClass + '-loading';
@@ -8,7 +8,7 @@ namespace RideStylerShowcase {
 
     export class RideStylerShowcaseVehicleVisualization extends MainComponentBase {
         private viewport:RideStylerViewport;
-        private tabBar:RideStylerShowcaseVerticalTabBar;
+        private tabBar:RideStylerShowcaseTabBar;
         private changeWheelSize:RideStylerShowcaseChangeWheelSize;
 
         private titleElement:HTMLElement;
@@ -226,26 +226,26 @@ namespace RideStylerShowcase {
         }
 
         private setupTabs() {
-            this.tabBar  = new RideStylerShowcaseVerticalTabBar(this.showcase);
+            this.tabBar  = new RideStylerShowcaseTabBar(this.showcase);
 
             // Define our tabs
             this.tabs = {
-                paint: new RideStylerShowcaseVerticalTabBar.Tab({
+                paint: new RideStylerShowcaseTabBar.Tab({
                     icon: 'paint',
                     key: 'paint',
                     label: strings.getString('paint')
                 }),
-                wheels: new RideStylerShowcaseVerticalTabBar.Tab({
+                wheels: new RideStylerShowcaseTabBar.Tab({
                     icon: 'wheel',
                     key: 'wheels',
                     label: strings.getString('wheels')
                 }),
-                tires: new RideStylerShowcaseVerticalTabBar.Tab({
+                tires: new RideStylerShowcaseTabBar.Tab({
                     icon: 'tire',
                     key: 'tires',
                     label: strings.getString('tires')
                 }),
-                suspension: new RideStylerShowcaseVerticalTabBar.Tab({
+                suspension: new RideStylerShowcaseTabBar.Tab({
                     icon: 'suspension',
                     key: 'suspension',
                     label: strings.getString('suspension')
@@ -451,7 +451,7 @@ namespace RideStylerShowcase {
             let componentKey:string = this.getComponentKey(customizationComponent);
             
             let settings:CustomizationComponentSettings = this.customizationComponentSettings[componentKey];
-            let tab:RideStylerShowcaseVerticalTabBar.Tab = this.tabs[componentKey];
+            let tab:RideStylerShowcaseTabBar.Tab = this.tabs[componentKey];
 
             if (tab) {
                 this.tabBar.setActiveTab(tab);
