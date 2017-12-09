@@ -1,0 +1,44 @@
+@import "../shared";
+
+.ridestyler-showcase-popover {
+    $backgroundColor: #ddd;
+    $borderColor: #ccc;
+    $arrowSize: 15px;
+    $borderWidth: 2px;
+
+    @include fadeIn();
+    
+    position: absolute;
+
+    background-color: $backgroundColor;
+    border: $borderWidth solid $borderColor;
+    border-radius: 6px;
+    margin-top: $arrowSize + $borderWidth + 1px;
+    box-sizing: border-box;
+    padding: 10px;
+
+    &:after, &:before {
+        bottom: 100%;
+        left: 50%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+
+    &:before {
+        border-bottom-color: $borderColor;
+
+        $size: $arrowSize + $borderWidth + 1px;
+        border-width: $size;
+        margin-left: -$size;
+    }
+
+    &:after {
+        border-bottom-color: $backgroundColor;
+        border-width: $arrowSize;
+        margin-left: -$arrowSize;
+    }
+}
