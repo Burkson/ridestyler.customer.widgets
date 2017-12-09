@@ -32,15 +32,8 @@ namespace RideStylerShowcase.ArrayHelper {
         return newArray;
     }
 
-    export function filter<T>(array:T[], itemMatch:T): T[];
-    export function filter<T>(array:T[], itemMatch:(T)=>boolean): T[];
-    export function filter<T>(array:T[], itemMatch:T|((T)=>boolean)): T[] {
-        let matchFunction:(T)=>boolean;
-
-        if (typeof itemMatch === 'function') matchFunction = item => !itemMatch(item);
-        else matchFunction = item => item != itemMatch;
-
-        return remove(array, matchFunction);
+    export function filter<T>(array:T[], itemMatch:(T)=>boolean): T[] {
+        return remove(array, item => !itemMatch(item));
     }
 
     export function map<T, U>(array:T[], mapFunction: (value: T, index: number, array: T[]) => U, thisArg?: any): U[] {
