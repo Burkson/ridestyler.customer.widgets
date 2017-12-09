@@ -1,0 +1,52 @@
+@import "../_sprites.scss";
+@import "../shared";
+
+.ridestyler-showcase .ridestyler-showcase-share-button {
+    &-facebook {
+        background-color: #3c569a;
+        border: 1px solid #2e4275;
+        border-bottom-color: #273763;
+        color: #fff;
+        
+        @include ridestyler-showcase-icon('facebook', after);
+    }
+
+    &-twitter {
+        background-color: #4baaf4;
+        border: 1px solid #1b93f1;
+        border-bottom-color: #0e87e5;
+        color: #fff;
+
+        @include ridestyler-showcase-icon('twitter', after);
+    }
+
+    &-qr-code {
+        @include ridestyler-showcase-icon('qr', after);
+
+        position: relative;
+
+        .ridestyler-showcase-popover {
+            $size: 200px;
+
+            width: $size;
+            height: $size;
+            position: absolute;
+            margin-left: -$size/2 + 10px;
+            top: 105%;
+            z-index: $zLayer1 + 1;
+        }
+
+        .ridestyler-showcase-qr-display-image {
+            display: block;
+            width: 100%;
+
+            img, canvas {
+                width: 100%;
+            }
+        }
+    }
+    
+    &-link {
+        @include ridestyler-showcase-icon('external-link', after);
+    }
+}
