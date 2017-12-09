@@ -1,0 +1,73 @@
+@import "../responsive-mixins";
+@import "../../shared";
+
+// Adjust tab bar font size
+.ridestyler-showcase-tab-bar {
+    font-size: 1.2em;
+
+    &-tab-icon {
+        font-size: 1.6em;
+    }
+}
+
+// We no longer need to account for the tab bar on the left
+.ridestyler-showcase-customizations, .ridestyler-showcase-viewport, .ridestyler-showcase-rotate-vehicle {
+    margin-left: 0;
+}
+
+.ridestyler-showcase-customizations {
+    bottom: 60px;
+}
+
+.ridestyler-showcase-viewport {
+    left: 5%;
+    right: 5%;
+    margin-bottom: 10px;
+    pointer-events: none;
+    z-index: $zLayer3;
+}
+
+.ridestyler-showcase-suspension-selector-element {
+    bottom: 10%;
+}
+
+.ridestyler-showcase-details {
+    float: none;
+    max-width: 50%;
+    padding: 5px 10px;
+
+    &-title {
+        margin-bottom: 2px;
+    }
+
+    button {
+        margin-top: 2px;
+    }
+
+    &:before {
+        display: none;
+    }
+}
+
+.ridestyler-showcase-change-wheel-size, .ridestyler-showcase-customization-component-title-container {
+    margin-bottom: 10px;
+}
+
+.ridestyler-showcase-rotate-vehicle {
+    height: 30%;
+}
+
+.ridestyler-showcase-suspension-selector-element {
+    .noUi-horizontal {
+        .noUi-handle {
+            top: -0.2em;
+        }    
+    }
+    .noUi-marker-horizontal.noUi-marker {
+        width: 1px;
+    }
+
+    .noUi-pips-horizontal {
+        padding-top: 5px;
+    }
+}

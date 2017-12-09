@@ -1,0 +1,9 @@
+&.ridestyler-showcase-breakpoint-phone-portrait {
+    @import "phone-portrait/vehicle-visualization";
+    @import "phone-portrait/vehicle-selection";
+    @import "phone-portrait/filter-modal";
+    @import "phone-portrait/share-modal";
+    @import "phone-portrait/pagination";
+    @import "phone-portrait/product-modal";
+    @import "phone-portrait/suspension-selector";
+}

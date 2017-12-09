@@ -1,0 +1,15 @@
+.ridestyler-showcase-filter-modal {
+    &-menus {
+        height: 90%;
+    }
+
+    &-menu-container {
+        width: 100%;
+        display: block;
+        height: (100% / 3);
+    }
+    
+    .ridestyler-showcase-option-menu {
+        padding: 10px 0;
+    }
+}
