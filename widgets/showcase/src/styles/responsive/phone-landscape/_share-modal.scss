@@ -1,0 +1,16 @@
+@import "../../shared";
+@import "../../modals";
+
+.ridestyler-showcase-share {
+    .ridestyler-showcase-share-button {
+        &-qr-code {
+            .ridestyler-showcase-popover {
+                $size: 100px;
+                
+                width: $size;
+                height: $size;
+                margin-left: -$size/2 + 5px;
+            }
+        }
+    }
+}
