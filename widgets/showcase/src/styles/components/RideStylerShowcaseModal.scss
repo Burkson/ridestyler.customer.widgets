@@ -10,27 +10,6 @@
         width: auto !important;
     }
 
-    .ridestyler-showcase & {
-        .ridestyler-showcase-background {
-            height: 40%;
-        }
-
-        .ridestyler-showcase-viewport, .ridestyler-showcase-rotate-vehicle {
-            margin-left: 0;
-        }
-        .ridestyler-showcase-rotate-vehicle {
-            bottom: 5%;
-
-            &.in {
-                opacity: 1;
-            }
-        }
-        .ridestyler-showcase-viewport {
-            bottom: 15%;
-            top: 25%;
-        }
-    }
-
     & &-close { @include modalClose; }
     &-backdrop { @include modalBackdrop; }
     &-actions {

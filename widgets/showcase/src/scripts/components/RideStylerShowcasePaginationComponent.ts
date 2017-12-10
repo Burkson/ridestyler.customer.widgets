@@ -15,6 +15,8 @@ namespace RideStylerShowcase {
         protected prevButton:HTMLButtonElement;
         protected nextButton:HTMLButtonElement;
 
+        protected touchScrollHandler:Impetus;
+
         /**
          * If true, this has more results that it can load
          */
@@ -69,7 +71,23 @@ namespace RideStylerShowcase {
                 const newValue = Math.min(scrollLeft + delta, scrollWidth - offsetWidth);
                 this.optionContainer.scrollLeft = newValue;
 
+                this.touchScrollHandler.setValues(newValue, 0);
                 this.onScroll();
+            });
+
+            this.touchScrollHandler = new Impetus({
+                source: this.optionContainer,
+                bounce: false,
+                multiplier: -1,
+                update: (x, y) => {
+                    console.log(x, y);
+
+                    this.optionContainer.scrollLeft = x;
+                    this.optionContainer.scrollTop = y;
+
+                    this.onScroll();
+                },
+                boundY: [0, 0]
             });
         }
 
@@ -80,7 +98,14 @@ namespace RideStylerShowcase {
         public loadMore():RideStylerPromise {
             return this._loadMore().always(() => {
                 this.clearOptionLoader();
+                this.updateBounds();
             });
+        }
+
+        public updateBounds() {
+            const {scrollWidth, offsetWidth} = this.optionContainer;
+
+            this.touchScrollHandler.setBoundX([0, scrollWidth - offsetWidth]);
         }
 
         private onScroll() {
@@ -97,10 +122,7 @@ namespace RideStylerShowcase {
         protected onEndVisible() {
             if (!this.isLoading && this.hasMoreResults) {
                 this.addOptionLoader();
-                
-                let optionContainer = this.optionContainer;
-                this.optionContainer.scrollLeft = optionContainer.scrollWidth - optionContainer.clientWidth;
-
+                this.updateBounds();
                 this.loadMore();
             }
         }
@@ -181,6 +203,7 @@ namespace RideStylerShowcase {
 
         public update() {
             this.updatePaginationButtons();
+            this.updateBounds();
         }
 
         public scrollTo(newLeft:number) {

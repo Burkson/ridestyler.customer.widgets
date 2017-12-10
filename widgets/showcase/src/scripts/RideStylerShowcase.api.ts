@@ -43,7 +43,16 @@ namespace RideStylerShowcase {
 
             // Validate the user's key or token
             auth.validate()
-                .done(() => authenticated.resolve())
+                .done(() => {
+                    const url = ridestyler.ajax.url('', undefined);
+
+                    if (/\/api-alpha\./i.test(url)) environment = Environment.Alpha;
+                    else if (/\/api-beta\./i.test(url)) environment = Environment.Beta;
+                    else if (/\/api\./i.test(url)) environment = Environment.Live;
+                    else environment = Environment.Other;
+
+                    authenticated.resolve();
+                })
                 .fail(() => authenticated.reject());
 
             return authenticated;
@@ -77,5 +86,14 @@ namespace RideStylerShowcase {
         export function getURL<Action extends ridestyler.RideStylerAPIEndpoint>(action:Action, data?:ridestyler.RidestylerAPIActionRequestMapping[Action]) : string {
             return ridestyler.ajax.url(action, data);
         }
+
+        export enum Environment {
+            Alpha,
+            Beta,
+            Live,
+            Other
+        }
+
+        export let environment:Environment;
     }
 }

@@ -1,7 +1,7 @@
 @import "shared";
 @import "buttons";
 
-.ridestyler-showcase-button {
+.ridestyler-showcase .ridestyler-showcase-button {
     @include button;
 
     &-large {

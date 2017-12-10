@@ -59,7 +59,8 @@ var polyfills = [
 var libraries = [
     './node_modules/nouislider/distribute/nouislider.js',
     './lib/qrcode.js',
-    './node_modules/TinyAnimate/src/TinyAnimate.js'
+    './node_modules/TinyAnimate/src/TinyAnimate.js',
+    './node_modules/impetus/dist/impetus.js'
 ];
 var widgets = [
     './node_modules/com.burkson.ridestyler.widgets/widgets/vehicle-selection-modal/scripts/rsvsm.js',

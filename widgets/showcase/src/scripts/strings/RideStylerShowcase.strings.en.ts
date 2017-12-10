@@ -21,7 +21,7 @@ namespace RideStylerShowcase.strings {
         "no-results":                     "No Results Found",
         "wheel-features-specs":           "Wheel Features & Specs",
         "share-my-vehicle":               "Share My Vehicle",
-        "share-instructions":             "Scan the QR code or use the link to share or save your vehicle configuration.",
+        "share-instructions":             "Use the buttons to share or save your vehicle configuration.",
         "no-description-wheel":           "We don't have a description for this wheel yet",
         'show-specs':                     "Show Specs",
         'call':                           "Call",
@@ -48,6 +48,7 @@ namespace RideStylerShowcase.strings {
         'features':                       "Features",
         'any-features':                   "Any Features",
         'finish':                         "Finish",
-        'summary':                        "Summary"
+        'summary':                        "Summary",
+        'check-out-my-vehicle':           "Check out my vehicle!"
     });
 }

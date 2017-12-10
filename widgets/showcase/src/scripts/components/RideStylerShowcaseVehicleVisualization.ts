@@ -237,8 +237,9 @@ namespace RideStylerShowcase {
         }
 
         private updateTabLayout() {
-            const [currentBreakpointKey] = this.showcase.style.getCurrentBreakpoint();
-            const horizontal:boolean = currentBreakpointKey === 'phone-portrait';
+            const currentBreakpoint = this.showcase.style.getCurrentBreakpoint();
+
+            const horizontal:boolean = currentBreakpoint && currentBreakpoint[0] === 'phone-portrait';
             
             this.tabBar.setMode(horizontal ? 'horizontal' : 'vertical');
         }

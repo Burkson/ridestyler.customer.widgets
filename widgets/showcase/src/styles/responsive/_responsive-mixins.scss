@@ -1,5 +1,5 @@
 @mixin responsiveTabBar($tabBarWidth: 150px, $iconFontSize: 1em, $iconTextFontSize: 2em) {
-    .ridestyler-showcase-vertical-tab-bar {
+    .ridestyler-showcase-tab-bar {
         width: $tabBarWidth;
         font-size: $iconFontSize;
     

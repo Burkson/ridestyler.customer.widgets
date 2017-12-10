@@ -272,14 +272,31 @@ namespace RideStylerShowcase.HTMLHelper {
         return createElement(tagName, {text: text});
     }
     
-    export function createElementWithClass<K extends keyof HTMLElementTagNameMap>(tagName: K, className:string): HTMLElementTagNameMap[K];
-    export function createElementWithClass(tagName: string, className:string): HTMLElement;
     /**
      * Creates an element with the specified class
      * @param tagName The tag of the element to create
      * @param className The class to add to the element
      */
-    export function createElementWithClass(tagName:string, className:string): HTMLElement {
+    export function createElementWithClass<K extends keyof HTMLElementTagNameMap>(tagName: K, className:string): HTMLElementTagNameMap[K];
+    /**
+     * Creates an element with the specified class
+     * @param tagName The tag of the element to create
+     * @param className The class to add to the element
+     */
+    export function createElementWithClass(tagName: string, className:string): HTMLElement;
+    /**
+     * Creates a DIV element with the specified class
+     * @param className The class to add to the element
+     */
+    export function createElementWithClass(className:string):HTMLDivElement;
+    export function createElementWithClass(tagNameOrClassName:string, className?:string): HTMLElement {
+        let tagName = tagNameOrClassName;
+
+        if (typeof className === 'undefined') {
+            tagName = 'div';
+            className = tagNameOrClassName;
+        }
+
         return createElement(tagName, {className: className});
     }
 

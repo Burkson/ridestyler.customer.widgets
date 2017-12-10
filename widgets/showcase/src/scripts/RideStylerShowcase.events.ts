@@ -39,6 +39,16 @@ namespace RideStylerShowcase.events {
         }
 
         /**
+         * Stop listening for an event
+         * @param eventName The name of the event to stop listening to
+         * @param callback The callback that was originally registered
+         */
+        public off<K extends keyof RideStylerShowcaseEventParameterMapping>(eventName: K, callback: RideStylerShowcaseEventHandler<RideStylerShowcaseEventParameterMapping[K]>): void {
+            if (eventName in this.eventHandlers === false) return;
+            this.eventHandlers[eventName] = ArrayHelper.remove(this.eventHandlers[eventName], callback);
+        }
+
+        /**
          * Trigger an event
          * @param eventName The name of the event to trigger
          * @param ev        The data to send to the event handlers

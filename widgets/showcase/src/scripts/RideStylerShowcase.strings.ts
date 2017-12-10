@@ -51,7 +51,8 @@ namespace RideStylerShowcase {
         'features' | 
         'any-features' |
         'finish' |
-        'summary';
+        'summary' |
+        'check-out-my-vehicle';
 
     let defaultLanguageFormatProvider:IStringsLanguageFormatProvider = {
         currency: (number, symbol) => {

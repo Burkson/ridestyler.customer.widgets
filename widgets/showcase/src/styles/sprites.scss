@@ -27,9 +27,21 @@
 .ridestyler-showcase-icon-suspension {
 	@include ridestyler-showcase-icon(suspension);
 }
+.ridestyler-showcase-icon-external-link {
+	@include ridestyler-showcase-icon(external-link);
+}
 .ridestyler-showcase-icon-tire {
 	@include ridestyler-showcase-icon(tire);
 }
 .ridestyler-showcase-icon-wheel {
 	@include ridestyler-showcase-icon(wheel);
+}
+.ridestyler-showcase-icon-facebook {
+	@include ridestyler-showcase-icon(facebook);
+}
+.ridestyler-showcase-icon-twitter {
+	@include ridestyler-showcase-icon(twitter);
+}
+.ridestyler-showcase-icon-qr {
+	@include ridestyler-showcase-icon(qr);
 }

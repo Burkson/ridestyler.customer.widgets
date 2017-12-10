@@ -28,6 +28,7 @@
     "gulp-typescript": "^3.2.3",
     "gulp-uglify": "^3.0.0",
     "ie8": "^0.7.1",
+    "impetus": "^0.8.7",
     "merge2": "^1.2.0",
     "node-sass": "^4.7.2",
     "nouislider": "^10.1.0",

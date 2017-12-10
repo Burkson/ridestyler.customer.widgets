@@ -3,14 +3,32 @@
 .ridestyler-showcase-share {
     padding-top: 1em;
 
-    .ridestyler-showcase-qr-display {
-        display: inline-block;
-        z-index: $zLayer1;
-        position: relative;
+    h1 {
+        margin-bottom: 0;
+    }
+    
+    p {
+        margin-top: 0;
+    }
 
-        &-image {
-            margin-bottom: 10px;
-        }
+    .ridestyler-showcase-share-button {
+        margin-right: 0.5em;
+        padding: 0.7em 1em;
+    }
 
+    .ridestyler-showcase-background {
+        height: 30%;
+    }
+
+    .ridestyler-showcase-viewport, .ridestyler-showcase-rotate-vehicle {
+        margin-left: 0;
+    }
+    
+    .ridestyler-showcase & .ridestyler-showcase-rotate-vehicle {
+        bottom: -2%;
+    }
+    
+    .ridestyler-showcase-viewport {
+        bottom: 8%;
     }
 }

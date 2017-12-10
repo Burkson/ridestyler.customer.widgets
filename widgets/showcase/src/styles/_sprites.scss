@@ -39,12 +39,28 @@
 		$char: "\";
 	}
 	
+	@if $filename == external-link {
+		$char: "\";
+	}
+	
 	@if $filename == tire {
 		$char: "\";
 	}
 	
 	@if $filename == wheel {
 		$char: "\";
+	}
+	
+	@if $filename == facebook {
+		$char: "\";
+	}
+	
+	@if $filename == twitter {
+		$char: "\";
+	}
+	
+	@if $filename == qr {
+		$char: "\";
 	}
 
 	@return $char;
