@@ -1,4 +1,5 @@
 var gulp = require('gulp'); // https://gulpjs.com/
+var gulpLog = require('gulp-messenger'); // https://github.com/gulpjs/gulplog
 var sourcemaps = require('gulp-sourcemaps'); // https://github.com/gulp-sourcemaps/gulp-sourcemaps
 var typescript = require('gulp-typescript'); // https://github.com/ivogabe/gulp-typescript
 var mergeStreams = require('merge2'); // https://www.npmjs.com/package/merge2
@@ -22,6 +23,12 @@ var consolidate = require('consolidate'); // https://github.com/tj/consolidate.j
 var async = require('async'); // https://caolan.github.io/async/
 var through = require('through2'); // https://github.com/rvagg/through2
 
+
+gulpLog.init({
+    logToFile: false,
+    timestamp: true
+});
+
 /**
  * If true, dev mode is enabled, skip minification and output sourcemaps
  */
@@ -34,8 +41,8 @@ if (gulpOptions.has('production') || gulpOptions.has('prod')) {
         production = production || 'false';
         production = production === 'true';
 
-    if (!production) console.log('Build using dev mode');
-    else console.log('Build using production mode');
+    if (!production) gulpLog.log('Build using dev mode');
+    else gulpLog.log('Build using production mode');
 
     dev = !production;
 }
@@ -75,7 +82,8 @@ var paths = {
             'src/styles/**/*.scss'
         ],
         resources: [
-            'src/images/**/*.{png,gif,jpg,svg}'
+            'src/images/**/*.{png,gif,jpg,svg}',
+            '!src/images/icons/**/*'
         ],
         folder: 'src/',
         icons: 'src/images/icons/**/*.svg'
@@ -119,7 +127,7 @@ var compiler = {
         if (bundleCSS) {
             cssBundledIntoJSFile = through.obj();
             
-            compiler.css(true).on('end', function () {
+            cssStream.on('finish', function () {
                 gulpFile('ridestyler.showcase.css.js',
                     "RideStylerShowcase.css = `" +
                     compiler.generatedCSS + "`;", 
@@ -179,6 +187,8 @@ var compiler = {
     css: function (forBundle) {
         var baseURL = forBundle ? paths.baseURLs.external : paths.baseURLs.cssRelative;
 
+        gulpLog.log('Compiling CSS...');
+
         // Compile the icon sprite sheet first if it hasn't been already
         if (!fs.existsSync(paths.output.spriteSheet)) {
             let passthrough = through.obj();
@@ -226,6 +236,14 @@ var compiler = {
             normalize: true,
             fontHeight: 1500
         }));
+
+        const originalCallback = callback;
+
+        callback = function () {
+            if (typeof originalCallback === 'function') originalCallback();
+
+            gulpLog.log('Finished compiling icons.');
+        };
 
         async.parallel([
             function outputMixins(cb) {
@@ -335,7 +353,7 @@ gulp.task('run', ['build'], function () {
 
 gulp.task('clean', function (cb) {
     return del([
-        "dist/**",
+        paths.output.folder + "/**",
         paths.output.spriteMixins,
         paths.output.spriteSheet
     ]);
