@@ -20,6 +20,7 @@ var fs = require('fs'); // https://nodejs.org/api/fs.html
 var iconfont = require('gulp-iconfont'); // https://github.com/nfroidure/gulp-iconfont
 var consolidate = require('consolidate'); // https://github.com/tj/consolidate.js
 var async = require('async'); // https://caolan.github.io/async/
+var through = require('through2'); // https://github.com/rvagg/through2
 
 /**
  * If true, dev mode is enabled, skip minification and output sourcemaps
@@ -116,7 +117,7 @@ var compiler = {
         var cssBundledIntoJSFile;
 
         if (bundleCSS) {
-            cssBundledIntoJSFile = new stream.PassThrough();
+            cssBundledIntoJSFile = through.obj();
             
             compiler.css(true).on('end', function () {
                 gulpFile('ridestyler.showcase.css.js',
@@ -180,7 +181,7 @@ var compiler = {
 
         // Compile the icon sprite sheet first if it hasn't been already
         if (!fs.existsSync(paths.output.spriteSheet)) {
-            let passthrough = new stream.PassThrough();
+            let passthrough = through.obj();
 
             compiler.icons(function () {
                 compiler.css(forBundle).pipe(passthrough);
@@ -209,11 +210,11 @@ var compiler = {
                 cssnano()
             ]))
             .pipe(gulpIf(dev, sourcemaps.write('.')))
+            .pipe(gulpIf(!forBundle, gulp.dest(paths.output.folder)))
             .on('data', function (file) {
                 if (bundleCSS && file.path.endsWith(paths.output.css))
                     compiler.generatedCSS = file.contents.toString();
-            })
-            .pipe(gulpIf(!forBundle, gulp.dest(paths.output.folder)));
+            });
     },
     icons: function (callback) {
         let fontName = 'RideStyler Showcase Icons';
@@ -274,7 +275,7 @@ gulp.task('resources', function () {
     }).pipe(gulp.dest(paths.output.folder));
 });
 
-gulp.task('build', ['js', 'css', 'resources']);
+gulp.task('build', bundleCSS ? ['js', 'resources'] : ['js', 'css', 'resources']);
 
 gulp.task('run', ['build'], function () {
     let port = 8080;
