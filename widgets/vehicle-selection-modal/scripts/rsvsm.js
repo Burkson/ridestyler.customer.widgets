@@ -1,5 +1,5 @@
 //Template HTML
-var vsm_template = '<div id="vsm_modal_base" class="vsm-modal vsm-hide vsm-fade" style="z-index: 9999;" tabindex="-1" role="dialog"> <div class="vsm-modal-container"> <div class="vsm-modal-header"> <button type="button" class="vsm-close"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAARVBMVEUAAACdnZ2ampqbm5ubm5uampqdnZ2ZmZmZmZmZmZmcnJyZmZmZmZmdnZ2ZmZmZmZmbm5uZmZmbm5ubm5uZmZmcnJybm5v/bA1VAAAAF3RSTlMAFL8yOr0Qz//tMvHLEs3zNO8wNuswLru4YpkAAADeSURBVHgBvdUFisQAEETRjrvL/W+6Em8+1PoWNpO8H5y2/1oQRhrESep8lhel9FVeN87nvqDP87ZxXhVxt4GsuT0K+K0Itv9hnrOA3xZuD/rBFcIXkZku6HVBrwt6XdDrgl4V8KOZLui5yRf0unj4md5YPPxiHAt6XdDrQntRzCsFC3i9sriDLv6a1wW9Luh1QS8L+mGWBf20yoLeTBf0sqDftogCnoX0opDebCxcIT2KKhZeFtHD94axCKV3H0zcyYJHUad2FvAocEbhUWTuUMOj2PxdhN6zCAP7p70CQy4hRTemab0AAAAASUVORK5CYII=" style="width:24px;"></button> </div><div class="vsm-modal-body vsm-option-body vsm-list-body"> <a href="javascript:void(0);" class="vsm-back-link vsm-back-step">❮ </a> <div class="vsm-in-progress"> <p class="vsm-header vsm-center"></p><div class="vsm-line-step center-piece vsm-columns"> </div><div class="vsm-list-container scrollable"><i class="vsm-loaderIcon" alt="Loading options"></i></div></div><div class="vsm-final"> <div class="center-piece vsm-line-step vehicle-result-wrap"> <i class="dot-style dot-before active"></i> <p class="vehicle-result-name"></p><p class="vehicle-result-size"></p></div><div class="scrollable"> <div class="center-piece vehicle-image-wrap"> <div style="position: relative; text-align: center; min-height: 120px;"> <i class="vsm-loaderIcon" alt="Loading an image of your vehicle"></i> <img src="" alt="" class="vsm-vehicle-display" style="display: none;"> </div><a href="javascript:void(0);" class="vsm-btn vsm-btn-gray vsm-full-width vsm-find"></a> </div></div></div></div></div></div>';
+var vsm_template = '<div id="vsm_modal_base" class="vsm-modal vsm-hide vsm-fade" style="z-index: 9999;" tabindex="-1" role="dialog"> <div class="vsm-modal-dialog"> <div class="vsm-modal-content"> <div class="vsm-modal-header"> <button type="button" class="vsm-close"> </button> </div><div class="vsm-modal-body vsm-option-body vsm-list-body"> <a href="javascript:void(0);" class="vsm-back-link vsm-back-step"> <i class="vsm-back-arrow"></i> </a> <div class="vsm-in-progress"> <p class="vsm-header vsm-center"></p><div class="vsm-line-step center-piece vsm-columns"> </div><div class="vsm-list-container"> <i class="vsm-loaderIcon" alt="Loading options"></i> </div></div><div class="vsm-final"> <div class="center-piece vsm-line-step vsm-columns vehicle-result-wrap"> <div class="vsm-column-2 vsm-before"></div><div class="vsm-column-2 no-style"><i class="dot-style dot-before active"></i></div><p class="vehicle-result-name"></p><p class="vehicle-result-size"></p></div> <div class="center-piece vehicle-image-wrap"> <div style="position: relative; text-align: center; min-height: 120px;"> <i class="vsm-loaderIcon" alt="Loading an image of your vehicle"></i> <img src="" alt="" class="vsm-vehicle-display" style="display: none;"> </div><a href="javascript:void(0);" class="vsm-btn vsm-btn-gray vsm-full-width vsm-find"></a> </div></div></div></div></div></div>';
 
 var _vsmModalIDCounter = 0;
 function RideStylerVehicleSelectionModal(options) {
@@ -235,6 +235,7 @@ function RideStylerVehicleSelectionModal(options) {
                 }
             });
             hideBackdrop();
+            removeClass(document.body, 'vsm-modal-open');
         }
         else {
             console.warn('This vsm instance is not shown yet.');
@@ -617,7 +618,7 @@ function RideStylerVehicleSelectionModal(options) {
         divELe.className = 'vsm-column-2';
         dotEle.className = 'dot-style dot-before active';
         spanEle.className = 'dot-info dot-info-before active';
-        spanEle.innerHTML = menuTitle;
+        //spanEle.innerHTML = menuTitle;
         divELe.appendChild(dotEle);
         divELe.appendChild(spanEle);
 
@@ -630,18 +631,19 @@ function RideStylerVehicleSelectionModal(options) {
         }
         else {
             addClass(bodyElement, 'vsm-has-back');
-            var notStyleDiv = document.createElement('div'),
-            cellEle = document.createElement('span'),
-            infoEle = document.createElement('span');
-            notStyleDiv.className = 'vsm-column-2 no-style vsm-table';
-            cellEle.className = 'vsm-table-cell';
+            var notStyleDiv = document.createElement('div');
+            /*cellEle = document.createElement('span'),*/
+            /*infoEle = document.createElement('span');*/
+            notStyleDiv.className = 'vsm-column-2 vsm-before';
+            /*cellEle.className = 'vsm-table-cell';
             infoEle.className = 'vsm-selected-info';
             cellEle.appendChild(infoEle);
-            notStyleDiv.appendChild(cellEle);
+            notStyleDiv.appendChild(cellEle);*/
             var infoBaseArray = infoArray.map(function (ele) {
                 return ele && ele.split(':').length === 2 ? ele.split(':')[1] : '';
             });
-            infoEle.innerHTML = infoBaseArray.join(' ');
+            /*infoEle.innerHTML = infoBaseArray.join(' ');*/
+            spanEle.innerHTML = infoBaseArray.join(' ');
             vsmLinkStyle.appendChild(notStyleDiv);
             vsmLinkStyle.appendChild(divELe);
 
@@ -886,6 +888,7 @@ function RideStylerVehicleSelectionModal(options) {
         disCountinued = false;
         setTimeout(function(){
             addClass(modal, 'in');
+            addClass(document.body, 'vsm-modal-open');
             modal.onTransitionEndOnce(function(){
                 requestStep(modal);
             })
