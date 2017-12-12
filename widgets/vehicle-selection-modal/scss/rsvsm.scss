@@ -47,16 +47,16 @@
 }
 /*Modal Structure*/
 .vsm-modal {
-	@extend %full-screen;
-	position: absolute;
-	background-color: $modal-bg;
-	box-shadow: 0 0 10px $gray-med;
-	@include box-sizing(border-box);
-	margin: 0;
-	width: auto;
-	height: auto;
-	font-family: $font-family-default;
-	line-height: $regular-line-height;
+	position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+    display: none;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
 
 	* {
 		@include box-sizing(border-box);
@@ -67,17 +67,23 @@
 		outline: 0;
 	}
 
-	.scrollable {
-		position: absolute;
-		top: 60px;
-		bottom: $edge-padding;
-		left: 0;
-		right: 0;
-		overflow: auto;
+	&.fade .vsm-modal-dialog {
+		@include transition(opacity .3s ease-out);
+		-webkit-transform: translate(0,-25%);
+		-ms-transform: translate(0,-25%);
+		-o-transform: translate(0,-25%);
+		transform: translate(0,-25%);
+	}
+	&.in .vsm-modal-dialog {
+		-webkit-transform: translate(0,0);
+		-ms-transform: translate(0,0);
+		-o-transform: translate(0,0);
+		transform: translate(0,0);
 	}
 
-	.vsm-list-body .scrollable {
-		top: 120px;
+	.vsm-modal-open & {
+		overflow-x: hidden;
+		overflow-y: auto;
 	}
 }
 
@@ -98,7 +104,7 @@
 	font-weight: $headers-font-weight;
 	font-size: 16px;
 	line-height: $header-line-height;
-	margin: 18px auto;
+	margin: 18px auto 0;
 }
 
 .vsm-close {
@@ -112,16 +118,44 @@
 	background: transparent;
 	border: 0;
 
+	width: 24px;
+	height: 24px;
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAARVBMVEUAAACdnZ2ampqbm5ubm5uampqdnZ2ZmZmZmZmZmZmcnJyZmZmZmZmdnZ2ZmZmZmZmbm5uZmZmbm5ubm5uZmZmcnJybm5v/bA1VAAAAF3RSTlMAFL8yOr0Qz//tMvHLEs3zNO8wNuswLru4YpkAAADeSURBVHgBvdUFisQAEETRjrvL/W+6Em8+1PoWNpO8H5y2/1oQRhrESep8lhel9FVeN87nvqDP87ZxXhVxt4GsuT0K+K0Itv9hnrOA3xZuD/rBFcIXkZku6HVBrwt6XdDrgl4V8KOZLui5yRf0unj4md5YPPxiHAt6XdDrQntRzCsFC3i9sriDLv6a1wW9Luh1QS8L+mGWBf20yoLeTBf0sqDftogCnoX0opDebCxcIT2KKhZeFtHD94axCKV3H0zcyYJHUad2FvAocEbhUWTuUMOj2PxdhN6zCAP7p70CQy4hRTemab0AAAAASUVORK5CYII=);
+	background-repeat: no-repeat;
+	background-size: 24px 24px;
+
 	&:active,
 	&:focus {
 		outline: 0;
 	}
 }
 
-.vsm-modal-container {
-	@extend %full-screen;
-	position: absolute;
-	overflow: hidden;
+.vsm-back-arrow {
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAACYUlEQVR4AdTZA4xcYRAH8ItZ27Zt27Zt24rt5Oxb7x6ji1OvbdtW/bVJrXnl7CQvxu+/HOT973K73VMbGxubs9ls67xcK5fLNb2kpCSen5//msfjPUEVAoCfXVxc/A7//smZEA6HYy7BJ9/DcyqE3W6f/z08+hAEv7CoqCj9I/z7p6mpqRkV3mq1Li0sLAThS0tLw16vdyIavMViWU7wWQi+rKws6PP5xqPBm83mlRTwflKj0eBNJtNaKL68vNwbCARGosEbjcb1BP8cgq+oqHAHg8HhaPAGg2FzQUEBCF9ZWekOh8OD0eD1ev1WCngnwQ9Eg9dqtdsJ/iUEX1VVZY1EIv3R4DUazW4ovrq62hyNRvuiwavV6v0EBsLX1NQYY7FYTzR4pVJ5EIqn0Wj6eDzeHQ1eoVAcheLpdLo2kUh0RYOXy+XH38IgD4PBUCaTyc5o8DKZ7DQUz2Qy5alUqiMavEQiOQ/Fs1gsKSq8WCy+CMWz2WxxOp1ujwYvEomuQvFcLpefyWTaosELBIKbEPj7cZDgcY2DfD7/HjRAbW3tg2w22/J/ehG8Cwi+BxwOh0++xPDvAf5fIkQllUrP4v8v+LP/xoBWAn8/pEbVzH3STh+m2JF2RxdCpVJRmQmM8Xi8J7oQarV6LwGCR8pYLNYbXQitVrubylCPai5+Xzqdbjt0rUJC2CORyEB0IfR6/WaKu6HB6EIYDIaNJAR4tRgKhYaiC2E0GhEvd+Hr9dUUQlBZr+M/cKA7MZH7GMYTE7xsNtvinD3yvRl9p1lHJ7oJg6dPn+JcajC62GMoLbcBAA0fLyRiwJxBAAAAAElFTkSuQmCC);
+	width: 24px;
+	height: 24px;
+	background-repeat: no-repeat;
+	background-size: 24px 24px;
+	display: block;
+}
+
+.vsm-modal-dialog {
+	position: relative;
+    width: auto;
+    margin: 10px;
+}
+
+.vsm-modal-content {
+	position: relative;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #999;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: 6px;
+    outline: 0;
+    -webkit-box-shadow: 0 3px 9px rgba(0,0,0,.5);
+    box-shadow: 0 3px 9px rgba(0,0,0,.5)
 }
 
 .vsm-modal-body {
@@ -129,6 +163,7 @@
 	position: relative;
 	overflow: hidden;
 	height: 100%;
+	min-height: 210px;
 }
 
 #vsm-backdrop {
@@ -169,12 +204,24 @@
 		}
 	}
 
+	&.vsm-line-step [class*="vsm-column-"] {
+		margin-left: 0;
+	}
+
 	.vsm-column-4 {
 		width: 23.404255319148934%;
 	}
 
+	&.vsm-line-step .vsm-column-4 {
+		width: 25%;
+	}
+
 	.vsm-column-2 {
 		width: 48.93617021276595%;
+	}
+
+	&.vsm-line-step .vsm-column-2 {
+		width: 50%;
 	}
 }
 /*Line step style*/
@@ -192,6 +239,23 @@
 				right: 0;
 				background-color: $gray-light;
 				@include middle(4px);
+			}
+
+			&.vsm-before:before {
+				content: '';
+				background-color: $red-normal;
+			}
+			&.vsm-before:after {
+				left: -1000px;
+				content: '';
+				display: block;
+				width: 1000px;
+				z-index: 0;
+				background-color: $red-normal;
+				position: absolute;
+				height: 4px;
+				top: 50%;
+				margin-top: -2px;
 			}
 
 			&.no-style:before {
@@ -244,7 +308,7 @@
 	}
 
 	.dot-info {
-		width: 96%;
+		width: 200%;
 		display: block;
 		position: absolute;
 		top: 18px;
@@ -269,20 +333,12 @@
 	}
 
 	.dot-info-before {
-		left: -8px;
-		text-align: left;
+		left: -100%;
+		text-align: center;
 	}
 
 	.dot-info-after {
 		right: -48%;
-	}
-
-	&.vehicle-result-wrap:before {
-		content: '';
-		width: 1000px;
-		left: -1000px;
-		background-color: $red-normal;
-		@include middle(4px);
 	}
 
 	.vehicle-result-name {
@@ -291,6 +347,7 @@
 		margin: 0;
 		line-height: $progress-line-height;
 		margin-bottom: 5px;
+		text-align: center;
 	}
 
 	.vehicle-result-size {
@@ -304,15 +361,11 @@
 .vsm-modal-body .center-piece {
 	max-width: 380px;
 	margin: 0 auto;
-	padding: 0 $edge-padding;
+	padding: $edge-padding;
 
 	&.vehicle-result-wrap {
 		position: relative;
-		margin-top: 55px;
-	}
-
-	&.vehicle-image-wrap {
-		margin-top: 15px;
+		margin-top: 42px;
 	}
 }
 
@@ -461,20 +514,13 @@
     display: block;
     margin: 10px auto;
 }
-@media screen and (min-width: 480px) and (min-height: 480px) {
-	.vsm-modal {
-		@include middle-center($modal-width, $modal-height);
-		right: auto;
-		bottom: auto;
+@media screen and (min-width: 768px) {
+	.vsm-modal-dialog {
+		width: 440px;
+		margin: 30px auto;
 	}
-}
-@media screen and (min-width: 640px) and (min-height: 520px) {
-	.vsm-modal {
-		@include middle-center($modal-width-lg, $modal-height-lg);
-		right: auto;
-		bottom: auto;
-	}
-	.vsm-modal-body .center-piece {
-		max-width: 480px;
+	.modal-content {
+		-webkit-box-shadow: 0 5px 15px rgba(0,0,0,.5);
+		box-shadow: 0 5px 15px rgba(0,0,0,.5);
 	}
 }
