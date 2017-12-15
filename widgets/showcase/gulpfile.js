@@ -32,12 +32,12 @@ if (gulpOptions.has('production') || gulpOptions.has('prod')) {
     let production = gulpOptions.get('production') || gulpOptions.get('prod');
         production = production || 'false';
         production = production === 'true';
-
-    if (!production) console.log('Build using dev mode');
-    else console.log('Build using production mode');
-
+        
     dev = !production;
 }
+    
+if (!dev) console.log('Build using dev mode');
+else console.log('Build using production mode');
 
 /**
  * If true bundle the CSS with the javascript file
@@ -73,6 +73,7 @@ var paths = {
         sass: [
             'src/styles/**/*.scss'
         ],
+        index: 'src/index.html',
         resources: [
             'src/images/**/*.{png,gif,jpg,svg}'
         ],
@@ -269,7 +270,7 @@ gulp.task('icons', function (done) {
     return compiler.icons(done);
 });
 gulp.task('resources', function () {
-    return gulp.src(paths.sources.resources, {
+    return gulp.src([].concat(paths.sources.resources).concat(paths.sources.index), {
         base: paths.sources.folder
     }).pipe(gulp.dest(paths.output.folder));
 });
@@ -282,7 +283,7 @@ gulp.task('run', ['build'], function () {
 
     browserSync.init({
         server: {
-            baseDir: paths.server
+            baseDir: paths.output.folder
         },
         port: port,
         host: host,
@@ -311,7 +312,7 @@ gulp.task('run', ['build'], function () {
         ]
     });
 
-    gulp.watch("*.html").on('change', browserSync.reload);
+    gulp.watch(paths.sources.index).on('change', browserSync.reload);
 
     gulp.watch(paths.sources.resources, ['resources']);
     
