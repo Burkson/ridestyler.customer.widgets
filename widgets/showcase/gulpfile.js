@@ -1,28 +1,28 @@
-var gulp = require('gulp'); // https://gulpjs.com/
-var gulpLog = require('gulp-messenger'); // https://github.com/gulpjs/gulplog
-var sourcemaps = require('gulp-sourcemaps'); // https://github.com/gulp-sourcemaps/gulp-sourcemaps
-var typescript = require('gulp-typescript'); // https://github.com/ivogabe/gulp-typescript
-var mergeStreams = require('merge2'); // https://www.npmjs.com/package/merge2
-var browserSync = require('browser-sync').create(); // https://browsersync.io/docs/gulp
-var concat = require('gulp-concat'); // https://github.com/contra/gulp-concat
-var sass = require('gulp-sass'); // https://github.com/dlmanning/gulp-sass
-var sassTypes = require('node-sass').types; // https://github.com/sass/node-sass#functions--v300---experimental
-var gulpFile = require('gulp-file'); // https://github.com/alexmingoia/gulp-file
-var del = require('del'); // https://github.com/sindresorhus/del
-var babel = require('gulp-babel'); // https://github.com/babel/gulp-babel
-var uglify = require('gulp-uglify'); // https://github.com/terinjokes/gulp-uglify
-var gulpIf = require('gulp-if'); // https://github.com/robrich/gulp-if
-var autoprefixer = require('autoprefixer'); // https://github.com/postcss/autoprefixer
-var cssnano = require('cssnano'); // http://cssnano.co/
-var postcss = require('gulp-postcss'); // https://github.com/postcss/gulp-postcss
-var gulpOptions = require('gulp-options'); // https://github.com/thomaschampagne/gulp-options
-var stream = require('stream'); // https://nodejs.org/api/stream.html
-var fs = require('fs'); // https://nodejs.org/api/fs.html
-var iconfont = require('gulp-iconfont'); // https://github.com/nfroidure/gulp-iconfont
-var consolidate = require('consolidate'); // https://github.com/tj/consolidate.js
-var async = require('async'); // https://caolan.github.io/async/
-var through = require('through2'); // https://github.com/rvagg/through2
-
+const gulp = require('gulp'); // https://gulpjs.com/
+const gulpLog = require('gulp-messenger'); // https://github.com/gulpjs/gulplog
+const sourcemaps = require('gulp-sourcemaps'); // https://github.com/gulp-sourcemaps/gulp-sourcemaps
+const typescript = require('gulp-typescript'); // https://github.com/ivogabe/gulp-typescript
+const mergeStreams = require('merge2'); // https://www.npmjs.com/package/merge2
+const browserSync = require('browser-sync').create(); // https://browsersync.io/docs/gulp
+const concat = require('gulp-concat'); // https://github.com/contra/gulp-concat
+const sass = require('gulp-sass'); // https://github.com/dlmanning/gulp-sass
+const sassTypes = require('node-sass').types; // https://github.com/sass/node-sass#functions--v300---experimental
+const gulpFile = require('gulp-file'); // https://github.com/alexmingoia/gulp-file
+const del = require('del'); // https://github.com/sindresorhus/del
+const babel = require('gulp-babel'); // https://github.com/babel/gulp-babel
+const uglify = require('gulp-uglify'); // https://github.com/terinjokes/gulp-uglify
+const gulpIf = require('gulp-if'); // https://github.com/robrich/gulp-if
+const autoprefixer = require('autoprefixer'); // https://github.com/postcss/autoprefixer
+const cssnano = require('cssnano'); // http://cssnano.co/
+const postcss = require('gulp-postcss'); // https://github.com/postcss/gulp-postcss
+const gulpOptions = require('gulp-options'); // https://github.com/thomaschampagne/gulp-options
+const stream = require('stream'); // https://nodejs.org/api/stream.html
+const fs = require('fs'); // https://nodejs.org/api/fs.html
+const iconfont = require('gulp-iconfont'); // https://github.com/nfroidure/gulp-iconfont
+const consolidate = require('consolidate'); // https://github.com/tj/consolidate.js
+const async = require('async'); // https://caolan.github.io/async/
+const through = require('through2'); // https://github.com/rvagg/through2
+const exec = require('child_process').execSync;
 
 gulpLog.init({
     logToFile: false,
@@ -99,7 +99,7 @@ var paths = {
 
     baseURLs: {
         cssRelative: '',
-        external: 'dist/'
+        external: 'https://cdn.rawgit.com/Burkson/com.burkson.ridestyler.widgets/{sha}/widgets/showcase/dist/'
     },
 
     server: "./"
@@ -127,7 +127,7 @@ var compiler = {
         if (bundleCSS) {
             cssBundledIntoJSFile = through.obj();
             
-            cssStream.on('finish', function () {
+            compiler.css(true).on('finish', function () {
                 gulpFile('ridestyler.showcase.css.js',
                     "RideStylerShowcase.css = `" +
                     compiler.generatedCSS + "`;", 
@@ -185,9 +185,7 @@ var compiler = {
         ]);
     },
     css: function (forBundle) {
-        var baseURL = forBundle ? paths.baseURLs.external : paths.baseURLs.cssRelative;
-
-        gulpLog.log('Compiling CSS...');
+        var baseURL;
 
         // Compile the icon sprite sheet first if it hasn't been already
         if (!fs.existsSync(paths.output.spriteSheet)) {
@@ -200,6 +198,16 @@ var compiler = {
             return passthrough;
         }
 
+        if (forBundle) {
+            const commit = exec('git rev-parse --short master').toString().split('\n').join('');
+            baseURL = paths.baseURLs.external.replace('{sha}', commit);
+        } else {
+            baseURL = paths.baseURLs.cssRelative;
+        }
+        
+        gulpLog.log('Compiling CSS...');
+        gulpLog.log('Using "' + baseURL + '" for external paths');
+
         return gulp.src(paths.sources.sass)
             .pipe(gulpIf(dev, sourcemaps.init()))
             .pipe(sass({
@@ -209,7 +217,6 @@ var compiler = {
                     }
                 }
             }).on('error', sass.logError))
-            .pipe(concat(paths.output.css))
             .pipe(postcss(dev ? [] : [
                 autoprefixer({browsers: [
                     '> 1%',
@@ -219,6 +226,7 @@ var compiler = {
                 ]}),
                 cssnano()
             ]))
+            .pipe(concat(paths.output.css))
             .pipe(gulpIf(dev, sourcemaps.write('.')))
             .pipe(gulpIf(!forBundle, gulp.dest(paths.output.folder)))
             .on('data', function (file) {
@@ -240,9 +248,8 @@ var compiler = {
         const originalCallback = callback;
 
         callback = function () {
-            if (typeof originalCallback === 'function') originalCallback();
-
             gulpLog.log('Finished compiling icons.');
+            if (typeof originalCallback === 'function') originalCallback();
         };
 
         async.parallel([
