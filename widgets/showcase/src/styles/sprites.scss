@@ -4,12 +4,12 @@
 
 @font-face {
 	font-family: "RideStyler Showcase Icons";
-	src: assetURL(url('fonts/RideStyler Showcase Icons.eot'));
-	src: assetURL(url('fonts/RideStyler Showcase Icons.eot?#iefix')) format('eot'),
-		assetURL(url('fonts/RideStyler Showcase Icons.woff2')) format('woff2'),
-		assetURL(url('fonts/RideStyler Showcase Icons.woff')) format('woff'),
-		assetURL(url('fonts/RideStyler Showcase Icons.ttf')) format('truetype'),
-		assetURL(url('fonts/RideStyler Showcase Icons.svg#RideStyler Showcase Icons')) format('svg');
+	src: url('fonts/RideStyler Showcase Icons.eot');
+	src: url('fonts/RideStyler Showcase Icons.eot?#iefix') format('eot'),
+		url('fonts/RideStyler Showcase Icons.woff2') format('woff2'),
+		url('fonts/RideStyler Showcase Icons.woff') format('woff'),
+		url('fonts/RideStyler Showcase Icons.ttf') format('truetype'),
+		url('fonts/RideStyler Showcase Icons.svg#RideStyler Showcase Icons') format('svg');
 }
 
 .ridestyler-showcase-icon-chevron-left {

@@ -20,6 +20,7 @@ var fs = require('fs'); // https://nodejs.org/api/fs.html
 var iconfont = require('gulp-iconfont'); // https://github.com/nfroidure/gulp-iconfont
 var consolidate = require('consolidate'); // https://github.com/tj/consolidate.js
 var async = require('async'); // https://caolan.github.io/async/
+var through = require('through2'); // https://github.com/rvagg/through2
 
 /**
  * If true, dev mode is enabled, skip minification and output sourcemaps
@@ -35,19 +36,9 @@ if (gulpOptions.has('production') || gulpOptions.has('prod')) {
         
     dev = !production;
 }
-    
-if (!dev) console.log('Build using dev mode');
+
+if (dev) console.log('Build using dev mode');
 else console.log('Build using production mode');
-
-/**
- * If true bundle the CSS with the javascript file
- */
-var bundleCSS = !dev;
-
-if (gulpOptions.has('bundle-css')) {
-    let bundleCSSOption = gulpOptions.get('bundle-css') || 'true';
-    bundleCSS = bundleCSSOption === 'true';
-}
 
 var typescriptProject = typescript.createProject('tsconfig.json');
 
@@ -113,28 +104,6 @@ var compiler = {
     },
 
     javascript: function () {
-        // Compile the css into a JS file
-        var cssBundledIntoJSFile;
-
-        if (bundleCSS) {
-            cssBundledIntoJSFile = new stream.PassThrough();
-            
-            compiler.css(true).on('end', function () {
-                gulpFile('ridestyler.showcase.css.js',
-                    "RideStylerShowcase.css = `" +
-                    compiler.generatedCSS + "`;", 
-                    {src: true}
-                )
-                    .pipe(gulpIf(dev, sourcemaps.init()))
-                    .pipe(compiler.babel())
-                    .pipe(gulpIf(dev, sourcemaps.write()))
-                    .pipe(cssBundledIntoJSFile);
-            });
-        } else {
-            cssBundledIntoJSFile = gulpFile('ridestyler.showcase.css.js', '');
-            cssBundledIntoJSFile.end();
-        }
-
         // Process the TypeScript files
         var typescriptStreams = 
             typescriptProject.src()
@@ -161,8 +130,7 @@ var compiler = {
             libraryStreams,
             widgetStreams,
             polyfillStream,
-            typescriptJavascriptStream,
-            cssBundledIntoJSFile
+            typescriptJavascriptStream
         )
             .pipe(sourcemaps.init({loadMaps: true}))
             .pipe(concat(paths.output.javascript))
@@ -176,29 +144,21 @@ var compiler = {
             javascriptStream
         ]);
     },
-    css: function (forBundle) {
-        var baseURL = forBundle ? paths.baseURLs.external : paths.baseURLs.cssRelative;
-
+    css: function () {
         // Compile the icon sprite sheet first if it hasn't been already
         if (!fs.existsSync(paths.output.spriteSheet)) {
-            let passthrough = new stream.PassThrough();
-
+            let passthrough = through.obj();
+            
             compiler.icons(function () {
-                compiler.css(forBundle).pipe(passthrough);
+                compiler.css().pipe(passthrough);
             });
-
+            
             return passthrough;
         }
 
         return gulp.src(paths.sources.sass)
             .pipe(gulpIf(dev, sourcemaps.init()))
-            .pipe(sass({
-                functions: {
-                    'assetURL($file)': function (file) {
-                        return new sassTypes.String(baseURL + file.getValue());
-                    }
-                }
-            }).on('error', sass.logError))
+            .pipe(sass().on('error', sass.logError))
             .pipe(concat(paths.output.css))
             .pipe(postcss(dev ? [] : [
                 autoprefixer({browsers: [
@@ -210,11 +170,7 @@ var compiler = {
                 cssnano()
             ]))
             .pipe(gulpIf(dev, sourcemaps.write('.')))
-            .on('data', function (file) {
-                if (bundleCSS && file.path.endsWith(paths.output.css))
-                    compiler.generatedCSS = file.contents.toString();
-            })
-            .pipe(gulpIf(!forBundle, gulp.dest(paths.output.folder)));
+            .pipe(gulp.dest(paths.output.folder));
     },
     icons: function (callback) {
         let fontName = 'RideStyler Showcase Icons';
@@ -326,8 +282,6 @@ gulp.task('run', ['build'], function () {
     
     gulp.watch(paths.sources.sass, function () {
         browserSync.notify("<span color='goldenrod'>Compiling SASS to CSS...</span>", 10 * 1000);
-
-        if (bundleCSS) return compiler.javascript().pipe(browserSync.reload({stream: true}));
 
         return compiler.css(false).pipe(browserSync.stream({match: '**/*.css'}));
     });

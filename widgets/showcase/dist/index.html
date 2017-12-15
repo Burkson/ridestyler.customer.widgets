@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">    
+    
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <title>RideStyler Vehicle Customization</title>
+    
+    <link rel="stylesheet" href="ridestyler.showcase.css">
+
+    <style>
+        #container {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <script src="http://api.ridestyler.net/js?DataType=json&amp;Key=c028c54cf0c447c594a862de6ac85d1a"></script>
+    <script src="ridestyler.showcase.js"></script>
+    <script type="text/javascript">
+        showcase = RideStylerShowcase.create('container', {
+            debug: {
+                events: true,
+                state: true
+            }
+        });
+    </script>
+</body>
+</html>
