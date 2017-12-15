@@ -12,9 +12,9 @@
     
     "include": [
         "src/scripts/**/*.ts",
-        "node_modules/com.burkson.ridestyler.widgets/ridestyler.d.ts",
-        "node_modules/com.burkson.ridestyler.widgets/widgets/vehicle-selection-modal/rsvsm.d.ts",
-        "node_modules/com.burkson.ridestyler.widgets/widgets/vehicle-renderer/rsvr.d.ts",
+        "../../ridestyler.d.ts",
+        "../vehicle-selection-modal/rsvsm.d.ts",
+        "../vehicle-renderer/rsvr.d.ts",
         "typings/**/*.d.ts"
     ]
 }

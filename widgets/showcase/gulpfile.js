@@ -63,8 +63,8 @@ var libraries = [
     './node_modules/impetus/dist/impetus.js'
 ];
 var widgets = [
-    './node_modules/com.burkson.ridestyler.widgets/widgets/vehicle-selection-modal/scripts/rsvsm.js',
-    './node_modules/com.burkson.ridestyler.widgets/widgets/vehicle-renderer/rsvr.js'
+    '../vehicle-selection-modal/scripts/rsvsm.js',
+    '../vehicle-renderer/rsvr.js'
 ];
 
 var paths = {
