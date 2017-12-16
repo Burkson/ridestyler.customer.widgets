@@ -1,3 +1,16 @@
+@mixin responsiveVehicleSelectionModal($width: 400px, $linePadding: 20px) {
+    .vsm-modal {
+        &-dialog {
+            width: $width;
+        }
+        &-body {
+            .center-piece {
+                padding: $linePadding;
+            }
+        }
+    }
+}
+
 @mixin responsiveTabBar($tabBarWidth: 150px, $iconFontSize: 1em, $iconTextFontSize: 2em) {
     .ridestyler-showcase-tab-bar {
         width: $tabBarWidth;
@@ -10,5 +23,29 @@
     
     .ridestyler-showcase-customizations, .ridestyler-showcase-viewport, .ridestyler-showcase-rotate-vehicle {
         margin-left: $tabBarWidth;
+    }
+}
+
+@mixin responsiveWheelShowcase($wheelImageSize: 100px) {
+    .ridestyler-showcase-vehicle-selection-wheel-showcase {
+        $marginLeft: -$wheelImageSize * 0.15;
+        $wheelCount: 3;
+        
+        $containerWidth: $wheelImageSize * $wheelCount + $marginLeft * ($wheelCount - 1);
+    
+        height: $wheelImageSize;
+        width: $wheelImageSize * $wheelCount + $marginLeft * ($wheelCount - 1);
+    
+        margin-left: -$containerWidth/2;
+        margin-bottom: -$wheelImageSize * 0.4;
+    
+        &-image {
+            width: $wheelImageSize;
+            height: $wheelImageSize;
+    
+            & + .ridestyler-showcase-vehicle-selection-wheel-showcase-image {
+                margin-left: $marginLeft;
+            }
+        }
     }
 }

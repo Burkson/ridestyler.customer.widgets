@@ -1,0 +1,4 @@
+@import "../responsive-mixins";
+
+@include responsiveVehicleSelectionModal($width: 700px);
+@include responsiveWheelShowcase($wheelImageSize: 200px);

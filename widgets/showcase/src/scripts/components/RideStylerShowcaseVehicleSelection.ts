@@ -134,7 +134,7 @@ namespace RideStylerShowcase {
             let scale = Math.max(window.devicePixelRatio || 0, 1);
             let container = this.component;
             
-            const widthToHeight = .6;
+            const widthToHeight = .5;
             const maxRequestResolution = 1920;
 
             // Width is 80% of the container width

@@ -68,100 +68,23 @@
 }
 
 .vsm-modal {
-    @include modal;
-
     @include baseFont;
-    line-height: 2em;
-}
-
-.vsm-modal .vsm-final .scrollable {
-    position: static;
-}
-
-.vsm-line-step .vehicle-result-name {
-    background-color: rgba(255,255,255,0.5);
-    font-size: 2em;
-}
-
-.vsm-modal-body .center-piece.vehicle-result-wrap {
-    z-index: 10;
-}
-
-.vsm-option-item {
-    @include button;
-    @include button-skinny;
-
-    background-color: desaturate($primary-color, 15%);
-    color: $primary-color-overlaid-text;
-    border-color: $primary-color;
-
-    border-radius: 0.25em;
-
-    transition: background-color 500ms;
-
-    &:hover {
-        background-color: $primary-color;
-    }
-}
-
-.vsm-header { 
-    margin: 0.25em auto;
-    font-size: 2em;
-}
-.vsm-modal .vsm-list-body .scrollable { 
-    top: 90px;
-}
-.vsm-modal .scrollable {
-    -webkit-overflow-scrolling: touch;    
-    bottom: 10px;
-}
-.vsm-line-step {
-    .dot-style.active {
-        background-color: $primary-color;
-    }
 
     .dot-info, .dot-info.active {
         font-size: 1em;
-        overflow-y: hidden;
     }
-    .dot-info-before {
-        left: -48%;
-        text-align: center;
-    }
-}
-.vsm-selected-info {
-    font-size: 2em;
-    overflow: visible;
-    max-height: none;
-}
-.vsm-modal-header {
-    font-size: 2em;
-}
-.vsm-back-link {
-    font-size: 2em;
-}
-.vsm-close { 
-    @include modalClose;
-    img { display: none; }
-}
-.vsm-modal-body .center-piece {
-    max-width: 80%;
-}
-.vsm-modal-body .center-piece.vehicle-result-wrap { margin-top: 35px; }
-.vsm-modal-body .center-piece.vehicle-image-wrap {
-     margin-top: 0; 
-     text-align: center;
-}
-.vsm-modal .vsm-final .vehicle-image-wrap .vsm-btn { 
-    @include button;
-    
-    font-size: 1.5em;
 
-    position: absolute;
-    left: 20%; right: 20%;
-    width: auto;
-    bottom: 5%;
+    &-body {
+        .center-piece {
+            max-width: 90%;
+        }
+    }
 }
+
 .vsm-btn {
-    font-size: 1em;
+    @include button;
+}
+
+.vsm-header {
+    font-size: 1.5em;
 }

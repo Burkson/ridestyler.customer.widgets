@@ -1,11 +1,11 @@
+@import "../responsive-mixins";
+
+@include responsiveVehicleSelectionModal($width: auto, $linePadding: 10px);
+
 .ridestyler-showcase-vehicle-selection-content {
     top: 2.5%;
 }
 
 #ridestyler-showcase-select-your-vehicle-wrapper {
     margin-top: 0;
-}
-
-.vsm-modal-body .center-piece {
-    max-width: 100%;
 }

@@ -1,34 +1,4 @@
-.ridestyler-showcase-vehicle-selection-wheel-showcase {
-    $size: 200px;
-    $marginLeft: -$size * 0.15;
-    $wheelCount: 3;
-    
-    $containerWidth: $size * $wheelCount + $marginLeft * ($wheelCount - 1);
+@import "../responsive-mixins";
 
-    height: $size;
-    width: $size * $wheelCount + $marginLeft * ($wheelCount - 1);
-
-    margin-left: -$containerWidth/2;
-    margin-bottom: -$size * 0.4;
-
-    &-image {
-        width: $size;
-        height: $size;
-
-        & + .ridestyler-showcase-vehicle-selection-wheel-showcase-image {
-            margin-left: $marginLeft;
-        }
-    }
-}
-
-.vsm-modal .vsm-list-body .scrollable { 
-    top: 130px;
-}
-
-.vsm-selected-info {
-    font-size: 1em;
-}
-
-.vsm-modal .vsm-final .vehicle-image-wrap .vsm-btn {
-    font-size: 1em;
-}
+@include responsiveWheelShowcase($wheelImageSize: 200px);
+@include responsiveVehicleSelectionModal($width: 800px);
