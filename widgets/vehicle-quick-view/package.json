@@ -1,0 +1,16 @@
+{
+  "name": "vehicle-quick-view",
+  "version": "1.0.0",
+  "description": "This script allows you to quickly add visualization to any website via a modal.",
+  "main": "gulpfile.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-cssbeautify": "^0.1.3",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-uglify": "^3.0.0"
+  }
+}

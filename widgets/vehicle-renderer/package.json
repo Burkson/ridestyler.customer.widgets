@@ -1,0 +1,15 @@
+{
+  "name": "vehicle-renderer",
+  "version": "1.0.0",
+  "description": "This component is used for managing vehicle drawing within larger interfaces.",
+  "main": "gulpfile.js",
+  "types": "./rsvr.d.ts",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^3.0.0"
+  }
+}

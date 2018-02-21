@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>RideStyler Vehicle Selection Modal test</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="dist/css/rsqv.css">
+
+	<script src="http://api.ridestyler.net/js?DataType=json&amp;key=c028c54cf0c447c594a862de6ac85d1a"></script>
+	
+	<script type="text/javascript" src="js/rsqv.js"></script>
+	<script type="text/javascript" src="../vehicle-renderer/js/rsvr.js"></script>
+</head>
+
+<body id="home">
+		<button type="button" data-rsqv-wheel-pn="222CH-LT20515011118">Default Vehicle</button>
+		<button type="button" data-rsqv-vehicle-desc="2016 Acura MDX AWD" data-rsqv-wheel-pn="222CH-LT20515011118">Override Vehicle</button>
+		<button type="button" data-rsqv-vehicle-desc="2016 Acura MDX AWD" data-rsqv-wheel-pn="222CH-LT20515011118">Same Vehicle Vehicle</button>
+		<button type="button" data-rsqv-vehicle-desc="Acura 2016 MDX 3.5i" data-rsqv-wheel-pn="222CH-LT20515011118">Override Vehicle</button>
+		<button type="button" data-rsqv-vehicle-desc="Acura 2016 MDX 3.5i" data-rsqv-wheel-pn="222CH-LT20515011118">Override Vehicle</button>
+	<script>
+		rsqv.bind({
+			vehicleDesc: '2012 Audi A5 Quattro'
+		});
+	</script>
+</body>
+
+</html>

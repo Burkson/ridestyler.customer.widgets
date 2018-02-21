@@ -11,9 +11,13 @@ function RideStylerViewport(elem, options) {
     var renderer = null;
 
     // Stores the current vehicle state for the vehicle
+    var active = false;
     var state = { };
 
-    if (options && options.state) {
+    // Make sure our options object is initialized
+    options = options || {};
+
+    if (options.state) {
         state = options.state;
     }
 
@@ -61,13 +65,56 @@ function RideStylerViewport(elem, options) {
     createLoaderElement();
 
     // Figure out which version of our viewer we want to use
+    /*
     if (isCanvasSupported() == false) { // TODO: NEED TO REMOVE THE FALSE REQUIREMENT - WE ARE FLIPPING FOR DEBUG
 
     } else {
         renderer = new RideStylerImageRenderer(container);
     }
+    */
+
+    // We are always using the image renderer since that is all that is supported currently
+    renderer = new RideStylerImageRenderer(container);
+
+    var desiredAspectHeight = null;
+    if (typeof options.containerAspectRatio === 'number') {
+        desiredAspectHeight = options.containerAspectRatio;
+    }
+
+    var lastClientWidth = 0;
+    var refreshTimeout = 0;
+    this.ResizeRenderArea = function() {
+        if (container.clientWidth != lastClientWidth) {
+            lastClientWidth = container.clientWidth;
+            state['width'] = lastClientWidth;
+
+            // If we are maintaining the aspect ratio we need to update that
+            if (desiredAspectHeight != null) {
+                var height = Math.round(lastClientWidth * desiredAspectHeight);
+                container.style.height = height + 'px';
+                state['height'] = height;
+            }
+
+            // Make sure our renderer is active before attempt to redraw
+            if (active) {
+                clearTimeout(refreshTimeout);
+                refreshTimeout = setTimeout(function() {
+                    // Trigger a refresh on the renderer
+                    renderer.Render(state);
+                }, 150);
+            }
+        }
+    };
+
+    // Check to see if we should be controlling the container aspect ratio
+    if (options.responsive !== false) {
+        setInterval(this.ResizeRenderArea, 100);
+        this.ResizeRenderArea();
+    }
 
     this.Update = function(instructions) {
+        // Let our system know that we are ready to rock
+        active = true;
 
         // Make sure our instructions are in an object format
         instructions = prepareArguments(instructions);
