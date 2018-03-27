@@ -92,7 +92,13 @@ namespace RideStylerShowcase {
         private updateViewport() { this.vehicleViewport.Update(this.vehicleRenderInstructions); }
 
         private getShareURL():string {
-            const shareURL = 'https://app.ridestyler.net/share.cshtml?';
+            let appURL = 'https://app.ridestyler.net';
+
+            if (api.environment === api.Environment.Alpha) appURL = 'http://app-alpha.ridestyler.net';
+            else if (api.environment === api.Environment.Beta) appURL = 'http://app-beta.ridestyler.net';
+
+            const sharePath = '/share.cshtml?';
+
             const shareParams = ridestyler.utils.toParamString(
                 ObjectHelper.assign(
                     ridestyler.auth.authenticateData(null),
@@ -100,7 +106,7 @@ namespace RideStylerShowcase {
                 )
             );
 
-            return shareURL + shareParams;
+            return appURL + sharePath + shareParams;
         }
         
         private setupViewport() {
