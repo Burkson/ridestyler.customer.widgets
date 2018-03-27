@@ -101,6 +101,15 @@
         }
     }
 
+    .ridestyler-showcase-pagination-option.ridestyler-showcase-pagination-option-no-results {
+        text-align: center;
+        color: white;
+        max-width: 100%;
+        width: 100%;
+        line-height: 200px;
+        font-size: 1em;
+    }
+
     $nextPreviousMargin: 0.5em;
     $nextPreviousWidth: 0.9em;
     $nextPreviousHeight: 1.1em;

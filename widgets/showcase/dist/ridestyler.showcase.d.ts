@@ -364,7 +364,7 @@ declare namespace RideStylerShowcase {
     /**
      * A list of all of our acceptable string keys
      */
-    type StringKeys = "vehicle-select-visualize-intro" | "vehicle-select-share-intro" | "select-your-vehicle" | "tires" | "wheels" | "suspension" | "paint" | "front" | "rear" | "vehicle-details" | "change-vehicle" | "wheel-details" | "tire-details" | 'select-paint' | 'select-wheels' | 'select-tires' | 'adjust-suspension' | 'change-wheel-size' | 'no-results' | 'wheel-features-specs' | 'share-my-vehicle' | 'share-instructions' | 'no-description-wheel' | 'show-specs' | 'call' | 'size' | 'offset' | 'bolt-pattern' | 'centerbore' | 'price' | 'item-number' | 'brands' | 'finishes' | 'sizes' | 'all' | 'all-brands' | 'all-finishes' | 'all-sizes' | 'filter-results' | 'loading-ellipsis' | 'show-count-format-wheels' | 'show-count-format-tires' | 'specifications' | 'speed-rating' | 'any-speed-ratings' | 'features' | 'any-features' | 'finish' | 'summary' | 'check-out-my-vehicle';
+    type StringKeys = "vehicle-select-visualize-intro" | "vehicle-select-share-intro" | "select-your-vehicle" | "tires" | "wheels" | "suspension" | "paint" | "front" | "rear" | "vehicle-details" | "change-vehicle" | "wheel-details" | "tire-details" | 'select-paint' | 'select-wheels' | 'select-tires' | 'adjust-suspension' | 'change-wheel-size' | 'no-results' | 'no-wheel-results' | 'wheel-features-specs' | 'share-my-vehicle' | 'share-instructions' | 'no-description-wheel' | 'show-specs' | 'call' | 'size' | 'offset' | 'bolt-pattern' | 'centerbore' | 'price' | 'item-number' | 'brands' | 'finishes' | 'sizes' | 'all' | 'all-brands' | 'all-finishes' | 'all-sizes' | 'filter-results' | 'loading-ellipsis' | 'show-count-format-wheels' | 'show-count-format-tires' | 'specifications' | 'speed-rating' | 'any-speed-ratings' | 'features' | 'any-features' | 'finish' | 'summary' | 'check-out-my-vehicle';
     /**
      * Defines what a strings dictionary should look like
      */
@@ -1017,7 +1017,7 @@ declare namespace RideStylerShowcase {
         protected addOptionLoader(): void;
         protected clearOptionLoader(): void;
         protected addOptionElements(elements: Node[] | Node): void;
-        private noResultsElement;
+        protected noResultsElement: HTMLElement;
         protected showNoResults(): void;
         clearOptions(): void;
         update(): void;
@@ -1547,6 +1547,7 @@ declare namespace RideStylerShowcase {
         protected readonly defaultFilters: WheelFilterModel;
         protected currentFilters: WheelFilterModel;
         constructor(showcaseInstance: RideStylerShowcaseInstance);
+        protected showNoResults(): void;
         protected countResults(filters: WheelFilterModel): ridestyler.RideStylerPromise<number, ridestyler.RideStylerAPIResponse>;
         protected getResults(filters: WheelFilterModel): ridestyler.RideStylerPromise<WheelModelDescriptionModel[], ridestyler.RideStylerAPIResponse>;
         protected productFilter(product: WheelModelDescriptionModel): boolean;

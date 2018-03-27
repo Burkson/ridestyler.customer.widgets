@@ -80,8 +80,6 @@ namespace RideStylerShowcase {
                 bounce: false,
                 multiplier: -1,
                 update: (x, y) => {
-                    console.log(x, y);
-
                     this.optionContainer.scrollLeft = x;
                     this.optionContainer.scrollTop = y;
 
@@ -168,15 +166,24 @@ namespace RideStylerShowcase {
         }
 
         protected addOptionElements(elements:Node[]|Node) {
-            if (elements instanceof Node) {
-                this.optionContainer.appendChild(elements as Node);
+            let hasNoResults = false;
+
+            if (elements instanceof DocumentFragment) {
+                hasNoResults = elements.children.length === 0;
+                this.optionContainer.appendChild(elements);
+            } else if (elements instanceof Node) {
+                this.optionContainer.appendChild(elements);
             } else {
-                if (!elements.length && this.enableShowNoResults) {
-                    this.showNoResults();
+                if (!elements.length) {
+                    hasNoResults = true;
                 } else {
                     for (let element of elements as Node[])
                         this.optionContainer.appendChild(element);
                 }
+            }
+
+            if (hasNoResults) {
+                this.showNoResults();
             }
 
             this.clearOptionLoader();
@@ -186,7 +193,7 @@ namespace RideStylerShowcase {
             this.isFirstLoad = false;
         }
 
-        private noResultsElement:HTMLElement;
+        protected noResultsElement:HTMLElement;
         protected showNoResults() {
             this.noResultsElement = HTMLHelper.createElement('div', {
                 className: optionClass + ' ' + noResultsClass,

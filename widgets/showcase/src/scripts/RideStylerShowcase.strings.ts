@@ -22,6 +22,7 @@ namespace RideStylerShowcase {
         'adjust-suspension' |
         'change-wheel-size' |
         'no-results' |
+        'no-wheel-results' | 
         'wheel-features-specs' |
         'share-my-vehicle' |
         'share-instructions' |
