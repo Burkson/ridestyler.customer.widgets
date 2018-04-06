@@ -25,9 +25,8 @@
         position: absolute !important;
         left: $modalPadding;
         right: $modalPadding;
-        top: $titleBottom;
+        top: $titleBottom + 1em;
         bottom: $modalPadding;
-
         overflow: hidden;
     }
 
@@ -49,12 +48,14 @@
 
         img {
             max-width: 100%;
+            position: absolute;
 
             @include crispImageRendering;
         }
     }
 
     .ridestyler-showcase-toggle-button {
-        float: right;
+        position: absolute;
+        right: 3em;
     }
 }

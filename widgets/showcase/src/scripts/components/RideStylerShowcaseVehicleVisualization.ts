@@ -132,6 +132,7 @@ namespace RideStylerShowcase {
                     currentWheelFitment: newOption
                 });
                 this.updateViewport({
+                        
                     WheelFitment: newOption.WheelFitmentID
                 });
             }
@@ -284,7 +285,6 @@ namespace RideStylerShowcase {
 
         protected onDisplay() {
             let stateData = this.state.getData();
-
             if (!stateData.currentVehicleConfigurationID || !stateData.currentVehicleTireOptionID) {
                 console.error('Trying to show the visualize screen without a vehicle configuration or tire option.');
             }
@@ -345,9 +345,9 @@ namespace RideStylerShowcase {
                     vehicleHasAngledImage: vehicleDescription.HasAngledImage,
                     vehicleHasSideImage: vehicleDescription.HasSideImage,
                     currentTireOption: vehicleTireOption,
-                    currentVehicleDescriptionModel: vehicleDescription
-                });
+                    currentVehicleDescriptionModel: vehicleDescription,
 
+                });
                 this.initializeForNewVehicle();
             });
         }
@@ -416,7 +416,6 @@ namespace RideStylerShowcase {
 
                         this.changeWheelSize.setFitmentOptions(fitments, bestFitment);
                         this.changeWheelSize.component.style.display = '';
-        
                         this.updateViewport({
                             WheelFitment: bestFitment.WheelFitmentID
                         }).always(() => {
@@ -450,13 +449,16 @@ namespace RideStylerShowcase {
 
             this.rotateElement.style.display = this.canSwitchAngle() ? '' : 'none';
 
-            this.updateViewport({
+            // this.vehicleReset();
+
+            this.updateViewport({ 
                 VehicleConfiguration: this.vehicleConfigurationID,
                 VehicleTireOption: this.vehicleTireOptionID,
                 PositionX: ridestyler.Requests.ImagePosition.Center,
                 PositionY: ridestyler.Requests.ImagePosition.Far,
                 Type: this.imageType
             }).done(() => {
+                console.log("Update View");
                 this.rotateElement.classList.add('in');
             })
 
@@ -507,8 +509,13 @@ namespace RideStylerShowcase {
 
         private updateViewport(instructions?:ridestyler.Requests.VehicleRenderInstructions) {
             Object.assign(this.currentRenderInstructions, instructions);
-            
+                          
             return this.viewport.Update(instructions);
+        }
+
+        private vehicleReset(instructions?:ridestyler.Requests.VehicleRenderInstructions) {
+            
+            return this.viewport.vehicleReset(instructions);
         }
         
         private canSwitchAngle():boolean {

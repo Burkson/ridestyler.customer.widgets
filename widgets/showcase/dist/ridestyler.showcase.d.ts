@@ -1515,6 +1515,7 @@ declare namespace RideStylerShowcase {
         private setActiveCustomizationComponent(customizationComponent);
         private getComponentKey(customizationComponent);
         private updateViewport(instructions?);
+        private vehicleReset(instructions?);
         private canSwitchAngle();
         private showFilters();
         private switchAngle();
