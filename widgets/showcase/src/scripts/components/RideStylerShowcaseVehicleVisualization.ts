@@ -444,16 +444,17 @@ namespace RideStylerShowcase {
             }
 
             this.imageType = ridestyler.DataObjects.VehicleResourceType.Angle;
+
             
             if (!this.vehicleDescriptionModel.HasAngledImage) this.imageType = ridestyler.DataObjects.VehicleResourceType.Side;
 
             this.rotateElement.style.display = this.canSwitchAngle() ? '' : 'none';
 
-            // this.vehicleReset();
-
             this.updateViewport({ 
                 VehicleConfiguration: this.vehicleConfigurationID,
                 VehicleTireOption: this.vehicleTireOptionID,
+                Suspension: null,
+                WheelFitment: null,
                 PositionX: ridestyler.Requests.ImagePosition.Center,
                 PositionY: ridestyler.Requests.ImagePosition.Far,
                 Type: this.imageType
@@ -461,7 +462,6 @@ namespace RideStylerShowcase {
                 console.log("Update View");
                 this.rotateElement.classList.add('in');
             })
-
 
             this.customizationComponentContainer.classList.remove(loadingClass);
         }
@@ -556,7 +556,6 @@ namespace RideStylerShowcase {
             });
         }
     }
-
 
 
     interface CustomizationComponentSettings {
