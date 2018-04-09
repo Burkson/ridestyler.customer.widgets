@@ -308,7 +308,7 @@ declare namespace RideStylerShowcase.state {
         private currentData;
         getData(): StateData;
         setData(newData: StateData): void;
-        extendData(dataExtension: PartialStateData): void;
+        extendData(dataExtension: PartialStateData): StateData;
         /**
          * A dictionary of States to StateCallbackRegisters
          */
@@ -1481,6 +1481,8 @@ declare namespace RideStylerShowcase {
          * The description of the currently displayed vehicle
          */
         private vehicleDescription;
+        private vehicleSuspension;
+        private suspension;
         private imageType;
         /**
          * The ID of the currently displayed OE tire option for the vehicle
@@ -1515,7 +1517,6 @@ declare namespace RideStylerShowcase {
         private setActiveCustomizationComponent(customizationComponent);
         private getComponentKey(customizationComponent);
         private updateViewport(instructions?);
-        private vehicleReset(instructions?);
         private canSwitchAngle();
         private showFilters();
         private switchAngle();

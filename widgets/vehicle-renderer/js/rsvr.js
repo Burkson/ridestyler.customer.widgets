@@ -151,12 +151,8 @@ function RideStylerViewport(elem, options) {
     };
 
 
-
-
-    this.vehicleReset = function() {
-       Suspension = null;
-       WheelFitment = null;
-       return;
+    this.Reset = function() {
+        state = {};
     };
 
 

@@ -12,4 +12,6 @@ declare class RideStylerViewport {
     constructor(element:Node);
 
     public Update(instructions:ridestyler.Requests.VehicleRenderInstructions): RideStylerPromise;
+    public Reset(): void;
 }
+

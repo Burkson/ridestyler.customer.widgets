@@ -119,6 +119,7 @@ namespace RideStylerShowcase.state {
         currentTire: ridestyler.Descriptions.TireModelDescriptionModel;
         currentTireOption: ridestyler.Descriptions.VehicleTireOptionDescriptionModel;
     }
+
     export type PartialStateData = {
         [P in keyof StateData]?: StateData[P];
     }
@@ -148,7 +149,9 @@ namespace RideStylerShowcase.state {
             currentTireOption: undefined,
             currentVehicleDescriptionModel: undefined
         };
+
         public getData() { return this.currentData; }
+
         public setData(newData:StateData) {
             let beforeCallbacks:StateDataChangedCallback[] = [],
                 afterCallbacks:StateDataChangedCallback[] = [];
@@ -168,7 +171,7 @@ namespace RideStylerShowcase.state {
             for (let callback of afterCallbacks)
                 callback(this.currentData);
         }
-        public extendData(dataExtension:PartialStateData) {
+        public extendData(dataExtension:PartialStateData): StateData {
             let hasChanged: boolean = false;
             let newData: PartialStateData = {}; 
             let currentData: StateData = this.currentData;
@@ -190,6 +193,8 @@ namespace RideStylerShowcase.state {
             if (hasChanged) {
                 this.setData(newData as StateData);
             }
+
+            return this.currentData;
         }
 
         /**

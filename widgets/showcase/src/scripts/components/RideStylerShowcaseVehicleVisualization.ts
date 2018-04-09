@@ -68,6 +68,10 @@ namespace RideStylerShowcase {
          */
         private vehicleDescription:string;
 
+        private vehicleSuspension: string;
+
+        private suspension: string;
+
         private imageType:ridestyler.DataObjects.VehicleResourceType;
 
         /**
@@ -355,6 +359,8 @@ namespace RideStylerShowcase {
         private initializeForNewVehicle() {
             this.currentRenderInstructions = {};
             this.tabBar.setActiveTab(this.tabs.paint);
+            this.viewport.Reset();
+
             
             // Create the components that will be switched with the tabs
             this.customizationComponents = {
@@ -453,8 +459,6 @@ namespace RideStylerShowcase {
             this.updateViewport({ 
                 VehicleConfiguration: this.vehicleConfigurationID,
                 VehicleTireOption: this.vehicleTireOptionID,
-                Suspension: null,
-                WheelFitment: null,
                 PositionX: ridestyler.Requests.ImagePosition.Center,
                 PositionY: ridestyler.Requests.ImagePosition.Far,
                 Type: this.imageType
@@ -513,11 +517,6 @@ namespace RideStylerShowcase {
             return this.viewport.Update(instructions);
         }
 
-        private vehicleReset(instructions?:ridestyler.Requests.VehicleRenderInstructions) {
-            
-            return this.viewport.vehicleReset(instructions);
-        }
-        
         private canSwitchAngle():boolean {
             return this.vehicleDescriptionModel.HasAngledImage && this.vehicleDescriptionModel.HasSideImage;
         }
