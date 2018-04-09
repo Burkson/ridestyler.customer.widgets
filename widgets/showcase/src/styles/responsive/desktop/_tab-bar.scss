@@ -21,7 +21,6 @@
     
         &-icon{
             bottom: 1em;
-            // background-color: yellow;
             position: absolute;
             display: table;
             z-index: $zLayer2;
@@ -82,7 +81,6 @@
         
         &:after {
             font-size: $baseFontSize - 1.2;
-            // background-color: blue;
             content: attr(title);
             position: absolute;
             width: 100%; height: 25%;
