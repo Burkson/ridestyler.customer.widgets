@@ -96,6 +96,76 @@
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl {
   font-size: 18px; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar {
+    font-size: 1em;
+    display: flex column;
+    content-align: center;
+    align-items: center;
+    justify-content: center; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-tab {
+      display: flex;
+      content-align: center;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      width: 100%; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-tab-icon {
+        bottom: 1em;
+        position: absolute;
+        display: table;
+        z-index: 2000; }
+        .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-tab-icon i:before {
+          display: block;
+          color: white;
+          width: 100%; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon {
+        display: table-cell;
+        vertical-align: middle;
+        font-size: 1.5em; }
+        .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon-paint {
+          font-size: 1.33333em; }
+        .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon-suspension {
+          font-size: 1.8em; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-tab-background {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        z-index: 1000; }
+        .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-tab-background svg {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          right: 0;
+          left: 0;
+          background-color: black; }
+        .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-tab-background-nosvg {
+          background-color: black; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-tab-active .ridestyler-showcase-tab-bar-tab-background svg {
+        background-color: transparent; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-tab-active .ridestyler-showcase-tab-bar-tab-background-nosvg:after {
+        content: '';
+        border-style: solid;
+        border-width: 20px 20px 20px 0;
+        border-color: transparent #aaa transparent transparent;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        margin-top: -20px; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-tab:after {
+        font-size: 0.8em;
+        content: attr(title);
+        position: absolute;
+        width: 100%;
+        height: 25%;
+        bottom: .25em;
+        text-align: center;
+        color: #ddd;
+        z-index: 2000; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-horizontal .ridestyler-showcase-tab-bar-tab {
+      display: inline-block; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-pagination {
     margin-top: 4em;
     height: 75%; }
@@ -147,6 +217,78 @@
     margin-top: 2em; }
     .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-pagination-next, .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-pagination-prev {
       top: 70px; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar {
+    font-size: 1em;
+    display: flex column;
+    content-align: center;
+    align-items: center;
+    justify-content: center; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-tab {
+      display: flex;
+      content-align: center;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      width: 100%; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-tab-icon {
+        bottom: 1em;
+        position: absolute;
+        display: table;
+        z-index: 2000; }
+        .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-tab-icon i:before {
+          display: block;
+          color: white;
+          width: 100%; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon {
+        display: table-cell;
+        vertical-align: middle;
+        font-size: 1.5em; }
+        .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon-paint {
+          font-size: 1.33333em; }
+        .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon-suspension {
+          font-size: 1.8em; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-tab-background {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        z-index: 1000; }
+        .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-tab-background svg {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          right: 0;
+          left: 0;
+          background-color: black; }
+        .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-tab-background-nosvg {
+          background-color: black; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-tab-active .ridestyler-showcase-tab-bar-tab-background svg {
+        background-color: transparent; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-tab-active .ridestyler-showcase-tab-bar-tab-background-nosvg:after {
+        content: '';
+        border-style: solid;
+        border-width: 20px 20px 20px 0;
+        border-color: transparent #aaa transparent transparent;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        margin-top: -20px; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-tab:after {
+        font-size: 0.8em;
+        content: attr(title);
+        position: absolute;
+        width: 100%;
+        height: 25%;
+        bottom: .75em;
+        text-align: center;
+        color: #ddd;
+        z-index: 2000; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-horizontal .ridestyler-showcase-tab-bar-tab {
+      display: inline-block; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-icon-paint:before {
+    -webkit-text-stroke: .01em black; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-vehicle-selection-wheel-showcase {
     height: 300px;
     width: 810px;
@@ -235,7 +377,8 @@
         z-index: 2000; }
         .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-tab-bar-tab-icon i:before {
           display: block;
-          color: white; }
+          color: white;
+          width: 100%; }
       .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon {
         display: table-cell;
         vertical-align: middle;
@@ -417,6 +560,81 @@
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet {
   font-size: 14px; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar {
+    font-size: 1em;
+    display: flex column;
+    content-align: center;
+    align-items: center;
+    justify-content: center; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab {
+      display: flex;
+      content-align: center;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      width: 100%; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab-icon {
+        bottom: 2em;
+        position: absolute;
+        display: table;
+        z-index: 2000; }
+        .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab-icon i:before {
+          display: block;
+          color: white;
+          width: 100%; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon {
+        display: table-cell;
+        vertical-align: middle;
+        font-size: 1.5em; }
+        .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon-paint {
+          font-size: 1.33333em; }
+        .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon-suspension {
+          font-size: 1.8em; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab-background {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        z-index: 1000; }
+        .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab-background svg {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          right: 0;
+          left: 0;
+          background-color: black; }
+        .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab-background-nosvg {
+          background-color: black; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab-active .ridestyler-showcase-tab-bar-tab-background svg {
+        background-color: transparent; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab-active .ridestyler-showcase-tab-bar-tab-background-nosvg:after {
+        content: '';
+        border-style: solid;
+        border-width: 20px 20px 20px 0;
+        border-color: transparent #aaa transparent transparent;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        margin-top: -20px; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab:after {
+        font-size: 1em;
+        content: attr(title);
+        position: absolute;
+        width: 100%;
+        height: 35%;
+        bottom: 0em;
+        text-align: center;
+        color: #ddd;
+        z-index: 2000; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-horizontal .ridestyler-showcase-tab-bar-tab {
+      display: inline-block; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-icon-paint:before {
+    -webkit-text-stroke: .01em black; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-pagination {
+    height: 75%;
+    margin-top: 2em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .vsm-modal-dialog {
     width: 700px; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .vsm-modal-body .center-piece {
@@ -438,9 +656,6 @@
       font-size: 1.9em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-customizations, .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-viewport, .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-rotate-vehicle {
     margin-left: 95px; }
-  .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-pagination {
-    height: 75%;
-    margin-top: 4em; }
 
 .ridestyler-showcase-pagination-wrapper {
   -webkit-mask-image: -webkit-gradient(linear, left center, right center, color-stop(0, transparent), color-stop(0, transparent), color-stop(0.03, black), color-stop(0.97, black), color-stop(1, transparent), color-stop(1, transparent)); }

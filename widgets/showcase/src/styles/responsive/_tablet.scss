@@ -1,7 +1,8 @@
 &.ridestyler-showcase-breakpoint-tablet {
     font-size: 14px;
     
+    @import "tablet/tab-bar";
+    @import "tablet/pagination";
     @import "tablet/vehicle-selection";
     @import "tablet/vehicle-visualization";
-    @import "tablet/pagination"
 }
