@@ -70,8 +70,6 @@ namespace RideStylerShowcase {
 
         private vehicleSuspension: string;
 
-        private suspension: string;
-
         private imageType:ridestyler.DataObjects.VehicleResourceType;
 
         /**
@@ -463,7 +461,6 @@ namespace RideStylerShowcase {
                 PositionY: ridestyler.Requests.ImagePosition.Far,
                 Type: this.imageType
             }).done(() => {
-                console.log("Update View");
                 this.rotateElement.classList.add('in');
             })
 

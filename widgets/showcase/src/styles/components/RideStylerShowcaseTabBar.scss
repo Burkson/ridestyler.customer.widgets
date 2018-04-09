@@ -2,17 +2,21 @@
 
 .ridestyler-showcase-tab-bar {
     font-size: 1em;
+    display: flex column;
+    content-align: center;
+    justify-content: space-between;
+
+   
 
     &-tab {
         cursor: pointer;
         position: relative;
         width: 100%;
-    
         $baseFontSize: 2em;
+
     
         &-icon{
             position: absolute;
-            top: 0; left: 0;
             width: 100%; height: 100%;
             text-align: center;
             display: table;
@@ -72,7 +76,9 @@
         &:after {
             content: attr(title);
             position: absolute;
-            left: 0; right: 0; bottom: 2px;
+            display: table;
+            width: 100%; height: 100%;
+            left: 0; right: 0; top: 5em; bottom: 0;
             text-align: center;
             color: #ddd;
             z-index: $zLayer2;

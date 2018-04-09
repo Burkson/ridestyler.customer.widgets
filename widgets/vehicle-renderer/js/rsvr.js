@@ -115,7 +115,6 @@ function RideStylerViewport(elem, options) {
     this.Update = function(instructions) {
         // Let our system know that we are ready to rock
         active = true;
-        console.log("Instructions1:", instructions);
        
         // Make sure our instructions are in an object format
         instructions = prepareArguments(instructions);
@@ -123,9 +122,6 @@ function RideStylerViewport(elem, options) {
         // Inject our variables based on global params
         instructions['width'] = container.clientWidth;
         instructions['height'] = container.clientHeight;
-        // instructions.Suspension = null;
-        // instructions.WheelFitment = null;
-        console.log("Instructions2:", instructions);
 
         // Update our internal state and watch for changes
         var hasChanges = false;
@@ -136,7 +132,6 @@ function RideStylerViewport(elem, options) {
                 state[x] = v2;
                 hasChanges = true;
             }
-            console.log('hasChanges:', hasChanges)
         }
         // If we didn't make any changes to our internal state we don't need to perform an update
         if (hasChanges == false) {

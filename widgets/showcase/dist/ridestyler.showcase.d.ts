@@ -1482,7 +1482,6 @@ declare namespace RideStylerShowcase {
          */
         private vehicleDescription;
         private vehicleSuspension;
-        private suspension;
         private imageType;
         /**
          * The ID of the currently displayed OE tire option for the vehicle

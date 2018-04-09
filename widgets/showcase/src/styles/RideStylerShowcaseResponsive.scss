@@ -5,4 +5,15 @@
     @import "responsive/phone-portrait";
     @import "responsive/phone-landscape";
     @import "responsive/tablet";
+
+    &-pagination-wrapper {
+    			-webkit-mask-image:
+		-webkit-gradient(linear, left center, right center,
+		  color-stop(0, transparent),
+		  color-stop(0, rgba(0,0,0,.0)),
+		  color-stop(.03, black),
+		  color-stop(.97, black),
+		  color-stop(1, rgba(0,0,0,0)),
+		  color-stop(1, transparent));
+    }
 }

@@ -1,4 +1,8 @@
 .ridestyler-showcase-pagination {
+	// background-color: pink;
+	margin-top: 4em;
+	height: 75%;
+
     &-option {
         max-width: 50%;
         
@@ -9,5 +13,5 @@
         &-label-tertiary {
             font-weight: normal;
         }
-    }        
+    }
 }

@@ -96,8 +96,11 @@
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl {
   font-size: 18px; }
-  .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-pagination-next, .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-pagination-prev {
-    top: 70px; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-pagination {
+    margin-top: 4em;
+    height: 75%; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-pagination-next, .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-pagination-prev {
+      top: 70px; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-vehicle-selection-wheel-showcase {
     height: 200px;
     width: 540px;
@@ -134,11 +137,16 @@
     border-radius: 37.5px; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-suspension-selector-element .noUi-value {
     margin-top: 1em; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-icon-paint:before {
+    width: 10em; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-tv {
   font-size: 24px; }
-  .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-pagination-next, .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-pagination-prev {
-    top: 70px; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-pagination {
+    height: 75%;
+    margin-top: 2em; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-pagination-next, .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-pagination-prev {
+      top: 70px; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-vehicle-selection-wheel-showcase {
     height: 300px;
     width: 810px;
@@ -203,6 +211,9 @@
       height: 200px; }
       .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-vehicle-selection-wheel-showcase-image + .ridestyler-showcase-vehicle-selection-wheel-showcase-image {
         margin-left: -30px; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-pagination {
+    margin-top: 4em;
+    height: 75%; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-tab-bar {
   font-size: 1.2em; }
@@ -251,6 +262,27 @@
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-suspension-selector-element .noUi-pips-horizontal {
   padding-top: 5px; }
 
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-suspension-selector-element .noUi-horizontal .noUi-handle {
+  margin: 1em;
+  top: -1.2em;
+  left: -2em; }
+
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-page {
+  top: 10em; }
+
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-image {
+  left: 0;
+  width: 100%;
+  top: 0;
+  bottom: 55%; }
+
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-summary {
+  left: 0;
+  width: 100%;
+  top: 50%;
+  bottom: 0;
+  overflow-y: auto; }
+
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-filter-modal-menus {
   height: 90%; }
 
@@ -279,33 +311,15 @@
       .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-share .ridestyler-showcase-share-button-qr-code .ridestyler-showcase-popover:before, .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-share .ridestyler-showcase-share-button-qr-code .ridestyler-showcase-popover:after {
         display: none; }
 
-.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-pagination-option {
-  max-width: 50%; }
-  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-pagination-option-label-secondary {
-    font-weight: normal; }
-  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-pagination-option-label-tertiary {
-    font-weight: normal; }
-
-.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-page {
-  top: 10em; }
-
-.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-image {
-  left: 0;
-  width: 100%;
-  top: 0;
-  bottom: 55%; }
-
-.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-summary {
-  left: 0;
-  width: 100%;
-  top: 50%;
-  bottom: 0;
-  overflow-y: auto; }
-
-.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-suspension-selector-element .noUi-horizontal .noUi-handle {
-  margin: 1em;
-  top: -1.2em;
-  left: -2em; }
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-pagination {
+  margin-top: 4em;
+  height: 75%; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-pagination-option {
+    max-width: 50%; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-pagination-option-label-secondary {
+      font-weight: normal; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-pagination-option-label-tertiary {
+      font-weight: normal; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .vsm-modal-dialog {
   width: auto; }
@@ -319,16 +333,18 @@
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape #ridestyler-showcase-select-your-vehicle-wrapper {
   margin-top: 0; }
 
-.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-pagination-option-label-secondary {
-  margin-top: 0; }
-
-.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-pagination-option-label-tertiary {
-  margin-top: 0; }
-
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-share .ridestyler-showcase-share-button-qr-code .ridestyler-showcase-popover {
   width: 100px;
   height: 100px;
   margin-left: -45px; }
+
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-pagination {
+  margin-top: 8em;
+  height: 50%; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-pagination-option-label-secondary {
+    margin-top: 0; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-pagination-option-label-tertiary {
+    margin-top: 0; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet {
   font-size: 14px; }
@@ -353,6 +369,12 @@
       font-size: 1.9em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-customizations, .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-viewport, .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-rotate-vehicle {
     margin-left: 95px; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-pagination {
+    height: 75%;
+    margin-top: 4em; }
+
+.ridestyler-showcase-pagination-wrapper {
+  -webkit-mask-image: -webkit-gradient(linear, left center, right center, color-stop(0, transparent), color-stop(0, transparent), color-stop(0.03, black), color-stop(0.97, black), color-stop(1, transparent), color-stop(1, transparent)); }
 
 .ridestyler-showcase .scrollable {
   overflow: auto !important; }
@@ -1256,15 +1278,16 @@ img.ridestyler-showcase-pagination-option-display {
       display: none; }
 
 .ridestyler-showcase-tab-bar {
-  font-size: 1em; }
+  font-size: 1em;
+  display: flex column;
+  content-align: center;
+  justify-content: space-between; }
   .ridestyler-showcase-tab-bar-tab {
     cursor: pointer;
     position: relative;
     width: 100%; }
     .ridestyler-showcase-tab-bar-tab-icon {
       position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
       text-align: center;
@@ -1309,9 +1332,13 @@ img.ridestyler-showcase-pagination-option-display {
     .ridestyler-showcase-tab-bar-tab:after {
       content: attr(title);
       position: absolute;
+      display: table;
+      width: 100%;
+      height: 100%;
       left: 0;
       right: 0;
-      bottom: 2px;
+      top: 5em;
+      bottom: 0;
       text-align: center;
       color: #ddd;
       z-index: 2000; }
@@ -1885,7 +1912,7 @@ img.ridestyler-showcase-pagination-option-display {
     width: 100%;
     height: 60px; }
     .ridestyler-showcase-tab-bar-horizontal .ridestyler-showcase-tab-bar-tab {
-      height: 100%; }
+      height: 90%; }
 
 .ridestyler-showcase-customizations {
   position: absolute;
