@@ -191,7 +191,7 @@
     .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-tab-icon {
       font-size: 2em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-customizations, .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-viewport, .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-rotate-vehicle {
-    margin-left: 130px; }
+    padding-left: 40em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-pagination-option {
     font-size: 0.75em;
     margin-bottom: 3.5em; }
@@ -307,7 +307,7 @@
     .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-tab-icon {
       font-size: 1.9em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-customizations, .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-viewport, .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-rotate-vehicle {
-    margin-left: 150px; }
+    padding-left: 40em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-customizations {
     height: 28%; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-rotate-vehicle {
@@ -336,7 +336,7 @@
     .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-tab-bar-tab-icon {
       font-size: 1.9em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-customizations, .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-viewport, .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-rotate-vehicle {
-    margin-left: 100px; }
+    padding-left: 40em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .vsm-modal-dialog {
     width: 750px; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .vsm-modal-body .center-piece {
@@ -352,8 +352,8 @@
       .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-vehicle-selection-wheel-showcase-image + .ridestyler-showcase-vehicle-selection-wheel-showcase-image {
         margin-left: -30px; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-pagination {
-    margin-top: 4em;
-    height: 75%; }
+    height: 75%;
+    margin-top: 3em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-tab-bar {
     font-size: 1em;
     display: flex;
@@ -781,7 +781,8 @@
       display: inline-block; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-pagination {
     height: 75%;
-    margin-top: 2em; }
+    margin-top: 2em;
+    margin-left: 1em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .vsm-modal-dialog {
     width: 700px; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .vsm-modal-body .center-piece {
@@ -802,10 +803,10 @@
     .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab-icon {
       font-size: 1.9em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-customizations, .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-viewport, .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-rotate-vehicle {
-    margin-left: 95px; }
+    padding-left: 40em; }
 
 .ridestyler-showcase-pagination-wrapper {
-  -webkit-mask-image: -webkit-gradient(linear, left center, right center, color-stop(0, transparent), color-stop(0, transparent), color-stop(0.03, black), color-stop(0.97, black), color-stop(1, transparent), color-stop(1, transparent)); }
+  -webkit-mask: -webkit-gradient(linear, left center, right center, color-stop(0, transparent), color-stop(0, transparent), color-stop(0.03, black), color-stop(0.97, black), color-stop(1, transparent), color-stop(1, transparent)); }
 
 .ridestyler-showcase .scrollable {
   overflow: auto !important; }
@@ -2273,7 +2274,6 @@ img.ridestyler-showcase-pagination-option-display {
   left: 18%;
   bottom: 30%;
   right: 18%;
-  margin-left: 50px;
   z-index: 1000; }
   .ridestyler-showcase-viewport img {
     image-rendering: -webkit-optimize-contrast;

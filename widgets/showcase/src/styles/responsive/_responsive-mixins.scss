@@ -22,7 +22,16 @@
     }
     
     .ridestyler-showcase-customizations, .ridestyler-showcase-viewport, .ridestyler-showcase-rotate-vehicle {
-        margin-left: $tabBarWidth;
+        
+
+        @if $tabBarWidth = 95px {
+            padding-left: 40em;
+        } 
+        @else { 
+            margin-left: $tabBarWidth; 
+        }
+
+
     }
 }
 
