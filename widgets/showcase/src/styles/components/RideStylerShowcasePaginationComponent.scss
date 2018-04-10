@@ -3,6 +3,12 @@
 
 .ridestyler-showcase-pagination {
     &-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        content-align: center;
+        text-align: center;
+
         width: 100%;
 
         white-space: nowrap;
@@ -10,7 +16,7 @@
 
         position: absolute;
         bottom: 0;
-
+        
     }
 
     &-option {
@@ -99,6 +105,7 @@
             background-size: 100%;
             min-width: 50px;
             height: 50px;
+            margin-bottom: 5em;
         }
     }
 
