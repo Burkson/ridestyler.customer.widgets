@@ -3,9 +3,11 @@ namespace RideStylerShowcase.styles {
     export type Breakpoint = [BreakpointKey, number];
     
     let widthBreakpoints:Breakpoint[] = [
-        ['phone-portrait', 319],
+        ['phone-portrait', 0],
         ['phone-landscape', 420],
         ['tablet', 768],
+        ['phone-landscape', 812],
+        ['tablet', 824],
         ['desktop', 992],
         ['desktop-xl', 1200],
         ['tv', 1600]

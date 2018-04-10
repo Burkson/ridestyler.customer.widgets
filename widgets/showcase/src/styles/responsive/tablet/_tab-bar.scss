@@ -1,55 +1,58 @@
+
 @import "../../shared";
 
 .ridestyler-showcase-tab-bar {
     font-size: 1em;
-    display: flex column;
+    display: flex;
+    flex-direction: column;
     content-align: center;
     align-items: center;
     justify-content: center;
+    bottom: -1em;
+    
+    &-vertical {
+        bottom: 0;
+        height:50%;
+    }
+
 
     &-tab {
-        display: flex;
-        content-align: center;
-        align-items: center;
-        justify-content: center;
         cursor: pointer;
-        position: relative;
-        width: 100%;
+        width: 100%; height: 100%;
         $baseFontSize: 2em;
-
-
-    
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        content-align: center;
+                        
         &-icon{
-            // background-color: yellow;
-            bottom: 2em;
-            position: absolute;
-            display: table;
-            z-index: $zLayer2;
-    
-            &        
+        z-index: $zLayer2;
 
             i:before {
-                display: block;
+                font-size: $baseFontSize - 1.1;
                 color: white;
                 width: 100%;
             }
+       
         }
-
+        
         .ridestyler-showcase-icon {
-            display: table-cell;
             vertical-align: middle;
-            
-            font-size: $baseFontSize - .5;
-    
-            &-paint { font-size: $baseFontSize / 1.5; }
-            &-suspension { font-size: $baseFontSize * .9; }
+            font-size: $baseFontSize;
+            -webkit-text-stroke: .01em black;
+
+            &-paint {
+                -webkit-text-stroke: .03em black;
+            }
         }
     
         &-background {
-            position: absolute;
             top: 0; bottom: 0; right: 0; left: 0;
-            z-index: $zLayer1;
-    
+            
             svg {
                 position: absolute;
                 top: 0; bottom: 0; right: 0; left: 0;
@@ -65,6 +68,8 @@
             .ridestyler-showcase-tab-bar-tab-background {
                 svg {
                     background-color: transparent;
+                    position: absolute;
+                                
                 }
     
                 &-nosvg {
@@ -73,26 +78,25 @@
                         border-style: solid;
                         border-width: 20px 20px 20px 0;
                         border-color: transparent #aaa transparent transparent;
-                        
-                        position: absolute;
                         top: 50%;
                         right: 0;
-                        margin-top: -20px;
                     }
                 }
             }
         }
         
         &:after {
-            // background-color:blue;
+            display: flex;
+            content-align: center;
+            align-items: center;
+            justify-content: center;
             font-size: $baseFontSize - 1;
             content: attr(title);
-            position: absolute;
-            width: 100%; height: 35%;
-            bottom: 0em;
+            position: relative;
+            width: 100%;
+            bottom: .75em;
             text-align: center;
-            color: #ddd;
-            z-index: $zLayer2;
+            color: #ddd;    
         }
     }
 
@@ -101,9 +105,4 @@
             display: inline-block;
         }
     }
-}
-
-
-.ridestyler-showcase-icon-paint:before {
-    -webkit-text-stroke: .01em black;
 }

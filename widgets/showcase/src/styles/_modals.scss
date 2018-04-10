@@ -42,6 +42,10 @@ $modalPaddingTop: 4em;
     .ridestyler-showcase.ridestyler-showcase-breakpoint-tv & {
         @include modalBreakPoint(1200px);
     }
+
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-min & {
+        @include modalBreakPoint(320px);
+    }
 }
 
 @mixin modalBackdrop {

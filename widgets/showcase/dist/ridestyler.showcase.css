@@ -98,42 +98,41 @@
   font-size: 18px; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar {
     font-size: 1em;
-    display: flex column;
+    display: flex;
+    flex-direction: column;
     content-align: center;
     align-items: center;
-    justify-content: center; }
+    justify-content: center;
+    bottom: -1em; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-vertical {
+      bottom: 0;
+      height: 50%; }
     .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-tab {
-      display: flex;
-      content-align: center;
-      align-items: center;
-      justify-content: center;
       cursor: pointer;
+      width: 100%;
+      height: 100%;
       position: relative;
-      width: 100%; }
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      content-align: center; }
       .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-tab-icon {
-        bottom: 1em;
-        position: absolute;
-        display: table;
         z-index: 2000; }
         .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-tab-icon i:before {
-          display: block;
+          font-size: 0.9em;
           color: white;
           width: 100%; }
       .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon {
-        display: table-cell;
         vertical-align: middle;
-        font-size: 1.5em; }
-        .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon-paint {
-          font-size: 1.33333em; }
-        .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon-suspension {
-          font-size: 1.8em; }
+        font-size: 2em; }
       .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-tab-background {
-        position: absolute;
         top: 0;
         bottom: 0;
         right: 0;
-        left: 0;
-        z-index: 1000; }
+        left: 0; }
         .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-tab-background svg {
           position: absolute;
           top: 0;
@@ -144,26 +143,27 @@
         .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-tab-background-nosvg {
           background-color: black; }
       .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-tab-active .ridestyler-showcase-tab-bar-tab-background svg {
-        background-color: transparent; }
+        background-color: transparent;
+        position: absolute; }
       .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-tab-active .ridestyler-showcase-tab-bar-tab-background-nosvg:after {
         content: '';
         border-style: solid;
         border-width: 20px 20px 20px 0;
         border-color: transparent #aaa transparent transparent;
-        position: absolute;
         top: 50%;
-        right: 0;
-        margin-top: -20px; }
+        right: 0; }
       .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-tab:after {
-        font-size: 0.8em;
+        display: flex;
+        content-align: center;
+        align-items: center;
+        justify-content: center;
+        font-size: 1em;
         content: attr(title);
-        position: absolute;
+        position: relative;
         width: 100%;
-        height: 25%;
-        bottom: .25em;
+        bottom: .75em;
         text-align: center;
-        color: #ddd;
-        z-index: 2000; }
+        color: #ddd; }
     .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-horizontal .ridestyler-showcase-tab-bar-tab {
       display: inline-block; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-pagination {
@@ -219,42 +219,41 @@
       top: 70px; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar {
     font-size: 1em;
-    display: flex column;
+    display: flex;
+    flex-direction: column;
     content-align: center;
     align-items: center;
-    justify-content: center; }
+    justify-content: center;
+    bottom: -1em; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-vertical {
+      bottom: 0;
+      height: 50%; }
     .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-tab {
-      display: flex;
-      content-align: center;
-      align-items: center;
-      justify-content: center;
       cursor: pointer;
+      width: 100%;
+      height: 100%;
       position: relative;
-      width: 100%; }
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      content-align: center; }
       .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-tab-icon {
-        bottom: 1em;
-        position: absolute;
-        display: table;
         z-index: 2000; }
         .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-tab-icon i:before {
-          display: block;
+          font-size: 0.9em;
           color: white;
           width: 100%; }
       .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon {
-        display: table-cell;
         vertical-align: middle;
-        font-size: 1.5em; }
-        .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon-paint {
-          font-size: 1.33333em; }
-        .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon-suspension {
-          font-size: 1.8em; }
+        font-size: 2em; }
       .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-tab-background {
-        position: absolute;
         top: 0;
         bottom: 0;
         right: 0;
-        left: 0;
-        z-index: 1000; }
+        left: 0; }
         .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-tab-background svg {
           position: absolute;
           top: 0;
@@ -265,30 +264,29 @@
         .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-tab-background-nosvg {
           background-color: black; }
       .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-tab-active .ridestyler-showcase-tab-bar-tab-background svg {
-        background-color: transparent; }
+        background-color: transparent;
+        position: absolute; }
       .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-tab-active .ridestyler-showcase-tab-bar-tab-background-nosvg:after {
         content: '';
         border-style: solid;
         border-width: 20px 20px 20px 0;
         border-color: transparent #aaa transparent transparent;
-        position: absolute;
         top: 50%;
-        right: 0;
-        margin-top: -20px; }
+        right: 0; }
       .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-tab:after {
-        font-size: 0.8em;
+        display: flex;
+        content-align: center;
+        align-items: center;
+        justify-content: center;
+        font-size: 1em;
         content: attr(title);
-        position: absolute;
+        position: relative;
         width: 100%;
-        height: 25%;
         bottom: .75em;
         text-align: center;
-        color: #ddd;
-        z-index: 2000; }
+        color: #ddd; }
     .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar-horizontal .ridestyler-showcase-tab-bar-tab {
       display: inline-block; }
-  .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-icon-paint:before {
-    -webkit-text-stroke: .01em black; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-vehicle-selection-wheel-showcase {
     height: 300px;
     width: 810px;
@@ -358,42 +356,44 @@
     height: 75%; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-tab-bar {
     font-size: 1em;
-    display: flex column;
+    display: flex;
+    flex-direction: column;
     content-align: center;
     align-items: center;
-    justify-content: center; }
+    justify-content: center;
+    bottom: -1em; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-tab-bar-vertical {
+      bottom: 0;
+      height: 50%; }
     .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-tab-bar-tab {
-      display: flex;
-      content-align: center;
-      align-items: center;
-      justify-content: center;
       cursor: pointer;
+      width: 100%;
+      height: 100%;
       position: relative;
-      width: 100%; }
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      content-align: center; }
       .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-tab-bar-tab-icon {
-        bottom: 1em;
-        position: absolute;
-        display: table;
         z-index: 2000; }
         .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-tab-bar-tab-icon i:before {
-          display: block;
+          font-size: 0.9em;
           color: white;
           width: 100%; }
       .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon {
-        display: table-cell;
         vertical-align: middle;
-        font-size: 1.5em; }
+        font-size: 2em;
+        -webkit-text-stroke: .01em black; }
         .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon-paint {
-          font-size: 1.33333em; }
-        .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon-suspension {
-          font-size: 1.8em; }
+          -webkit-text-stroke: .03em black; }
       .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-tab-bar-tab-background {
-        position: absolute;
         top: 0;
         bottom: 0;
         right: 0;
-        left: 0;
-        z-index: 1000; }
+        left: 0; }
         .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-tab-bar-tab-background svg {
           position: absolute;
           top: 0;
@@ -404,26 +404,27 @@
         .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-tab-bar-tab-background-nosvg {
           background-color: black; }
       .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-tab-bar-tab-active .ridestyler-showcase-tab-bar-tab-background svg {
-        background-color: transparent; }
+        background-color: transparent;
+        position: absolute; }
       .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-tab-bar-tab-active .ridestyler-showcase-tab-bar-tab-background-nosvg:after {
         content: '';
         border-style: solid;
         border-width: 20px 20px 20px 0;
         border-color: transparent #aaa transparent transparent;
-        position: absolute;
         top: 50%;
-        right: 0;
-        margin-top: -20px; }
+        right: 0; }
       .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-tab-bar-tab:after {
-        font-size: 0.8em;
+        display: flex;
+        content-align: center;
+        align-items: center;
+        justify-content: center;
+        font-size: 1em;
         content: attr(title);
-        position: absolute;
+        position: relative;
         width: 100%;
-        height: 25%;
-        bottom: .25em;
+        bottom: .75em;
         text-align: center;
-        color: #ddd;
-        z-index: 2000; }
+        color: #ddd; }
     .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-tab-bar-horizontal .ridestyler-showcase-tab-bar-tab {
       display: inline-block; }
 
@@ -533,6 +534,77 @@
     .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-pagination-option-label-tertiary {
       font-weight: normal; }
 
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-tab-bar {
+  font-size: 1em;
+  display: flex;
+  content-align: center;
+  align-items: center;
+  justify-content: center;
+  bottom: -1em; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-tab-bar-tab {
+    cursor: pointer;
+    width: 100%;
+    position: relative; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-tab-bar-tab-icon {
+      margin-top: .75em;
+      position: relative;
+      text-align: center;
+      z-index: 2000; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-tab-bar-tab-icon i:before {
+        font-size: 0.9em;
+        display: block;
+        color: white;
+        width: 100%; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-tab-bar-tab svg {
+      color: yellow;
+      z-index: 0; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon {
+      vertical-align: middle;
+      font-size: 2em;
+      -webkit-text-stroke: .01em black; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon-paint {
+        -webkit-text-stroke: .03em black; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-tab-bar-tab-background {
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-tab-bar-tab-background svg {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        background-color: black; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-tab-bar-tab-background-nosvg {
+        background-color: black; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-tab-bar-tab-active .ridestyler-showcase-tab-bar-tab-background svg {
+      background-color: transparent;
+      position: absolute; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-tab-bar-tab-active .ridestyler-showcase-tab-bar-tab-background-nosvg:after {
+      content: '';
+      border-style: solid;
+      border-width: 20px 20px 20px 0;
+      border-color: transparent #aaa transparent transparent;
+      top: 50%;
+      right: 0;
+      margin-top: -20px; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-tab-bar-tab:after {
+      display: flex;
+      content-align: center;
+      align-items: center;
+      justify-content: center;
+      font-size: 1em;
+      content: attr(title);
+      position: relative;
+      width: 100%;
+      height: 20%;
+      bottom: 0;
+      text-align: center;
+      color: #ddd; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-tab-bar-horizontal .ridestyler-showcase-tab-bar-tab {
+    display: inline-block; }
+
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .vsm-modal-dialog {
   width: auto; }
 
@@ -558,46 +630,122 @@
   .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-pagination-option-label-tertiary {
     margin-top: 0; }
 
-.ridestyler-showcase.ridestyler-showcase-breakpoint-tablet {
-  font-size: 14px; }
-  .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar {
-    font-size: 1em;
-    display: flex column;
-    content-align: center;
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-tab-bar {
+  font-size: 1em;
+  display: flex;
+  flex-direction: column;
+  content-align: center;
+  align-items: center;
+  justify-content: center;
+  bottom: -1em; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-tab-bar-vertical {
+    bottom: 0;
+    height: 50%; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-tab-bar-tab {
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    text-align: center;
+    justify-content: center;
     align-items: center;
-    justify-content: center; }
-    .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab {
-      display: flex;
-      content-align: center;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      position: relative;
-      width: 100%; }
-      .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab-icon {
-        bottom: 2em;
-        position: absolute;
-        display: table;
-        z-index: 2000; }
-        .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab-icon i:before {
-          display: block;
-          color: white;
-          width: 100%; }
-      .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon {
-        display: table-cell;
-        vertical-align: middle;
-        font-size: 1.5em; }
-        .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon-paint {
-          font-size: 1.33333em; }
-        .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon-suspension {
-          font-size: 1.8em; }
-      .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab-background {
+    content-align: center; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-tab-bar-tab-icon {
+      z-index: 2000; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-tab-bar-tab-icon i:before {
+        font-size: 0.9em;
+        color: white;
+        width: 100%; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon {
+      vertical-align: middle;
+      font-size: 2em;
+      -webkit-text-stroke: .01em black; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon-paint {
+        -webkit-text-stroke: .03em black; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-tab-bar-tab-background {
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-tab-bar-tab-background svg {
         position: absolute;
         top: 0;
         bottom: 0;
         right: 0;
         left: 0;
-        z-index: 1000; }
+        background-color: black; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-tab-bar-tab-background-nosvg {
+        background-color: black; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-tab-bar-tab-active .ridestyler-showcase-tab-bar-tab-background svg {
+      background-color: transparent;
+      position: absolute; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-tab-bar-tab-active .ridestyler-showcase-tab-bar-tab-background-nosvg:after {
+      content: '';
+      border-style: solid;
+      border-width: 20px 20px 20px 0;
+      border-color: transparent #aaa transparent transparent;
+      top: 50%;
+      right: 0; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-tab-bar-tab:after {
+      display: flex;
+      content-align: center;
+      align-items: center;
+      justify-content: center;
+      font-size: 1em;
+      content: attr(title);
+      position: relative;
+      width: 100%;
+      bottom: 0;
+      text-align: center;
+      color: #ddd; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-tab-bar-horizontal .ridestyler-showcase-tab-bar-tab {
+    display: inline-block; }
+
+.ridestyler-showcase.ridestyler-showcase-breakpoint-tablet {
+  font-size: 14px; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar {
+    font-size: 1em;
+    display: flex;
+    flex-direction: column;
+    content-align: center;
+    align-items: center;
+    justify-content: center;
+    bottom: -1em; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-vertical {
+      bottom: 0;
+      height: 50%; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab {
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      content-align: center; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab-icon {
+        z-index: 2000; }
+        .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab-icon i:before {
+          font-size: 0.9em;
+          color: white;
+          width: 100%; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon {
+        vertical-align: middle;
+        font-size: 2em;
+        -webkit-text-stroke: .01em black; }
+        .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon-paint {
+          -webkit-text-stroke: .03em black; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab-background {
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0; }
         .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab-background svg {
           position: absolute;
           top: 0;
@@ -608,30 +756,29 @@
         .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab-background-nosvg {
           background-color: black; }
       .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab-active .ridestyler-showcase-tab-bar-tab-background svg {
-        background-color: transparent; }
+        background-color: transparent;
+        position: absolute; }
       .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab-active .ridestyler-showcase-tab-bar-tab-background-nosvg:after {
         content: '';
         border-style: solid;
         border-width: 20px 20px 20px 0;
         border-color: transparent #aaa transparent transparent;
-        position: absolute;
         top: 50%;
-        right: 0;
-        margin-top: -20px; }
+        right: 0; }
       .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-tab:after {
+        display: flex;
+        content-align: center;
+        align-items: center;
+        justify-content: center;
         font-size: 1em;
         content: attr(title);
-        position: absolute;
+        position: relative;
         width: 100%;
-        height: 35%;
-        bottom: 0em;
+        bottom: .75em;
         text-align: center;
-        color: #ddd;
-        z-index: 2000; }
+        color: #ddd; }
     .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar-horizontal .ridestyler-showcase-tab-bar-tab {
       display: inline-block; }
-  .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-icon-paint:before {
-    -webkit-text-stroke: .01em black; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-pagination {
     height: 75%;
     margin-top: 2em; }
@@ -933,6 +1080,13 @@
     left: 50%;
     right: auto;
     margin-left: -600px;
+    top: 5%;
+    bottom: 5%; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-min .ridestyler-showcase-modal {
+    width: 320px;
+    left: 50%;
+    right: auto;
+    margin-left: -160px;
     top: 5%;
     bottom: 5%; }
   .ridestyler-showcase-modal-full {
