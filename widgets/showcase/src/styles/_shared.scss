@@ -34,6 +34,8 @@ $zLayerModal: 5000;
     }
 }
 
+$baseFontSize: 2em;
+
 // Animations
 @mixin rotate($duration:1s) {
     animation: rotation $duration infinite linear;

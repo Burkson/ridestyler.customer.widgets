@@ -3,104 +3,23 @@
 
 .ridestyler-showcase-tab-bar {
     font-size: 1em;
-    display: flex;
-    content-align: center;
-    align-items: center;
-    justify-content: center;
+    flex-direction: row;
+    margin-bottom: -.3em;
 
-    &-tab {
-        cursor: pointer;
-        width: 100%;
-        $baseFontSize: 2em;
-        position: relative;
-                        
+    &-tab {                
+        
         &-icon{
-        margin-top: .75em;
-        position: relative;
-        text-align: center;
-        z-index: $zLayer2;
-                
-
-            i:before {
-                font-size: $baseFontSize - 1.1;
-                display: block;
-                color: white;
-                width: 100%;
-            }
-       
-        }
-        
-        svg {
-            color: yellow;
-            z-index: 0;
-        }
-
-        .ridestyler-showcase-icon {
-                        
-            vertical-align: middle;
-
-            font-size: $baseFontSize;
-            -webkit-text-stroke: .01em black;
-
-            &-paint {
-                -webkit-text-stroke: .03em black;
-            }
-        }
-    
-        &-background {
-            top: 0; bottom: 0; right: 0; left: 0;
-            
-            svg {
-                position: absolute;
-                top: 0; bottom: 0; right: 0; left: 0;
-                background-color: black;
-            }
-            
-            &-nosvg {
-                background-color: black;
-            }
-        }
-    
-        &-active {
-            .ridestyler-showcase-tab-bar-tab-background {
-                svg {
-                    background-color: transparent;
-                    position: absolute;
-                                
-                }
-    
-                &-nosvg {
-                    &:after {
-                        content: '';
-                        border-style: solid;
-                        border-width: 20px 20px 20px 0;
-                        border-color: transparent #aaa transparent transparent;
-                        top: 50%;
-                        right: 0;
-                        margin-top: -20px;
-                    }
-                }
-            }
-        }
-        
-        &:after {
-            display: flex;
-            content-align: center;
-            align-items: center;
-            justify-content: center;
-            font-size: $baseFontSize - 1;
-            content: attr(title);
+            margin-top: .8em;
             position: relative;
-            width: 100%; height: 20%;
-            bottom: 0;
-            text-align: center;
-            color: #ddd;    
+        
+            i:before {
+                display: block;
+            }
         }
-    }
 
-    &-horizontal {
-        .ridestyler-showcase-tab-bar-tab {
-            display: inline-block;
+        &:after {
+            bottom: 0;
+            margin-top: .25em;  
         }
     }
 }
