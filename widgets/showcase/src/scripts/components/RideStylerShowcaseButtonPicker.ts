@@ -10,7 +10,10 @@ namespace RideStylerShowcase {
             super(showcaseInstance);
 
             this.component = HTMLHelper.createElement('div', {
-                className: className
+                className: className,
+                style: {
+                    height: '2.5em'
+                }
             });
 
             HTMLHelper.createElement('div', {
@@ -18,14 +21,17 @@ namespace RideStylerShowcase {
                 text: options.title,
                 appendTo: this.component
             }).addEventListener('click', () => {
-                this.optionContainer.style.display = this.optionContainer.style.display == 'none' ? '' : 'none';
+                this.optionContainer.style.transform = this.optionContainer.style.transform == 'scaleY(0)' ? 'scaleY(1)' : 'scaleY(0)';
+                this.optionContainer.style.height = this.optionContainer.style.height == '0px' ? 'auto' : '0px';
+                this.component.style.height = this.component.style.height == '2.5em' ? '9.5em' : '2.5em';
             })
 
             this.optionContainer = HTMLHelper.createElement('div', {
                 className: className + '-option-container',
                 appendTo: this.component,
                 style: {
-                    display: 'none'
+                    height: '0px',
+                    transform: 'scaleY(0)'
                 }
             });
 

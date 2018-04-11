@@ -5,38 +5,45 @@
     @include button;
     @include button-skinny;
 
-    padding: 0;
+    display: flex;
+    flex-direction: column;
     text-align: center;
-
-    &-option, &-title {
-        padding: 10px;
-    }
+    padding: 0;
 
     &-title {
         font-size: 1em;
+        padding:.5em;
+        
     }
 
     &-option {
+        padding: .5em;
+        
         &-container {
-            color: $primary-color-overlaid-text;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             border-bottom-left-radius: 0.1em;
             border-bottom-right-radius: 0.1em;
+            
+            transition:transform 0.3s ease-out;
+            transform-origin:top;
+            overflow: hidden;
+
         }
 
         &-active {
+            text-align: center;
             color: $primary-color;
             background-color: white;
-            position: relative;
 
             &:after {
                 content:  '';
                 position: absolute;
                 border-style: solid;
-                border-width: 10px 10px 10px 0;
+                border-width: .7em .7em .7em 0;
                 border-color: transparent $primary-color transparent transparent;
                 right: 0;
-                top: 50%;
-                margin-top: -10px;
             }
 
             &:last-child {

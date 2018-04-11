@@ -964,8 +964,10 @@
   transition-duration: 500ms;
   cursor: pointer;
   padding: 10px;
-  padding: 0;
-  text-align: center; }
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 0; }
   .ridestyler-showcase-button-picker:disabled {
     background-color: #f3767b;
     color: #cccccc;
@@ -975,35 +977,40 @@
     border-color: #aaa; }
   .ridestyler-showcase-button-picker:active {
     box-shadow: inset 0 0 10px 0 #900d12; }
-  .ridestyler-showcase-button-picker-option, .ridestyler-showcase-button-picker-title {
-    padding: 10px; }
   .ridestyler-showcase-button-picker-title {
-    font-size: 1em; }
-  .ridestyler-showcase-button-picker-option-container {
-    color: #fff;
-    border-bottom-left-radius: 0.1em;
-    border-bottom-right-radius: 0.1em; }
-  .ridestyler-showcase-button-picker-option-active {
-    color: #ea1921;
-    background-color: white;
-    position: relative; }
-    .ridestyler-showcase-button-picker-option-active:after {
-      content: '';
-      position: absolute;
-      border-style: solid;
-      border-width: 10px 10px 10px 0;
-      border-color: transparent #ea1921 transparent transparent;
-      right: 0;
-      top: 50%;
-      margin-top: -10px; }
-    .ridestyler-showcase-button-picker-option-active:last-child {
+    font-size: 1em;
+    padding: .5em; }
+  .ridestyler-showcase-button-picker-option {
+    padding: .5em; }
+    .ridestyler-showcase-button-picker-option-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       border-bottom-left-radius: 0.1em;
-      border-bottom-right-radius: 0.1em; }
+      border-bottom-right-radius: 0.1em;
+      transition: transform 0.3s ease-out;
+      transform-origin: top;
+      overflow: hidden; }
+    .ridestyler-showcase-button-picker-option-active {
+      text-align: center;
+      color: #ea1921;
+      background-color: white; }
+      .ridestyler-showcase-button-picker-option-active:after {
+        content: '';
+        position: absolute;
+        border-style: solid;
+        border-width: .7em .7em .7em 0;
+        border-color: transparent #ea1921 transparent transparent;
+        right: 0; }
+      .ridestyler-showcase-button-picker-option-active:last-child {
+        border-bottom-left-radius: 0.1em;
+        border-bottom-right-radius: 0.1em; }
 
 .ridestyler-showcase-change-wheel-size {
   position: absolute;
   right: 10px;
   bottom: 50%;
+  transition: height .3s ease-out;
   margin-bottom: 10px;
   z-index: 2000; }
 
