@@ -4,7 +4,6 @@
 .ridestyler-showcase-pagination {
     &-wrapper {
         display: flex;
-        justify-content: center;
         align-items: center;
         content-align: center;
         text-align: center;
@@ -16,7 +15,6 @@
 
         position: absolute;
         bottom: 0;
-        
     }
 
     &-option {
@@ -32,6 +30,7 @@
         vertical-align: top;
 
         margin-bottom: 2em;
+
 
         &-display {
             margin: 5px auto;
@@ -80,10 +79,9 @@
 
         &-loading:after {
             content: "";
-
+            
             line-height: 0.3em;
             font-size: 2em;
-
             @include crispImageRendering;
             @include rotate;
             
@@ -101,11 +99,12 @@
         }
 
         &-loader {
+            margin-left: 50%;
             background: url(images/spinner.gif) no-repeat top center;
             background-size: 100%;
             min-width: 50px;
             height: 50px;
-            margin-bottom: 5em;
+            margin-bottom: 2em;
         }
     }
 

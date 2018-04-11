@@ -8,7 +8,6 @@
     content-align: center;
     align-items: center;
     justify-content: center;
-    bottom: -1em;
     
     &-vertical {
         bottom: 0;
@@ -43,7 +42,6 @@
         .ridestyler-showcase-icon {
             vertical-align: middle;
             font-size: $baseFontSize;
-            -webkit-text-stroke: .01em black;
 
             &-paint {
                 -webkit-text-stroke: .03em black;

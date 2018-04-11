@@ -301,6 +301,7 @@ namespace RideStylerShowcase {
                 this.vehicleTireOptionID = stateData.currentVehicleTireOptionID;
                 this.vehicleTireOptionDescription = stateData.currentVehicleTireOptionDescription;
                 
+                this.tabBar.clearActiveTab();
                 this.onVehicleChanged();
             }
         }
@@ -359,7 +360,6 @@ namespace RideStylerShowcase {
             this.tabBar.setActiveTab(this.tabs.paint);
             this.viewport.Reset();
 
-            
             // Create the components that will be switched with the tabs
             this.customizationComponents = {
                 paint: new RideStylerShowcasePaintSelector(this.showcase),
