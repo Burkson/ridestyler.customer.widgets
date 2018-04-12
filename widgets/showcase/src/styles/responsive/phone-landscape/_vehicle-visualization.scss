@@ -1,0 +1,61 @@
+@import "../responsive-mixins";
+@import "../../shared";
+
+.ridestyler-showcase-viewport {
+    bottom: 22%;
+    right: 15%;
+    height: 45%;
+    margin-bottom: 10px;
+    pointer-events: none;
+    z-index: $zLayer1;
+}
+
+.ridestyler-showcase-suspension-selector-element {
+    bottom: 10%;
+}
+
+.ridestyler-showcase-details {
+    float: none;
+    max-width: 30%;
+    padding: 5px 10px;
+
+    &-title {
+        margin-bottom: 2px;
+    }
+
+    button {
+        margin-top: 2px;
+    }
+
+    &:before {
+        display: none;
+    }
+}
+
+.ridestyler-showcase-change-wheel-size, .ridestyler-showcase-customization-component-title-container {
+    margin-bottom: 10px;
+}
+
+.ridestyler-showcase-rotate-vehicle {
+    height: 25%;
+}
+
+.ridestyler-showcase-suspension-selector-element {
+    .noUi-horizontal {
+        .noUi-handle {
+            top: -0.2em;
+        }    
+    }
+    .noUi-marker-horizontal.noUi-marker {
+        width: 1px;
+    }
+
+    .noUi-pips-horizontal {
+        padding-top: 5px;
+    }
+}
+
+.ridestyler-showcase-customization-component-title + .ridestyler-showcase-button {
+    padding: 5px;
+    margin-top: .5em;
+}

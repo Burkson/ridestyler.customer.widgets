@@ -1,6 +1,8 @@
 &.ridestyler-showcase-breakpoint-phone-landscape {
-    @import "phone-landscape/vehicle-selection";
-    @import "phone-landscape/share-modal";
-    @import "phone-landscape/pagination";
     @import "phone-landscape/tab-bar";
+    @import "phone-landscape/pagination";
+    @import "phone-landscape/share-modal";
+    @import "phone-landscape/showcase-table";
+    @import "phone-landscape/vehicle-selection";
+		@import "phone-landscape/vehicle-visualization";
 }

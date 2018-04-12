@@ -1,20 +1,16 @@
 .ridestyler-showcase-share {
     .ridestyler-showcase-share-buttons {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
     }
 
     .ridestyler-showcase-share-button {
-        margin-right: 0;
         font-size: 1.7em;
+        margin: .5em;
 
         &-qr-code {
-            position: static;
-            
             .ridestyler-showcase-popover {
                 top: auto;
-                left: 50%;
-                margin-left: -100px;
                 margin-top: 50px;
 
                 &:before, &:after {

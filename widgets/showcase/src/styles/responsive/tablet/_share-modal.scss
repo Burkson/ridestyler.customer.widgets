@@ -1,0 +1,41 @@
+.ridestyler-showcase-share {
+
+    &-buttons {
+        width: 70%;
+        display: flex;
+        align-content: center;
+        margin-top: 1em;
+    }
+
+    &-button {
+        width: 20%;
+    }
+
+    &-button-qr-code {
+        z-index: $zLayer3 + 1;
+    }
+
+    .ridestyler-showcase-background {
+        height: 38%;
+    }
+
+    .ridestyler-showcase-viewport, .ridestyler-showcase-rotate-vehicle {
+        margin-left: 0;
+    }
+    
+    .ridestyler-showcase & .ridestyler-showcase-rotate-vehicle {
+        bottom: 2%;
+    }
+    
+    .ridestyler-showcase-viewport {
+        bottom: 10%;
+    }
+    img {
+        margin-left: -4em;
+    }
+}
+
+.ridestyler-showcase-modal-full {
+    height: 75%;
+    top: 10%;
+}

@@ -1,8 +1,8 @@
 &.ridestyler-showcase-breakpoint-tv {
     font-size: 24px;
     
-    @import "tv/pagination";
     @import "tv/tab-bar";
+    @import "tv/pagination";
     @import "tv/vehicle-selection";
     @import "tv/vehicle-visualization";
 }

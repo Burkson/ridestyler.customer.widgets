@@ -1,8 +1,10 @@
 &.ridestyler-showcase-breakpoint-desktop {
     font-size: 16px;
 
-    @import "desktop/vehicle-visualization";
-    @import "desktop/vehicle-selection";
-    @import "desktop/pagination";
     @import "desktop/tab-bar";
+    @import "desktop/pagination";
+    @import "desktop/share-modal";
+    @import "desktop/showcase-table";
+    @import "desktop/vehicle-selection";
+    @import "desktop/vehicle-visualization";
 }

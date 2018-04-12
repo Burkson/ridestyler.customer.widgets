@@ -6,6 +6,7 @@
     display: flex;
     flex-direction: column;
     text-align: center;
+    align-items: center;
 
     h1 {
         margin-bottom: 0;
@@ -16,18 +17,17 @@
     }
 
     &-buttons {
+        left: 0;
+        width: 70%;
         display: flex;
-        justify-content: center;
         align-content: center;
         align-items: center;
-        height: 10%;
+        justify-content: space-around;
         margin-top: 1em;
     }
 
-    &-button {
-        width: 15%;
-        margin-right: 1.5em;
-        padding: 0.7em 1em;
+    &-button-qr-code {
+        z-index: $zLayer3 + 1;
     }
 
     .ridestyler-showcase-background {
@@ -43,15 +43,11 @@
     }
     
     .ridestyler-showcase-viewport {
-        bottom: 6%;
-    }
-
-    img {
-        margin-left: -4em;
+        bottom: 9%;
     }
 }
 
 .ridestyler-showcase-modal-full {
-    height: 50%;
-    top: 20%;
+    height: 75%;
+    top: 10%;
 }
