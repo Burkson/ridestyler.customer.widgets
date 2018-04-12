@@ -137,6 +137,9 @@ img {
       top: 70px; }
     .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-pagination-option:only-child {
       margin-left: 40%; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-table tbody {
+    height: 475px;
+    text-align: center; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-vehicle-selection-wheel-showcase {
     height: 200px;
     width: 540px;
@@ -195,6 +198,9 @@ img {
       top: 70px; }
     .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-pagination-option:only-child {
       margin-left: 40%; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-table tbody {
+    height: 600px;
+    text-align: center; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-vehicle-selection-wheel-showcase {
     height: 300px;
     width: 810px;
@@ -257,6 +263,9 @@ img {
     margin-top: 1em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-share img {
     margin-left: -2em; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-table tbody {
+    height: 450px;
+    text-align: center; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .vsm-modal-dialog {
     width: 750px; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .vsm-modal-body .center-piece {
@@ -579,6 +588,9 @@ img {
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-modal-full {
     height: 75%;
     top: 10%; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-table tbody {
+    height: 475px;
+    text-align: center; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .vsm-modal-dialog {
     width: 700px; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .vsm-modal-body .center-piece {

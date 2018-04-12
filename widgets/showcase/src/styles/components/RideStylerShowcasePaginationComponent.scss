@@ -15,13 +15,9 @@
 
         position: absolute;
         bottom: 0;
-
     }
 
-
-
     &-option {
-
         min-width: 20%;
         max-width: 30%;
         padding: 0 10px;
@@ -34,7 +30,6 @@
         vertical-align: top;
 
         margin-bottom: 2em;
-
 
         &-display {
             margin: 5px auto;
@@ -110,10 +105,6 @@
             height: 50px;
             margin-bottom: 2em;
         }
-
-        // &:only-child {
-        //     margin-left: 25%;
-        // }
     }
 
     .ridestyler-showcase-pagination-option.ridestyler-showcase-pagination-option-no-results {
