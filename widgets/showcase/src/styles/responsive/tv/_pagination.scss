@@ -5,6 +5,9 @@
     &-next, &-prev {
         top: 70px;
     }
+   &-option:only-child {
+       margin-left: 40%;
+   }
 }
 
 

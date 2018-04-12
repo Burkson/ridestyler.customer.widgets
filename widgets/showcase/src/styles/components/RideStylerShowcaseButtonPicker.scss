@@ -13,7 +13,6 @@
     &-title {
         font-size: 1em;
         padding:.5em;
-        
     }
 
     &-option {
@@ -26,7 +25,8 @@
             border-bottom-left-radius: 0.1em;
             border-bottom-right-radius: 0.1em;
             
-            transition:transform 0.3s ease-out;
+            transition:opacity 0.5s ease-out;
+            transition:transform 0.35s ease-out;
             transform-origin:top;
             overflow: hidden;
         }

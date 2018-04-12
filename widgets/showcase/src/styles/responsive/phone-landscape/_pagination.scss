@@ -3,15 +3,16 @@
     margin-top: 8em;
     height: 50%;
 
-    &-wrapper {
-    }
-
     &-option {
         &-label-secondary {
             margin-top: 0;
         }
         &-label-tertiary {
             margin-top: 0;
+        }
+    
+        &:only-child {
+            margin-left: 35%;
         }
     }
 }

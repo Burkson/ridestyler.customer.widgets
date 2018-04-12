@@ -40,7 +40,7 @@ namespace RideStylerShowcase {
             });
             this.optionContainer = HTMLHelper.createElement('div', {
                 className: 'ridestyler-showcase-pagination-wrapper',
-                appendTo: this.component
+                appendTo: this.component,
             });
 
             this.prevButton = HTMLHelper.createElement('button', {
@@ -166,6 +166,7 @@ namespace RideStylerShowcase {
         }
 
         protected addOptionElements(elements:Node[]|Node) {
+   
             let hasNoResults = false;
 
             if (elements instanceof DocumentFragment) {

@@ -13,5 +13,9 @@
         &-label-tertiary {
             font-weight: normal;
         }
+
+        &:only-child {
+            margin-left: 25%;
+        }
     }
 }

@@ -23,16 +23,15 @@
     &-qr-code {
         @include ridestyler-showcase-icon('qr', after);
 
+        display: flex;
+        justify-content: center;
         position: relative;
 
         .ridestyler-showcase-popover {
-            $size: 200px;
-
+            $size: 180px;
             width: $size;
             height: $size;
-            position: absolute;
-            margin-left: -$size/2 + 10px;
-            top: 105%;
+            top: 120%;
             z-index: $zLayer1 + 1;
         }
 
@@ -42,6 +41,7 @@
 
             img, canvas {
                 width: 100%;
+                margin-left: 0;
             }
         }
     }

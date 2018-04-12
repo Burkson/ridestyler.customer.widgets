@@ -2,4 +2,9 @@
 	height: 75%;
 	margin-top: 2em;
 	margin-left: 1em;
+
+	&-option:only-child {
+    margin-left: 35%;
+  }
+
 }

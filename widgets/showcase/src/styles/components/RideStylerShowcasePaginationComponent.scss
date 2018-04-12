@@ -7,7 +7,7 @@
         align-items: center;
         content-align: center;
         text-align: center;
-
+        justify-content: space-between;
         width: 100%;
 
         white-space: nowrap;
@@ -15,9 +15,13 @@
 
         position: absolute;
         bottom: 0;
+
     }
 
+
+
     &-option {
+
         min-width: 20%;
         max-width: 30%;
         padding: 0 10px;
@@ -106,6 +110,10 @@
             height: 50px;
             margin-bottom: 2em;
         }
+
+        // &:only-child {
+        //     margin-left: 25%;
+        // }
     }
 
     .ridestyler-showcase-pagination-option.ridestyler-showcase-pagination-option-no-results {

@@ -1,4 +1,8 @@
 .ridestyler-showcase-pagination {
 	height: 75%;
 	margin-top: 3em;
+
+	&-option:only-child {
+  	margin-left: 35%;
+  }
 }

@@ -23,13 +23,15 @@ namespace RideStylerShowcase {
             }).addEventListener('click', () => {
                 this.optionContainer.style.transform = this.optionContainer.style.transform == 'scaleY(0)' ? 'scaleY(1)' : 'scaleY(0)';
                 this.optionContainer.style.height = this.optionContainer.style.height == '0px' ? 'auto' : '0px';
-                this.component.style.height = this.component.style.height == '2.5em' ? '9.5em' : '2.5em';
+                 this.optionContainer.style.opacity = this.optionContainer.style.opacity == '0' ? '1' : '0';
+                this.component.style.height = this.component.style.height == '2.5em' ? '9.25em' : '2.5em';
             })
 
             this.optionContainer = HTMLHelper.createElement('div', {
                 className: className + '-option-container',
                 appendTo: this.component,
                 style: {
+                    opacity: '0',
                     height: '0px',
                     transform: 'scaleY(0)'
                 }
