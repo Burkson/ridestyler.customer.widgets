@@ -504,6 +504,9 @@ img {
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape #ridestyler-showcase-select-your-vehicle-wrapper {
   margin-top: 0; }
 
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .vsm-modal .dot-info-before, .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .vsm-modal .dot-info.active-before {
+  margin-top: 1em; }
+
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape img {
   user-drag: none;
   user-select: none;
@@ -2343,9 +2346,12 @@ img {
     font-size: 1em;
     overflow: hidden; }
     .vsm-modal .dot-info-before, .vsm-modal .dot-info.active-before {
-      margin-top: 1em; }
+      margin-top: 2em; }
   .vsm-modal-body .center-piece {
     max-width: 90%; }
+
+.vsm-list-container {
+  margin-top: -1em; }
 
 .vsm-btn {
   background-color: #ea1921;
@@ -2358,8 +2364,7 @@ img {
   padding: 1em 1.5em;
   transition-property: color, background-color, border-color;
   transition-duration: 500ms;
-  cursor: pointer;
-  margin-top: -1em; }
+  cursor: pointer; }
   .vsm-btn:disabled {
     background-color: #f3767b;
     color: #cccccc;

@@ -9,3 +9,11 @@
 #ridestyler-showcase-select-your-vehicle-wrapper {
     margin-top: 0;
 }
+
+.vsm-modal {
+    .dot-info, .dot-info.active {
+        &-before {
+            margin-top: 1em;
+        }
+    }
+}
