@@ -74,7 +74,6 @@ img {
   border-style: solid;
   border-width: 2px;
   font-size: 1em;
-  padding: 1em 1.5em;
   transition-property: color, background-color, border-color;
   transition-duration: 500ms;
   cursor: pointer; }
@@ -801,7 +800,6 @@ img {
   border-style: solid;
   border-width: 2px;
   font-size: 1em;
-  padding: 1em 1.5em;
   transition-property: color, background-color, border-color;
   transition-duration: 500ms;
   cursor: pointer;
@@ -2361,7 +2359,6 @@ img {
   border-style: solid;
   border-width: 2px;
   font-size: 1em;
-  padding: 1em 1.5em;
   transition-property: color, background-color, border-color;
   transition-duration: 500ms;
   cursor: pointer; }
@@ -2485,7 +2482,8 @@ img {
   position: absolute;
   top: 10px;
   right: 10px;
-  z-index: 2000; }
+  z-index: 2000;
+  padding: .75em; }
 
 .ridestyler-showcase-vehicle-details-vehicle-swatch {
   display: block;
