@@ -43,7 +43,7 @@ $baseFontSize: 2em;
             font-size: $baseFontSize;
 
             &-paint {
-                -webkit-text-stroke: .02em black;
+                // -webkit-text-stroke: 1px black;
             }
         }
     

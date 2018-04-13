@@ -6,5 +6,5 @@
     bottom: 50%;
     transition:height .3s ease-out;
     margin-bottom: $screen-padding;
-    z-index: $zLayer2;
+    z-index: $zLayer3 + 1;
 }

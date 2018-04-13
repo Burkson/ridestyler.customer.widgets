@@ -15,6 +15,7 @@
         text-align: center;
         left: 0; right: 0;
     }
+    padding: 1em 1.5em;
 }
 
 .ridestyler-showcase-vehicle-selection-content {
@@ -79,10 +80,6 @@
     .dot-info, .dot-info.active {
         font-size: 1em;
         overflow: hidden;
-
-        &-before {
-            margin-top: 2em;
-        }
     }
 
     &-body {
