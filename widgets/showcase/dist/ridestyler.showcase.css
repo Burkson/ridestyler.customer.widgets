@@ -136,7 +136,8 @@ img {
     .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-pagination-next, .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-pagination-prev {
       top: 70px; }
     .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-pagination-option:only-child {
-      margin-left: 40%; }
+      margin-bottom: 5%;
+      margin-left: 35%; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-table tbody {
     height: 475px;
     text-align: center; }
@@ -371,7 +372,7 @@ img {
   overflow-y: auto; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-table tbody {
-  height: 400px;
+  height: 200px;
   text-align: center; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-suspension-selector-element .noUi-horizontal .noUi-handle {
@@ -480,9 +481,12 @@ img {
   .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-share .ridestyler-showcase-share-button-qr-code .ridestyler-showcase-popover {
     width: 100px;
     height: 100px; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-share .ridestyler-showcase-share-button-qr-code img {
+    margin: 0; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-share img {
-  margin: 0; }
+  margin-top: 7.25em;
+  margin-left: -2.5em; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-table tbody {
   height: 175px;
@@ -1796,7 +1800,9 @@ img {
     height: 250px; }
   .ridestyler-showcase-table-head {
     background-color: #ea1921;
-    color: white; }
+    color: white;
+    border-top-left-radius: .75em;
+    border-top-right-radius: .75em; }
   .ridestyler-showcase-table-body {
     background-color: #fbfbfb; }
     .ridestyler-showcase-table-body-loading {
@@ -2328,10 +2334,16 @@ img {
 
 .vsm-modal {
   font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
-  letter-spacing: 0.75px; }
+  letter-spacing: 0.75px;
+  margin-top: 1em; }
+  .vsm-modal img {
+    max-height: 44vmin;
+    margin-top: -3.5em; }
   .vsm-modal .dot-info, .vsm-modal .dot-info.active {
     font-size: 1em;
     overflow: hidden; }
+    .vsm-modal .dot-info-before, .vsm-modal .dot-info.active-before {
+      margin-top: 1em; }
   .vsm-modal-body .center-piece {
     max-width: 90%; }
 
@@ -2346,7 +2358,8 @@ img {
   padding: 1em 1.5em;
   transition-property: color, background-color, border-color;
   transition-duration: 500ms;
-  cursor: pointer; }
+  cursor: pointer;
+  margin-top: -1em; }
   .vsm-btn:disabled {
     background-color: #f3767b;
     color: #cccccc;

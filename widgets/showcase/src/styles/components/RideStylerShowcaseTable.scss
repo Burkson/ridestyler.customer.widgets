@@ -46,7 +46,6 @@
         flex: 1 auto;
         text-align: center;
         align-items: center;
-
     }
 
     tbody {
@@ -59,6 +58,9 @@
     &-head {
         background-color: $primary-color;
         color: white;
+        border-top-left-radius: .75em;
+        border-top-right-radius: .75em;
+
     }
 
     &-body {

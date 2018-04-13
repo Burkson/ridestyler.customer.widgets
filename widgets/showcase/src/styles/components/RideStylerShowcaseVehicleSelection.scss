@@ -69,10 +69,20 @@
 
 .vsm-modal {
     @include baseFont;
+    margin-top: 1em;
+
+    img {
+        max-height: 44vmin;
+        margin-top: -3.5em;
+    }
 
     .dot-info, .dot-info.active {
         font-size: 1em;
         overflow: hidden;
+
+        &-before {
+            margin-top: 1em;
+        }
     }
 
     &-body {
@@ -84,6 +94,7 @@
 
 .vsm-btn {
     @include button;
+    margin-top: -1em;
 }
 
 .vsm-header {

@@ -91,7 +91,7 @@ function RideStylerViewport(elem, options) {
             // If we are maintaining the aspect ratio we need to update that
             if (desiredAspectHeight != null) {
                 var height = Math.round(lastClientWidth * desiredAspectHeight);
-                container.style.height = height + 'px';
+                container.style.height = height - 200 + 'px';
                 state['height'] = height;
             }
 
