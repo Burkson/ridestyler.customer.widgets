@@ -1,4 +1,13 @@
+@import url('//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300i,700');
+@import url('//static.ridestyler.net/fonts/rs_icons_v1.css');
+
 .rsqv-modal-wrapper {
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 16px;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
     opacity: 0;
     visibility: hidden;
 
@@ -19,26 +28,288 @@
     width: auto;
     height: auto;
 
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(191, 227, 255, 0.6);
 
     transition: visibility 0s 300ms, opacity 300ms linear;
 
     .rsqv-modal-container {
-        background: white;
+        position: relative;
+
+        background: #E2E2E2;
+        outline: 5px solid rgba(107, 109, 128, 0.7);
         margin: 10% auto 0 auto;
 
         width: 700px;
         max-width: 95%;
 
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Safari */
+        -khtml-user-select: none; /* Konqueror HTML */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none;
+
         .rsqv-modal-header {
-            background: #FF1807;
-            padding: 10px;
+            //background: #D83B39;
+            position: relative;
+
+            padding: 10px 0;
+            margin: 0 20px;
+
+            border-bottom: 1px solid #eee;
+
+            z-index: 10;
+
+            &::after {
+                display: block;
+                content: " ";
+                clear: both;
+            }
+            
+            &::before {
+                content: " ";
+
+                position: absolute;
+                left: 0;
+                right: 0;
+                height: 1px;
+                bottom: 0;
+
+                background: #999;
+            }
+
+            .rsqv-control-wrapper {
+                display: table;
+
+                .rsqv-control {
+                    color: #fff;
+                    display: table-cell;
+                    position: relative;
+                    text-align: center;
+                    vertical-align: middle;
+
+                    transition: color 100ms;
+
+                    &:hover {
+                        color: #D83B39;
+                    }
+
+                    &+.rsqv-control {
+                        padding-left: 22px;
+                    }
+
+                    cursor: pointer;
+
+                    .rs-icon {
+                        font-size: 30px;
+                    }
+
+                    .rsqv-title {
+                        display: block;
+                        text-transform: uppercase;
+                        font-weight: bold;
+                        font-size: 12px;
+                    }
+                }
+            }
+
+            .rsqv-tag-button {
+                color: #fafafa;
+
+                position: relative;
+                padding: 10px 20px;
+
+                em {
+                    display: block;
+                    font-style: italic;
+                    font-size: 0.9em;
+                }
+
+                strong {
+                    font-size: 1em;
+                    text-transform: uppercase;
+                }
+
+                &.right {
+                    background: #3A3B3B;
+
+                    float: right;
+                    margin-right: -30px;
+
+                    -webkit-box-shadow: -1px 1px 1px 0px rgba(0,0,0,0.2);
+                    -moz-box-shadow: -1px 1px 1px 0px rgba(0,0,0,0.2);
+                    box-shadow: -1px 1px 1px 0px rgba(0,0,0,0.2);
+
+                    &::after {
+                        content: " ";
+                        position: absolute;
+                        right: 0px;
+                        top: 100%;
+
+                        border: 5px solid transparent;
+                        border-top: 5px solid #0D0D0D;
+                        border-left: 5px solid #0D0D0D;
+                    }
+                }
+
+                &.left {
+                    background: #D83B39;
+
+                    float: left;
+                    margin-left: -30px;
+
+                    -webkit-box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.2);
+                    -moz-box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.2);
+                    box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.2);
+
+                    &::after {
+                        content: " ";
+                        position: absolute;
+                        left: 0px;
+                        top: 100%;
+
+                        border: 5px solid transparent;
+                        border-top: 5px solid #5F1E1E;
+                        border-right: 5px solid #5F1E1E;
+                    }
+                }
+            }
         }
 
         .rsqv-modal-body {
+            position: relative;
+            overflow: hidden;
+
             padding: 5%;
 
-            overflow: hidden;
+            a {
+                color: #777;
+                text-decoration: none;
+
+                &:hover {
+                    color:#2a2a2a;
+                }
+            }
+
+            .rsqv-modal-disclaimer {
+                padding: 10px 0 0 0;
+                text-align: center;
+            }
+
+            .rsqv-modal-overlay {
+                position: absolute;
+
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+
+                background: rgba(226,226,226,0.9);
+
+                transition: opacity 200ms;
+
+                opacity: 0;
+                pointer-events: none;
+
+                &.show {
+                    opacity: 1;
+                    pointer-events: auto;
+                }
+
+                .rsqv-trim-selection {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+
+                    table-layout: fixed;
+
+                    border-collapse: separate;
+                    border-spacing: 10px;
+
+                    padding: 10px;
+
+                    .rsqv-trim-wrapper {
+                        position: relative;
+                        overflow: visible;
+                        height: 100%;
+
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+
+        .rsqv-control-menu {
+            position: absolute;           
+
+            display: none;
+            z-index: 20;
+
+            white-space: nowrap;
+            text-align: right;
+
+            .rsqv-menu-content {
+                display: inline-block;
+                padding: 10px;
+                line-height: 0;
+
+                background: #D83B39;
+                color: #fff;
+
+                font-size: 24px;
+
+                [class^="rsicon-"] {
+                    cursor: pointer;
+
+                    &.disabled {
+                        opacity: 0.5;
+                        cursor: default;
+                    }
+                }
+
+                .rsqv-output {
+                    display: inline-block;
+
+                    padding: 0 10px;
+                    margin: 0 10px;
+                    line-height: normal;
+
+                    background: #fff;
+                    color: #D83B39;
+
+                    font-weight: bold;
+                }
+            }
+
+            .rsqv-paint-swatch {
+                display: inline-block;
+
+                width: 30px;
+                height: 30px;
+
+                border: 5px solid transparent;
+
+                cursor: pointer;
+            }
+
+            &.show {
+                display: block;
+            }
+
+            &::after {
+                content: " ";
+
+                position: absolute;
+                bottom: 100%;
+                right: 0;
+
+                width: 0;
+                height: 0;
+
+                border: 5px solid transparent;
+                border-bottom: 5px solid #D83B39;
+                border-right:  5px solid #D83B39;
+            }
         }
     }
 }

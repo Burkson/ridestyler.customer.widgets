@@ -27,7 +27,7 @@ gulp.task('min-css', function() {
 });
 
 gulp.task('min-js', function() {
-  return gulp.src('./js/rsqv.js')
+  return gulp.src('./js/*.js')
     .pipe(uglify())
     .pipe(rename({
       'suffix': '.min'
