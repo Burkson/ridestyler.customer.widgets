@@ -119,8 +119,8 @@ namespace RideStylerShowcase.share {
         protected getShareRedirectURL():string {
             let appURL = 'https://app.ridestyler.net';
 
-            if (api.environment === api.Environment.Alpha) appURL = 'https://app-alpha.ridestyler.net';
-            else if (api.environment === api.Environment.Beta) appURL = 'https://app-beta.ridestyler.net';
+            if (api.environment === api.Environment.Alpha) appURL = 'http://app-alpha.ridestyler.net';
+            else if (api.environment === api.Environment.Beta) appURL = 'http://app-beta.ridestyler.net';
 
             return appURL + '/shared.html';
         }

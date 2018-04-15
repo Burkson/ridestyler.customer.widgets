@@ -3,6 +3,9 @@ namespace RideStylerShowcase {
     import WheelModelDescriptionModel = ridestyler.Descriptions.WheelModelDescriptionModel;
     import WheelModelRequest = ridestyler.Requests.WheelModelDescriptionRequestModel;
 
+    const optionClass = 'ridestyler-showcase-pagination-option';
+    const noResultsClass = optionClass + '-no-results'
+
     export class RideStylerShowcaseWheelSelector extends RideStylerShowcaseProductSelector<WheelModelDescriptionModel, WheelFilterModel> {
         private readonly vehicleConfigurationID:string;
         private readonly supportedVehicleImagery: {
@@ -30,6 +33,22 @@ namespace RideStylerShowcase {
                 HasFitments: true
             };
             this.currentFilters = ObjectHelper.assign({}, this.defaultFilters);
+        }
+
+        protected showNoResults() {
+            this.noResultsElement = HTMLHelper.createElement('div', {
+                className: optionClass + ' ' + noResultsClass,
+                text: strings.getString('no-wheel-results') + ' ',
+                appendTo: this.optionContainer
+            });
+
+            HTMLHelper.createButton({
+                appendTo: this.noResultsElement,
+                text: strings.getString('change-vehicle'),
+                link: true
+            }).addEventListener('click', () => {
+                this.state.changeState(States.ChooseVehicle);
+            });
         }
 
         protected countResults(filters: WheelFilterModel): ridestyler.RideStylerPromise<number, ridestyler.RideStylerAPIResponse> {

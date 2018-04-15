@@ -55,7 +55,7 @@ var libraries = [
 ];
 var widgets = [
     '../vehicle-selection-modal/scripts/rsvsm.js',
-    '../vehicle-renderer/rsvr.js'
+    '../vehicle-renderer/js/rsvr.js',
 ];
 
 var paths = {
