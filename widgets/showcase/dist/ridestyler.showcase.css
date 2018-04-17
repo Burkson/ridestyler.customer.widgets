@@ -201,6 +201,8 @@ img {
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-table tbody {
     height: 600px;
     text-align: center; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .dot-info {
+    margin-top: 0; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-vehicle-selection-wheel-showcase {
     height: 300px;
     width: 810px;
