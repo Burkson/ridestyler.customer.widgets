@@ -134,9 +134,12 @@ img {
     height: 75%; }
     .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-pagination-next, .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-pagination-prev {
       top: 70px; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-pagination-option-loader {
+      left: 10%;
+      margin-bottom: 5em; }
     .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-pagination-option:only-child {
       margin-bottom: 5%;
-      margin-left: 35%; }
+      margin-left: 40%; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-table tbody {
     height: 475px;
     text-align: center; }
@@ -256,8 +259,14 @@ img {
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-pagination {
     height: 75%;
     margin-top: 3em; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-pagination-option-loader {
+      left: 5em;
+      margin-bottom: 10%;
+      min-width: 50px;
+      max-height: 50px; }
     .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-pagination-option:only-child {
-      margin-left: 35%; }
+      margin-bottom: 7%;
+      margin-left: 37%; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-share-buttons {
     width: 70%;
     display: flex;
@@ -315,14 +324,19 @@ img {
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-pagination {
   margin-top: 4em;
   height: 75%; }
-  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-pagination-option {
-    max-width: 50%; }
-    .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-pagination-option-label-secondary {
-      font-weight: normal; }
-    .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-pagination-option-label-tertiary {
-      font-weight: normal; }
-    .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-pagination-option:only-child {
-      margin-left: 25%; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-pagination-option-label-secondary {
+    font-weight: normal; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-pagination-option-label-tertiary {
+    font-weight: normal; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-pagination-option:only-child {
+    margin-left: 30%;
+    max-width: 50%;
+    max-height: 50%; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-pagination-option-loader {
+    left: 3em;
+    margin-bottom: 20%;
+    min-width: 50px;
+    height: 50px; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-share .ridestyler-showcase-share-buttons {
   display: flex;
@@ -451,14 +465,15 @@ img {
     bottom: 0; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-pagination {
-  margin-top: 6em;
+  margin-top: 7em;
   height: 50%; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-pagination-option-label-secondary {
     margin-top: 0; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-pagination-option-label-tertiary {
     margin-top: 0; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-pagination-option:only-child {
-    margin-left: 35%; }
+    margin-left: 35%;
+    width: 100%; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape img {
   user-drag: none;
@@ -586,13 +601,14 @@ img {
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-share .ridestyler-showcase-background {
     height: 38%; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-share .ridestyler-showcase-viewport, .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-share .ridestyler-showcase-rotate-vehicle {
-    margin-left: 0; }
+    margin-left: 0;
+    bottom: 8%; }
   .ridestyler-showcase .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-share .ridestyler-showcase-rotate-vehicle {
     bottom: 2%; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-share .ridestyler-showcase-viewport {
-    bottom: 10%; }
+    bottom: 18%; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-share img {
-    margin-left: -4em; }
+    margin-left: -5em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-modal-full {
     height: 75%;
     top: 10%; }
@@ -1093,25 +1109,20 @@ img {
     image-rendering: crisp-edges;
     animation: rotation 1s infinite linear;
     position: absolute;
-    left: 50%;
     background-image: url("images/tire-loading.png");
     background-size: 100%;
     width: 0.9em;
     height: 0.9em;
     margin-left: -0.45em; }
   .ridestyler-showcase-pagination-option-loader {
-    margin-left: 50%;
     background: url(images/spinner.gif) no-repeat top center;
     background-size: 100%;
     min-width: 50px;
-    height: 50px;
-    margin-bottom: 2em; }
+    height: 50px; }
 
 .ridestyler-showcase-pagination .ridestyler-showcase-pagination-option.ridestyler-showcase-pagination-option-no-results {
   text-align: center;
   color: white;
-  max-width: 100%;
-  width: 100%;
   line-height: 200px;
   font-size: 1em; }
 

@@ -6,8 +6,16 @@
  		top: 70px;
   }
 
-  &-option:only-child {
-  	margin-bottom: 5%;
-  	margin-left: 35%;
-  }
+  &-option {
+		
+		&-loader {        
+	    left: 10%;
+	    margin-bottom: 5em;
+    }
+
+  	&:only-child {
+  		margin-bottom: 5%;
+  		margin-left: 40%;
+  	}
+	}
 }

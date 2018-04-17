@@ -2,7 +2,21 @@
 	height: 75%;
 	margin-top: 3em;
 
-	&-option:only-child {
-  	margin-left: 35%;
-  }
+	  &-option {
+	  	// background: pink;
+			&-loader {       
+		    left: 5em;
+		    margin-bottom: 10%;
+		    // margin-bottom: 5em;
+		    // background-size: 50%;
+		    min-width: 50px;
+		    max-height: 50px;
+		    // margin-bottom: 2em;
+	    }
+
+	  	&:only-child {
+	  		margin-bottom: 7%;
+	  		margin-left: 37%;
+	  	}
+		}
 }
