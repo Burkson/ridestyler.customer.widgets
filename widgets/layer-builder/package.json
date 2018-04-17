@@ -13,5 +13,8 @@
     "gulp": "^3.9.1",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^3.0.0"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0"
   }
 }

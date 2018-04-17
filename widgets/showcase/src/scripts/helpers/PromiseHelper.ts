@@ -27,7 +27,7 @@ namespace RideStylerShowcase.PromiseHelper {
 
         promise.done(function (result) {
             if (typeof onfulfilled === 'function') {
-                try {
+                // try {
                     let onfulfilledResult = onfulfilled(result);
 
                     if (isPromise(onfulfilledResult)) {
@@ -41,9 +41,9 @@ namespace RideStylerShowcase.PromiseHelper {
                         returnPromise.resolve(onfulfilledResult);
                     }
 
-                } catch(exception) {
-                    returnPromise.reject(exception);
-                }
+                // } catch(exception) {
+                //     returnPromise.reject(exception);
+                // }
             } else {
                 returnPromise.resolve(result);
             }
@@ -51,7 +51,7 @@ namespace RideStylerShowcase.PromiseHelper {
 
         promise.fail(function (result) {
             if (typeof onrejected === 'function') {
-                try {
+                // try {
                     let onrejectedResult = onrejected(result);
                     
                     if (isPromise(onrejectedResult)) {
@@ -64,9 +64,9 @@ namespace RideStylerShowcase.PromiseHelper {
                         // Resolve the promise with the returned value
                         returnPromise.resolve(onrejectedResult);
                     }
-                } catch (exception) {
-                    returnPromise.reject(exception);
-                }
+                // } catch (exception) {
+                //     returnPromise.reject(exception);
+                // }
             } else {
                 returnPromise.reject(result);
             }

@@ -8,7 +8,7 @@ var sass = require('gulp-sass'); // https://github.com/dlmanning/gulp-sass
 var sassTypes = require('node-sass').types; // https://github.com/sass/node-sass#functions--v300---experimental
 var gulpFile = require('gulp-file'); // https://github.com/alexmingoia/gulp-file
 var del = require('del'); // https://github.com/sindresorhus/del
-var babel = require('gulp-babel'); // https://github.com/babel/gulp-babel
+var babel = require('gulp-babel'); // https://github.com/babel/gulp-babel 
 var uglify = require('gulp-uglify'); // https://github.com/terinjokes/gulp-uglify
 var gulpIf = require('gulp-if'); // https://github.com/robrich/gulp-if
 var autoprefixer = require('autoprefixer'); // https://github.com/postcss/autoprefixer
@@ -21,6 +21,7 @@ var iconfont = require('gulp-iconfont'); // https://github.com/nfroidure/gulp-ic
 var consolidate = require('consolidate'); // https://github.com/tj/consolidate.js
 var async = require('async'); // https://caolan.github.io/async/
 var through = require('through2'); // https://github.com/rvagg/through2
+
 
 /**
  * If true, dev mode is enabled, skip minification and output sourcemaps
@@ -43,9 +44,10 @@ else console.log('Build using production mode');
 var typescriptProject = typescript.createProject('tsconfig.json');
 
 var polyfills = [
+    './node_modules/babel-polyfill/dist/polyfill.js',
     './node_modules/classlist-polyfill/src/index.js',
     './node_modules/ie8/build/ie8.max.js',
-    './node_modules/TinyAnimate/src/requestAnimationFrame.js'
+    './node_modules/TinyAnimate/src/requestAnimationFrame.js',
 ];
 var libraries = [
     './node_modules/nouislider/distribute/nouislider.js',
@@ -98,7 +100,7 @@ var compiler = {
         return babel({
             presets: ['env'],
             plugins: [
-                "transform-remove-strict-mode"
+                "transform-remove-strict-mode",
             ]
         });
     },
@@ -137,7 +139,7 @@ var compiler = {
             .pipe(gulpIf(!dev, uglify().on('error', console.error)))
             .pipe(sourcemaps.write())
             .pipe(gulp.dest(paths.output.folder));
-    
+
         // Merge the streams (in parallel) so that this task is done when both of the below tasks are done
         return mergeStreams([
             typescriptDefinitionStream,

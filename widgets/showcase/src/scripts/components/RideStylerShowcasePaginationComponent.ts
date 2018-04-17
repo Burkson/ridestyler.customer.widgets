@@ -170,7 +170,7 @@ namespace RideStylerShowcase {
             let hasNoResults = false;
 
             if (elements instanceof DocumentFragment) {
-                hasNoResults = elements.children.length === 0;
+                hasNoResults = elements.childNodes.length === 0;
                 this.optionContainer.appendChild(elements);
             } else if (elements instanceof Node) {
                 this.optionContainer.appendChild(elements);
