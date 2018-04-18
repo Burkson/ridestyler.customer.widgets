@@ -2,6 +2,7 @@ namespace RideStylerShowcase {
     const className = 'ridestyler-showcase-button-picker';
     const optionClass = className + '-option';
     const activeClass = optionClass + '-active';
+    let   optionsCount = 1;
 
     export class RideStylerShowcaseButtonPicker<T> extends ComponentBase {
         private optionContainer:HTMLElement;
@@ -21,10 +22,37 @@ namespace RideStylerShowcase {
                 text: options.title,
                 appendTo: this.component
             }).addEventListener('click', () => {
-                this.optionContainer.style.transform = this.optionContainer.style.transform == 'scaleY(0)' ? 'scaleY(1)' : 'scaleY(0)';
-                this.optionContainer.style.height = this.optionContainer.style.height == '0px' ? 'auto' : '0px';
-                 this.optionContainer.style.opacity = this.optionContainer.style.opacity == '0' ? '1' : '0';
-                this.component.style.height = this.component.style.height == '2.5em' ? '9.25em' : '2.5em';
+                switch(optionsCount) {
+                    case 1:
+                        this.component.style.height = this.component.style.height == '2.5em' ? '4.75em' : '2.5em';
+                        this.optionContainer.style.opacity = this.optionContainer.style.opacity == '0' ? '1' : '0';
+                        this.optionContainer.style.transform = this.optionContainer.style.transform == 'scaleY(0)' ? 'scaleY(1)' : 'scaleY(0)';
+                        this.optionContainer.style.height = this.optionContainer.style.height == '0px' ? 'auto' : '0px';
+                        break;
+                    case 2:
+                        this.component.style.height = this.component.style.height == '2.5em' ? '7em' : '2.5em';
+                        this.optionContainer.style.opacity = this.optionContainer.style.opacity == '0' ? '1' : '0';
+                        this.optionContainer.style.transform = this.optionContainer.style.transform == 'scaleY(0)' ? 'scaleY(1)' : 'scaleY(0)';
+                        this.optionContainer.style.height = this.optionContainer.style.height == '0px' ? 'auto' : '0px';
+                        break;
+                    case 3:
+                        this.component.style.height = this.component.style.height == '2.5em' ? '9.25em' : '2.5em';
+                        this.optionContainer.style.opacity = this.optionContainer.style.opacity == '0' ? '1' : '0';
+                        this.optionContainer.style.transform = this.optionContainer.style.transform == 'scaleY(0)' ? 'scaleY(1)' : 'scaleY(0)';
+                        this.optionContainer.style.height = this.optionContainer.style.height == '0px' ? 'auto' : '0px';
+                        break;
+                    case 4:
+                        this.component.style.height = this.component.style.height == '2.5em' ? '10em' : '2.5em';
+                        this.optionContainer.style.opacity = this.optionContainer.style.opacity == '0' ? '1' : '0';
+                        this.optionContainer.style.transform = this.optionContainer.style.transform == 'scaleY(0)' ? 'scaleY(1)' : 'scaleY(0)';
+                        this.optionContainer.style.height = this.optionContainer.style.height == '0px' ? 'auto' : '0px';
+                        break;
+                    default:
+                        this.component.style.height = '2.5em';
+                        this.optionContainer.style.opacity = this.optionContainer.style.opacity == '0' ? '1' : '0';
+                        this.optionContainer.style.transform = this.optionContainer.style.transform == 'scaleY(0)' ? 'scaleY(1)' : 'scaleY(0)';
+                        this.optionContainer.style.height = this.optionContainer.style.height == '0px' ? 'auto' : '0px';
+                }
             })
 
             this.optionContainer = HTMLHelper.createElement('div', {
@@ -38,11 +66,47 @@ namespace RideStylerShowcase {
             });
 
             this.optionContainer.addEventListener('click', event => this.onOptionClick(event));
+            this.optionContainer.addEventListener('DOMNodeInserted', () => {
+            console.log(optionsCount);
+                            switch(optionsCount) {
+                                case 1:
+                                    this.component.style.height = '4.75em';
+                                    this.optionContainer.style.opacity = '1';
+                                    this.optionContainer.style.transform = 'scaleY(1)';
+                                    this.optionContainer.style.height = 'auto';
+                                    break;
+                                case 2:
+                                    this.component.style.height = '7em';
+                                    this.optionContainer.style.opacity = this.optionContainer.style.opacity == '1' ? '1' : '1';
+                                    this.optionContainer.style.transform = this.optionContainer.style.transform == 'scaleY(1)' ? 'scaleY(1)' : 'scaleY(1)';
+                                    this.optionContainer.style.height = this.optionContainer.style.height == 'auto' ? 'auto' : 'auto';
+                                    break;
+                                case 3:
+                                    this.component.style.height = '9.25em';
+                                    this.optionContainer.style.opacity = this.optionContainer.style.opacity == '1' ? '1' : '1';
+                                    this.optionContainer.style.transform = this.optionContainer.style.transform == 'scaleY(1)' ? 'scaleY(1)' : 'scaleY(1)';
+                                    this.optionContainer.style.height = this.optionContainer.style.height == 'auto' ? 'auto' : 'auto';
+                                    break;
+                                case 4:
+                                    this.component.style.height = '10em';
+                                    this.optionContainer.style.opacity = this.optionContainer.style.opacity == '1' ? '1' : '1';
+                                    this.optionContainer.style.transform = this.optionContainer.style.transform == 'scaleY(1)' ? 'scaleY(1)' : 'scaleY(1)';
+                                    this.optionContainer.style.height = this.optionContainer.style.height == 'auto' ? 'auto' : 'auto';
+                                    break;
+                                default:
+                                    this.component.style.height = '2.5em';
+                                    this.optionContainer.style.opacity = '0';
+                                    this.optionContainer.style.transform = 'scaleY(0)';
+                                    this.optionContainer.style.height = '0px';
+                            }
+            });
+
         }
 
         public setOptions(options: RideStylerShowcaseButtonPicker.Option<T>[]) {
             HTMLHelper.empty(this.optionContainer);
 
+            optionsCount = options.length;
             let fragment = document.createDocumentFragment();
 
             for (let option of options) {
@@ -56,6 +120,7 @@ namespace RideStylerShowcase {
                 if (option.active) optionElement.classList.add(activeClass);
 
                 fragment.appendChild(optionElement);
+
             }
 
             this.optionContainer.appendChild(fragment);

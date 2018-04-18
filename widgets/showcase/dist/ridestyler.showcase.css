@@ -342,6 +342,13 @@ img {
   display: flex;
   justify-content: center; }
 
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-share .ridestyler-showcase-viewport {
+  bottom: 18%; }
+
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-share .ridestyler-showcase-rotate-vehicle {
+  margin-left: 0;
+  bottom: 8%; }
+
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-share .ridestyler-showcase-share-button {
   font-size: 1.7em;
   margin: .5em; }
