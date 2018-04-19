@@ -13,7 +13,7 @@ namespace RideStylerShowcase {
             this.component = HTMLHelper.createElement('div', {
                 className: className,
                 style: {
-                    height: '2.5em'
+                    height: '2.5em',
                 }
             });
 
@@ -22,37 +22,25 @@ namespace RideStylerShowcase {
                 text: options.title,
                 appendTo: this.component
             }).addEventListener('click', () => {
+                this.optionContainer.style.opacity = this.optionContainer.style.opacity == '0' ? '1' : '0';
+                this.optionContainer.style.transform = this.optionContainer.style.transform == 'scaleY(0)' ? 'scaleY(1)' : 'scaleY(0)';
+                this.optionContainer.style.height = this.optionContainer.style.height == '0px' ? 'auto' : '0px';
+                
                 switch(optionsCount) {
                     case 1:
-                        this.component.style.height = this.component.style.height == '2.5em' ? '4.75em' : '2.5em';
-                        this.optionContainer.style.opacity = this.optionContainer.style.opacity == '0' ? '1' : '0';
-                        this.optionContainer.style.transform = this.optionContainer.style.transform == 'scaleY(0)' ? 'scaleY(1)' : 'scaleY(0)';
-                        this.optionContainer.style.height = this.optionContainer.style.height == '0px' ? 'auto' : '0px';
+                        this.component.style.height = this.component.style.height == '2.5em' ? '4.5em' : '2.5em';
                         break;
                     case 2:
                         this.component.style.height = this.component.style.height == '2.5em' ? '7em' : '2.5em';
-                        this.optionContainer.style.opacity = this.optionContainer.style.opacity == '0' ? '1' : '0';
-                        this.optionContainer.style.transform = this.optionContainer.style.transform == 'scaleY(0)' ? 'scaleY(1)' : 'scaleY(0)';
-                        this.optionContainer.style.height = this.optionContainer.style.height == '0px' ? 'auto' : '0px';
                         break;
                     case 3:
                         this.component.style.height = this.component.style.height == '2.5em' ? '9.25em' : '2.5em';
-                        this.optionContainer.style.opacity = this.optionContainer.style.opacity == '0' ? '1' : '0';
-                        this.optionContainer.style.transform = this.optionContainer.style.transform == 'scaleY(0)' ? 'scaleY(1)' : 'scaleY(0)';
-                        this.optionContainer.style.height = this.optionContainer.style.height == '0px' ? 'auto' : '0px';
                         break;
                     case 4:
-                        this.component.style.height = this.component.style.height == '2.5em' ? '10em' : '2.5em';
-                        this.optionContainer.style.opacity = this.optionContainer.style.opacity == '0' ? '1' : '0';
-                        this.optionContainer.style.transform = this.optionContainer.style.transform == 'scaleY(0)' ? 'scaleY(1)' : 'scaleY(0)';
-                        this.optionContainer.style.height = this.optionContainer.style.height == '0px' ? 'auto' : '0px';
+                        this.component.style.height = this.component.style.height == '2.5em' ? '11.25em' : '2.5em';
                         break;
                     default:
                         this.component.style.height = '2.5em';
-                        this.optionContainer.style.opacity = this.optionContainer.style.opacity == '0' ? '1' : '0';
-                        this.optionContainer.style.transform = this.optionContainer.style.transform == 'scaleY(0)' ? 'scaleY(1)' : 'scaleY(0)';
-                        this.optionContainer.style.height = this.optionContainer.style.height == '0px' ? 'auto' : '0px';
-                }
             })
 
             this.optionContainer = HTMLHelper.createElement('div', {
@@ -67,38 +55,29 @@ namespace RideStylerShowcase {
 
             this.optionContainer.addEventListener('click', event => this.onOptionClick(event));
             this.optionContainer.addEventListener('DOMNodeInserted', () => {
-            console.log(optionsCount);
-                            switch(optionsCount) {
-                                case 1:
-                                    this.component.style.height = '4.75em';
-                                    this.optionContainer.style.opacity = '1';
-                                    this.optionContainer.style.transform = 'scaleY(1)';
-                                    this.optionContainer.style.height = 'auto';
-                                    break;
-                                case 2:
-                                    this.component.style.height = '7em';
-                                    this.optionContainer.style.opacity = this.optionContainer.style.opacity == '1' ? '1' : '1';
-                                    this.optionContainer.style.transform = this.optionContainer.style.transform == 'scaleY(1)' ? 'scaleY(1)' : 'scaleY(1)';
-                                    this.optionContainer.style.height = this.optionContainer.style.height == 'auto' ? 'auto' : 'auto';
-                                    break;
-                                case 3:
-                                    this.component.style.height = '9.25em';
-                                    this.optionContainer.style.opacity = this.optionContainer.style.opacity == '1' ? '1' : '1';
-                                    this.optionContainer.style.transform = this.optionContainer.style.transform == 'scaleY(1)' ? 'scaleY(1)' : 'scaleY(1)';
-                                    this.optionContainer.style.height = this.optionContainer.style.height == 'auto' ? 'auto' : 'auto';
-                                    break;
-                                case 4:
-                                    this.component.style.height = '10em';
-                                    this.optionContainer.style.opacity = this.optionContainer.style.opacity == '1' ? '1' : '1';
-                                    this.optionContainer.style.transform = this.optionContainer.style.transform == 'scaleY(1)' ? 'scaleY(1)' : 'scaleY(1)';
-                                    this.optionContainer.style.height = this.optionContainer.style.height == 'auto' ? 'auto' : 'auto';
-                                    break;
-                                default:
-                                    this.component.style.height = '2.5em';
-                                    this.optionContainer.style.opacity = '0';
-                                    this.optionContainer.style.transform = 'scaleY(0)';
-                                    this.optionContainer.style.height = '0px';
-                            }
+                this.optionContainer.style.opacity = '1';
+                this.optionContainer.style.transform = 'scaleY(1)';
+                this.optionContainer.style.height = 'auto';
+                            
+                switch(optionsCount) {
+                    case 1:
+                        this.component.style.height = '4.5em';
+                        break;
+                    case 2:
+                        this.component.style.height = '7em';
+                        break;
+                    case 3:
+                        this.component.style.height = '9.25em';
+                        break;
+                    case 4:
+                        this.component.style.height = '11.25em';
+                        break;
+                    default:
+                        this.component.style.height = '2.5em';
+                        this.optionContainer.style.opacity = '0';
+                        this.optionContainer.style.transform = 'scaleY(0)';
+                        this.optionContainer.style.height = '0px';
+                }
             });
 
         }

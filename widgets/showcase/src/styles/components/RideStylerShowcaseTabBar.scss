@@ -28,13 +28,23 @@ $baseFontSize: 2em;
         align-items: center;
         content-align: center;
                         
-        &-icon{
+        &-icon {
         z-index: $zLayer2;
 
             i:before {
+                
                 font-size: $baseFontSize - 1.1;
                 color: white;
                 width: 100%;
+            }
+
+            &-paint:before {
+                // font-weight: 400;
+                font-style: normal;
+                font-variant: normal;
+                font-weight: 400;
+                text-decoration: none;
+                text-transform: none;
             }  
         }
         

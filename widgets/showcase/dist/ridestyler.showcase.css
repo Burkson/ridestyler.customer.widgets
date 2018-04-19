@@ -397,11 +397,6 @@ img {
   height: 200px;
   text-align: center; }
 
-.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-suspension-selector-element .noUi-horizontal .noUi-handle {
-  margin: 1em;
-  top: -1.2em;
-  left: -2em; }
-
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait img {
   user-drag: none;
   user-select: none;
@@ -457,6 +452,34 @@ img {
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-suspension-selector-element .noUi-pips-horizontal {
   padding-top: 5px; }
 
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-button-picker {
+  width: 8em;
+  transition: all .25s ease-out; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-button-picker-title {
+    padding: .5em; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-button-picker-option-container:last-child {
+    border-bottom-left-radius: .2em; }
+
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-change-wheel-size {
+  right: 0;
+  border-top-left-radius: .5em;
+  border-bottom-left-radius: .5em;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  margin: auto;
+  margin-bottom: 1.1em; }
+
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-customization-component-title-container {
+  z-index: 3001; }
+
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-customization-component-title + .ridestyler-showcase-button {
+  left: 0;
+  margin-left: -1.25em;
+  border-top-right-radius: .5em;
+  border-bottom-right-radius: .5em;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0; }
+
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape img {
   user-drag: none;
   user-select: none;
@@ -472,7 +495,7 @@ img {
     bottom: 0; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-pagination {
-  margin-top: 7em;
+  margin-top: 5.5em;
   height: 50%; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-pagination-option-label-secondary {
     margin-top: 0; }
@@ -542,7 +565,7 @@ img {
   bottom: 22%;
   right: 15%;
   height: 45%;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   pointer-events: none;
   z-index: 1000; }
 
@@ -550,7 +573,6 @@ img {
   bottom: 10%; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-details {
-  float: none;
   max-width: 30%;
   padding: 5px 10px; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-details-title {
@@ -564,16 +586,17 @@ img {
   margin-bottom: 10px; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-rotate-vehicle {
-  height: 25%; }
+  height: 30%;
+  margin-bottom: 10px; }
 
-.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-suspension-selector-element .noUi-horizontal .noUi-handle {
-  top: -0.2em; }
-
-.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-suspension-selector-element .noUi-marker-horizontal.noUi-marker {
-  width: 1px; }
-
-.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-suspension-selector-element .noUi-pips-horizontal {
-  padding-top: 5px; }
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-suspension-selector-element {
+  margin-bottom: 3em; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-suspension-selector-element .noUi-horizontal .noUi-handle {
+    top: -0.2em; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-suspension-selector-element .noUi-marker-horizontal.noUi-marker {
+    width: 1px; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-suspension-selector-element .noUi-pips-horizontal {
+    padding-top: 5px; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-customization-component-title + .ridestyler-showcase-button {
   padding: 5px;
@@ -1118,9 +1141,9 @@ img {
     position: absolute;
     background-image: url("images/tire-loading.png");
     background-size: 100%;
-    width: 0.9em;
-    height: 0.9em;
-    margin-left: -0.45em; }
+    width: 0.8em;
+    height: 0.8em;
+    margin-left: -0.4em; }
   .ridestyler-showcase-pagination-option-loader {
     background: url(images/spinner.gif) no-repeat top center;
     background-size: 100%;
@@ -1724,6 +1747,12 @@ img {
         font-size: 0.9em;
         color: white;
         width: 100%; }
+      .ridestyler-showcase-tab-bar-tab-icon-paint:before {
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 400;
+        text-decoration: none;
+        text-transform: none; }
     .ridestyler-showcase-tab-bar-tab .ridestyler-showcase-icon {
       vertical-align: middle;
       font-size: 2em; }
@@ -1876,6 +1905,10 @@ img {
   .ridestyler-showcase-toggle-button-option-active {
     background-color: #ea1921;
     color: #fff; }
+
+.ridestyler-showcase-button-picker {
+  width: 10em;
+  transition: all .25s ease-out; }
 
 /*Mixins*/
 /*Placeholders*/
@@ -2491,7 +2524,8 @@ img {
   font-size: 1.6em;
   font-weight: bold; }
   .ridestyler-showcase-customization-component-title + .ridestyler-showcase-button {
-    margin-top: 10px; }
+    margin-top: 10px;
+    padding: .65em; }
   .ridestyler-showcase-customization-component-title-container {
     position: absolute;
     bottom: 50%;
@@ -2503,8 +2537,8 @@ img {
   position: absolute;
   top: 10px;
   right: 10px;
-  z-index: 2000;
-  padding: .75em; }
+  z-index: 3000;
+  padding: .65em; }
 
 .ridestyler-showcase-vehicle-details-vehicle-swatch {
   display: block;

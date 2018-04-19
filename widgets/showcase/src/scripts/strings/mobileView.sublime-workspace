@@ -1,0 +1,1251 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"create",
+				"createElement\tfunction"
+			],
+			[
+				"HTML",
+				"HTMLHelper\tmodule"
+			],
+			[
+				"geyt",
+				"getElementsByClassName\tmethod"
+			],
+			[
+				"options",
+				"optionsCount\tlet"
+			],
+			[
+				"option",
+				"optionsCount\tlet"
+			],
+			[
+				"opti",
+				"optionsCount\tlet"
+			],
+			[
+				"op",
+				"optionsCount\tlet"
+			],
+			[
+				"get",
+				"getElementsByClassName\tmethod"
+			],
+			[
+				"child",
+				"childElementCount\tproperty"
+			],
+			[
+				"chi",
+				"childrenArray\tlet"
+			],
+			[
+				"chidr",
+				"children2\tlet"
+			],
+			[
+				"padding",
+				"paddingBottom\tproperty"
+			],
+			[
+				"ba",
+				"backgroundColor\tproperty"
+			],
+			[
+				"ve",
+				"vechileResetData\tlet"
+			],
+			[
+				"Ve",
+				"vehicleReset"
+			],
+			[
+				"in",
+				"instructions"
+			],
+			[
+				"has",
+				"hasChanges"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/RideStylerShowcaseButtonPicker.ts",
+			"settings":
+			{
+				"buffer_size": 9124,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/phone-portrait/_vehicle-visualization.scss",
+			"settings":
+			{
+				"buffer_size": 2246,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "RideStylerShowcase.strings.en.ts",
+			"settings":
+			{
+				"buffer_size": 3178,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 354.0,
+		"last_filter": "inst",
+		"selected_items":
+		[
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"setting",
+				"Preferences: Settings"
+			],
+			[
+				"defa",
+				"Preferences: Package Control Settings – Default"
+			],
+			[
+				"git",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 528.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/phone-portrait"
+	],
+	"file_history":
+	[
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/phone-portrait/_filter-modal.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/phone-landscape/_vehicle-visualization.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/phone-portrait/_suspension-selector.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RideStylerShowcaseVehicleVisualization.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RideStylerShowcasePaginationComponent.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/strings/RideStylerShowcase.strings.en.ts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/WheelDetails.ts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/phone-landscape/_pagination.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/_buttons.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/dist/ridestyler.showcase.js",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RideStylerShowcaseTabBar.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RideStylerShowcaseShareButton.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RideStylerShowcaseButtonPicker.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RideStylerShowcaseChangeWheelSize.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/dist/index.html",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/RideStylerShowcaseChangeWheelSize.ts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/ComponentBase.ts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/tablet/_share-modal.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/phone-portrait/_share-modal.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/phone-portrait/_pagination.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/desktop-xl/_pagination.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/desktop/_pagination.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/tv/_pagination.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/tablet/_pagination.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/gulpfile.js",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/tv/_showcase-table.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/package.json",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/layer-builder/package.json",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/index.html",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/RideStylerShowcasePaginationComponent.ts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/helpers/PromiseHelper.ts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/layer-builder/src/js/layerBuilder.js",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/layer-builder/dist/js/layerBuilder.min.js",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/RideStylerShowcase.events.ts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/layer-builder/gulpfile.js",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/RideStylerShowcase.ts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/dist/ridestyler.showcase.css",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RIdeStylerShowcaseShareModal.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RideStylerShowcaseVehicleSelection.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RideStylerShowcaseFilterModal.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RideStylerShowcaseProductModal.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/RideStylerShowcaseButton.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/vehicle-selection-modal/scss/rsvsm.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/vehicle-selection-modal/scripts/rsvsm.js",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/vehicle-selection-modal/scss/_variables.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/phone-landscape/_vehicle-selection.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/vehicle-renderer/js/rsvr.js",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RideStylerShowcaseTable.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/RideStylerShowcase.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/phone-landscape/_share-modal.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/phone-portrait/_showcase-table.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/RideStylerShowcase.styles.ts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/_tv.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/tablet/_showcase-table.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/desktop/_showcase-table.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/phone-landscape/_showcase-table.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/desktop-xl/_showcase-table.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/phone-portrait/_tab-bar.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RideStylerShowcaseModal.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/_tablet.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/_responsive-mixins.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/_phone-landscape.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/_phone-portrait.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/_desktop.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/_desktop-xl.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/phone-portrait/_vehicle-visualization.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/_shared.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/desktop/_share-modal.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/RideStylerShowcaseButtonPicker.ts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/_modals.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/tv/_tab-bar.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/desktop-xl/_tab-bar.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/tablet/_tab-bar.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/phone-landscape/_tab-bar.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/desktop/_tab-bar.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/desktop/_vehicle-selection.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/RideStylerShowcaseTabBar.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/RideStylerShowcaseTabBar.ts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/RideStylerShowcaseVehicleVisualization.ts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/tv/_vehicle-visualization.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/tablet/_vehicle-visualization.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/RideStylerShowcaseResponsive.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/RideStylerShowcase.css.d.ts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/dist/ridestyler.showcase.d.ts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/RideStylerShowcaseOptionMenu.ts",
+		"/C/Users/Tyler/AppData/Roaming/Sublime Text 3/Packages/Package Control/Package Control.sublime-settings",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/helpers/VisibilityHelper.ts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/helpers/StyleHelper.ts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/desktop-xl/_vehicle-visualization.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/RideStylerShowcase.api.ts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/RideStylerShowcase.api.settings.ts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/RideStylerShowcase.api.auth.ts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/_sprites.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/vehicle-renderer/rsvr.d.ts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/RideStylerShowcase.data.ts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/MainComponentBase.ts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/RideStylerShowcase.state.ts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/RideStylerShowcaseSuspensionSelector.ts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/RideStylerShowcaseWheelModal.ts",
+		"/C/Users/Tyler/.zshrc",
+		"/C/Users/Tyler/.babun/cygwin/home/Tyler/.babunrc",
+		"/C/Users/Tyler/.bash_history",
+		"/C/Users/Tyler/.babun/cygwin/home/Tyler/.bashrc",
+		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/RideStylerShowcaseVehicleVisualization.ts",
+		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/MainComponentBase.ts",
+		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RideStylerShowcaseProductModal.scss",
+		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RideStylerShowcaseFilterModal.scss",
+		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RideStylerShowcasePaginationComponent.scss",
+		"/C/cygwin64/Users/Tyler/bin/zsh/.zshrc",
+		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RideStylerShowcaseOptionMenu.scss",
+		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/helpers/BoxHelper.ts",
+		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RideStylerShowcaseVehicleSelection.scss",
+		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/helpers/ArrayHelper.ts",
+		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/dist/ridestyler.showcase.css",
+		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/RideStylerShowcase.scss",
+		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/src/index.html",
+		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/modals/RideStylerShowcaseFilterModal.ts",
+		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/RideStylerShowcasePopover.ts",
+		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/RideStylerShowcase.filters.ts",
+		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/RideStylerShowcase.state.ts",
+		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/RideStylerShowcase.styles.ts",
+		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/RideStylerShowcase.api.settings.ts",
+		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/RideStylerShowcase.api.auth.ts",
+		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/RideStylerShowcaseShareButton.ts",
+		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/ResizeableResourceImage.ts",
+		"/C/cygwin64/etc/passwd",
+		"/C/cygwin64/etc/nsswitch.conf",
+		"/C/cygwin64/home/Tyler/.bash_profile"
+	],
+	"find":
+	{
+		"height": 29.0
+	},
+	"find_in_files":
+	{
+		"height": 158.0,
+		"where_history":
+		[
+			"",
+			"C:\\Users\\Tyler\\rideStyler\\widgets\\com.burkson.ridestyler.widgets\\widgets",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"11.",
+			"'11.5em",
+			"left",
+			"this.component.style.width",
+			"'\n",
+			"margin",
+			"1",
+			"padding",
+			"height",
+			"2.5",
+			"3.5",
+			"height",
+			"ridestyler-showcase-change-wheel-siz",
+			"container",
+			"change wheel size",
+			"chnage wheel size",
+			".8em",
+			";\n",
+			"-icon",
+			"-icon-wheel",
+			"1.5",
+			"1em",
+			"er-",
+			"-specs",
+			"-features-specs",
+			"1px",
+			"0",
+			" this.optionContainer.style.opacity = this.optionContainer.style.opacity == '0' ? '1' : '0';\n                                    this.optionContainer.style.transform = this.optionContainer.style.transform == 'scaleY(0)' ? 'scaleY(1)' : 'scaleY(0)';\n                                    this.optionContainer.style.height = this.optionContainer.style.height == '0px' ? 'auto' : '0px';",
+			"cell",
+			"optionContainer",
+			"paginationComponent",
+			"DOMNodeInserted",
+			"'2.5em'",
+			"x",
+			"optionContainer",
+			"title",
+			"background",
+			"2.5em",
+			"height",
+			"containerGrowHeight",
+			"count",
+			"optionClass",
+			"optionContainerCount",
+			"%;\n",
+			"hasnoresults",
+			"updatepanel",
+			"Update()",
+			"IsLoading",
+			"isLoading",
+			"NoCache",
+			"\"noCache\": false",
+			"rejected",
+			"isRejected",
+			"rejected",
+			"Rejected",
+			"rejected",
+			"resized data",
+			"resized Data:",
+			"Name:resized Data:",
+			"Unable to get property 'length' of undefined or null reference",
+			"loading",
+			"rejected",
+			"loadMore",
+			"states",
+			"changeState",
+			"LBUtil",
+			"promise",
+			"when promise is finalized.",
+			"cannot changeState",
+			"xhr.",
+			"();\n",
+			"classlist-polyfill",
+			"/>\n",
+			"entry",
+			"runTime",
+			"runtime",
+			"babelPolyfill",
+			"browsers",
+			"polyfillStream",
+			"polyfills",
+			"polyfill",
+			"impetus",
+			"-webkit-text-stroke",
+			"webkit-text",
+			"generateVehiclePreviewSettings",
+			"RideStylerVehicleSelectionModal",
+			"modal",
+			"bestConfiguration",
+			"imagesetting",
+			"\n",
+			";\n",
+			"imageSet",
+			"ImageSet",
+			"imageSet",
+			"ImageSet",
+			"imageSet",
+			"ImageSet",
+			"imageSet",
+			"ImageSet",
+			"imageset",
+			"options",
+			"imageSettings",
+			"Viewport",
+			"Container",
+			"container",
+			"heigh",
+			"height",
+			"step",
+			"em",
+			"list ",
+			"-cont",
+			"vsm",
+			"//",
+			";\n",
+			"phone-portrait",
+			";\n",
+			"-flow",
+			"flow",
+			"phone-portrait",
+			"display",
+			"1",
+			"height",
+			"%;\n",
+			"flex",
+			"top",
+			"5",
+			"\n            // justify-content: center;\n            // align-items: center;",
+			"10px"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/RideStylerShowcaseButtonPicker.ts",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9124,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2743,
+								2743
+							],
+							[
+								5953,
+								5953
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.clone": -1,
+							"bracket_highlighter.clone_locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										2746,
+										2747
+									],
+									"2":
+									[
+										5956,
+										5957
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/single_quote.png",
+										"region.greenish"
+									],
+									"2":
+									[
+										"Packages/BracketHighlighter/icons/single_quote.png",
+										"region.greenish"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										2738,
+										2739
+									],
+									"2":
+									[
+										5948,
+										5949
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.clone_regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
+							],
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										2746,
+										2747
+									],
+									"2":
+									[
+										5956,
+										5957
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/single_quote.png",
+										"region.greenish"
+									],
+									"2":
+									[
+										"Packages/BracketHighlighter/icons/single_quote.png",
+										"region.greenish"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										2738,
+										2739
+									],
+									"2":
+									[
+										5948,
+										5949
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
+							],
+							"git_gutter_is_enabled": false,
+							"syntax": "Packages/TypeScript/TypeScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true,
+							"typescript_plugin_format_options":
+							{
+								"convertTabsToSpaces": true,
+								"indentSize": 4,
+								"tabSize": 4
+							},
+							"use_tab_stops": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 729.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/phone-portrait/_vehicle-visualization.scss",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2246,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1622,
+								1622
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.clone": -1,
+							"bracket_highlighter.clone_locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										1627,
+										1628
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/curly_bracket.png",
+										"region.purplish"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										1383,
+										1384
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.clone_regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
+							],
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										1627,
+										1628
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/curly_bracket.png",
+										"region.purplish"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										1383,
+										1384
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
+							],
+							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Darker.tmTheme",
+							"git_gutter_is_enabled": false,
+							"syntax": "Packages/Sass/Syntaxes/SCSS.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true,
+							"typescript_plugin_format_options":
+							{
+								"convertTabsToSpaces": true,
+								"indentSize": 4,
+								"tabSize": 4
+							}
+						},
+						"translation.x": 0.0,
+						"translation.y": 819.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "RideStylerShowcase.strings.en.ts",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3178,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1247,
+								1247
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.clone": -1,
+							"bracket_highlighter.clone_locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										1256,
+										1257
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/double_quote.png",
+										"region.greenish"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										1239,
+										1240
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.clone_regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
+							],
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										1256,
+										1257
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/double_quote.png",
+										"region.greenish"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										1239,
+										1240
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
+							],
+							"git_gutter_is_enabled": false,
+							"syntax": "Packages/TypeScript/TypeScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true,
+							"typescript_plugin_format_options":
+							{
+								"convertTabsToSpaces": true,
+								"indentSize": 4,
+								"tabSize": 4
+							},
+							"use_tab_stops": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 29.0
+	},
+	"input":
+	{
+		"height": 67.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.SublimeLinter":
+	{
+		"height": 0.0
+	},
+	"output.SublimeLinter Messages":
+	{
+		"height": 120.0
+	},
+	"output.doc":
+	{
+		"height": 0.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.mdpopups":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "mobileView.sublime-project",
+	"replace":
+	{
+		"height": 54.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 414.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

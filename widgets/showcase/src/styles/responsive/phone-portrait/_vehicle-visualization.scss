@@ -71,3 +71,42 @@
         padding-top: 5px;
     }
 }
+
+.ridestyler-showcase-button-picker {
+    width: 8em;
+    transition:all .25s ease-out;
+
+    &-title {    
+        padding: .5em;
+    }
+
+    &-option-container:last-child {
+        border-bottom-left-radius: .2em;
+    }
+}
+
+.ridestyler-showcase-change-wheel-size {
+    right: 0;
+    border-top-left-radius: .5em;
+    border-bottom-left-radius: .5em;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    margin: auto;
+    margin-bottom: 1.1em;
+}
+
+.ridestyler-showcase-customization-component {
+
+    &-title-container {
+        z-index: $zLayer3 + 1;
+    } 
+
+    &-title + .ridestyler-showcase-button {
+        left: 0;
+        margin-left: -1.25em;
+        border-top-right-radius: .5em;
+        border-bottom-right-radius: .5em;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+}

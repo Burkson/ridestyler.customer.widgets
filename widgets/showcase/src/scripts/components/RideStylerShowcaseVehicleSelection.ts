@@ -123,7 +123,7 @@ namespace RideStylerShowcase {
                 modelImage.className = 'ridestyler-showcase-vehicle-selection-wheel-showcase-image';
                 
                 modelImage.addEventListener('load', onModelImageLoad);
-                modelImages.push(modelImage);
+                modelImages.push( );
 
                 modelImage.src = modelImageSource;
                 wheelContainer.appendChild(modelImage);

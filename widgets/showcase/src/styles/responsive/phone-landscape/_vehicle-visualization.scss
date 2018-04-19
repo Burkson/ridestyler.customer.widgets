@@ -5,7 +5,7 @@
     bottom: 22%;
     right: 15%;
     height: 45%;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     pointer-events: none;
     z-index: $zLayer1;
 }
@@ -15,7 +15,6 @@
 }
 
 .ridestyler-showcase-details {
-    float: none;
     max-width: 30%;
     padding: 5px 10px;
 
@@ -37,10 +36,13 @@
 }
 
 .ridestyler-showcase-rotate-vehicle {
-    height: 25%;
+    height: 30%;
+    margin-bottom: 10px;
 }
 
 .ridestyler-showcase-suspension-selector-element {
+    margin-bottom: 3em;
+
     .noUi-horizontal {
         .noUi-handle {
             top: -0.2em;

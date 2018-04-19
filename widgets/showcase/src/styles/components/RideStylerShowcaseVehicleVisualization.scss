@@ -110,6 +110,7 @@
 
     & + .ridestyler-showcase-button {
         margin-top: 10px;
+        padding: .65em;
     }
     
     &-container {
@@ -125,6 +126,6 @@
 .ridestyler-share-my-vehicle-button {
     position: absolute;
     top: $screen-padding; right: $screen-padding;
-    z-index: $zLayer2;
-    padding: .75em;
+    z-index: $zLayer3;
+    padding: .65em;
 }
