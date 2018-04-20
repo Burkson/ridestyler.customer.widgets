@@ -198,11 +198,6 @@ function RideStylerViewport(elem, options) {
         function createNewLayer(instructions) {
             var promise = ridestyler.promise();
 
-            // Show our loader since we are creating a new layer
-            showLoaderElement();
-
-            var imageUrl = ridestyler.ajax.url('Vehicle/Render', instructions);
-
             // Retire our active image if it is available
             if (activeImage != null) {
                 retiredImages.push(activeImage);
@@ -214,8 +209,13 @@ function RideStylerViewport(elem, options) {
                 var oimg = retiredImages[i];
 
                 // Partially fade out our retired images
-                if (oimg.style.opacity > 0.5) oimg.style.opacity = 0.5;
+                if (oimg.style.opacity > 0.5) oimg.style.opacity = 0.0;
             }
+            
+            // Show our loader since we are creating a new layer
+            showLoaderElement();
+            var imageUrl = ridestyler.ajax.url('Vehicle/Render', instructions);
+
 
             // Create a new image element for the current render result
             var img = document.createElement('img');
@@ -246,7 +246,6 @@ function RideStylerViewport(elem, options) {
                         for(var i = 0; i < removedImages.length; i++) {
                             container.removeChild(removedImages[i]);
                         }
-
                         promise.resolve();
                     }, 300);
                 }

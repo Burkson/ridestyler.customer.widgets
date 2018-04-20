@@ -134,7 +134,6 @@ namespace RideStylerShowcase {
                     currentWheelFitment: newOption
                 });
                 this.updateViewport({
-                        
                     WheelFitment: newOption.WheelFitmentID
                 });
             }

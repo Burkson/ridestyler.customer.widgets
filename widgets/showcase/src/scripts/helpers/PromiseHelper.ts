@@ -51,7 +51,6 @@ namespace RideStylerShowcase.PromiseHelper {
 
         promise.fail(function (result) {
             if (typeof onrejected === 'function') {
-                // try {
                     let onrejectedResult = onrejected(result);
                     
                     if (isPromise(onrejectedResult)) {
@@ -60,13 +59,8 @@ namespace RideStylerShowcase.PromiseHelper {
                             .done(result => returnPromise.resolve(result))
                             .fail(result => returnPromise.reject(result));
 
-                    } else {
-                        // Resolve the promise with the returned value
-                        returnPromise.resolve(onrejectedResult);
-                    }
-                // } catch (exception) {
-                //     returnPromise.reject(exception);
-                // }
+                    } else { returnPromise.resolve(onrejectedResult); }
+                    
             } else {
                 returnPromise.reject(result);
             }

@@ -1,11 +1,15 @@
 
 @import "../../shared";
 
-.ridestyler-showcase-tab-bar {
-    &-tab {
+.ridestyler-showcase {
+    &-tab-bar-tab {
         &:after {
             font-size: 1em;
             bottom: .5em;    
         }
     }
+    &-icon-paint {
+    	font-size: 1.9em;
+    }
+
 }

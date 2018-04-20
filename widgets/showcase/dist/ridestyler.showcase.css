@@ -129,6 +129,8 @@ img {
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar-tab:after {
     font-size: 1em;
     bottom: .5em; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-icon-paint {
+    font-size: 1.9em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-pagination {
     margin-top: 4em;
     height: 75%; }
@@ -394,7 +396,7 @@ img {
   overflow-y: auto; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-table tbody {
-  height: 200px;
+  height: 55vh;
   text-align: center; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait img {
@@ -504,6 +506,11 @@ img {
   .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-pagination-option:only-child {
     margin-left: 35%;
     width: 100%; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-pagination-option-loader {
+    background: url(images/spinner.gif) no-repeat top center;
+    background-size: 25%;
+    min-width: 50px;
+    height: 50px; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape img {
   user-drag: none;
@@ -535,7 +542,7 @@ img {
   margin-left: -2.5em; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-table tbody {
-  height: 175px;
+  height: 55vh;
   text-align: center; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .vsm-modal-dialog {
@@ -1881,7 +1888,9 @@ img {
         animation: rotation 1s infinite linear; }
 
 .ridestyler-showcase-product-modal-page {
-  bottom: 0em; }
+  bottom: 0em;
+  height: 75vh;
+  margin-top: .75em; }
 
 img {
   user-drag: none;
