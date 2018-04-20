@@ -45,6 +45,9 @@ var typescriptProject = typescript.createProject('tsconfig.json');
 
 var polyfills = [
     './node_modules/babel-polyfill/dist/polyfill.js',
+    './node_modules/classlist-polyfill/src/index.js',
+    './node_modules/ie8/build/ie8.max.js',
+    './node_modules/TinyAnimate/src/requestAnimationFrame.js',
 ];
 var libraries = [
     './node_modules/nouislider/distribute/nouislider.js',
