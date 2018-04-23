@@ -1,6 +1,14 @@
-.ridestyler-showcase-table {
-    tbody {
-        height: 450px;
-        text-align: center;
-    }
+.ridestyler-showcase {
+		&-table {
+    		tbody {
+        		height: 450px;
+        		text-align: center;
+    		}
+		}
+		
+		&-product-modal {
+				img {
+						margin-top: -8em;
+				}
+		}
 }

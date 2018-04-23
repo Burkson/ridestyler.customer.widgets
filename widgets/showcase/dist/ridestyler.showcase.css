@@ -142,9 +142,24 @@ img {
     .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-pagination-option:only-child {
       margin-bottom: 5%;
       margin-left: 40%; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-pagination-option-loading:after {
+      content: "";
+      line-height: 0.3em;
+      font-size: 2em;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+      animation: rotation 1s infinite linear;
+      position: absolute;
+      background-image: url("images/tire-loading.png");
+      background-size: 100%;
+      width: 0.8em;
+      height: 0.8em;
+      margin-left: -0.4em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-table tbody {
     height: 475px;
     text-align: center; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-product-modal img {
+    margin-top: -12em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-vehicle-selection-wheel-showcase {
     height: 200px;
     width: 540px;
@@ -279,6 +294,8 @@ img {
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-table tbody {
     height: 450px;
     text-align: center; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-product-modal img {
+    margin-top: -8em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .vsm-modal-dialog {
     width: 750px; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .vsm-modal-body .center-piece {
@@ -545,6 +562,9 @@ img {
   height: 55vh;
   text-align: center; }
 
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-product-modal img {
+  margin-top: -30em; }
+
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .vsm-modal-dialog {
   width: auto; }
 
@@ -652,6 +672,8 @@ img {
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-table tbody {
     height: 475px;
     text-align: center; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-product-modal img {
+    margin-top: -16em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .vsm-modal-dialog {
     width: 700px; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .vsm-modal-body .center-piece {

@@ -104,7 +104,6 @@ namespace RideStylerShowcase {
             // isn't guaranteed to be loaded until the initialized event
             this.events.on('initialized', () => {
                 this.setupViewport(container);
-
                 // Setup initial tab layout
                 this.updateTabLayout();
 
@@ -222,6 +221,14 @@ namespace RideStylerShowcase {
             });
 
             this.viewport = new RideStylerViewport(viewportElement);
+
+            //Listens for new car selection and hides vehicle between updates
+            this.events.on('vehicle-selected', () => {
+                let viewportImgArray = [...viewportElement.getElementsByTagName('img')];
+                if (viewportImgArray.length > 1) { 
+                    viewportImgArray[1].setAttribute('style', 'opacity: 0');
+                }
+            })
         }
 
         private updateTabs() {

@@ -171,7 +171,6 @@ namespace RideStylerShowcase {
                     currentTireOption: undefined,
                     currentVehicleDescriptionModel: undefined
                 });
-
                 return true;
             });
 
@@ -246,7 +245,6 @@ namespace RideStylerShowcase {
         
         private onStateChanged(ev: state.StateChangedEvent):boolean {
             this.updateCurrentComponent(ev);
-
             return true;
         }
 

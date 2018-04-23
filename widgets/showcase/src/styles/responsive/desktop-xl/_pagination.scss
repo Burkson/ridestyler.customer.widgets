@@ -17,5 +17,24 @@
   		margin-bottom: 5%;
   		margin-left: 40%;
   	}
-	}
+    &-loading:after {
+        content: "";
+        
+        line-height: 0.3em;
+        font-size: 2em;
+        @include crispImageRendering;
+        @include rotate;
+        
+        position: absolute;
+
+        background-image: url('images/tire-loading.png');
+        background-size: 100%;
+
+        $size: 0.8em;
+
+        width: $size ;
+        height: $size ;
+        margin-left: -$size/2;
+    }
+  }
 }

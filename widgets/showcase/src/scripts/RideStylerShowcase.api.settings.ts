@@ -66,14 +66,14 @@ namespace RideStylerShowcase.api.settings {
     function parseSuspensionRanges(suspensionRangesSetting:string):RideStylerShowcaseSettingsFromAPI["SuspensionRanges"] {
         if (!suspensionRangesSetting) return defaultSettings.SuspensionRanges;
 
-        // try {
+        try {
             let suspensionRanges:RideStylerShowcaseSettingsFromAPI["SuspensionRanges"] = JSON.parse(suspensionRangesSetting);
 
             return suspensionRanges;
-        // } catch (e) {
-            // console.error(e);
+        } catch (e) {
+            console.error(e);
 
-            // return defaultSettings.SuspensionRanges;
-        // }
+            return defaultSettings.SuspensionRanges;
+        }
     }
 }
