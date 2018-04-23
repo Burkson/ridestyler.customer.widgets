@@ -1509,6 +1509,7 @@ declare namespace RideStylerShowcase {
         private updateTabs();
         private updateTabLayout();
         private setupTabs();
+        private vehicleDifferentFromState();
         protected onDisplay(): void;
         private onVehicleChanged();
         private initializeForNewVehicle();

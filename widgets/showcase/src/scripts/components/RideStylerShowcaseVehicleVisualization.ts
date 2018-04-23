@@ -107,6 +107,11 @@ namespace RideStylerShowcase {
                 // Setup initial tab layout
                 this.updateTabLayout();
 
+                this.events.on('vehicle-selected', () => {
+                    if (this.vehicleDifferentFromState())
+                        this.viewport.Reset();
+                })
+
                 // Hide the share button if sharing is disabled
                 if (!this.showcase.settingsFromAPI.EnableSharing)
                     shareButton.style.display = 'none';
@@ -223,12 +228,6 @@ namespace RideStylerShowcase {
             this.viewport = new RideStylerViewport(viewportElement);
 
             //Listens for new car selection and hides vehicle between updates
-            this.events.on('vehicle-selected', () => {
-                let viewportImgArray = [...viewportElement.getElementsByTagName('img')];
-                if (viewportImgArray.length > 1) { 
-                    viewportImgArray[1].setAttribute('style', 'opacity: 0');
-                }
-            })
         }
 
         private updateTabs() {
@@ -291,7 +290,7 @@ namespace RideStylerShowcase {
             };
         }
 
-        protected onDisplay() {
+        private vehicleDifferentFromState(): boolean {
             let stateData = this.state.getData();
             if (!stateData.currentVehicleConfigurationID || !stateData.currentVehicleTireOptionID) {
                 console.error('Trying to show the visualize screen without a vehicle configuration or tire option.');
@@ -300,7 +299,13 @@ namespace RideStylerShowcase {
             let vehicleChanged = !GUIDHelper.areEqual(stateData.currentVehicleConfigurationID, this.vehicleConfigurationID);
             let tireOptionChanged = !GUIDHelper.areEqual(stateData.currentVehicleTireOptionID, this.vehicleTireOptionID);
 
-            if (vehicleChanged || tireOptionChanged) {
+            return vehicleChanged || tireOptionChanged;
+        }
+
+        protected onDisplay() {
+            if (this.vehicleDifferentFromState()) {
+                let stateData = this.state.getData();
+
                 this.vehicleConfigurationID = stateData.currentVehicleConfigurationID
                 this.vehicleDescription = stateData.currentVehicleDescription;
                 

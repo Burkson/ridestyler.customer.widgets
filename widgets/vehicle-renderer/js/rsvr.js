@@ -147,6 +147,8 @@ function RideStylerViewport(elem, options) {
 
     this.Reset = function() {
         state = {};
+
+        if (typeof renderer.Reset === 'function') renderer.Reset();
     };
 
 
@@ -189,6 +191,13 @@ function RideStylerViewport(elem, options) {
          */
         this.Render = function(instructions) {
             return createNewLayer(instructions);
+        };
+
+        this.Reset = function () {
+            if (activeImage != null) {
+                container.removeChild(activeImage);
+                activeImage = null;
+            }
         };
 
         /**
