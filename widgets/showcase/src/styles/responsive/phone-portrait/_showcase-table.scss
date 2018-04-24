@@ -1,9 +1,6 @@
-$border-radius: 5px;
-
 .ridestyler-showcase {
     &-table {
     	tbody {
-        // height: 55vh;
         text-align: center;
     	}
     }
@@ -33,36 +30,31 @@ $border-radius: 5px;
     }
 }
 
-// iPhone X / iPhone 6++ / Android Screen height fix for Spec. table to fit to screen
-@media screen and ( max-height: 812px) and (min-height: 810px) {
-    .ridestyler-showcase-table {
-        tbody {
-            height: 75vh;
-        }
-    }
-}
-
-@media screen and ( max-height: 731px) and (min-height: 665px) {
-    .ridestyler-showcase-table {
-        tbody {
-            height: 68vh;
+// Prevents overflow on fixed header - Android
+@media only screen and (max-width: 414px) and (min-width: 411px) {
+    .ridestyler-showcase {
+        &-product-modal {
+            &-page {
+                height: 82vh;
+                tbody {
+                // background: blue;
+                    height: 85vh;
+                    overflow: scroll;
+                }
+            }
         }
     }
 }
 
 // Prevents overflow on fixed header - Android
-@media only screen and (max-width: 414px) {
+@media only screen and (max-height: 640px) and (min-height: 630px) {
     .ridestyler-showcase {
         &-product-modal {
             &-page {
-                height: 85vh;
+                height: 82vh;
                 tbody {
-                    overflow: visible;
-                }
-            }
-            &-summary {
-                tbody {
-                    max-height: 32vh;
+                // background: blue;
+                    height: 85vh;
                     overflow: scroll;
                 }
             }
@@ -71,14 +63,48 @@ $border-radius: 5px;
 }
 
 
+// iPhone X / iPhone 6++ / Android Screen height fix for Spec. table to fit to screen
+@media screen and ( max-height: 824px) and (min-height: 736px) {
+    .ridestyler-showcase {
+        &-product-modal {
+            &-page {
+                height: 85vh;
+                tbody {
+                    height: 80vh;
+                    overflow: scroll;
+                }
+            }
+        }
+    }
+}
+
+
+//iPhone X Spec. Page Height Adjustments
+@media screen and ( max-height: 813px) and (min-height: 811px) {
+    .ridestyler-showcase {
+        &-product-modal {
+            &-page {
+                tbody {
+                    min-height: 80vh;
+                    overflow: scroll;
+                }
+            }
+            &-summary {
+                max-height: 32vh;
+                overflow: hidden; 
+            }
+        }
+    }
+}
 
 // Prevents overflow on fixed header - iPhone 6+
 @media only screen and (max-width: 376px) {
     .ridestyler-showcase {
         &-product-modal {
             &-page {
+                min-height: 80vh; 
                 tbody {
-                height: 75vh;
+                    height: 75vh;
                     overflow: scroll;
                 }
             }

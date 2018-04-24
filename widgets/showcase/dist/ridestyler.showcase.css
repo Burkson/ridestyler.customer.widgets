@@ -437,27 +437,41 @@ img {
         border-bottom-right-radius: 0;
         border-bottom-left-radius: 5px; } }
 
-@media screen and (max-height: 812px) and (min-height: 810px) {
-  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-table tbody {
-    height: 75vh; } }
+@media only screen and (max-width: 414px) and (min-width: 411px) {
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-page {
+    height: 82vh; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-page tbody {
+      height: 85vh;
+      overflow: scroll; } }
 
-@media screen and (max-height: 731px) and (min-height: 665px) {
-  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-table tbody {
-    height: 68vh; } }
+@media only screen and (max-height: 640px) and (min-height: 630px) {
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-page {
+    height: 82vh; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-page tbody {
+      height: 85vh;
+      overflow: scroll; } }
 
-@media only screen and (max-width: 414px) {
+@media screen and (max-height: 824px) and (min-height: 736px) {
   .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-page {
     height: 85vh; }
     .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-page tbody {
-      overflow: visible; }
-  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-summary tbody {
+      height: 80vh;
+      overflow: scroll; } }
+
+@media screen and (max-height: 813px) and (min-height: 811px) {
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-page tbody {
+    min-height: 80vh;
+    overflow: scroll; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-summary {
     max-height: 32vh;
-    overflow: scroll; } }
+    overflow: hidden; } }
 
 @media only screen and (max-width: 376px) {
-  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-page tbody {
-    height: 75vh;
-    overflow: scroll; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-page {
+    min-height: 80vh; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-page tbody {
+      height: 75vh;
+      overflow: scroll; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-summary tbody {
     max-height: 32vh;
     overflow: scroll; } }
