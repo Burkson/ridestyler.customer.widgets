@@ -1,10 +1,18 @@
 .ridestyler-showcase-table {
     tbody {
-        height: 600px;
+        height: 45vh;
         text-align: center;
     }
 }
 
 .dot-info {
 	margin-top: 0;
+}
+
+.ridestyler-showcase-product-modal {
+	&-image {
+		width: 40%;
+		align-items: center;
+		margin-left: 10%;
+	}
 }

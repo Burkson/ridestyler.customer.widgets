@@ -190,7 +190,7 @@ namespace RideStylerShowcase {
                 action: "wheel/image",
                 baseInstructions: {
                     PositionX: ridestyler.Requests.ImagePosition.Center,
-                    PositionY: ridestyler.Requests.ImagePosition.Far,
+                    PositionY: ridestyler.Requests.ImagePosition.Near,
                     IncludeShadow: true
                 }
             });

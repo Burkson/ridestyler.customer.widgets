@@ -2,29 +2,45 @@
 @import "../modals";
 
 .ridestyler-showcase-table {
-    display: flex;
+    overflow: hidden;
     flex-direction: column;
     font-size: 1em;
     width: 100%;
     border: 0;
     border-collapse: collapse;
+    border-top-left-radius: .75em;
+    border-top-right-radius: .75em;
+
+    -ms-overflow-style: none;  // IE 10+
+    overflow: -moz-scrollbars-none;  // Firefox
+
+    ::-webkit-scrollbar { 
+        display: none;  // Safari and Chrome
+    }
+
+    table {
+        table-layout:fixed;
+        text-align: center;
+        word-break: break-all;
+    }
 
     th {
         text-align: center;
         font-weight: normal;
         padding: 10px 5px;
+        min-width: 1%;
+        flex: 1 auto;
     }
     
     td {
         flex: 1 auto;
         text-align: center;
         padding: 10px 5px;
-        width: 0;
+        width: 1%;
         word-wrap: break-word;
     }
 
     tr {
-        display: flex;
         text-align: center;
         align-items: center;
     }
@@ -47,20 +63,26 @@
         text-align: center;
         align-items: center;
     }
+    
+    thead tr {
+        display: flex;
+    }
 
     tbody {
+        position: absolute;
         display: block;
         width: 100%;
-        overflow-y: auto;
+        overflow-y: scroll;
         height: 250px;
+    }
+
+    thead {
+
     }
 
     &-head {
         background-color: $primary-color;
         color: white;
-        border-top-left-radius: .75em;
-        border-top-right-radius: .75em;
-
     }
 
     &-body {

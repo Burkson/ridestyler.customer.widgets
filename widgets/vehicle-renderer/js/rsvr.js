@@ -180,7 +180,7 @@ function RideStylerViewport(elem, options) {
     function isCanvasSupported() {
         var elem = document.createElement('canvas');
         return !!(elem.getContext && elem.getContext('2d'));
-    }
+    } 
 
     function RideStylerImageRenderer(container) {
         var activeImage = null;

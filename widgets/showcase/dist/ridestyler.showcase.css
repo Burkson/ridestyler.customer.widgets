@@ -158,8 +158,6 @@ img {
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-table tbody {
     height: 475px;
     text-align: center; }
-  .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-product-modal img {
-    margin-top: -12em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-vehicle-selection-wheel-showcase {
     height: 200px;
     width: 540px;
@@ -219,10 +217,14 @@ img {
     .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-pagination-option:only-child {
       margin-left: 40%; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-table tbody {
-    height: 600px;
+    height: 45vh;
     text-align: center; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .dot-info {
     margin-top: 0; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-product-modal-image {
+    width: 40%;
+    align-items: center;
+    margin-left: 10%; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-vehicle-selection-wheel-showcase {
     height: 300px;
     width: 810px;
@@ -294,8 +296,6 @@ img {
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-table tbody {
     height: 450px;
     text-align: center; }
-  .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-product-modal img {
-    margin-top: -8em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .vsm-modal-dialog {
     width: 750px; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .vsm-modal-body .center-piece {
@@ -412,9 +412,11 @@ img {
   bottom: 0;
   overflow-y: auto; }
 
-.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-table tbody {
-  height: 55vh;
-  text-align: center; }
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-table {
+  min-width: 100vw; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-table tbody {
+    height: 55vh;
+    text-align: center; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait img {
   user-drag: none;
@@ -562,9 +564,6 @@ img {
   height: 55vh;
   text-align: center; }
 
-.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-product-modal img {
-  margin-top: -30em; }
-
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .vsm-modal-dialog {
   width: auto; }
 
@@ -672,8 +671,6 @@ img {
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-table tbody {
     height: 475px;
     text-align: center; }
-  .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-product-modal img {
-    margin-top: -16em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .vsm-modal-dialog {
     width: 700px; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .vsm-modal-body .center-piece {
@@ -1841,24 +1838,35 @@ img {
   -ms-user-select: none; }
 
 .ridestyler-showcase-table {
-  display: flex;
+  overflow: hidden;
   flex-direction: column;
   font-size: 1em;
   width: 100%;
   border: 0;
-  border-collapse: collapse; }
+  border-collapse: collapse;
+  border-top-left-radius: .75em;
+  border-top-right-radius: .75em;
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none; }
+  .ridestyler-showcase-table ::-webkit-scrollbar {
+    display: none; }
+  .ridestyler-showcase-table table {
+    table-layout: fixed;
+    text-align: center;
+    word-break: break-all; }
   .ridestyler-showcase-table th {
     text-align: center;
     font-weight: normal;
-    padding: 10px 5px; }
+    padding: 10px 5px;
+    min-width: 1%;
+    flex: 1 auto; }
   .ridestyler-showcase-table td {
     flex: 1 auto;
     text-align: center;
     padding: 10px 5px;
-    width: 0;
+    width: 1%;
     word-wrap: break-word; }
   .ridestyler-showcase-table tr {
-    display: flex;
     text-align: center;
     align-items: center; }
   .ridestyler-showcase-table tr:nth-child(even) {
@@ -1873,16 +1881,17 @@ img {
     flex: 1 auto;
     text-align: center;
     align-items: center; }
+  .ridestyler-showcase-table thead tr {
+    display: flex; }
   .ridestyler-showcase-table tbody {
+    position: absolute;
     display: block;
     width: 100%;
-    overflow-y: auto;
+    overflow-y: scroll;
     height: 250px; }
   .ridestyler-showcase-table-head {
     background-color: #ea1921;
-    color: white;
-    border-top-left-radius: .75em;
-    border-top-right-radius: .75em; }
+    color: white; }
   .ridestyler-showcase-table-body {
     background-color: #fbfbfb; }
     .ridestyler-showcase-table-body-loading {
