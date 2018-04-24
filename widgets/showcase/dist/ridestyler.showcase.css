@@ -416,7 +416,7 @@ img {
   height: 55vh;
   text-align: center; }
 
-@media only screen and (max-width: 340px) {
+@media only screen and (max-width: 325px) {
   .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase {
     display: flex;
     justify-content: center; }
