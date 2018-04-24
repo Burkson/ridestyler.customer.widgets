@@ -435,6 +435,14 @@ img {
           border-bottom-right-radius: 0;
           border-bottom-left-radius: 5px; } }
 
+@media screen and (max-height: 812px) and (min-height: 810px) {
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-table tbody {
+    height: 75vh; } }
+
+@media screen and (max-height: 731px) and (min-height: 666px) {
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-table tbody {
+    height: 68vh; } }
+
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait img {
   user-drag: none;
   user-select: none;

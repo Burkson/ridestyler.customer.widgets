@@ -9,7 +9,7 @@ $border-radius: 5px;
     }
 }
 
-
+// iPhone 5 Summary and Specifications moved from blocking title
 @media only screen and (max-width: 360px) {
     .ridestyler-showcase {
         tbody {
@@ -35,6 +35,24 @@ $border-radius: 5px;
                 border-bottom-left-radius: 5px;
             }
             }
+        }
+    }
+}
+
+// iPhone X / iPhone 6++ / Android Screen height fix for Spec. table to fit to screen
+@media screen and ( max-height: 812px) and (min-height: 810px) {
+    .ridestyler-showcase-table {
+        tbody {
+            height: 75vh;
+        }
+    }
+}
+
+
+@media screen and ( max-height: 731px) and (min-height: 666px) {
+    .ridestyler-showcase-table {
+        tbody {
+            height: 68vh;
         }
     }
 }
