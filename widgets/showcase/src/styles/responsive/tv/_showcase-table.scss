@@ -1,18 +1,19 @@
-.ridestyler-showcase-table {
-    tbody {
-        height: 45vh;
-        text-align: center;
-    }
+.ridestyler-showcase {
+		&-table {
+    		tbody {
+        		height: 45vh;
+        		text-align: center;
+    		}
+		}
+		&-product-modal {
+				&-image {
+					width: 40%;
+					align-items: center;
+					margin-left: 10%;
+				}
+		}
 }
 
 .dot-info {
 	margin-top: 0;
-}
-
-.ridestyler-showcase-product-modal {
-	&-image {
-		width: 40%;
-		align-items: center;
-		margin-left: 10%;
-	}
 }

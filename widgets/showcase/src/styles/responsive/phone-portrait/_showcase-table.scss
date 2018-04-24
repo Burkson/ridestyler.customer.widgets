@@ -1,7 +1,12 @@
-.ridestyler-showcase-table {
-    tbody {
+.ridestyler-showcase {
+    &-table {
+    	tbody {
         height: 55vh;
         text-align: center;
-    } 
-    min-width: 100vw;
+    	}
+    }
+    &-toggle-button {
+    	font-size: .9em;
+    	width: 38vw;
+    }
 }

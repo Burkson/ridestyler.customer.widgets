@@ -80,7 +80,7 @@ namespace RideStylerShowcase {
                 bounce: false,
                 multiplier: -1,
                 update: (x, y) => {
-                    this.optionContainer.scrollLeft = x;
+                    this.optionContainer.scrollLeft = Math.floor(x);
                     this.optionContainer.scrollTop = y;
 
                     this.onScroll();
@@ -102,7 +102,6 @@ namespace RideStylerShowcase {
 
         public updateBounds() {
             const {scrollWidth, offsetWidth} = this.optionContainer;
-
             this.touchScrollHandler.setBoundX([0, scrollWidth - offsetWidth]);
         }
 
@@ -115,6 +114,7 @@ namespace RideStylerShowcase {
             if (optionContainer.scrollLeft >= optionContainer.scrollWidth - optionContainer.offsetWidth - reachedEndTolerance) {
                 this.onEndVisible();
             }
+            this.updateBounds();
         }
 
         protected onEndVisible() {
@@ -220,6 +220,7 @@ namespace RideStylerShowcase {
 
             TinyAnimate.animate(startLeft, newLeft, duration, currentLeft => {
                 this.optionContainer.scrollLeft = currentLeft
+                this.touchScrollHandler.setValues(newLeft, 0);
             }, 'easeOutCubic', () => this.update());
         }
 
@@ -229,6 +230,7 @@ namespace RideStylerShowcase {
 
         public nextPage() {
             this.scrollTo(this.optionContainer.scrollLeft + this.optionContainer.clientWidth);
+
         }
 
         public selectOption(optionElement:HTMLElement) {

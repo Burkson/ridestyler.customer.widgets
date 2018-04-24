@@ -10,18 +10,28 @@
     border-collapse: collapse;
     border-top-left-radius: .75em;
     border-top-right-radius: .75em;
-
-    -ms-overflow-style: none;  // IE 10+
-    overflow: -moz-scrollbars-none;  // Firefox
+    -ms-overflow-style: none; 
+    overflow: -moz-scrollbars-none;  
 
     ::-webkit-scrollbar { 
-        display: none;  // Safari and Chrome
+        display: none; 
     }
 
     table {
         table-layout:fixed;
         text-align: center;
         word-break: break-all;
+    }
+
+    thead th:after {
+      content: '';
+      overflow-y: scroll;
+      visibility: hidden;
+      height: 10px;
+    }
+
+    thead tr {
+        display: flex;
     }
 
     th {
@@ -31,6 +41,22 @@
         min-width: 1%;
         flex: 1 auto;
     }
+    
+    thead th {
+        display: inline-block;
+        flex: 1 auto;
+        text-align: center;
+        align-items: center;
+    }
+
+    tbody {
+        position: absolute;
+        display: block;
+        width: 100%;
+        overflow-y: scroll;
+        height: 250px;
+    }
+    
     
     td {
         flex: 1 auto;
@@ -47,37 +73,6 @@
 
     tr:nth-child(even) {
         background-color: #eee;
-    }
-
-    thead th:after {
-      content: '';
-      overflow-y: scroll;
-      visibility: hidden;
-      height: 10px;
-    }
-
-    
-    thead th {
-        display: inline-block;
-        flex: 1 auto;
-        text-align: center;
-        align-items: center;
-    }
-    
-    thead tr {
-        display: flex;
-    }
-
-    tbody {
-        position: absolute;
-        display: block;
-        width: 100%;
-        overflow-y: scroll;
-        height: 250px;
-    }
-
-    thead {
-
     }
 
     &-head {
