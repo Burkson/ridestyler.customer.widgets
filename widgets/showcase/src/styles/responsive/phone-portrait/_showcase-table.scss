@@ -12,12 +12,6 @@ $border-radius: 5px;
 // iPhone 5 Summary and Specifications moved from blocking title
 @media only screen and (max-width: 360px) {
     .ridestyler-showcase {
-        tbody {
-            max-height: 1vh;
-        }
-
-        display: flex;
-
         &-toggle-button {
             display: flex;
             flex-direction: column;
@@ -53,6 +47,24 @@ $border-radius: 5px;
     .ridestyler-showcase-table {
         tbody {
             height: 68vh;
+        }
+    }
+}
+
+
+@media only screen and (max-width: 414px) {
+    .ridestyler-showcase {
+        &-product-modal {
+            &-page {   
+                tbody {
+                    max-height: 72vh;
+                }
+            }
+            &-summary {
+                tbody {
+                    max-height: 32vh;
+                }
+            }
         }
     }
 }
