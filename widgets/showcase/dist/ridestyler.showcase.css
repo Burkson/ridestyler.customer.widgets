@@ -416,9 +416,21 @@ img {
   height: 55vh;
   text-align: center; }
 
-.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-toggle-button {
-  font-size: .9em;
-  width: 38vw; }
+@media only screen and (max-width: 340px) {
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase {
+    display: flex;
+    justify-content: center; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase tbody {
+      max-height: 1vh; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-toggle-button {
+      display: flex;
+      flex-direction: row;
+      text-align: center;
+      font-size: .9em;
+      bottom: .5%;
+      right: 25%; }
+      .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-toggle-button-option {
+        padding: 7px; } }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait img {
   user-drag: none;
