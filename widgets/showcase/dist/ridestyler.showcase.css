@@ -357,6 +357,13 @@ img {
     min-width: 50px;
     height: 50px; }
 
+@media only screen and (max-width: 411px) {
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-pagination-wrapper {
+    justify-content: flex-start; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-pagination-option {
+    margin-right: 1.25em;
+    min-width: 9em; } }
+
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-share .ridestyler-showcase-share-buttons {
   display: flex;
   justify-content: center; }
