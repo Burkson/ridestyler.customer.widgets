@@ -4,3 +4,25 @@
         text-align: center;
     }
 }
+
+
+
+// Prevents overflow on fixed header - iPad
+@media only screen and (max-width: 1025px) and (min-width: 768px) {
+    .ridestyler-showcase {
+        &-product-modal {
+            &-page {
+                margin-top: -.5em;
+                height: 100vh;
+                tbody {
+                    height: 77vh;
+                    overflow: scroll;
+                }
+            }
+            &-summary {
+                max-height: 32vh;
+                overflow: hidden; 
+            }
+        }
+    }
+}

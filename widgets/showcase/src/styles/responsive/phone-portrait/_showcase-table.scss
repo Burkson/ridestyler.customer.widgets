@@ -37,10 +37,13 @@
             &-page {
                 height: 82vh;
                 tbody {
-                // background: blue;
-                    height: 85vh;
+                    height: 77vh;
                     overflow: scroll;
                 }
+            }
+            &-summary {
+                max-height: 32vh;
+                overflow: hidden; 
             }
         }
     }
@@ -53,7 +56,6 @@
             &-page {
                 height: 82vh;
                 tbody {
-                // background: blue;
                     height: 85vh;
                     overflow: scroll;
                 }
@@ -73,6 +75,10 @@
                     height: 80vh;
                     overflow: scroll;
                 }
+            }
+            &-summary {
+                max-height: 32vh;
+                overflow: hidden; 
             }
         }
     }
@@ -121,12 +127,13 @@
 
 
 // Prevents overflow on fixed header - iPhone 5
-@media only screen and (max-width: 320px) {
+@media only screen and (max-width: 321px) {
     .ridestyler-showcase {
         &-product-modal {
             &-page {
+                min-height: 60vh;
                 tbody {
-                height: 65vh;
+                    min-height: 50vh;
                     overflow: scroll;
                 }
             }

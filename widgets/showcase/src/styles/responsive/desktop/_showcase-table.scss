@@ -6,3 +6,23 @@
     		}
 		}
 }
+
+
+// Prevents overflow on fixed header - iPad Pro
+@media only screen and (max-width: 1200px) and (min-width: 768px) {
+    .ridestyler-showcase {
+        &-product-modal {
+            &-page {
+                height: 71vh;
+                tbody {
+                    height: 62vh;
+                    overflow: scroll;
+                }
+            }
+            &-summary {
+                max-height: 32vh;
+                overflow: hidden; 
+            }
+        }
+    }
+}

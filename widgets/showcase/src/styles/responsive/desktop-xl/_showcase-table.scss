@@ -4,3 +4,22 @@
         text-align: center;
     }
 }
+
+@media only screen and (max-width: 3000px) and (min-width: 100px) {
+    .ridestyler-showcase {
+        &-product-modal {
+            &-page {
+                margin-top: -.5em;
+                height: 80vh;
+                tbody {
+                    height: 65vh;
+                    overflow: scroll;
+                }
+            }
+            &-summary {
+                max-height: 32vh;
+                overflow: hidden; 
+            }
+        }
+    }
+}
