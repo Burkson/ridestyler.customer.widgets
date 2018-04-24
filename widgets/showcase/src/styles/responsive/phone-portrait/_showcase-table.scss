@@ -19,15 +19,15 @@ $border-radius: 5px;
             font-size: .95em;
             right: 0;
 
-
             &-option {
                 padding: 7px 18px;
-            &:last-child {
-                border-top-right-radius: 0;
-                border-top-left-radius: 5px;
-                border-bottom-right-radius: 0;
-                border-bottom-left-radius: 5px;
-            }
+                
+                &:last-child {
+                    border-top-right-radius: 0;
+                    border-top-left-radius: 5px;
+                    border-bottom-right-radius: 0;
+                    border-bottom-left-radius: 5px;
+                }
             }
         }
     }
@@ -51,7 +51,7 @@ $border-radius: 5px;
     }
 }
 
-
+// Prevents overflow on fixed header
 @media only screen and (max-width: 414px) {
     .ridestyler-showcase {
         &-product-modal {
