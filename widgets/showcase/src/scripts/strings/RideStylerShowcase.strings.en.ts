@@ -20,7 +20,7 @@ namespace RideStylerShowcase.strings {
         "change-wheel-size":              "Wheel Size",
         "no-results":                     "No Results Found",
         "no-wheel-results":               "No wheels found for this vehicle.",
-        "wheel-features-specs":           "Features & Specs",
+        "wheel-features-specs":           "Features & Specs.",
         "share-my-vehicle":               "Share My Vehicle",
         "share-instructions":             "Use the buttons to share or save your vehicle configuration.",
         "no-description-wheel":           "We don't have a description for this wheel yet",
