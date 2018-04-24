@@ -413,7 +413,6 @@ img {
   overflow-y: auto; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-table tbody {
-  height: 55vh;
   text-align: center; }
 
 @media only screen and (max-width: 360px) {
@@ -435,15 +434,34 @@ img {
   .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-table tbody {
     height: 75vh; } }
 
-@media screen and (max-height: 731px) and (min-height: 666px) {
+@media screen and (max-height: 731px) and (min-height: 665px) {
   .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-table tbody {
     height: 68vh; } }
 
 @media only screen and (max-width: 414px) {
-  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-page tbody {
-    max-height: 72vh; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-page {
+    height: 85vh; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-page tbody {
+      overflow: visible; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-summary tbody {
-    max-height: 32vh; } }
+    max-height: 32vh;
+    overflow: scroll; } }
+
+@media only screen and (max-width: 376px) {
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-page tbody {
+    height: 75vh;
+    overflow: scroll; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-summary tbody {
+    max-height: 32vh;
+    overflow: scroll; } }
+
+@media only screen and (max-width: 320px) {
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-page tbody {
+    height: 65vh;
+    overflow: scroll; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-summary tbody {
+    max-height: 32vh;
+    overflow: scroll; } }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait img {
   user-drag: none;
@@ -541,6 +559,12 @@ img {
   .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-tab-bar-tab:after {
     font-size: 1em;
     bottom: 0; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-tab-bar-tab-icon {
+    font-size: 1.5em; }
+
+@media only screen and (max-height: 320px) {
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-tab-bar-tab-icon {
+    font-size: 1.2em; } }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-pagination {
   margin-top: 5.5em;
@@ -594,6 +618,12 @@ img {
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-product-modal-image img {
   height: 85%; }
 
+@media only screen and (max-height: 320px) {
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-product-modal-page tbody {
+    max-height: 50vh; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-product-modal-summary tbody {
+    max-height: 50vh; } }
+
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .vsm-modal-dialog {
   width: auto; }
 
@@ -603,11 +633,14 @@ img {
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-vehicle-selection-content {
   top: 2.5%; }
 
-.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape #ridestyler-showcase-select-your-vehicle-wrapper {
-  margin-top: 0; }
-
-.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .vsm-modal .dot-info-before, .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .vsm-modal .dot-info.active-before {
-  margin-top: 1em; }
+@media only screen and (max-height: 375px) {
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .vsm-modal {
+    font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    letter-spacing: 0.75px;
+    margin: .75em;
+    height: 100vh; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .vsm-modal img {
+      margin-top: -2.75em; } }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape img {
   user-drag: none;
@@ -2466,8 +2499,7 @@ img {
   letter-spacing: 0.75px;
   margin-top: 1em; }
   .vsm-modal img {
-    max-height: 44vmin;
-    margin-top: -3.5em; }
+    max-height: 44vmin; }
   .vsm-modal .dot-info, .vsm-modal .dot-info.active {
     font-size: 1em;
     overflow: hidden; }

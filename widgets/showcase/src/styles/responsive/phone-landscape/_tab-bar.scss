@@ -9,5 +9,16 @@
             font-size: $baseFontSize - 1;
             bottom: 0;
         }
+        &-icon {
+        	font-size: 1.5em;
+        }
     }
+
+}
+
+//Prevent Text Cutoff - iPhone 5 lanscape
+@media only screen and (max-height: 320px) {
+	.ridestyler-showcase-tab-bar-tab-icon {
+			font-size: 1.2em;
+	}
 }

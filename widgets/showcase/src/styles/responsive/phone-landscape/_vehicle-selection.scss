@@ -1,19 +1,22 @@
-@import "../responsive-mixins";
+@import '../responsive-mixins';
 
 @include responsiveVehicleSelectionModal($width: auto, $linePadding: 10px);
 
-.ridestyler-showcase-vehicle-selection-content {
+.ridestyler-showcase-vehicle-selection-content
+{
     top: 2.5%;
 }
 
-#ridestyler-showcase-select-your-vehicle-wrapper {
-    margin-top: 0;
+// Prevents image from overlapping text while allowing fullscreen selection for mobile landscape - iPhone 5 / iPhone X
+@media only screen and (max-height: 375px) {
+	.vsm-modal {
+	    @include baseFont;
+	    margin: .75em;
+
+	    img {
+	        margin-top: -2.75em;
+	    }
+	    height: 100vh;
+	}
 }
 
-.vsm-modal {
-    .dot-info, .dot-info.active {
-        &-before {
-            margin-top: 1em;
-        }
-    }
-}

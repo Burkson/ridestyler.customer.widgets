@@ -221,7 +221,7 @@ function RideStylerViewport(elem, options) {
                 var oimg = retiredImages[i];
 
                 // Partially fade out our retired images
-                if (oimg.style.opacity > 0.5) oimg.style.opacity = 0.0;
+                if (oimg.style.opacity > 0.5) oimg.style.opacity = 0.5;
             }
             
             var imageUrl = ridestyler.ajax.url('Vehicle/Render', instructions);

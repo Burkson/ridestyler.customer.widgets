@@ -10,3 +10,22 @@
 		height: 85%;
 	}
 }
+
+
+// Prevents overflow on fixed header - iPhone 5 lanscape
+@media only screen and (max-height: 320px) {
+    .ridestyler-showcase {
+        &-product-modal {
+            &-page {   
+                tbody {
+                    max-height: 50vh;
+                }
+            }
+            &-summary {
+                tbody {
+                    max-height: 50vh;
+                }
+            }
+        }
+    }
+}
