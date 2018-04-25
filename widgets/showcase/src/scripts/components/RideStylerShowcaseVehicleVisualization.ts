@@ -307,8 +307,7 @@ namespace RideStylerShowcase {
                 let stateData = this.state.getData();
 
                 this.vehicleConfigurationID = stateData.currentVehicleConfigurationID
-                this.vehicleDescription = stateData.currentVehicleDescription;
-                
+                this.vehicleDescription = stateData.currentVehicleDescription;                
                 this.vehicleTireOptionID = stateData.currentVehicleTireOptionID;
                 this.vehicleTireOptionDescription = stateData.currentVehicleTireOptionDescription;
                 

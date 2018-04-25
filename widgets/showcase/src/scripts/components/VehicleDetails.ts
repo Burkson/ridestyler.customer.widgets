@@ -81,7 +81,9 @@ namespace RideStylerShowcase {
         public paintSwatchClickCallback:() => void;
 
         private onDataChange(data:state.StateData) {
-            HTMLHelper.setText(this.vehicleDescriptionElement, data.currentVehicleDescription);
+            let newVehicleDescription = data.currentVehicleDescription.length > 45 ? data.currentVehicleDescription.substring(0, 62) + '...' : data.currentVehicleDescription
+
+            HTMLHelper.setText(this.vehicleDescriptionElement, newVehicleDescription);
             this.vehiclePaintSwatchElement.style.backgroundColor = data.currentPaintScheme ? data.currentPaintScheme.Colors[0].Hex : firstPaintColor;
             HTMLHelper.setText(this.tireSizeElement, data.currentVehicleTireOptionDescription);
         }
