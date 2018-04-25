@@ -268,6 +268,8 @@ img {
     width: 900px; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .vsm-modal-body .center-piece {
     padding: 20px; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .vsm-modal .dot-info, .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .vsm-modal .dot-info.active {
+    overflow: visible; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar {
     width: 150px;
     font-size: 0.9em; }
@@ -2594,9 +2596,6 @@ img {
     font-size: 1em; }
   .vsm-modal-body .center-piece {
     max-width: 90%; }
-
-.vsm-list-container {
-  margin-top: -1em; }
 
 .vsm-btn {
   background-color: #ea1921;

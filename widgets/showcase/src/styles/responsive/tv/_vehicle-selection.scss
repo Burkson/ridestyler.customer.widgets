@@ -2,3 +2,7 @@
 
 @include responsiveWheelShowcase($wheelImageSize: 300px);
 @include responsiveVehicleSelectionModal($width: 900px);
+
+.vsm-modal .dot-info, .vsm-modal .dot-info.active {
+	overflow: visible;
+}

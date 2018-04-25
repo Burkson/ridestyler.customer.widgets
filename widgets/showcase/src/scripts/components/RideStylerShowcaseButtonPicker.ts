@@ -41,6 +41,7 @@ namespace RideStylerShowcase {
                         break;
                     default:
                         this.component.style.height = '2.5em';
+                }
             })
 
             this.optionContainer = HTMLHelper.createElement('div', {
