@@ -390,10 +390,9 @@ img {
     max-width: 50%;
     max-height: 50%; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-pagination-option-loader {
-    left: 3em;
-    margin-bottom: 20%;
-    min-width: 50px;
-    height: 50px; }
+    left: 2em;
+    margin-bottom: 6em;
+    background-size: 75%; }
 
 @media only screen and (max-width: 411px) {
   .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-pagination-wrapper {
