@@ -81,7 +81,7 @@ namespace RideStylerShowcase {
         public paintSwatchClickCallback:() => void;
 
         private onDataChange(data:state.StateData) {
-            let newVehicleDescription = data.currentVehicleDescription.length > 45 ? data.currentVehicleDescription.substring(0, 62) + '...' : data.currentVehicleDescription
+            let newVehicleDescription = data.currentVehicleDescription.length > 60 ? data.currentVehicleDescription.substring(0, 62) + '...' : data.currentVehicleDescription
 
             HTMLHelper.setText(this.vehicleDescriptionElement, newVehicleDescription);
             this.vehiclePaintSwatchElement.style.backgroundColor = data.currentPaintScheme ? data.currentPaintScheme.Colors[0].Hex : firstPaintColor;
