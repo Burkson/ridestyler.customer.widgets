@@ -25,7 +25,7 @@ namespace RideStylerShowcase {
                 this.optionContainer.style.opacity = this.optionContainer.style.opacity == '0' ? '1' : '0';
                 this.optionContainer.style.transform = this.optionContainer.style.transform == 'scaleY(0)' ? 'scaleY(1)' : 'scaleY(0)';
                 this.optionContainer.style.height = this.optionContainer.style.height == '0px' ? 'auto' : '0px';
-                
+
                 switch(optionsCount) {
                     case 1:
                         this.component.style.height = this.component.style.height == '2.5em' ? '4.5em' : '2.5em';

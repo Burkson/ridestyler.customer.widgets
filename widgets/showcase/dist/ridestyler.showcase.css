@@ -475,6 +475,10 @@ img {
         border-bottom-right-radius: 0;
         border-bottom-left-radius: 5px; } }
 
+@media only screen and (max-width: 375px) and (min-width: 261px) {
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-toggle-button {
+    font-size: .98em; } }
+
 @media only screen and (max-width: 414px) and (min-width: 411px) {
   .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-page {
     height: 82vh; }
@@ -685,11 +689,13 @@ img {
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-product-modal-image img {
   height: 85%; }
 
-@media only screen and (max-height: 320px) {
+@media only screen and (max-height: 380px) and (min-height: 0px) {
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-product-modal img {
+    height: 80%; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-product-modal-page tbody {
-    max-height: 50vh; }
+    max-height: 45vh; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-product-modal-summary tbody {
-    max-height: 50vh; } }
+    max-height: 45vh; } }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .vsm-modal-dialog {
   width: auto; }
@@ -757,6 +763,9 @@ img {
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-customization-component-title + .ridestyler-showcase-button {
   padding: 5px;
   margin-top: .5em; }
+
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape #ridestyler-showcase-select-your-vehicle-wrapper {
+  margin-top: -5px; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet {
   font-size: 14px; }
