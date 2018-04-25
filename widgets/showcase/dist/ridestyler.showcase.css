@@ -466,9 +466,10 @@ img {
     flex-direction: column;
     text-align: center;
     font-size: .95em;
-    right: 0; }
+    right: 0;
+    margin-top: .25em; }
     .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-toggle-button-option {
-      padding: 7px 18px; }
+      padding: 5.5px 18px; }
       .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-toggle-button-option:last-child {
         border-top-right-radius: 0;
         border-top-left-radius: 5px;
@@ -526,13 +527,16 @@ img {
 
 @media only screen and (max-width: 321px) {
   .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-page {
-    min-height: 60vh; }
+    min-height: 70vh; }
     .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-page tbody {
       min-height: 50vh;
       overflow: scroll; }
-  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-summary tbody {
-    max-height: 32vh;
-    overflow: scroll; } }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-summary {
+    max-height: 60vh;
+    overflow: hidden; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-product-modal-summary tbody {
+      max-height: 20vh;
+      overflow: scroll; } }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait img {
   user-drag: none;
