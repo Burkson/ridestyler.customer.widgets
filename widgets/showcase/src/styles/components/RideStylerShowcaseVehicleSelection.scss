@@ -1,95 +1,101 @@
+
 @import "../../../../vehicle-selection-modal/scss/rsvsm";
 @import "../shared";
 @import "../buttons";
 @import "../modals";
 
+
+
 .ridestyler-showcase-vehicle-selection {
-    text-align: center;
+    text-align : center;
 }
 
 #ridestyler-showcase-select-your-vehicle {
+    padding : 1em 1.5em;
     &-wrapper {
-        position: absolute; 
-        top: 50%;
-        margin-top: -30px;
-        text-align: center;
-        left: 0; right: 0;
+        position       : absolute;
+        top            : 50%;
+
+        margin-top     : -30px;
+
+        text-align     : center;
+
+        left: 0; right : 0;
     }
-    padding: 1em 1.5em;
 }
 
 .ridestyler-showcase-vehicle-selection-content {
-    opacity: 0;
-    transform: translate3d(0px,10px,0px);
+    top                 : 10%;
+    bottom              : 20%;
 
-    transition-duration: 1s;
-    transition-property: opacity, transform;
+    opacity             : 0;
 
-    top: 10%;
-    bottom: 20%;
+    transition-property : opacity, transform;
+    transition-duration : 1s;
+    transform           : translate3d(0px,10px,0px);
 
     .in & {
-        transform: translate3d(0px,0px,0px);
-        opacity: 1;
+        opacity   : 1;
+        transform : translate3d(0px,0px,0px);
     }
 }
 
 .ridestyler-showcase-vehicle-selection-wheel-showcase {
-    opacity: 0;
-    transition-property: opacity, left;
-    transition-duration: 1000ms;
+    position            : absolute;
+    bottom              : 20%;
+    left                : -30%;
 
-    position: absolute;
-    bottom: 20%;
-    left: -30%;
+    height              : 100px;
+    width               : 270px;
+    margin-bottom       : -40px;
+    margin-left         : -135px;
 
-    width: 270px;
-    height: 100px;
-    margin-left: -135px;
-    margin-bottom: -40px;
+    opacity             : 0;
+    white-space         : nowrap;
 
-    white-space: nowrap;
+    transition-property : opacity, left;
+    transition-duration : 1000ms;
 
     .in & {
-        left: 50%;
+        left : 50%;
     }
 }
 
 .ridestyler-showcase-vehicle-selection-wheel-showcase-image {
-    width: 100px;
-    height: 100px;
-    
+    height : 100px;
+    width  : 100px;
+
     & + .ridestyler-showcase-vehicle-selection-wheel-showcase-image {
-        margin-left: -15px;
+        margin-left : -15px;
     }
 }
- 
+
 #vsm-backdrop {
     @include modalBackdrop;
 }
 
 .vsm-modal {
     @include baseFont;
-    margin-top: 1em;
+    margin-top : 1em;
 
     img {
-        max-height: 44vmin;
+        max-height : 44vmin;
     }
 
     .dot-info, .dot-info.active {
-        font-size: 1em;
-        overflow: hidden;
+        overflow  : hidden;
+        font-size : 1em;
     }
 
     &-body {
         .center-piece {
-            max-width: 90%;
+            max-width : 90%;
         }
     }
 }
 
 .vsm-list-container {
-    margin-top: -1em;
+    margin-top : -1em;
 }
 
 .vsm-btn {
@@ -97,5 +103,5 @@
 }
 
 .vsm-header {
-    font-size: 1.5em;
+    font-size : 1.5em;
 }

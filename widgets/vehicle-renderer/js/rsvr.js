@@ -139,7 +139,6 @@ function RideStylerViewport(elem, options) {
             promise.resolve();
 
             return promise;
-
         }
         return renderer.Render(state);
     };
@@ -147,7 +146,6 @@ function RideStylerViewport(elem, options) {
 
     this.Reset = function() {
         state = {};
-
         if (typeof renderer.Reset === 'function') renderer.Reset();
     };
 

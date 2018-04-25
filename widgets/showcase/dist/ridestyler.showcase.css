@@ -2541,34 +2541,34 @@ img {
     right: 0; }
 
 .ridestyler-showcase-vehicle-selection-content {
-  opacity: 0;
-  transform: translate3d(0px, 10px, 0px);
-  transition-duration: 1s;
-  transition-property: opacity, transform;
   top: 10%;
-  bottom: 20%; }
+  bottom: 20%;
+  opacity: 0;
+  transition-property: opacity, transform;
+  transition-duration: 1s;
+  transform: translate3d(0px, 10px, 0px); }
   .in .ridestyler-showcase-vehicle-selection-content {
-    transform: translate3d(0px, 0px, 0px);
-    opacity: 1; }
+    opacity: 1;
+    transform: translate3d(0px, 0px, 0px); }
 
 .ridestyler-showcase-vehicle-selection-wheel-showcase {
-  opacity: 0;
-  transition-property: opacity, left;
-  transition-duration: 1000ms;
   position: absolute;
   bottom: 20%;
   left: -30%;
-  width: 270px;
   height: 100px;
-  margin-left: -135px;
+  width: 270px;
   margin-bottom: -40px;
-  white-space: nowrap; }
+  margin-left: -135px;
+  opacity: 0;
+  white-space: nowrap;
+  transition-property: opacity, left;
+  transition-duration: 1000ms; }
   .in .ridestyler-showcase-vehicle-selection-wheel-showcase {
     left: 50%; }
 
 .ridestyler-showcase-vehicle-selection-wheel-showcase-image {
-  width: 100px;
-  height: 100px; }
+  height: 100px;
+  width: 100px; }
   .ridestyler-showcase-vehicle-selection-wheel-showcase-image + .ridestyler-showcase-vehicle-selection-wheel-showcase-image {
     margin-left: -15px; }
 
@@ -2590,8 +2590,8 @@ img {
   .vsm-modal img {
     max-height: 44vmin; }
   .vsm-modal .dot-info, .vsm-modal .dot-info.active {
-    font-size: 1em;
-    overflow: hidden; }
+    overflow: hidden;
+    font-size: 1em; }
   .vsm-modal-body .center-piece {
     max-width: 90%; }
 
