@@ -17,12 +17,6 @@ namespace RideStylerShowcase {
          */
         private tireSizeElement:HTMLElement;
 
-        private currentDescriptionText:string;
-
-        private newVehicleDescription:string;
-
-        private initialVehicleDescription:string;
-
         protected initializeComponent() {
             this.component = HTMLHelper.createElementWithClass('div', className + " ridestyler-showcase-details");
             
@@ -54,12 +48,6 @@ namespace RideStylerShowcase {
                 ],
                 appendTo: this.component
             });
-            // Listener to switch between Long Text and shortened text
-                // .addEventListener('click', () => {
-                    // this.currentDescriptionText = this.currentDescriptionText == this.newVehicleDescription  ? this.initialVehicleDescription : this.newVehicleDescription
-                    // this.vehicleDescriptionElement.style.fontSize = this.currentDescriptionText == this.newVehicleDescription  ? '1em' : '.75em'
-                    // HTMLHelper.setText(this.vehicleDescriptionElement, this.currentDescriptionText);
-                // })
 
             // Tire Size
             this.tireSizeElement = HTMLHelper.createElement('div', {
@@ -93,11 +81,12 @@ namespace RideStylerShowcase {
         public paintSwatchClickCallback:() => void;
 
         private onDataChange(data:state.StateData) {
-            this.initialVehicleDescription = data.currentVehicleDescription;
-            this.newVehicleDescription  = this.initialVehicleDescription.length > 60 ? this.initialVehicleDescription.substring(0, 62) + '...' : this.initialVehicleDescription;
+            const vehicleDescription = data.currentVehicleDescription;
+            const shortVehicleDescription  = vehicleDescription.length > 60 ? vehicleDescription.substring(0, 62) + '...' : vehicleDescription;
+            
             this.vehiclePaintSwatchElement.style.backgroundColor = data.currentPaintScheme ? data.currentPaintScheme.Colors[0].Hex : firstPaintColor;
             
-            HTMLHelper.setText(this.vehicleDescriptionElement, this.newVehicleDescription);
+            HTMLHelper.setText(this.vehicleDescriptionElement, shortVehicleDescription);
             HTMLHelper.setText(this.tireSizeElement, data.currentVehicleTireOptionDescription);
         }
     }
