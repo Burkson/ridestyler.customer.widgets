@@ -1585,6 +1585,9 @@ declare namespace RideStylerShowcase {
          * The tire size
          */
         private tireSizeElement;
+        private currentDescriptionText;
+        private newVehicleDescription;
+        private initialVehicleDescription;
         protected initializeComponent(): void;
         /**
          * A call back for when the paint swatch was clicked on

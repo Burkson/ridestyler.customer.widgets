@@ -2740,9 +2740,7 @@ img {
   float: right; }
 
 .ridestyler-showcase-vehicle-details-vehicle-details {
-  overflow: hidden;
-  word-wrap: break-word;
-  text-overflow: ellipsis; }
+  width: 10em; }
 
 img {
   user-drag: none;

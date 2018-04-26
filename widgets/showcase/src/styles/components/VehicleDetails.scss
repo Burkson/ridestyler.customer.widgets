@@ -8,9 +8,7 @@
     }
 
     &-details {
-        overflow: hidden;
-        word-wrap: break-word;
-        text-overflow: ellipsis;
+        width: 10em;        
     }
 }
 

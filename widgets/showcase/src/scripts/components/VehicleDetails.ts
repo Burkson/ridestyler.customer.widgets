@@ -17,6 +17,12 @@ namespace RideStylerShowcase {
          */
         private tireSizeElement:HTMLElement;
 
+        private currentDescriptionText:string;
+
+        private newVehicleDescription:string;
+
+        private initialVehicleDescription:string;
+
         protected initializeComponent() {
             this.component = HTMLHelper.createElementWithClass('div', className + " ridestyler-showcase-details");
             
@@ -47,7 +53,11 @@ namespace RideStylerShowcase {
 
                 ],
                 appendTo: this.component
-            });
+            }).addEventListener('click', () => {
+                this.currentDescriptionText = this.currentDescriptionText == this.newVehicleDescription  ? this.initialVehicleDescription : this.newVehicleDescription
+                console.log(this.currentDescriptionText)
+                HTMLHelper.setText(this.vehicleDescriptionElement, this.currentDescriptionText);
+            })
 
             // Tire Size
             this.tireSizeElement = HTMLHelper.createElement('div', {
@@ -81,9 +91,10 @@ namespace RideStylerShowcase {
         public paintSwatchClickCallback:() => void;
 
         private onDataChange(data:state.StateData) {
-            let newVehicleDescription = data.currentVehicleDescription.length > 60 ? data.currentVehicleDescription.substring(0, 62) + '...' : data.currentVehicleDescription
-
-            HTMLHelper.setText(this.vehicleDescriptionElement, newVehicleDescription);
+            this.initialVehicleDescription = data.currentVehicleDescription;
+            this.newVehicleDescription  = this.initialVehicleDescription.length > 60 ? this.initialVehicleDescription.substring(0, 62) + '...' : this.initialVehicleDescription;
+            
+            HTMLHelper.setText(this.vehicleDescriptionElement, this.newVehicleDescription);
             this.vehiclePaintSwatchElement.style.backgroundColor = data.currentPaintScheme ? data.currentPaintScheme.Colors[0].Hex : firstPaintColor;
             HTMLHelper.setText(this.tireSizeElement, data.currentVehicleTireOptionDescription);
         }
