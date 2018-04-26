@@ -622,6 +622,9 @@ img {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0; }
 
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-vehicle-details-vehicle-details {
+  width: auto; }
+
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape img {
   user-drag: none;
   user-select: none;
@@ -2736,11 +2739,11 @@ img {
   display: block;
   width: 1em;
   height: 1em;
-  margin: 0 0 0 5px;
+  margin: 0 1em 0 0;
   float: right; }
 
 .ridestyler-showcase-vehicle-details-vehicle-details {
-  width: 10em; }
+  width: 11em; }
 
 img {
   user-drag: none;

@@ -53,11 +53,13 @@ namespace RideStylerShowcase {
 
                 ],
                 appendTo: this.component
-            }).addEventListener('click', () => {
-                this.currentDescriptionText = this.currentDescriptionText == this.newVehicleDescription  ? this.initialVehicleDescription : this.newVehicleDescription
-                console.log(this.currentDescriptionText)
-                HTMLHelper.setText(this.vehicleDescriptionElement, this.currentDescriptionText);
-            })
+            });
+            // Listener to switch between Long Text and shortened text
+                // .addEventListener('click', () => {
+                    // this.currentDescriptionText = this.currentDescriptionText == this.newVehicleDescription  ? this.initialVehicleDescription : this.newVehicleDescription
+                    // this.vehicleDescriptionElement.style.fontSize = this.currentDescriptionText == this.newVehicleDescription  ? '1em' : '.75em'
+                    // HTMLHelper.setText(this.vehicleDescriptionElement, this.currentDescriptionText);
+                // })
 
             // Tire Size
             this.tireSizeElement = HTMLHelper.createElement('div', {
@@ -93,9 +95,9 @@ namespace RideStylerShowcase {
         private onDataChange(data:state.StateData) {
             this.initialVehicleDescription = data.currentVehicleDescription;
             this.newVehicleDescription  = this.initialVehicleDescription.length > 60 ? this.initialVehicleDescription.substring(0, 62) + '...' : this.initialVehicleDescription;
+            this.vehiclePaintSwatchElement.style.backgroundColor = data.currentPaintScheme ? data.currentPaintScheme.Colors[0].Hex : firstPaintColor;
             
             HTMLHelper.setText(this.vehicleDescriptionElement, this.newVehicleDescription);
-            this.vehiclePaintSwatchElement.style.backgroundColor = data.currentPaintScheme ? data.currentPaintScheme.Colors[0].Hex : firstPaintColor;
             HTMLHelper.setText(this.tireSizeElement, data.currentVehicleTireOptionDescription);
         }
     }
