@@ -3,12 +3,26 @@
 	margin-top: 3em;
 
 	  &-option {
-			&-loader {       
-		    left: 5em;
-		    margin-bottom: 10%;
-		    min-width: 50px;
-		    max-height: 50px;
-	    }
+	  			&-loading:after {
+	  			    content: "";
+	  			    
+	  			    line-height: 0.3em;
+	  			    font-size: 2em;
+	  			    @include crispImageRendering;
+	  			    @include rotate;
+	  			    
+	  			    position: absolute;
+
+	  			    background-image: url('images/tire-loading.png');
+	  			    background-size: 100%;
+	  	       
+	  			    $size: 25px;
+
+	  			    width: $size ;
+	  			    height: $size ;
+	  			    margin-left: -$size/2;
+	  	       margin-top: -$size/20;
+	  			}
 
 	  	&:only-child {
 	  		margin-bottom: 7%;

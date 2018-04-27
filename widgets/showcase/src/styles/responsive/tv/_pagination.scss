@@ -1,13 +1,44 @@
 .ridestyler-showcase-pagination {
-	height: 75%;
-	margin-top: 2em;
+	height: 50%;
+	margin-top: 3em;
 
     &-next, &-prev {
-        top: 70px;
+    	bottom: 3em;
     }
-   &-option:only-child {
-       margin-left: 40%;
-   }
+   	&-option{
+   		&:only-child {
+   			margin-left: 40%;
+   			margin-bottom: 4%;
+   		}	
+   		&-loader {
+				background: url(images/spinner.gif) no-repeat top center;
+				background-size: 50%;
+				margin-bottom: 5%;
+				min-width: 50px;
+				min-height: 50px;
+   		}
+   		&-loading:after {
+   		    content: "";
+   		    
+   		    line-height: 0.3em;
+   		    font-size: 2em;
+   		    @include crispImageRendering;
+   		    @include rotate;
+   		    
+   		    position: absolute;
+
+   		    background-image: url('images/tire-loading.png');
+   		    background-size: 100%;
+          
+   		    $size: 25px;
+
+   		    width: $size ;
+   		    height: $size ;
+   		    margin-left: -$size/2;
+          margin-top: -$size/20;
+   		}
+   	}
+
 }
 
 

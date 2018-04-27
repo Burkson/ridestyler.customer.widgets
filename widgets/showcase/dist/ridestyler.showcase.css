@@ -137,11 +137,14 @@ img {
     .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-pagination-next, .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-pagination-prev {
       top: 70px; }
     .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-pagination-option-loader {
-      left: 10%;
-      margin-bottom: 5em; }
-    .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-pagination-option:only-child {
+      background: url(images/spinner.gif) no-repeat top center;
+      background-size: 50%;
       margin-bottom: 5%;
-      margin-left: 40%; }
+      min-width: 50px;
+      min-height: 50px; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-pagination-option:only-child {
+      margin-bottom: 10%;
+      margin-left: 45%; }
     .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-pagination-option-loading:after {
       content: "";
       line-height: 0.3em;
@@ -152,9 +155,10 @@ img {
       position: absolute;
       background-image: url("images/tire-loading.png");
       background-size: 100%;
-      width: 0.8em;
-      height: 0.8em;
-      margin-left: -0.4em; }
+      width: 25px;
+      height: 25px;
+      margin-left: -12.5px;
+      margin-top: -1.25px; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-table tbody {
     height: 475px;
     text-align: center; }
@@ -232,12 +236,33 @@ img {
     font-size: 0.8em;
     bottom: .75em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-pagination {
-    height: 75%;
-    margin-top: 2em; }
+    height: 50%;
+    margin-top: 3em; }
     .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-pagination-next, .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-pagination-prev {
-      top: 70px; }
+      bottom: 3em; }
     .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-pagination-option:only-child {
-      margin-left: 40%; }
+      margin-left: 40%;
+      margin-bottom: 4%; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-pagination-option-loader {
+      background: url(images/spinner.gif) no-repeat top center;
+      background-size: 50%;
+      margin-bottom: 5%;
+      min-width: 50px;
+      min-height: 50px; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-pagination-option-loading:after {
+      content: "";
+      line-height: 0.3em;
+      font-size: 2em;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+      animation: rotation 1s infinite linear;
+      position: absolute;
+      background-image: url("images/tire-loading.png");
+      background-size: 100%;
+      width: 25px;
+      height: 25px;
+      margin-left: -12.5px;
+      margin-top: -1.25px; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-table tbody {
     height: 45vh;
     text-align: center; }
@@ -323,11 +348,20 @@ img {
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-pagination {
     height: 75%;
     margin-top: 3em; }
-    .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-pagination-option-loader {
-      left: 5em;
-      margin-bottom: 10%;
-      min-width: 50px;
-      max-height: 50px; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-pagination-option-loading:after {
+      content: "";
+      line-height: 0.3em;
+      font-size: 2em;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+      animation: rotation 1s infinite linear;
+      position: absolute;
+      background-image: url("images/tire-loading.png");
+      background-size: 100%;
+      width: 25px;
+      height: 25px;
+      margin-left: -12.5px;
+      margin-top: -1.25px; }
     .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-pagination-option:only-child {
       margin-bottom: 7%;
       margin-left: 37%; }
@@ -422,9 +456,11 @@ img {
     max-width: 50%;
     max-height: 50%; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-pagination-option-loader {
-    left: 2em;
-    margin-bottom: 6em;
-    background-size: 75%; }
+    left: 1em;
+    background: url(images/spinner.gif) no-repeat top center;
+    background-size: 40%;
+    min-width: 50px;
+    min-height: 50px; }
 
 @media only screen and (max-width: 411px) {
   .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .ridestyler-showcase-pagination-wrapper {
@@ -714,7 +750,7 @@ img {
     width: 100%; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-pagination-option-loader {
     background: url(images/spinner.gif) no-repeat top center;
-    background-size: 25%;
+    background-size: 50%;
     min-width: 50px;
     height: 50px; }
 
@@ -878,7 +914,8 @@ img {
     margin-top: 2em;
     margin-left: 1em; }
     .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-pagination-option:only-child {
-      margin-left: 35%; }
+      margin-left: 35%;
+      margin-bottom: 5%; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-share-buttons {
     width: 70%;
     display: flex;
@@ -1433,8 +1470,8 @@ img {
   .ridestyler-showcase-pagination-option-loader {
     background: url(images/spinner.gif) no-repeat top center;
     background-size: 100%;
-    min-width: 50px;
-    height: 50px; }
+    max-width: 50px;
+    max-height: 50px; }
 
 .ridestyler-showcase-pagination .ridestyler-showcase-pagination-option.ridestyler-showcase-pagination-option-no-results {
   text-align: center;

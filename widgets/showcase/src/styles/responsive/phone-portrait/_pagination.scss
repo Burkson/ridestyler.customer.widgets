@@ -18,9 +18,11 @@
         }
 
         &-loader {
-            left: 2em;
-            margin-bottom: 6em;
-            background-size: 75%;
+          left: 1em;
+          background: url(images/spinner.gif) no-repeat top center;
+          background-size: 40%;
+          min-width: 50px;
+          min-height: 50px;
         }
     }
 }

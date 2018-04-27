@@ -7,34 +7,37 @@
   }
 
   &-option {
-		
-		&-loader {        
-	    left: 10%;
-	    margin-bottom: 5em;
-    }
+          &-loader {
+            background: url(images/spinner.gif) no-repeat top center;
+            background-size: 50%;
+            margin-bottom: 5%;
+            min-width: 50px;
+            min-height: 50px;
+          }
 
   	&:only-child {
-  		margin-bottom: 5%;
-  		margin-left: 40%;
+  		margin-bottom: 10%;
+  		margin-left: 45%;
   	}
-    &-loading:after {
-        content: "";
-        
-        line-height: 0.3em;
-        font-size: 2em;
-        @include crispImageRendering;
-        @include rotate;
-        
-        position: absolute;
+      &-loading:after {
+          content: "";
+          
+          line-height: 0.3em;
+          font-size: 2em;
+          @include crispImageRendering;
+          @include rotate;
+          
+          position: absolute;
 
-        background-image: url('images/tire-loading.png');
-        background-size: 100%;
+          background-image: url('images/tire-loading.png');
+          background-size: 100%;
+          
+          $size: 25px;
 
-        $size: 0.8em;
-
-        width: $size ;
-        height: $size ;
-        margin-left: -$size/2;
-    }
+          width: $size ;
+          height: $size ;
+          margin-left: -$size/2;
+          margin-top: -$size/20;
+      }
   }
 }

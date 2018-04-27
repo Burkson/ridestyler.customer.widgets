@@ -3,8 +3,11 @@
 	margin-top: 2em;
 	margin-left: 1em;
 
-	&-option:only-child {
-    margin-left: 35%;
-  }
-
+	&-option {
+		&:only-child {
+	    margin-left: 35%;
+	    margin-bottom: 5%;
+	  }
+	}
 }
+
