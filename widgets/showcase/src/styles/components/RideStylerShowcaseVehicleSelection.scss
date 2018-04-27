@@ -108,6 +108,7 @@
 
 .vsm-column-2 {
     margin-top: -1em;
+    margin-bottom: .5em;
 
     & + .no-style {
         margin-top: .25em;
@@ -134,4 +135,16 @@ body {
     ::-webkit-scrollbar {
         display: none;
     }
+    -ms-overflow-style: none;
+    overflow: hidden;
+}
+
+
+.vsm-back-arrow {
+    positon: absolute;
+}
+
+
+.vsm-one-container > a:first-child {
+    margin-top: 0;
 }
