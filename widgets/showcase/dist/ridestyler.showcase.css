@@ -182,6 +182,18 @@ img {
     width: 800px; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .vsm-modal-body .center-piece {
     padding: 20px; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .vsm-column-2 {
+    margin-top: -1em; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .vsm-column-2 + .no-style {
+      margin-top: -.1em;
+      margin-bottom: -.4em; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .vsm-column-2.vsm-before {
+      margin-top: -.1em;
+      margin-bottom: -.4em; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .vsm-single-step .vsm-before {
+    margin: -1em 0 0 0; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl div.vsm-group-wrap.center-piece {
+    margin-top: 1.25em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl .ridestyler-showcase-tab-bar {
     width: 130px;
     font-size: 1em; }
@@ -270,6 +282,8 @@ img {
     padding: 20px; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .vsm-modal .dot-info, .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .vsm-modal .dot-info.active {
     overflow: visible; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .vehicle-result-name {
+    font-size: 1em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-tab-bar {
     width: 150px;
     font-size: 0.9em; }
@@ -350,6 +364,22 @@ img {
       height: 200px; }
       .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-vehicle-selection-wheel-showcase-image + .ridestyler-showcase-vehicle-selection-wheel-showcase-image {
         margin-left: -30px; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .vsm-column-2 {
+    margin-top: -1em; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .vsm-column-2 + .no-style {
+      margin-top: -.25em;
+      margin-bottom: -.5em; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .vsm-column-2.vsm-before {
+      margin-top: -.25em;
+      margin-bottom: -.5em; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .vsm-single-step .vsm-before {
+    margin: -1em 0 0 0; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop div.vsm-group-wrap.center-piece {
+    margin-top: 0em; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .vsm-line-step .vehicle-result-name {
+    font-size: 1em; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .active {
+    padding-bottom: 1em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-tab-bar {
     width: 100px;
     font-size: 0.9em; }
@@ -539,6 +569,33 @@ img {
       max-height: 20vh;
       overflow: scroll; } }
 
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .vsm-column-2 {
+  font-size: 1.5em;
+  margin-top: -1em; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .vsm-column-2 + .no-style {
+    margin-top: -1.45em;
+    margin-bottom: -.35em; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .vsm-column-2.vsm-before {
+    margin-top: -1.45em;
+    margin-bottom: -.35em; }
+
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .vsm-single-step .vsm-before {
+  margin: -1em 0 0 0; }
+
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait div.vsm-group-wrap.center-piece {
+  margin-top: 2em; }
+
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .vsm-line-step .vehicle-result-name {
+  font-size: 1.5em;
+  margin-top: -.05em; }
+
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .active {
+  padding-bottom: 1em; }
+
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait .dot-info.active {
+  margin-top: .5em;
+  overflow: visible; }
+
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait img {
   user-drag: none;
   user-select: none;
@@ -723,6 +780,36 @@ img {
     .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .vsm-modal img {
       margin-top: -2.75em; } }
 
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .vsm-column-2 {
+  font-size: 1.5em;
+  margin-top: -1em; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .vsm-column-2 + .no-style {
+    margin-top: -1.45em;
+    margin-bottom: -.35em; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .vsm-column-2.vsm-before {
+    margin-top: -1.45em;
+    margin-bottom: -.35em; }
+
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .vsm-single-step .vsm-before {
+  margin: -1em 0 0 0; }
+
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape div.vsm-group-wrap.center-piece {
+  margin-top: 1em; }
+
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .vsm-line-step .vehicle-result-name {
+  font-size: 1.5em;
+  margin-top: -.05em; }
+
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .active {
+  padding-bottom: 1em; }
+
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .vsm-modal .dot-info, .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .vsm-modal .dot-info.active {
+  overflow: visible; }
+
+.ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .dot-info.active {
+  margin-top: .5em;
+  overflow: visible; }
+
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape img {
   user-drag: none;
   user-select: none;
@@ -842,6 +929,22 @@ img {
       height: 200px; }
       .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-vehicle-selection-wheel-showcase-image + .ridestyler-showcase-vehicle-selection-wheel-showcase-image {
         margin-left: -30px; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .vsm-column-2 {
+    margin-top: -1em; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .vsm-column-2 + .no-style {
+      margin-top: -.5em;
+      margin-bottom: -.6em; }
+    .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .vsm-column-2.vsm-before {
+      margin-top: -.5em;
+      margin-bottom: -.6em; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .vsm-single-step .vsm-before {
+    margin: -1em 0 0 0; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet div.vsm-group-wrap.center-piece {
+    margin-top: 0em; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .vsm-line-step .vehicle-result-name {
+    font-size: 1em; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .active {
+    padding-bottom: 1em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-tab-bar {
     width: 95px;
     font-size: 0.9em; }
@@ -2550,7 +2653,7 @@ img {
   bottom: 20%;
   opacity: 0;
   transition-property: opacity, transform;
-  transition-duration: 1s;
+  transition-duration: 2s;
   transform: translate3d(0px, 10px, 0px); }
   .in .ridestyler-showcase-vehicle-selection-content {
     opacity: 1;
@@ -2596,9 +2699,12 @@ img {
     max-height: 44vmin; }
   .vsm-modal .dot-info, .vsm-modal .dot-info.active {
     overflow: hidden;
+    margin-top: .25em;
     font-size: 1em; }
-  .vsm-modal-body .center-piece {
-    max-width: 90%; }
+  .vsm-modal-body {
+    padding-top: 1em; }
+    .vsm-modal-body .center-piece {
+      max-width: 90%; }
 
 .vsm-btn {
   background-color: #ea1921;
@@ -2623,6 +2729,24 @@ img {
 
 .vsm-header {
   font-size: 1.5em; }
+
+.vsm-column-2 {
+  margin-top: -1em; }
+  .vsm-column-2 + .no-style {
+    margin-top: .25em;
+    margin-bottom: -.25em; }
+  .vsm-column-2.vsm-before {
+    margin-bottom: -.25em;
+    margin-top: .25em; }
+
+.vsm-single-step .vsm-before {
+  margin: -1em 0 0 0; }
+
+div.vsm-group-wrap.center-piece {
+  margin-top: 1.25em; }
+
+body ::-webkit-scrollbar {
+  display: none; }
 
 img {
   user-drag: none;

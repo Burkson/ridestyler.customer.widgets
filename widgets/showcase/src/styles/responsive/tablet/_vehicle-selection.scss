@@ -2,3 +2,36 @@
 
 @include responsiveVehicleSelectionModal($width: 700px);
 @include responsiveWheelShowcase($wheelImageSize: 200px);
+
+
+.vsm-column-2 {
+    margin-top: -1em;
+
+    & + .no-style {
+        margin-top: -.5em;
+        margin-bottom: -.6em; 
+    }
+
+    &.vsm-before {
+        margin-top: -.5em;
+        margin-bottom: -.6em;        
+    }
+}
+
+.vsm-single-step {
+    .vsm-before {
+        margin: -1em 0 0 0;
+    }
+}
+
+div.vsm-group-wrap.center-piece {
+    margin-top: 0em;
+}
+
+.vsm-line-step .vehicle-result-name {
+    font-size: 1em;
+}
+
+.active {
+	padding-bottom: 1em;
+}

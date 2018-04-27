@@ -1,0 +1,38 @@
+.vsm-column-2 {
+	font-size: 1.5em;
+    margin-top: -1em;
+
+    & + .no-style {
+        margin-top: -1.45em;
+        margin-bottom: -.35em; 
+    }
+
+    &.vsm-before {
+        margin-top: -1.45em;
+        margin-bottom: -.35em;        
+    }
+}
+
+.vsm-single-step {
+    .vsm-before {
+        margin: -1em 0 0 0;
+    }
+}
+
+div.vsm-group-wrap.center-piece {
+    margin-top: 2em;
+}
+
+.vsm-line-step .vehicle-result-name {
+    font-size: 1.5em;
+    margin-top: -.05em;
+}
+
+.active {
+    padding-bottom: 1em;
+}
+
+ .dot-info.active {
+    margin-top: .5em;
+    overflow: visible;
+}

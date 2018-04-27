@@ -611,6 +611,7 @@ function RideStylerVehicleSelectionModal(options) {
         finalScreen.parentNode.removeChild(finalScreen);
         addClass(vsmLinkStyle, 'vsm-single-step');
 
+        
         //Create right-side progress bar
         var divELe = document.createElement('div'),
         dotEle = document.createElement('i'),

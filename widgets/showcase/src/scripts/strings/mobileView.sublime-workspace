@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"not",
+				"notStyleDiv"
+			],
+			[
 				"mouse",
 				"mouseenter\tvar"
 			],
@@ -144,27 +148,27 @@
 	"buffers":
 	[
 		{
-			"file": "/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/VehicleDetails.ts",
+			"file": "/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/RideStylerShowcaseVehicleSelection.ts",
 			"settings":
 			{
-				"buffer_size": 4157,
+				"buffer_size": 6330,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/vehicle-selection-modal/scripts/rsvsm.js",
+			"settings":
+			{
+				"buffer_size": 38093,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/RideStylerShowcaseButtonPicker.ts",
+			"file": "/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RideStylerShowcaseVehicleSelection.scss",
 			"settings":
 			{
-				"buffer_size": 6017,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/VehicleDetails.scss",
-			"settings":
-			{
-				"buffer_size": 404,
+				"buffer_size": 2190,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -248,22 +252,16 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
-	"expanded_folders":
-	[
-		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets",
-		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase",
-		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src",
-		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts",
-		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components",
-		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles",
-		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components",
-		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive",
-		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/tv"
-	],
 	"file_history":
 	[
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/tv/_vehicle-selection.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RideStylerShowcasePaginationComponent.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/VehicleDetails.ts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/phone-portrait/_vehicle-visualization.scss",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/VehicleDetails.scss",
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/RideStylerShowcaseButtonPicker.ts",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/.gitignore",
+		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/dist/fonts/RideStyler Showcase Icons.woff",
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RideStylerShowcaseVehicleSelection.scss",
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/RideStylerShowcase.state.ts",
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RideStylerShowcaseProductModal.scss",
@@ -272,7 +270,6 @@
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/RideStylerShowcaseVehicleSelection.ts",
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/vehicle-renderer/js/rsvr.js",
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/RideStylerShowcaseWheelSelector.ts",
-		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RideStylerShowcasePaginationComponent.scss",
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/phone-portrait/_pagination.scss",
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/phone-landscape/_showcase-table.scss",
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/phone-landscape/_vehicle-visualization.scss",
@@ -302,20 +299,17 @@
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/helpers/PromiseHelper.ts",
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/helpers/ScrollHelper.ts",
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/RideStylerShowcaseModal.ts",
-		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/VehicleDetails.scss",
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/package.json",
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/dist/ridestyler.showcase.js",
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/gulpfile.js",
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/RideStylerShowcase.api.settings.ts",
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/dist/index.html",
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/desktop-xl/_pagination.scss",
-		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/VehicleDetails.ts",
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/desktop-xl/_tab-bar.scss",
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RIdeStylerShowcaseShareModal.scss",
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/RideStylerShowcaseToggleButton.ts",
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RideStylerShowcaseVehicleVisualization.scss",
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/WheelDetails.ts",
-		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/phone-portrait/_vehicle-visualization.scss",
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RideStylerShowcaseToggleButton.scss",
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/phone-portrait/_filter-modal.scss",
 		"/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/responsive/phone-portrait/_suspension-selector.scss",
@@ -387,13 +381,11 @@
 		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/helpers/BoxHelper.ts",
 		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RideStylerShowcaseVehicleSelection.scss",
 		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/helpers/ArrayHelper.ts",
-		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/dist/ridestyler.showcase.css",
-		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/RideStylerShowcase.scss",
-		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/src/index.html"
+		"/C/cygwin64/home/Tyler/RS/com.burkson.ridestyler.widgets/widgets/showcase/dist/ridestyler.showcase.css"
 	],
 	"find":
 	{
-		"height": 70.0
+		"height": 23.0
 	},
 	"find_in_files":
 	{
@@ -413,6 +405,25 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"olumn-2 no-style\"><i class=\"dot-styl",
+			"no-style",
+			"vsm-before",
+			"notStyleDiv",
+			"vsmLinkStyle",
+			"single",
+			"';\n",
+			"vsm-single-step",
+			"no-style",
+			"finalScreen",
+			"color",
+			"infoBaseArray",
+			"spanEle",
+			"column-2",
+			"vsm",
+			"dot",
+			"dot-info",
+			"data.currentVehicleDescription",
+			"hoek",
 			"optionsCount",
 			"firstV",
 			"first",
@@ -521,26 +532,7 @@
 			"Render",
 			"instructions",
 			"isVisible",
-			"onVehicleSelected",
-			"RideStylerImageRenderer",
-			"reset",
-			"WheelFitmentResourceType",
-			".reset",
-			"Reset",
-			"triggerexitcallback",
-			"events",
-			"state",
-			"reset",
-			"activeimage",
-			"clear",
-			"drop",
-			"show",
-			"visibilityhelper",
-			"hide",
-			"retiredImage",
-			"try {",
-			"try",
-			"tab"
+			"onVehicleSelected"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -563,24 +555,24 @@
 			[
 				{
 					"buffer": 0,
-					"file": "/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/VehicleDetails.ts",
+					"file": "/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/RideStylerShowcaseVehicleSelection.ts",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4157,
+						"buffer_size": 6330,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3951,
-								3951
+								5999,
+								5999
 							]
 						],
 						"settings":
 						{
-							"SL.118.region_keys":
+							"SL.14.region_keys":
 							[
 							],
 							"bracket_highlighter.busy": false,
@@ -591,8 +583,8 @@
 								{
 									"1":
 									[
-										4148,
-										4149
+										6321,
+										6322
 									]
 								},
 								"icon":
@@ -607,8 +599,8 @@
 								{
 									"1":
 									[
-										3533,
-										3534
+										5533,
+										5534
 									]
 								},
 								"unmatched":
@@ -627,51 +619,51 @@
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
 								"bh_curly",
 								"bh_curly_center",
 								"bh_curly_open",
 								"bh_curly_close",
 								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
 								"bh_tag_close",
-								"bh_tag_content"
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content"
 							],
 							"bracket_highlighter.locations":
 							{
@@ -679,8 +671,8 @@
 								{
 									"1":
 									[
-										4148,
-										4149
+										6321,
+										6322
 									]
 								},
 								"icon":
@@ -695,8 +687,8 @@
 								{
 									"1":
 									[
-										3533,
-										3534
+										5533,
+										5534
 									]
 								},
 								"unmatched":
@@ -705,56 +697,56 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
 								"bh_default",
 								"bh_default_center",
 								"bh_default_open",
 								"bh_default_close",
 								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
 								"bh_c_define",
 								"bh_c_define_center",
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
 								"bh_single_quote",
 								"bh_single_quote_center",
 								"bh_single_quote_open",
 								"bh_single_quote_close",
 								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
@@ -774,7 +766,7 @@
 							"use_tab_stops": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 702.0,
+						"translation.y": 1200.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -782,23 +774,244 @@
 				},
 				{
 					"buffer": 1,
-					"file": "/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/scripts/components/RideStylerShowcaseButtonPicker.ts",
+					"file": "/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/vehicle-selection-modal/scripts/rsvsm.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6017,
+						"buffer_size": 38093,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2890,
-								2890
+								26131,
+								26131
 							]
 						],
 						"settings":
 						{
+							"SL.15.region_keys":
+							[
+							],
+							"SL.44.region_keys":
+							[
+							],
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.clone": -1,
+							"bracket_highlighter.clone_locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										26361,
+										26362
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/curly_bracket.png",
+										"region.purplish"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										26008,
+										26009
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.clone_regions":
+							[
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content"
+							],
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										26237,
+										26238
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/curly_bracket.png",
+										"region.purplish"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										26008,
+										26009
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content"
+							],
+							"git_gutter_is_enabled": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 7797.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/RideStylerShowcaseVehicleSelection.scss",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2190,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2182,
+								2182
+							]
+						],
+						"settings":
+						{
+							"SL.16.region_keys":
+							[
+							],
+							"SL.40.region_keys":
+							[
+							],
 							"bracket_highlighter.busy": false,
 							"bracket_highlighter.clone": -1,
 							"bracket_highlighter.clone_locations":
@@ -828,51 +1041,51 @@
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
 								"bh_curly",
 								"bh_curly_center",
 								"bh_curly_open",
 								"bh_curly_close",
 								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
 								"bh_tag_close",
-								"bh_tag_content"
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content"
 							],
 							"bracket_highlighter.locations":
 							{
@@ -880,136 +1093,8 @@
 								{
 									"1":
 									[
-										2893,
-										2894
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/round_bracket.png",
-										"region.yellowish"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										2880,
-										2881
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content"
-							],
-							"git_gutter_is_enabled": false,
-							"syntax": "Packages/TypeScript/TypeScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true,
-							"typescript_plugin_format_options":
-							{
-								"convertTabsToSpaces": true,
-								"indentSize": 4,
-								"tabSize": 4
-							},
-							"use_tab_stops": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 390.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/C/Users/Tyler/rideStyler/widgets/com.burkson.ridestyler.widgets/widgets/showcase/src/styles/components/VehicleDetails.scss",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 404,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								233,
-								233
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.clone": 137,
-							"bracket_highlighter.clone_locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										232,
-										233
+										2187,
+										2188
 									]
 								},
 								"icon":
@@ -1024,82 +1109,9 @@
 								{
 									"1":
 									[
-										197,
-										198
+										2132,
+										2133
 									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.clone_regions":
-							[
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content"
-							],
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-								},
-								"icon":
-								{
-								},
-								"open":
-								{
 								},
 								"unmatched":
 								{
@@ -1107,79 +1119,73 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
 								"bh_curly",
 								"bh_curly_center",
 								"bh_curly_open",
 								"bh_curly_close",
 								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
 								"bh_tag_close",
-								"bh_tag_content"
+								"bh_tag_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content"
 							],
 							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Darker.tmTheme",
 							"git_gutter_is_enabled": false,
 							"syntax": "Packages/Sass/Syntaxes/SCSS.sublime-syntax",
 							"tab_size": 4,
-							"translate_tabs_to_spaces": true,
-							"typescript_plugin_format_options":
-							{
-								"convertTabsToSpaces": false,
-								"indentSize": 2,
-								"tabSize": 2
-							}
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 862.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
@@ -1286,7 +1292,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 414.0,
+	"side_bar_width": 191.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
