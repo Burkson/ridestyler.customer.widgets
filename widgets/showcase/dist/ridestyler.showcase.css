@@ -2737,7 +2737,8 @@ img {
   .vsm-modal .dot-info, .vsm-modal .dot-info.active {
     overflow: hidden;
     margin-top: .25em;
-    font-size: 1em; }
+    font-size: 1em;
+    color: #000; }
   .vsm-modal-body {
     padding-top: 1em; }
     .vsm-modal-body .center-piece {
