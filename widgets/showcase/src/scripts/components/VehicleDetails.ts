@@ -82,7 +82,7 @@ namespace RideStylerShowcase {
 
         private onDataChange(data:state.StateData) {
             const vehicleDescription = data.currentVehicleDescription;
-            const shortVehicleDescription  = vehicleDescription.length > 56 ? vehicleDescription.substring(0, 56) + '...' : vehicleDescription;
+            const shortVehicleDescription  = vehicleDescription.length > 40 ? vehicleDescription.substring(0, 38) + '...' : vehicleDescription;
             
             this.vehiclePaintSwatchElement.style.backgroundColor = data.currentPaintScheme ? data.currentPaintScheme.Colors[0].Hex : firstPaintColor;
             

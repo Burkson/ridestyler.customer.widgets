@@ -237,7 +237,7 @@ img {
     bottom: .75em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-pagination {
     height: 50%;
-    margin-top: 3em; }
+    margin-top: 5em; }
     .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-pagination-next, .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-pagination-prev {
       bottom: 3em; }
     .ridestyler-showcase.ridestyler-showcase-breakpoint-tv .ridestyler-showcase-pagination-option:only-child {
@@ -739,7 +739,7 @@ img {
     font-size: 1.2em; } }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-pagination {
-  margin-top: 5.5em;
+  margin-top: 6.5em;
   height: 50%; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-pagination-option-label-secondary {
     margin-top: 0; }
