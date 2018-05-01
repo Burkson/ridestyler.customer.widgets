@@ -47,7 +47,7 @@ var polyfills = [
     './node_modules/babel-polyfill/dist/polyfill.js',
     './node_modules/classlist-polyfill/src/index.js',
     './node_modules/ie8/build/ie8.max.js',
-    './node_modules/TinyAnimate/src/requestAnimationFrame.js',
+    './node_modules/TinyAnimate/src/requestAnimationFrame.js'
 ];
 var libraries = [
     './node_modules/nouislider/distribute/nouislider.js',
@@ -57,7 +57,7 @@ var libraries = [
 ];
 var widgets = [
     '../vehicle-selection-modal/scripts/rsvsm.js',
-    '../vehicle-renderer/js/rsvr.js',
+    '../vehicle-renderer/js/rsvr.js'
 ];
 
 var paths = {

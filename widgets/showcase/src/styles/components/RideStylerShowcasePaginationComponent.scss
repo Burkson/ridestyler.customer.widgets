@@ -3,6 +3,7 @@
 
 .ridestyler-showcase-pagination {
     &-wrapper {
+        cursor: default;
         display: flex;
         align-items: center;
         content-align: center;
@@ -30,6 +31,11 @@
         vertical-align: top;
 
         margin-bottom: 2em;
+
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
 
         &-no-results {
             top: 3em;

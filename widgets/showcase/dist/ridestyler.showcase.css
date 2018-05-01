@@ -1403,6 +1403,7 @@ img {
   -ms-user-select: none; }
 
 .ridestyler-showcase-pagination-wrapper {
+  cursor: default;
   display: flex;
   align-items: center;
   content-align: center;
@@ -1423,7 +1424,11 @@ img {
   box-sizing: border-box;
   position: relative;
   vertical-align: top;
-  margin-bottom: 2em; }
+  margin-bottom: 2em;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
   .ridestyler-showcase-pagination-option-no-results {
     top: 3em;
     left: -6.5em; }
