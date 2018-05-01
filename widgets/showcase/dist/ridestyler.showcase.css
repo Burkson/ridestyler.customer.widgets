@@ -1424,6 +1424,9 @@ img {
   position: relative;
   vertical-align: top;
   margin-bottom: 2em; }
+  .ridestyler-showcase-pagination-option-no-results {
+    top: 3em;
+    left: -6.5em; }
   .ridestyler-showcase-pagination-option-display {
     margin: 5px auto;
     width: 50px;
