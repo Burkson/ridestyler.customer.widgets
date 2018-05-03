@@ -5,6 +5,7 @@ namespace RideStylerShowcase {
     let   optionsCount = 1;
 
     export class RideStylerShowcaseButtonPicker<T> extends ComponentBase {
+        public optionClicked: boolean; 
         private optionContainer:HTMLElement;
 
         constructor(showcaseInstance:RideStylerShowcaseInstance, options: RideStylerShowcaseButtonPicker.Settings) {
@@ -16,6 +17,7 @@ namespace RideStylerShowcase {
                     height: '2.5em',
                 }
             });
+
 
             HTMLHelper.createElement('div', {
                 className: className + '-title',
@@ -54,7 +56,12 @@ namespace RideStylerShowcase {
                 }
             });
 
-            this.optionContainer.addEventListener('click', event => this.onOptionClick(event));
+            this.optionContainer.addEventListener('click', event => {
+                this.onOptionClick(event);
+                this.state.shareButtonState = false;
+
+            });
+
             this.optionContainer.addEventListener('DOMNodeInserted', () => {
                 this.optionContainer.style.opacity = '1';
                 this.optionContainer.style.transform = 'scaleY(1)';
@@ -80,9 +87,8 @@ namespace RideStylerShowcase {
                         this.optionContainer.style.height = '0px';
                 }
             });
-
         }
-
+ 
         public setOptions(options: RideStylerShowcaseButtonPicker.Option<T>[]) {
             HTMLHelper.empty(this.optionContainer);
 
@@ -100,7 +106,6 @@ namespace RideStylerShowcase {
                 if (option.active) optionElement.classList.add(activeClass);
 
                 fragment.appendChild(optionElement);
-
             }
 
             this.optionContainer.appendChild(fragment);

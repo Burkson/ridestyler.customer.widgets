@@ -1,3 +1,13 @@
 @import "../responsive-mixins";
 
 @include responsiveTabBar($tabBarWidth: 95px, $iconFontSize: 0.9em, $iconTextFontSize: 1.9em);
+
+
+.ridestyler-showcase-rotate-vehicle {
+    bottom: 23%;
+}
+
+
+.ridestyler-showcase-viewport {
+    bottom: 35%;
+}

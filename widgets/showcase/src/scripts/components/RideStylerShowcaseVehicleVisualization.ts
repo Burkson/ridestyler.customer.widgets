@@ -14,6 +14,7 @@ namespace RideStylerShowcase {
         private titleElement:HTMLElement;
         private rotateElement:HTMLElement;
         private filterButton:HTMLButtonElement;
+        private shareButton:HTMLButtonElement;
 
         private vehicleDetails:VehicleDetails;
 
@@ -68,7 +69,7 @@ namespace RideStylerShowcase {
          */
         private vehicleDescription:string;
 
-        private vehicleSuspension: string;
+        private vehicleSuspension:string;
 
         private imageType:ridestyler.DataObjects.VehicleResourceType;
 
@@ -191,9 +192,17 @@ namespace RideStylerShowcase {
             let shareButton = HTMLHelper.createButton({
                 className: 'ridestyler-share-my-vehicle-button',
                 text: strings.getString('share-my-vehicle'),
-                appendTo: this.component
+                appendTo: this.component,
+                style: {
+                    opacity: '1'
+                },
+                disabled: true;
             });
             
+            this.state.afterDataChange(stateData => {
+                shareButton.disabled = stateData.currentWheel ? false : true;
+            })
+
             shareButton.addEventListener('click', () => {
                 new RideStylerShowcaseShareModal(this.showcase, this.currentRenderInstructions).show();
             });
@@ -402,7 +411,6 @@ namespace RideStylerShowcase {
                 const canRenderOnCurrentAngle =
                     this.imageType === ridestyler.DataObjects.VehicleResourceType.Angle && model.HasAngleImage ||
                     this.imageType === ridestyler.DataObjects.VehicleResourceType.Side && model.HasSideImage;
-
                 if (!canRenderOnCurrentAngle) this.switchAngle();
 
                 api.request('wheel/getfitmentdescriptions', {

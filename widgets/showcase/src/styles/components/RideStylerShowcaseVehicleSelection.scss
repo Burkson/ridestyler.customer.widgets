@@ -6,6 +6,7 @@
 
 .ridestyler-showcase-vehicle-selection {
     text-align : center;
+
 }
 
 #ridestyler-showcase-select-your-vehicle {
@@ -94,6 +95,15 @@
             max-width: 90%;
         }
             padding-top: 1em;
+    }
+
+    span, p {
+        user-drag: none; 
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-drag: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
     }
 }
 

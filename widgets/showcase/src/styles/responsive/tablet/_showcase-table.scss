@@ -11,8 +11,15 @@
 @media only screen and (max-width: 1025px) and (min-width: 768px) {
     .ridestyler-showcase {
         &-product-modal {
+            display: flex;
+            flex-direction: column;
+
+            &-image {
+                height: 45%;
+                width: 100%;
+            }
+
             &-page {
-                margin-top: -.5em;
                 height: 100vh;
                 tbody {
                     height: 77vh;
@@ -22,6 +29,8 @@
             &-summary {
                 max-height: 32vh;
                 overflow: hidden; 
+                width: 100%;
+                margin-top: 49vh;
             }
         }
     }

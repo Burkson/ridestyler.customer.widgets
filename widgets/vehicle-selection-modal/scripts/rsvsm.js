@@ -525,7 +525,6 @@ function RideStylerVehicleSelectionModal(options) {
         bodyElement = modal.querySelectorAll('.vsm-modal-body')[0],
         vsmLinkStyle = modal.querySelectorAll('.vsm-line-step')[0],
         finalScreen = modal.querySelectorAll('.vsm-final')[0];
-
         var menuOptions = menu.Options,
         menuKey = menu.Key,
         menuTitle = menu.Title,
@@ -649,7 +648,10 @@ function RideStylerVehicleSelectionModal(options) {
             vsmLinkStyle.appendChild(divELe);
 
         }
-        headerElement.innerHTML = menu.Description;
+
+        let headerEnd = menu.Description.split(' ').slice(-1)[0].replace(/\b\w/g, function(t){ return t.toUpperCase() });
+        let headerStart = menu.Description.split(' '). slice(0,2).join(" ");
+        headerElement.innerHTML = headerStart + ' ' + headerEnd;
 
         //Clear the container
         while (itemListContainer.firstChild) {

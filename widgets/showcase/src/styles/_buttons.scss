@@ -43,6 +43,8 @@
 }
 
 @mixin button-link {
+    display: flex;
+    align-items: center;
     background: none;
     border: none;
     padding: 0;
@@ -58,6 +60,8 @@
     }
 
     &:after {
+        font-size: .9em;
+        padding-left: .33em;
         @include ridestyler-showcase-icon-styles;
         content: ' ' + ridestyler-showcase-icon-char('chevron-right');
     }

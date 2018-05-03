@@ -838,6 +838,7 @@ declare namespace RideStylerShowcase {
 
 declare namespace RideStylerShowcase {
     class RideStylerShowcaseButtonPicker<T> extends ComponentBase {
+        optionClicked: boolean;
         private optionContainer;
         constructor(showcaseInstance: RideStylerShowcaseInstance, options: RideStylerShowcaseButtonPicker.Settings);
         setOptions(options: RideStylerShowcaseButtonPicker.Option<T>[]): void;
@@ -1466,6 +1467,7 @@ declare namespace RideStylerShowcase {
         private titleElement;
         private rotateElement;
         private filterButton;
+        private shareButton;
         private vehicleDetails;
         private tabs;
         private customizationComponentOrder;

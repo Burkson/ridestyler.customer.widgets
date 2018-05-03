@@ -7,3 +7,15 @@
         bottom: .75em;
     }
 }
+
+
+
+@media only screen and (max-height: 815px) {
+	.ridestyler-showcase-tab-bar-tab {
+		font-size: .75em;
+	}
+
+	.ridestyler-showcase-customization-component-title {
+		font-size: 1.2em;
+	}
+}
