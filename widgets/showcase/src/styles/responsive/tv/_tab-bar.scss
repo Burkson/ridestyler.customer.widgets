@@ -12,7 +12,18 @@
 
 @media only screen and (max-height: 815px) {
 	.ridestyler-showcase-tab-bar-tab {
-		font-size: .75em;
+		font-size: .7em;
+	}
+
+	.ridestyler-showcase-customization-component-title {
+		font-size: 1.2em;
+	}
+}
+
+
+@media only screen and (max-height: 520px) {
+	.ridestyler-showcase-tab-bar-tab {
+		font-size: .65em;
 	}
 
 	.ridestyler-showcase-customization-component-title {

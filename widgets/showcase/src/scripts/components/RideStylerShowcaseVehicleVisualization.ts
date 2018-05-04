@@ -58,7 +58,6 @@ namespace RideStylerShowcase {
         }
 
         private components:IComponent[];
-
         /**
          * The ID of the currently displayed vehicle
          */
@@ -199,13 +198,13 @@ namespace RideStylerShowcase {
                 disabled: true;
             });
             
-            this.state.afterDataChange(stateData => {
-                shareButton.disabled = stateData.currentWheel ? false : true;
-            })
-
             shareButton.addEventListener('click', () => {
                 new RideStylerShowcaseShareModal(this.showcase, this.currentRenderInstructions).show();
             });
+
+            this.state.afterDataChange(stateData => {
+                shareButton.disabled = stateData.currentWheel ? false : true;
+            })
 
             // Start listening for resize events
             this.events.on('resized', () => {
@@ -528,12 +527,11 @@ namespace RideStylerShowcase {
 
         private updateViewport(instructions?:ridestyler.Requests.VehicleRenderInstructions) {
             Object.assign(this.currentRenderInstructions, instructions);
-                          
             return this.viewport.Update(instructions);
         }
 
         private canSwitchAngle():boolean {
-            return this.vehicleDescriptionModel.HasAngledImage && this.vehicleDescriptionModel.HasSideImage;
+            return this.vehicleDescriptionModel.HasAngledImage && this.vehicleDescriptionModel.HasSideImage ;
         }
 
         private showFilters() {
@@ -558,10 +556,12 @@ namespace RideStylerShowcase {
         }
 
         private switchAngle() {
-            if (!this.canSwitchAngle()) return;
+            if (!this.canSwitchAngle() || this.state.getData().currentWheel.HasSideImage === false) return;
 
-            if (this.imageType === ridestyler.DataObjects.VehicleResourceType.Angle)
+            if (this.imageType === ridestyler.DataObjects.VehicleResourceType.Angle) {
+
                 this.imageType = ridestyler.DataObjects.VehicleResourceType.Side;
+            }
             else
                 this.imageType = ridestyler.DataObjects.VehicleResourceType.Angle;
             

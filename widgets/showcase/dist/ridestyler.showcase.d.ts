@@ -1525,6 +1525,7 @@ declare namespace RideStylerShowcase {
     }
 }
 
+
 declare namespace RideStylerShowcase {
     import WheelModelDescriptionModel = ridestyler.Descriptions.WheelModelDescriptionModel;
     class RideStylerShowcaseWheelModal extends RideStylerShowcaseProductModal {

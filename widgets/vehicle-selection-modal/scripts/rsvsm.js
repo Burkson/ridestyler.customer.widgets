@@ -651,6 +651,13 @@ function RideStylerVehicleSelectionModal(options) {
 
         let headerEnd = menu.Description.split(' ').slice(-1)[0].replace(/\b\w/g, function(t){ return t.toUpperCase() });
         let headerStart = menu.Description.split(' '). slice(0,2).join(" ");
+        
+        // // let letterChecker = menu.Description.split(' ')[1];
+
+        // if ( letterChecker.charAt(0) === 'y') {
+        //     // let letterChecker = menu.Description.split(' ').slice(-2)[0].replace(/\b\w/g, function(t){ return t.toUpperCase() });
+        // }
+
         headerElement.innerHTML = headerStart + ' ' + headerEnd;
 
         //Clear the container

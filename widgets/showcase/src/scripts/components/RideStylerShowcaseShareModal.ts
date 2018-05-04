@@ -167,7 +167,7 @@ namespace RideStylerShowcase {
         }
 
         private switchAngle() {
-            if (!this.canSwitchAngle()) return;
+            if (!this.canSwitchAngle()  || this.state.getData().currentWheel.HasSideImage === false) return;
 
             if (this.imageType === ridestyler.DataObjects.VehicleResourceType.Angle)
                 this.imageType = ridestyler.DataObjects.VehicleResourceType.Side;
