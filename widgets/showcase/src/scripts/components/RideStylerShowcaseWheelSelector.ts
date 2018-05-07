@@ -27,12 +27,19 @@ namespace RideStylerShowcase {
             };
 
             this.vehicleConfigurationID = stateData.currentVehicleConfigurationID;
-            this.defaultFilters = {
-                VehicleConfiguration: stateData.currentVehicleConfigurationID,
-                HasCatalogImage: true,
-                HasFitments: true
-            };
-            this.currentFilters = ObjectHelper.assign({}, this.defaultFilters);
+            this.defaultFilters = {};
+
+            const currentVehicle = stateData.currentVehicleDescriptionModel;
+
+            if (currentVehicle.HasSideImage && !currentVehicle.HasAngledImage) {
+                this.defaultFilters.HasSideImage = true;
+            }
+
+            if (currentVehicle.HasAngledImage && !currentVehicle.HasSideImage) {
+                this.defaultFilters.HasAngledImage = true;
+            }
+
+            this.currentFilters = ObjectHelper.assign({}, this.defaultFilters, showcaseInstance.filters.wheelFilters.getFilters());
         }
 
         protected showNoResults() {

@@ -195,7 +195,7 @@ namespace RideStylerShowcase {
                 style: {
                     opacity: '1'
                 },
-                disabled: true;
+                disabled: true
             });
             
             shareButton.addEventListener('click', () => {
@@ -386,6 +386,9 @@ namespace RideStylerShowcase {
                 suspension: new RideStylerShowcaseSuspensionSelector(this.showcase)
             };
 
+
+            this.customizationComponents.wheels.setFilters(this.showcase.filters.wheelFilters.getFilters());
+
             this.showcase.filters.wheelFilters.onFiltersChanged = filters => {
                 this.customizationComponents.wheels.setFilters(filters);
             };
@@ -460,7 +463,6 @@ namespace RideStylerShowcase {
 
             for (let customizationComponent of ObjectHelper.getValues<IComponent>(this.customizationComponents)) {
                 customizationComponent.component.classList.add('ridestyler-showcase-customization-component');
-
                 this.customizationComponentContainer.appendChild(customizationComponent.component);
             }
 

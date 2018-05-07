@@ -21,6 +21,7 @@ namespace RideStylerShowcase.filters {
         public setVehicle(vehicle:Vehicle) {
             this.clearFilters(false);
             this.globalFilters.setVehicle(vehicle);
+            this.wheelFilters.setFilter
         }
 
         public clearFilters(triggerChange?: boolean) {
@@ -364,13 +365,6 @@ namespace RideStylerShowcase.filters {
 
     export class WheelFilterProvider extends FilterProvider<WheelFilterModel> {
         public readonly filterOptions:IFilter<any, WheelFilterModel>[];
-        protected readonly baseFilters:WheelFilterModel = {
-            FitmentResourceTypes: [ // At least one image
-                ridestyler.Requests.WheelFitmentResourceType.Angled,
-                ridestyler.Requests.WheelFitmentResourceType.Catalog,
-                ridestyler.Requests.WheelFitmentResourceType.Side
-            ]
-        };
 
         constructor(globalFilterProvider:GlobalFilterProvider) {
             super('wheel', globalFilterProvider);

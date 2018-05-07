@@ -67,6 +67,7 @@ declare namespace RideStylerShowcase.events {
         "resize": undefined;
         "resized": undefined;
         "breakpoint-changed": RideStylerShowcase.styles.Breakpoint;
+        "vehicle-description-loaded": ridestyler.Descriptions.VehicleDescriptionModel;
     }
     interface RideStylerShowcaseEventHandler<DataType = any> {
         /**
@@ -220,7 +221,6 @@ declare namespace RideStylerShowcase.filters {
     }
     class WheelFilterProvider extends FilterProvider<WheelFilterModel> {
         readonly filterOptions: IFilter<any, WheelFilterModel>[];
-        protected readonly baseFilters: WheelFilterModel;
         constructor(globalFilterProvider: GlobalFilterProvider);
         getCount(filters: WheelFilterModel): RideStylerPromise<number, ridestyler.RideStylerAPIResponse>;
     }

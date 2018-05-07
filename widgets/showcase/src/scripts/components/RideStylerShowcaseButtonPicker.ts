@@ -58,8 +58,6 @@ namespace RideStylerShowcase {
 
             this.optionContainer.addEventListener('click', event => {
                 this.onOptionClick(event);
-                this.state.shareButtonState = false;
-
             });
 
             this.optionContainer.addEventListener('DOMNodeInserted', () => {

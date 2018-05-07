@@ -78,7 +78,7 @@ namespace RideStylerShowcase {
 
             let previouslySelectedOption:OptionElement = HTMLHelper.firstChildWithClass(this.component, optionMenuOptionActiveClass);
             let newSelectedOption:OptionElement = target as OptionElement;
-            
+
             if (previouslySelectedOption) previouslySelectedOption.classList.remove(optionMenuOptionActiveClass);
             newSelectedOption.classList.add(optionMenuOptionActiveClass);
 

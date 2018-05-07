@@ -1,3 +1,13 @@
 @import "../responsive-mixins";
 
 @include responsiveTabBar($tabBarWidth: 100px, $iconFontSize: 0.9em, $iconTextFontSize: 1.9em);
+
+
+.ridestyler-showcase-viewport {
+    bottom: 23vh;
+    right: 15%;
+    height: 45%;
+    margin-bottom: 20px;
+    pointer-events: none;
+    z-index: $zLayer1;
+}

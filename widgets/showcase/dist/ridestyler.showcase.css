@@ -446,6 +446,13 @@ img {
       font-size: 1.9em; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-customizations, .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-viewport, .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-rotate-vehicle {
     padding-left: 40em; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-viewport {
+    bottom: 23vh;
+    right: 15%;
+    height: 45%;
+    margin-bottom: 20px;
+    pointer-events: none;
+    z-index: 1000; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait img {
   user-drag: none;
@@ -880,7 +887,7 @@ img {
   -ms-user-select: none; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-viewport {
-  bottom: 22%;
+  bottom: 20vh;
   right: 15%;
   height: 45%;
   margin-bottom: 20px;
@@ -1025,6 +1032,13 @@ img {
     bottom: 23%; }
   .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-viewport {
     bottom: 35%; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-tablet .ridestyler-showcase-viewport {
+    bottom: 32vh;
+    right: 15%;
+    height: 45%;
+    margin-bottom: 20px;
+    pointer-events: none;
+    z-index: 1000; }
 
 .ridestyler-showcase-pagination-wrapper {
   -webkit-mask: -webkit-gradient(linear, left center, right center, color-stop(0, transparent), color-stop(0, transparent), color-stop(0.03, black), color-stop(0.97, black), color-stop(1, transparent), color-stop(1, transparent)); }

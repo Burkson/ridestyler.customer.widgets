@@ -11,3 +11,14 @@
 .ridestyler-showcase-viewport {
     bottom: 35%;
 }
+
+
+.ridestyler-showcase-viewport {
+	// background: blue;
+    bottom: 32vh;
+    right: 15%;
+    height: 45%;
+    margin-bottom: 20px;
+    pointer-events: none;
+    z-index: $zLayer1;
+}

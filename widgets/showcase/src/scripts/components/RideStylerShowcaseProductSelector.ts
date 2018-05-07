@@ -31,14 +31,16 @@ namespace RideStylerShowcase {
                     Start: this.index,
                     Count: resultsPerLoad
                 }, this.currentFilters) as FilterType;
-
+                
                 return this.getResults(filters).done(products => {
                     this.index += resultsPerLoad;
                     this.hasMoreResults = this.index + resultsPerLoad < productCount;
+                    // this.currentFilters = filters;
 
                     this.createOptions(products);
                 });
-            }).always(() => this.isLoading = false);
+            }).always(() => {
+                this.isLoading = false});
         }
 
         protected abstract countResults(filters: FilterType) : RideStylerPromise<number,ridestyler.RideStylerAPIResponse>;
@@ -58,8 +60,8 @@ namespace RideStylerShowcase {
             this.index = 0;
 
             // Set our filters
-            this.currentFilters = newFilters;
-
+            this.currentFilters = ObjectHelper.assign({}, this.currentFilters, newFilters);
+            
             // Load first result set
             this.loadMore();
         }
@@ -69,7 +71,7 @@ namespace RideStylerShowcase {
          * @param filterUpdates The filter properties to update
          */
         public updateFilters(filterUpdates: FilterType) {
-            this.setFilters(ObjectHelper.assign(this.currentFilters, filterUpdates));
+            this.setFilters(ObjectHelper.assign({}, this.currentFilters, filterUpdates));
         }
 
         /**

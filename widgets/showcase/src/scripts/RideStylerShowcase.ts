@@ -97,7 +97,7 @@ namespace RideStylerShowcase {
                 this.events.debugCallback = function (name, e, handlers) {
                     if (name === 'resize') return;
 
-                    console.log(`[RideStylerShowcase Event] Name:${name} Data:`, e, handlers);
+                    console.log(`[RideStylerShowcase Event] Name: ${name} Data:`, e, handlers);
                 };
 
             if (container) {
@@ -229,6 +229,11 @@ namespace RideStylerShowcase {
                     vehicleTireOptionID: selection.TireOptionID
                 });
             });
+            this.events.on("vehicle-description-loaded", selected => {
+                ridestyler.Requests.WheelFitmentResourceType.Angled,
+                ridestyler.Requests.WheelFitmentResourceType.Catalog,
+                ridestyler.Requests.WheelFitmentResourceType.Side
+            })
         }
 
         private initializeComponents() {
