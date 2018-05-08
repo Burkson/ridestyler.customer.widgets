@@ -67,7 +67,6 @@ declare namespace RideStylerShowcase.events {
         "resize": undefined;
         "resized": undefined;
         "breakpoint-changed": RideStylerShowcase.styles.Breakpoint;
-        "vehicle-description-loaded": ridestyler.Descriptions.VehicleDescriptionModel;
     }
     interface RideStylerShowcaseEventHandler<DataType = any> {
         /**

@@ -235,7 +235,8 @@ namespace RideStylerShowcase.filters {
     export class GlobalFilterProvider extends FilterProvider<GlobalFilterModel> {
         public readonly filterOptions:IFilter<any, GlobalFilterModel>[];
         protected readonly baseFilters: GlobalFilterModel = {
-            HasFitments: true
+            HasFitments: true,
+            HasCatalogImage: true
         };
         
         constructor() {

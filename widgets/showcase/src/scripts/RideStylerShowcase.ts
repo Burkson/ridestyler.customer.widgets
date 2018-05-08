@@ -229,11 +229,6 @@ namespace RideStylerShowcase {
                     vehicleTireOptionID: selection.TireOptionID
                 });
             });
-            this.events.on("vehicle-description-loaded", selected => {
-                ridestyler.Requests.WheelFitmentResourceType.Angled,
-                ridestyler.Requests.WheelFitmentResourceType.Catalog,
-                ridestyler.Requests.WheelFitmentResourceType.Side
-            })
         }
 
         private initializeComponents() {

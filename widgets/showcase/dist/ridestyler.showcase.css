@@ -453,6 +453,8 @@ img {
     margin-bottom: 20px;
     pointer-events: none;
     z-index: 1000; }
+  .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop .ridestyler-showcase-modal .ridestyler-showcase-viewport {
+    bottom: 11vh; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-portrait img {
   user-drag: none;
@@ -887,7 +889,6 @@ img {
   -ms-user-select: none; }
 
 .ridestyler-showcase.ridestyler-showcase-breakpoint-phone-landscape .ridestyler-showcase-viewport {
-  bottom: 20vh;
   right: 15%;
   height: 45%;
   margin-bottom: 20px;

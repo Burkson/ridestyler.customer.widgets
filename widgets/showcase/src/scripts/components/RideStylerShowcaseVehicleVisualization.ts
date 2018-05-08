@@ -367,8 +367,10 @@ namespace RideStylerShowcase {
                     vehicleHasSideImage: vehicleDescription.HasSideImage,
                     currentTireOption: vehicleTireOption,
                     currentVehicleDescriptionModel: vehicleDescription,
-
                 });
+
+
+
                 this.initializeForNewVehicle();
             });
         }

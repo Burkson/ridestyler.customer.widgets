@@ -35,7 +35,6 @@ namespace RideStylerShowcase {
                 return this.getResults(filters).done(products => {
                     this.index += resultsPerLoad;
                     this.hasMoreResults = this.index + resultsPerLoad < productCount;
-                    // this.currentFilters = filters;
 
                     this.createOptions(products);
                 });
