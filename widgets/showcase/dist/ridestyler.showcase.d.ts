@@ -1558,6 +1558,7 @@ declare namespace RideStylerShowcase {
         private readonly supportedVehicleImagery;
         protected readonly defaultFilters: WheelFilterModel;
         protected currentFilters: WheelFilterModel;
+        constructor(showcaseInstance: RideStylerShowcaseInstance);
         protected showNoResults(): void;
         protected countResults(filters: WheelFilterModel): ridestyler.RideStylerPromise<number, ridestyler.RideStylerAPIResponse>;
         protected getResults(filters: WheelFilterModel): ridestyler.RideStylerPromise<WheelModelDescriptionModel[], ridestyler.RideStylerAPIResponse>;
