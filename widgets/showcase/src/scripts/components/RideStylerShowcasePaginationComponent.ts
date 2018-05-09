@@ -230,7 +230,13 @@ namespace RideStylerShowcase {
 
         public nextPage() {
             this.scrollTo(this.optionContainer.scrollLeft + this.optionContainer.clientWidth);
-
+                let optionContainer = this.optionContainer;
+                const reachedEndTolerance = 10;
+                
+                if (optionContainer.scrollLeft >= optionContainer.scrollWidth - optionContainer.offsetWidth - reachedEndTolerance) {
+                    this.onEndVisible();
+                }
+                this.updateBounds();
         }
 
         public selectOption(optionElement:HTMLElement) {
