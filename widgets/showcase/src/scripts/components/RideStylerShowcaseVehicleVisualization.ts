@@ -367,15 +367,14 @@ namespace RideStylerShowcase {
                     vehicleHasSideImage: vehicleDescription.HasSideImage,
                     currentTireOption: vehicleTireOption,
                     currentVehicleDescriptionModel: vehicleDescription,
+
                 });
-
-
-
                 this.initializeForNewVehicle();
             });
         }
 
         private initializeForNewVehicle() {
+            this.events.trigger("vehicle-description-loaded", this.vehicleDescriptionModel);
             this.currentRenderInstructions = {};
             this.tabBar.setActiveTab(this.tabs.paint);
             this.viewport.Reset();

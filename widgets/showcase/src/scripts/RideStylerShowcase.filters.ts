@@ -21,7 +21,10 @@ namespace RideStylerShowcase.filters {
         public setVehicle(vehicle:Vehicle) {
             this.clearFilters(false);
             this.globalFilters.setVehicle(vehicle);
-            this.wheelFilters.setFilter
+        }
+
+        public setVehicleDescription(vehicleDescription:VehicleDescription) {
+            this.wheelFilters.setVehicleDescription(vehicleDescription);
         }
 
         public clearFilters(triggerChange?: boolean) {
@@ -34,6 +37,11 @@ namespace RideStylerShowcase.filters {
     export interface Vehicle {
         vehicleConfigurationID: string;
         vehicleTireOptionID: string;
+    }
+
+    export interface VehicleDescription {
+        HasSideImage: boolean;
+        HasAngledImage: boolean;
     }
 
     export interface FilterValue {
@@ -238,7 +246,7 @@ namespace RideStylerShowcase.filters {
             HasFitments: true,
             HasCatalogImage: true
         };
-        
+
         constructor() {
             super('global', undefined);
 
@@ -258,14 +266,15 @@ namespace RideStylerShowcase.filters {
                         if (vehicleConfigurationID) filters.VehicleConfiguration = vehicleConfigurationID;
                         if (vehicleTireOptionID) filters.VehicleTireOption = vehicleTireOptionID;
                     }
-                }
+                },
             ];
         }
 
         /**
-         * Applies a vehicle selection to all 
-         * @param vehicle The vehicle to apply to filter queries
-         */
+        * Applies a vehicle selection to all 
+        * @param vehicle The vehicle to apply to filter queries
+        */
+        
         public setVehicle(vehicle:Vehicle) {
             this.setFilter(vehicleConfigFilterKey, vehicle);
         }
@@ -440,10 +449,22 @@ namespace RideStylerShowcase.filters {
                             Diameter: diameter
                         });
                     }
+                },
+                {
+                    key: 'wheel',
+                    apply: (filters, vehicleDescription:VehicleDescription) => {
+                        if (vehicleDescription.HasSideImage && !vehicleDescription.HasAngledImage) filters.HasSideImage = true;
+                        if (vehicleDescription.HasAngledImage && !vehicleDescription.HasSideImage) filters.HasAngledImage = true;
+                    } 
                 }
             ];
         }
-        
+
+
+        public setVehicleDescription(vehicleDescription:VehicleDescription) {
+           this.setFilter('wheel', vehicleDescription);
+        }
+      
         public getCount(filters:WheelFilterModel):RideStylerPromise<number, ridestyler.RideStylerAPIResponse> {
             return PromiseHelper.then(api.request("wheel/countmodels", filters), response => {
                 return response.Count;

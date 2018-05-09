@@ -25,7 +25,10 @@ namespace RideStylerShowcase {
                 angled: stateData.vehicleHasAngledImage,
                 side: stateData.vehicleHasSideImage
             };
+
+            this.vehicleConfigurationID = stateData.currentVehicleConfigurationID;
             
+           
             this.currentFilters = ObjectHelper.assign({}, this.defaultFilters, showcaseInstance.filters.wheelFilters.getFilters());
         }
 

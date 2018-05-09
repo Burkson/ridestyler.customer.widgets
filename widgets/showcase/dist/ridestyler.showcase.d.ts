@@ -67,6 +67,7 @@ declare namespace RideStylerShowcase.events {
         "resize": undefined;
         "resized": undefined;
         "breakpoint-changed": RideStylerShowcase.styles.Breakpoint;
+        "vehicle-description-loaded": ridestyler.Descriptions.VehicleDescriptionModel;
     }
     interface RideStylerShowcaseEventHandler<DataType = any> {
         /**
@@ -117,11 +118,16 @@ declare namespace RideStylerShowcase.filters {
         readonly wheelFilters: WheelFilterProvider;
         constructor();
         setVehicle(vehicle: Vehicle): void;
+        setVehicleDescription(vehicleDescription: VehicleDescription): void;
         clearFilters(triggerChange?: boolean): void;
     }
     interface Vehicle {
         vehicleConfigurationID: string;
         vehicleTireOptionID: string;
+    }
+    interface VehicleDescription {
+        HasSideImage: boolean;
+        HasAngledImage: boolean;
     }
     interface FilterValue {
         key: string;
@@ -206,9 +212,9 @@ declare namespace RideStylerShowcase.filters {
         protected readonly baseFilters: GlobalFilterModel;
         constructor();
         /**
-         * Applies a vehicle selection to all
-         * @param vehicle The vehicle to apply to filter queries
-         */
+        * Applies a vehicle selection to all
+        * @param vehicle The vehicle to apply to filter queries
+        */
         setVehicle(vehicle: Vehicle): void;
         getCount(): never;
     }
@@ -221,6 +227,7 @@ declare namespace RideStylerShowcase.filters {
     class WheelFilterProvider extends FilterProvider<WheelFilterModel> {
         readonly filterOptions: IFilter<any, WheelFilterModel>[];
         constructor(globalFilterProvider: GlobalFilterProvider);
+        setVehicleDescription(vehicleDescription: VehicleDescription): void;
         getCount(filters: WheelFilterModel): RideStylerPromise<number, ridestyler.RideStylerAPIResponse>;
     }
 }

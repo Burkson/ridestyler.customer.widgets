@@ -229,6 +229,13 @@ namespace RideStylerShowcase {
                     vehicleTireOptionID: selection.TireOptionID
                 });
             });
+
+            this.events.on("vehicle-description-loaded", selectedVehicle => {
+                this.filters.setVehicleDescription({
+                    HasSideImage: selectedVehicle.HasSideImage,
+                    HasAngledImage: selectedVehicle.HasAngledImage
+                });
+            });
         }
 
         private initializeComponents() {
