@@ -16,21 +16,18 @@ namespace RideStylerShowcase {
         protected readonly defaultFilters: WheelFilterModel;
         protected currentFilters: WheelFilterModel;
 
-        constructor(showcaseInstance:RideStylerShowcaseInstance) {
-            super(showcaseInstance);
+        // constructor(showcaseInstance:RideStylerShowcaseInstance) {
+        //     super(showcaseInstance);
 
-            let stateData = showcaseInstance.state.getData();
+        //     // let stateData = showcaseInstance.state.getData();
 
-            this.supportedVehicleImagery = {
-                angled: stateData.vehicleHasAngledImage,
-                side: stateData.vehicleHasSideImage
-            };
-
-            this.vehicleConfigurationID = stateData.currentVehicleConfigurationID;
+        //     // this.supportedVehicleImagery = {
+        //     //     angled: stateData.vehicleHasAngledImage,
+        //     //     side: stateData.vehicleHasSideImage
+        //     // };
             
-           
-            this.currentFilters = ObjectHelper.assign({}, this.defaultFilters, showcaseInstance.filters.wheelFilters.getFilters());
-        }
+        //     // this.currentFilters = ObjectHelper.assign({}, this.defaultFilters, showcaseInstance.filters.wheelFilters.getFilters());
+        // }
 
         protected showNoResults() {
             this.noResultsElement = HTMLHelper.createElement('div', {

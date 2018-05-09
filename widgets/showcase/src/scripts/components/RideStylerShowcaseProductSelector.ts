@@ -6,7 +6,7 @@ namespace RideStylerShowcase {
         protected currentFilters: FilterType;
         protected readonly defaultFilters: FilterType;
 
-        protected readonly resultsPerLoad = 20;
+        protected readonly resultsPerLoad = 50;
 
         protected count:number = -1;
         protected index:number = 0;
@@ -34,8 +34,7 @@ namespace RideStylerShowcase {
                 
                 return this.getResults(filters).done(products => {
                     this.index += resultsPerLoad;
-                    this.hasMoreResults = this.index + resultsPerLoad < productCount;
-
+                    this.hasMoreResults = this.index < productCount;
                     this.createOptions(products);
                 });
             }).always(() => {

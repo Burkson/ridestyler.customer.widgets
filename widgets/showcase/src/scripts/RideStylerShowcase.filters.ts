@@ -283,7 +283,6 @@ namespace RideStylerShowcase.filters {
         * @param vehicle The vehicle to apply to filter queries
         */
         
-
         public setVehicleDescription(vehicleDescription:VehicleDescription) {
            this.setFilter('globalWheel', vehicleDescription);
         }
@@ -473,13 +472,11 @@ namespace RideStylerShowcase.filters {
             ];
         }
 
-
         public setVehicleDescription(vehicleDescription:VehicleDescription) {
            this.setFilter('wheel', vehicleDescription);
         }
       
         public getCount(filters:WheelFilterModel):RideStylerPromise<number, ridestyler.RideStylerAPIResponse> {
-            console.log('filters', filters);
             return PromiseHelper.then(api.request("wheel/countmodels", filters), response => {
                 return response.Count;
             });
