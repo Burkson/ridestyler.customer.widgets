@@ -25,6 +25,7 @@ namespace RideStylerShowcase.filters {
 
         public setVehicleDescription(vehicleDescription:VehicleDescription) {
             this.wheelFilters.setVehicleDescription(vehicleDescription);
+            this.globalFilters.setVehicleDescription(vehicleDescription);
         }
 
         public clearFilters(triggerChange?: boolean) {
@@ -267,6 +268,13 @@ namespace RideStylerShowcase.filters {
                         if (vehicleTireOptionID) filters.VehicleTireOption = vehicleTireOptionID;
                     }
                 },
+                {
+                    key: 'globalWheel',
+                    apply: (filters, vehicleDescription:VehicleDescription) => {
+                        if (vehicleDescription.HasSideImage && !vehicleDescription.HasAngledImage) filters.HasSideImage = true;
+                        if (vehicleDescription.HasAngledImage && !vehicleDescription.HasSideImage) filters.HasAngledImage = true;
+                    } 
+                }
             ];
         }
 
@@ -275,6 +283,11 @@ namespace RideStylerShowcase.filters {
         * @param vehicle The vehicle to apply to filter queries
         */
         
+
+        public setVehicleDescription(vehicleDescription:VehicleDescription) {
+           this.setFilter('globalWheel', vehicleDescription);
+        }
+
         public setVehicle(vehicle:Vehicle) {
             this.setFilter(vehicleConfigFilterKey, vehicle);
         }
@@ -466,6 +479,7 @@ namespace RideStylerShowcase.filters {
         }
       
         public getCount(filters:WheelFilterModel):RideStylerPromise<number, ridestyler.RideStylerAPIResponse> {
+            console.log('filters', filters);
             return PromiseHelper.then(api.request("wheel/countmodels", filters), response => {
                 return response.Count;
             });

@@ -215,6 +215,7 @@ declare namespace RideStylerShowcase.filters {
         * Applies a vehicle selection to all
         * @param vehicle The vehicle to apply to filter queries
         */
+        setVehicleDescription(vehicleDescription: VehicleDescription): void;
         setVehicle(vehicle: Vehicle): void;
         getCount(): never;
     }
