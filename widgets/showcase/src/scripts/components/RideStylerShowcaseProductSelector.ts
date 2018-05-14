@@ -155,7 +155,6 @@ namespace RideStylerShowcase {
         
         private urlEncode(product) {
             let stateData = this.state.getData();            
-            console.log('stateData', stateData);
             let vehicleFragments = {
                 vehicleConfiguration: stateData.currentVehicleConfigurationID,
                 paint: !stateData.currentPaintScheme ? undefined : stateData.currentPaintScheme.SchemeName,
