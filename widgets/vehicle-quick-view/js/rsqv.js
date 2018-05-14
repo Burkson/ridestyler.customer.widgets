@@ -97,9 +97,21 @@ var rsqv = function() {
                                 // Store our configuration maps
                                 for(var i = 0; i < response.Results.length; i++) {
                                     var result = response.Results[i];
-                                    var index = parseInt(result.ID);                                    
-        
-                                    map.matches[index].models = result.Descriptions;
+                                    var index = parseInt(result.ID);          
+                                    var descriptions = result.Descriptions;                          
+
+                                    // Group our search results together based on unique images
+                                    var group = {};
+                                    for(var x = descriptions.length - 1; x >= 0; x--) {
+                                        var desc = descriptions[x];
+                                        group[desc.SideImage + '_' + desc.AngledImage] = desc;
+                                    }
+
+                                    // Convert our grouped images back into an array
+                                    map.matches[index].models = [];
+                                    for(var key in group) {
+                                        map.matches[index].models.push(group[key]);
+                                    }
                                 }
         
                                 // Load our default paint schemes (use the first match for simplicity)
