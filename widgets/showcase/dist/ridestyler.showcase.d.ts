@@ -1053,6 +1053,7 @@ declare namespace RideStylerShowcase {
         constructor(showcaseInstance: RideStylerShowcaseInstance);
         protected _loadMore(): ridestyler.RideStylerPromise<ridestyler.Responses.VehiclePaintSchemeDescriptionResultModel, ridestyler.Responses.VehiclePaintSchemeDescriptionResultModel>;
         private createOptions(schemes);
+        private urlEncode(paintScheme);
         onPaintSchemeSelected: (paintScheme: VehiclePaintSchemeDescriptionModel) => void;
         protected onOptionClick(optionElement: HTMLElement): void;
         private static createAttributeLabel(attributes);
@@ -1157,6 +1158,7 @@ declare namespace RideStylerShowcase {
         private createOptions(products);
         protected onOptionClick(optionElement: HTMLElement): void;
         productSelectedCallback: (product: DataType) => void;
+        private urlEncode(product);
         protected onProductClick(product: DataType): void;
     }
 }
@@ -1456,6 +1458,7 @@ declare namespace RideStylerShowcase {
         protected buildComponent(container: HTMLElement): void;
         private buildCopy();
         private onAuthenticated();
+        private urlEncode(selection);
         private onVehicleSelected(selection);
         /**
          * Show the passed in wheel models in the wheel showcase section of the vehicle selection screen

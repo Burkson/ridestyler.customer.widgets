@@ -138,6 +138,7 @@ namespace RideStylerShowcase {
          * @param container The container to initialize this showcase in
          */
         public initialize(container: HTMLElement) : void {
+
             if (!container) throw "Cannot initialize showcase without a container to put it in.";
 
             this.container = ObjectHelper.assign(container, {

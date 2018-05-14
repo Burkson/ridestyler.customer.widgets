@@ -33,6 +33,7 @@ namespace RideStylerShowcase {
                         }
                     });
 
+                    this.getURL()
                     // Skip calling validate below
                     return;
                 } else if ('token' in settings || 'key' in settings) {

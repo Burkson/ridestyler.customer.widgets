@@ -4,7 +4,7 @@ namespace RideStylerShowcase {
             this.showcase = showcaseInstance;
             this.events = showcaseInstance.events;
             this.state = showcaseInstance.state;
-            
+
             this.initializeComponent();
         }
         

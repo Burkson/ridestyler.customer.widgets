@@ -467,7 +467,7 @@ namespace RideStylerShowcase.filters {
                     apply: (filters, vehicleDescription:VehicleDescription) => {
                         if (vehicleDescription.HasSideImage && !vehicleDescription.HasAngledImage) filters.HasSideImage = true;
                         if (vehicleDescription.HasAngledImage && !vehicleDescription.HasSideImage) filters.HasAngledImage = true;
-                    } 
+                    }
                 }
             ];
         }
