@@ -27,24 +27,6 @@ namespace RideStylerShowcase {
          * @virtual
          */
         protected initializeComponent() {
-            let currentUrl = decodeURIComponent(location.search.substr(1));
-            let splitUrl = [];
-            let dataObject = undefined;
-            let actionString = '';
-
-            if (currentUrl.length !== 1) {
-                let urlArray = currentUrl.split("&")
-                urlArray.forEach(innerArray => {
-                  splitUrl.push(innerArray.split("="));
-                })
-                
-                actionString = 'Vehicle/Render';
-                dataObject = splitUrl.reduce(function(object, [key, value]) {return  (object[key]=value, object)}, {});
-                
-                let url = ridestyler.ajax.url(actionString, dataObject);
-                console.log('url', url);
-            }
-
         }
 
         /**
