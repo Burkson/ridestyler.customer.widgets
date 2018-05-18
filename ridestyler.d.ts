@@ -375,6 +375,50 @@ declare namespace ridestyler {
             EuroMetric = 7
         }
 
+        const enum VehicleReferenceType
+        {
+            ACES = 1,
+            WheelPros = 2
+        }
+
+        const enum WheelProsReferenceFields
+        {
+            VehicleCD = 1
+        }
+        
+        const enum VcDbReferenceFields
+        {
+            BaseVehicleID = 1,
+            BedConfigID = 2,
+            BedLengthID = 3,
+            BedTypeID = 4,
+            BodyNumDoorsID = 5,
+            BodyStyleConfigID = 6,
+            BodyTypeID = 7,
+            DriveTypeID = 8,
+            EngineBaseID = 9,
+            EngineConfigID = 10,
+            FuelTypeID = 11,
+            MakeID = 12,
+            ModelID = 13,
+            RegionID = 14,
+            SubModelID = 15,
+            VehicleID = 16,
+            VehicleTypeGroupID = 17,
+            VehicleTypeID = 18,
+            YearID = 19
+        }
+        type VehicleReferenceFields = VcDbReferenceFields | WheelProsReferenceFields;
+
+        interface VehicleReferenceDataObject {
+            VehicleReferenceID: number;
+            VehicleReference_VehicleConfigurationID: string;
+            VehicleReferenceType: VehicleReferenceType;
+            VehicleReferenceField: VehicleReferenceFields;
+            VehicleReferenceValue: string;
+            VehicleReferenceUpdated: string;
+        }
+
         interface VehicleTireOptionDataObject {
             VehicleTireOptionID: string;
             VehicleTireOption_VehicleConfigurationID: string;
@@ -692,6 +736,10 @@ declare namespace ridestyler {
 
         interface VehicleDescriptionResultModel extends RideStylerAPIResponse {
             Descriptions: Descriptions.VehicleDescriptionModel[];
+        }
+
+        interface VehicleReferencesResultModel extends RideStylerAPIResponse {
+            References: DataObjects.VehicleReferenceDataObject[]
         }
 
         interface TireBrandsResultModel extends RideStylerAPIResponse {
@@ -1028,6 +1076,20 @@ declare namespace ridestyler {
             Years?: number[];
         }
 
+        interface VehicleReferenceFilterModel extends ActionRequestPagedModel {
+            VehicleConfiguration?: string;
+            VehicleConfigurations?: string[];
+
+            VehicleReferenceType?: DataObjects.VehicleReferenceType;
+            VehicleReferenceTypes?: DataObjects.VehicleReferenceType[];
+
+            VehicleReferenceField?: DataObjects.VehicleReferenceFields;
+            VehicleReferenceFields?: DataObjects.VehicleReferenceFields[];
+
+            VehicleReferenceValue?: string;
+            VehicleReferenceValues?: string[];
+        }
+
         const enum VehicleTireSizeComparisonSettings
         {
             None = 0,
@@ -1245,6 +1307,8 @@ declare namespace ridestyler {
         "vehicle/gettireoptions": Responses.VehicleTireOptionResultModel,
         "vehicle/gettireoptiondetails": Responses.VehicleTireOptionDetailResultModel,
         "vehicle/getpaintschemedescriptions": Responses.VehiclePaintSchemeDescriptionResultModel,
+        "vehicle/countreferences": Responses.ActionCountResultModel,
+        "vehicle/getreferences": Responses.VehicleReferencesResultModel,
 
         "wheel/countmodels": Responses.ActionCountResultModel,
         "wheel/countbrands": Responses.ActionCountResultModel,
@@ -1283,6 +1347,8 @@ declare namespace ridestyler {
         "vehicle/gettireoptions": Requests.VehicleFilterModel,
         "vehicle/gettireoptiondetails": Requests.GetTireOptionsRequestModel,
         "vehicle/getpaintschemedescriptions": Requests.VehiclePaintSchemeRequestModel,
+        "vehicle/countreferences": Requests.VehicleReferenceFilterModel,
+        "vehicle/getreferences": Requests.VehicleReferenceFilterModel,
 
         "wheel/countmodels": Requests.WheelFilterModel,
         "wheel/countbrands": Requests.WheelFilterModel,
