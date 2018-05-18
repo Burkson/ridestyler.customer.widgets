@@ -418,12 +418,15 @@ namespace RideStylerShowcase {
 
                 api.request('wheel/getfitmentdescriptions', {
                     VehicleConfiguration: this.vehicleConfigurationID,
-                    WheelModel: model.WheelModelID
+                    WheelModel: model.WheelModelID,
+                    IncludePricing: true
                 })
                     .done(response => {
                         let fitments:ridestyler.Descriptions.WheelFitmentDescriptionModel[] = response.Fitments;
                         let bestFitment:ridestyler.Descriptions.WheelFitmentDescriptionModel = undefined;
                         let targetDiameter = this.vehicleTireOption.Front.InsideDiameter;
+
+                        model.WheelFitments = fitments;
 
                         fitments.sort(function (a,b) {
                             const aDiff = Math.abs(a.DiameterMin - targetDiameter);
