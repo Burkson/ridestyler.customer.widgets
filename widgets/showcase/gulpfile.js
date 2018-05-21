@@ -134,10 +134,10 @@ var compiler = {
             polyfillStream,
             typescriptJavascriptStream
         )
-            .pipe(sourcemaps.init({loadMaps: true}))
+            .pipe(gulpIf(dev, sourcemaps.init({loadMaps: true})))
             .pipe(concat(paths.output.javascript))
             .pipe(gulpIf(!dev, uglify().on('error', console.error)))
-            .pipe(sourcemaps.write())
+            .pipe(gulpIf(dev, sourcemaps.write()))
             .pipe(gulp.dest(paths.output.folder));
 
         // Merge the streams (in parallel) so that this task is done when both of the below tasks are done
