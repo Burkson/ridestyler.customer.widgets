@@ -3,66 +3,27 @@
 
 .ridestyler-showcase-table {
     border: 0;
-    width: 100%;
-    font-size: 1em;
-    overflow: hidden;
-    flex-direction: column;
-    -ms-overflow-style: none; 
     border-collapse: collapse;
     border-top-left-radius: .75em;
     border-top-right-radius: .75em;
+
+    font-size: 1em;
+    
+    -ms-overflow-style: none; 
     overflow: -moz-scrollbars-none;  
+    overflow: hidden;
 
-    ::-webkit-scrollbar { 
-        display: none; 
-    }
-
-    table {
-        table-layout:fixed;
-        text-align: center;
-        word-break: break-all;
-    }
-
-    thead th:after {
-      content: '';
-      overflow-y: scroll;
-      visibility: hidden;
-      height: 10px;
-    }
-
-    thead tr {
-        display: flex;
-    }
+    width: 100%;
 
     th {
-        text-align: center;
         font-weight: normal;
         padding: 10px 5px;
-        min-width: 1%;
-        flex: 1 auto;
-    }
-    
-    thead th {
-        display: inline-block;
-        flex: 1 auto;
         text-align: center;
-        align-items: center;
     }
-
-    tbody {
-        position: absolute;
-        display: block;
-        width: 100%;
-        overflow-y: scroll;
-        height: 250px;
-    }
-    
     
     td {
-        flex: 1 auto;
         text-align: center;
         padding: 10px 5px;
-        width: 1%;
         word-wrap: break-word;
     }
 
@@ -75,7 +36,7 @@
         background-color: #eee;
     }
 
-    &-head {
+    &-head, &-head th {
         background-color: $primary-color;
         color: white;
     }
@@ -116,9 +77,12 @@
         }
     }
 }
+<<<<<<< HEAD
 
  .ridestyler-showcase-product-modal-page {
         bottom: 0em;
         height: 75%;
         margin-top: .75em;
     }
+=======
+>>>>>>> 5b045d3d62785f4dbf68503cc969e8272a0fa46c

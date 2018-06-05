@@ -3,6 +3,15 @@
 $modalPadding: 3em;
 $modalPaddingTop: 4em;
 
+@mixin modalBreakPoint($modalWidth:650px, $verticalSpace: 5%) {
+    width: $modalWidth;
+    left: 50%;
+    right: auto;
+    margin-left: -$modalWidth/2;
+    top: $verticalSpace;
+    bottom: $verticalSpace;
+}
+
 @mixin modal {
     position: absolute;
     top: 10px;
@@ -24,14 +33,6 @@ $modalPaddingTop: 4em;
 
     &.in {
         opacity: 1;
-    }
-    @mixin modalBreakPoint($modalWidth:650px, $verticalSpace: 5%) {
-        width: $modalWidth;
-        left: 50%;
-        right: auto;
-        margin-left: -$modalWidth/2;
-        top: $verticalSpace;
-        bottom: $verticalSpace;
     }
 
     .ridestyler-showcase.ridestyler-showcase-breakpoint-desktop-xl & {

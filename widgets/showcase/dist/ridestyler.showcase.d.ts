@@ -1635,8 +1635,8 @@ declare namespace RideStylerShowcase {
         private wheelNameElement;
         private wheelDescriptionElement;
         protected initializeComponent(): void;
-        private showWheelModal();
-        private onDataChange(data);
+        protected showWheelModal(): void;
+        protected onDataChange(data: state.StateData): void;
     }
 }
 

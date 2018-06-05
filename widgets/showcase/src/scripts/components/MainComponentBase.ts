@@ -27,6 +27,7 @@ namespace RideStylerShowcase {
          * @virtual
          */
         protected initializeComponent() {
+<<<<<<< HEAD
             let currentUrl = decodeURIComponent(location.search.substr(1));
             let splitUrl = [];
             let dataObject = undefined;
@@ -44,6 +45,8 @@ namespace RideStylerShowcase {
                 let url = ridestyler.ajax.url(actionString, dataObject);
             }
 
+=======
+>>>>>>> 5b045d3d62785f4dbf68503cc969e8272a0fa46c
         }
 
         /**

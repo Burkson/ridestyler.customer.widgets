@@ -558,7 +558,8 @@ namespace RideStylerShowcase {
 
                 api.request('wheel/getfitmentdescriptions', {
                     VehicleConfiguration: this.vehicleConfigurationID,
-                    WheelModel: model.WheelModelID
+                    WheelModel: model.WheelModelID,
+                    IncludePricing: true
                 })
                 .done(response => {
                     let fitments:ridestyler.Descriptions.WheelFitmentDescriptionModel[] = response.Fitments;

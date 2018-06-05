@@ -92,7 +92,10 @@ namespace RideStylerShowcase {
                 });
 
                 if (typeof this.onPaintSchemeSelected === 'function') {
+<<<<<<< HEAD
                     // this.urlEncode(paintScheme)
+=======
+>>>>>>> 5b045d3d62785f4dbf68503cc969e8272a0fa46c
                     this.onPaintSchemeSelected(paintScheme)
                 }
             }

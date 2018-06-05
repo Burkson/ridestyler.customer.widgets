@@ -36,13 +36,13 @@ namespace RideStylerShowcase {
             this.state.afterDataChange(data => this.onDataChange(data));
         }
 
-        private showWheelModal() {
-            let stateData = this.state.getData();
+        protected showWheelModal() {
+            const stateData = this.state.getData();
 
             new RideStylerShowcaseWheelModal(this.showcase, stateData.currentWheel).show();
         }
 
-        private onDataChange(data:state.StateData) {
+        protected onDataChange(data:state.StateData) {
             const currentWheel = data.currentWheel;
             const currentWheelFitment = data.currentWheelFitment;
 
