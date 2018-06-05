@@ -4,6 +4,7 @@ namespace RideStylerShowcase {
             this.showcase = showcaseInstance;
             this.events = showcaseInstance.events;
             this.state = showcaseInstance.state;
+            this.parameters = showcaseInstance.parameters;
 
             this.initializeComponent();
         }
@@ -11,6 +12,7 @@ namespace RideStylerShowcase {
         protected readonly showcase:RideStylerShowcaseInstance;
         protected readonly events:events.EventHandler;
         protected readonly state:state.RideStylerShowcaseState;
+        protected readonly parameters:parameters.RideStylerShowcaseParameters;
         
         /**
          * The main element for this component

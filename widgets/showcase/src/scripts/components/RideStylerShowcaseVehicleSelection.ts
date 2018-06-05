@@ -77,32 +77,11 @@ namespace RideStylerShowcase {
             }).done(response => this.showWheels(response.Models));
         }
 
-         private urlEncode(selection) {
-             let stateData = this.state.getData();
-             console.log('selection', selection);
-             let vehicleFragments = {
-                 vehicleConfiguration: selection.VehicleConfiguration,
-                 paint: stateData.currentPaintScheme,
-                 wheel: !stateData.currentWheel ? undefined : stateData.currentWheel.WheelModelID,
-                 tire: !stateData.currentTire ? undefined : stateData.currentTire.TireModelID,
-                 height: this.generateVehiclePreviewSettings().Height,
-                 width: this.generateVehiclePreviewSettings().Width
-             }
-
-             vehicleFragments = JSON.parse(JSON.stringify(vehicleFragments));
-
-             let url = '?' + Object.keys(vehicleFragments).map(function(key) {
-                 return encodeURIComponent(key) + '=' + encodeURIComponent(vehicleFragments[key])
-             }).join('&')
-
-             window.history.pushState(vehicleFragments, null, url)
-         }
-
         private onVehicleSelected(selection:RideStylerVehicleSelectionModal.SelectedVehicleData) {
             // The user has selected a vehicle using the vehicle selection modal.
             // Now we need to obtain a OE tire option for them.
             this.events.trigger("vehicle-selected", selection);
-            this.urlEncode(selection);
+            history.pushState(selection, null, null)
         }
 
         /**

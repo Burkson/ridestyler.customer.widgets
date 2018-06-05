@@ -10,14 +10,14 @@
         &-product-modal {
             &-page {
                 margin-top: -.5em;
-                height: 80vh;
+                height: 80%;
                 tbody {
-                    height: 65vh;
+                    height: 65%;
                     overflow: scroll;
                 }
             }
             &-summary {
-                max-height: 32vh;
+                max-height: 32%;
                 overflow: hidden; 
             }
         }

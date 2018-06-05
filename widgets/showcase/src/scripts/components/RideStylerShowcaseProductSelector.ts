@@ -138,11 +138,11 @@ namespace RideStylerShowcase {
                         appendTo: option
                     });
             }
-
+            
             this.addOptionElements(fragment);
         }
 
-        protected onOptionClick(optionElement:HTMLElement) {
+        public onOptionClick(optionElement:HTMLElement) {
             let product = (optionElement as ProductElement<DataType>).product;
 
             if (product) {
@@ -152,30 +152,13 @@ namespace RideStylerShowcase {
         }
 
         public productSelectedCallback: (product:DataType)=>void;
-        
-        private urlEncode(product) {
-            let stateData = this.state.getData();            
-            let vehicleFragments = {
-                vehicleConfiguration: stateData.currentVehicleConfigurationID,
-                paint: !stateData.currentPaintScheme ? undefined : stateData.currentPaintScheme.SchemeName,
-                wheel: !product.WheelModelID ? (!stateData.currentWheel ? undefined : stateData.currentWheel.WheelModelID) : product.WheelModelID,
-                tire: !product.TireModelID ? (!stateData.currentTire ? undefined : stateData.currentTire.TireModelID) : product.TireModelID
-            }
-
-            vehicleFragments = JSON.parse(JSON.stringify(vehicleFragments));
-
-            let url = "?" + Object.keys(vehicleFragments).map(function(k) {
-                return encodeURIComponent(k) + '=' + encodeURIComponent(vehicleFragments[k])
-            }).join('&')
-
-            window.history.pushState(vehicleFragments, null, url)
-        }
 
         protected onProductClick(product:DataType) {
             if (typeof this.productSelectedCallback === 'function') {
                 this.productSelectedCallback(product);
             }
-                this.urlEncode(product);
+       
+       
         }
     }
 }

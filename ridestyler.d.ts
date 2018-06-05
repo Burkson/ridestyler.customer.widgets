@@ -419,6 +419,10 @@ declare namespace ridestyler {
             Rear: TireSizeDescriptionModel;
         }
 
+        interface VehicleSuspensionDescriptionModel {
+            Suspension: number;
+        }
+
         interface WheelModelDescriptionModel {
             WheelBrandID:string;
             WheelBrandName:string;

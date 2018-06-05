@@ -47,14 +47,14 @@
     .ridestyler-showcase {
         &-product-modal {
             &-page {
-                height: 82vh;
+                height: 82%;
                 tbody {
-                    height: 77vh;
+                    height: 77%;
                     overflow: scroll;
                 }
             }
             &-summary {
-                max-height: 32vh;
+                max-height: 32%;
                 overflow: hidden; 
             }
         }
@@ -66,9 +66,9 @@
     .ridestyler-showcase {
         &-product-modal {
             &-page {
-                height: 82vh;
+                height: 82%;
                 tbody {
-                    height: 85vh;
+                    height: 85%;
                     overflow: scroll;
                 }
             }
@@ -82,14 +82,14 @@
     .ridestyler-showcase {
         &-product-modal {
             &-page {
-                height: 85vh;
+                height: 85%;
                 tbody {
-                    height: 80vh;
+                    height: 80%;
                     overflow: scroll;
                 }
             }
             &-summary {
-                max-height: 32vh;
+                max-height: 32%;
                 overflow: hidden; 
             }
         }
@@ -103,12 +103,12 @@
         &-product-modal {
             &-page {
                 tbody {
-                    min-height: 80vh;
+                    min-height: 80%;
                     overflow: scroll;
                 }
             }
             &-summary {
-                max-height: 32vh;
+                max-height: 32%;
                 overflow: hidden; 
             }
         }
@@ -120,15 +120,15 @@
     .ridestyler-showcase {
         &-product-modal {
             &-page {
-                min-height: 80vh; 
+                min-height: 80%; 
                 tbody {
-                    height: 75vh;
+                    height: 75%;
                     overflow: scroll;
                 }
             }
             &-summary {
                 tbody {
-                    max-height: 32vh;
+                    max-height: 32%;
                     overflow: scroll;
                 }
             }
@@ -143,17 +143,17 @@
     .ridestyler-showcase {
         &-product-modal {
             &-page {
-                min-height: 70vh;
+                min-height: 70%;
                 tbody {
-                    min-height: 50vh;
+                    min-height: 50%;
                     overflow: scroll;
                 }
             }
             &-summary {
-                max-height: 60vh;
+                max-height: 60%;
                 overflow: hidden;
                 tbody {
-                    max-height: 20vh;
+                    max-height: 20%;
                     overflow: scroll;
                 }
             }

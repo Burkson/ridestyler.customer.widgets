@@ -12,6 +12,7 @@ namespace RideStylerShowcase.events {
         "resized": undefined;
         "breakpoint-changed": RideStylerShowcase.styles.Breakpoint;
         "vehicle-description-loaded": ridestyler.Descriptions.VehicleDescriptionModel;
+        "popState": undefined; 
     }
 
     export interface RideStylerShowcaseEventHandler<DataType = any> {

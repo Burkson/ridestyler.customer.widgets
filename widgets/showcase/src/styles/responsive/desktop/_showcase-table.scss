@@ -13,14 +13,14 @@
     .ridestyler-showcase {
         &-product-modal {
             &-page {
-                height: 71vh;
+                height: 71%;
                 tbody {
-                    height: 62vh;
+                    height: 62%;
                     overflow: scroll;
                 }
             }
             &-summary {
-                max-height: 32vh;
+                max-height: 32%;
                 overflow: hidden; 
             }
         }

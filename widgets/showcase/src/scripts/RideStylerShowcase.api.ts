@@ -71,16 +71,14 @@ namespace RideStylerShowcase {
         export function request<Action extends keyof ridestyler.RidestylerAPIActionResponseMapping>(action:Action, data?:ridestyler.RidestylerAPIActionRequestMapping[Action]) : RideStylerPromise<ridestyler.RidestylerAPIActionResponseMapping[Action]> {
             type Response = ridestyler.RidestylerAPIActionResponseMapping[Action];
             var promise = ridestyler.promise<Response>();
-
-            ridestyler.ajax.send<Action>({
-                action: action,
-                data: data,
-                callback: function (response) {
-                    if (response.Success) promise.resolve(response);
-                    else promise.reject(response);
-                }
-            });
-
+                ridestyler.ajax.send<Action>({
+                    action: action,
+                    data: data,
+                    callback: function (response) {
+                        if (response.Success) promise.resolve(response);
+                        else promise.reject(response);
+                    }
+                });
             return promise;
         }
 

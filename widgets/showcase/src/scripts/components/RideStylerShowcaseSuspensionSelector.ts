@@ -16,13 +16,12 @@ namespace RideStylerShowcase {
             this.component = HTMLHelper.createElement('div', {
                 className: className
             });
-
-            let vehicleDescription = this.state.getData().currentVehicleDescriptionModel;
-
+            let stateData = this.state.getData();
+            let vehicleDescription = stateData.currentVehicleDescriptionModel;
             let suspensionOptions:SuspensionOptions = {
                 min: defaultSuspensionRange.Min,
                 max: defaultSuspensionRange.Max,
-                start: 0,
+                start: stateData.currentSuspension || 0,
                 step: 1,
                 decimalPlaces: 1,
                 unitAbbreviation: '″'
@@ -53,6 +52,7 @@ namespace RideStylerShowcase {
             };
 
             this.component.appendChild(this.frontAndRear.component);
+
 
             // let frontOptions:SuspensionUIElementOptions = ObjectHelper.assign({
             //     label: strings.getString('front')
@@ -98,6 +98,10 @@ namespace RideStylerShowcase {
 
         protected onSuspensionChanged(newValue:number) {
             this.value = newValue;
+
+            this.state.extendData({
+                currentSuspension: this.value
+            })
 
             if (typeof this.suspensionChangedCallback === 'function') 
                 this.suspensionChangedCallback(newValue);

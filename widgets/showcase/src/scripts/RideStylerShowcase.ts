@@ -56,8 +56,13 @@ namespace RideStylerShowcase {
         public events:events.EventHandler;
 
         /**
+         * The url check handler
+         */
+        public parameters:parameters.RideStylerShowcaseParameters; 
+        /**
          * Settings specified when the showcase was created
          */
+
         public settings:RideStylerShowcaseSettings;
 
         /**
@@ -144,6 +149,7 @@ namespace RideStylerShowcase {
             this.container = ObjectHelper.assign(container, {
                 ridestylerShowcase: this
             });
+            this.initializeParameters();
 
             this.initializeState();
 
@@ -158,20 +164,22 @@ namespace RideStylerShowcase {
             this.initializeComponents();
 
             this.events.on("vehicle-selected", selection => {
-                this.state.changeState(States.Visualize, {
+                var vehicleSelectionState = {
                     currentVehicleConfigurationID: selection.VehicleConfiguration,
                     currentVehicleDescription: selection.VehicleDescription,
                     currentVehicleTireOptionID: selection.TireOptionID,
                     currentVehicleTireOptionDescription: selection.TireOptionString,
-                    currentPaintScheme: undefined,
-                    vehicleHasAngledImage: undefined,
-                    vehicleHasSideImage: undefined,
-                    currentTire: undefined,
-                    currentWheel: undefined,
-                    currentWheelFitment: undefined,
-                    currentTireOption: undefined,
-                    currentVehicleDescriptionModel: undefined
-                });
+                    currentPaintScheme: selection.PaintScheme || undefined,
+                    vehicleHasAngledImage: selection.vehicleHasAngledImage || undefined,
+                    vehicleHasSideImage: selection.vehicleHasSideImage || undefined,
+                    currentTire: selection.currentTire || undefined,
+                    currentWheel: selection.currentWheel || undefined,
+                    currentWheelFitment: selection.currentWheelFitment || undefined,
+                    currentTireOption: selection.currentTireOption || undefined,
+                    currentVehicleDescriptionModel: selection.currentVehicleDescriptionModel || undefined,
+                    currentSuspension: selection.currentSuspension || undefined
+                };
+                this.state.changeState(States.Visualize, vehicleSelectionState);
                 return true;
             });
 
@@ -220,6 +228,12 @@ namespace RideStylerShowcase {
             if (!this.container.classList.contains('ridestyler-showcase'))
                 this.container.classList.add('ridestyler-showcase');
         }
+
+        private initializeParameters() {
+            this.parameters = new parameters.RideStylerShowcaseParameters();
+
+        };
+
 
         private initializeFilters() {
             this.filters = new filters.FilterController();

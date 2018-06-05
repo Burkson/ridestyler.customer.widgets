@@ -1,7 +1,7 @@
 .ridestyler-showcase {
 		&-table {
     		tbody {
-        		height: 45vh;
+        		height: 45%;
         		text-align: center;
     		}
 		}
@@ -18,40 +18,37 @@
 	margin-top: 0;
 }
 
-
 @media only screen and (min-width: 1000px) {
     .ridestyler-showcase {
         &-product-modal {
             &-page {
-                height: 100vh;
+                height: 100%;
                 tbody {
-                    height: 80vh;
+                    height: 80%;
                     overflow: scroll;
                 }
             }
             &-summary {
-                max-height: 32vh;
+                max-height: 32%;
                 overflow: hidden; 
             }
         }
     }
 }
 
-
-
 @media only screen and (min-width: 1000px) and (max-height: 2000px) {
     .ridestyler-showcase {
         &-product-modal {
             &-page {
                 margin-top: -.5em;
-                height: 60vh;
+                height: 60%;
                 tbody {
-                    height: 54vh;
+                    height: 54%;
                     overflow: scroll;
                 }
             }
             &-summary {
-                max-height: 40vh;
+                max-height: 40%;
                 overflow: hidden; 
             }
         }

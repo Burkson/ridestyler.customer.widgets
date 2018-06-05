@@ -63,6 +63,7 @@ namespace RideStylerShowcase {
                 link: true
             }).addEventListener('click', () => {
                 this.state.changeState(States.ChooseVehicle);
+                history.pushState(null, null, ' ')
             });
 
             // Listen for data changes
@@ -82,9 +83,9 @@ namespace RideStylerShowcase {
 
         private onDataChange(data:state.StateData) {
             const vehicleDescription = data.currentVehicleDescription;
-            const shortVehicleDescription  = vehicleDescription.length > 40 ? vehicleDescription.substring(0, 38) + '...' : vehicleDescription;
+            const shortVehicleDescription =  (vehicleDescription !== undefined && vehicleDescription.length > 40) ? vehicleDescription.substring(0, 38) + '...' : vehicleDescription;
             
-            this.vehiclePaintSwatchElement.style.backgroundColor = data.currentPaintScheme ? data.currentPaintScheme.Colors[0].Hex : firstPaintColor;
+            this.vehiclePaintSwatchElement.style.backgroundColor = data.currentPaintScheme ? (!data.currentPaintScheme.Colors ? data.currentPaintScheme : data.currentPaintScheme.Colors[0].Hex)  : firstPaintColor;
             
             HTMLHelper.setText(this.vehicleDescriptionElement, shortVehicleDescription);
             HTMLHelper.setText(this.tireSizeElement, data.currentVehicleTireOptionDescription);

@@ -80,24 +80,6 @@ namespace RideStylerShowcase {
             this.update();
         }
 
-        private urlEncode(paintScheme) {
-            let stateData = this.state.getData();
-            let vehicleFragments = {
-                vehicle: stateData.currentVehicleConfigurationID,
-                paint:   paintScheme.SchemeName,
-                wheel:  !stateData.currentWheel ? undefined : stateData.currentWheel.WheelModelID,
-                tire:   !stateData.currentTire ? undefined : stateData.currentTire.TireModelID
-            }
-
-            vehicleFragments = JSON.parse(JSON.stringify(vehicleFragments));
-
-            let url = "?" + Object.keys(vehicleFragments).map(function(k) {
-                return encodeURIComponent(k) + '=' + encodeURIComponent(vehicleFragments[k])
-            }).join('&')
-
-            window.history.pushState(vehicleFragments, null, url)
-        }
-
         public onPaintSchemeSelected: (paintScheme:VehiclePaintSchemeDescriptionModel)=>void;
         protected onOptionClick(optionElement:HTMLElement) {
             let paintScheme = (optionElement as RideStylerShowcasePaintSchemeOptionElement).paintScheme;
@@ -110,7 +92,7 @@ namespace RideStylerShowcase {
                 });
 
                 if (typeof this.onPaintSchemeSelected === 'function') {
-                    this.urlEncode(paintScheme)
+                    // this.urlEncode(paintScheme)
                     this.onPaintSchemeSelected(paintScheme)
                 }
             }

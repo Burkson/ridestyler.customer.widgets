@@ -62,8 +62,7 @@ namespace RideStylerShowcase {
             this.optionContainer.addEventListener('DOMNodeInserted', () => {
                 this.optionContainer.style.opacity = '1';
                 this.optionContainer.style.transform = 'scaleY(1)';
-                this.optionContainer.style.height = 'auto';
-                            
+                this.optionContainer.style.height = 'auto';  
                 switch(optionsCount) {
                     case 1:
                         this.component.style.height = '4.5em';

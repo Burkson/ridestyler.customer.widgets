@@ -42,7 +42,6 @@ namespace RideStylerShowcase {
                 dataObject = splitUrl.reduce(function(object, [key, value]) {return  (object[key]=value, object)}, {});
                 
                 let url = ridestyler.ajax.url(actionString, dataObject);
-                console.log('url', url);
             }
 
         }

@@ -165,6 +165,8 @@ namespace RideStylerShowcase {
             HTMLHelper.removeChildrenWithClasses(this.optionContainer, optionLoaderClass);
         }
 
+        protected abstract getOptionElementValue(element:HTMLElement): string; 
+
         protected addOptionElements(elements:Node[]|Node) {
    
             let hasNoResults = false;
@@ -241,7 +243,6 @@ namespace RideStylerShowcase {
 
         public selectOption(optionElement:HTMLElement) {
             if (this.selectedOption === optionElement) return; // Already selected
-
             let oldOptionElement = this.selectedOption;
 
             if (oldOptionElement)

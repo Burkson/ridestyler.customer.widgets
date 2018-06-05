@@ -4,6 +4,7 @@ namespace RideStylerShowcase {
         Visualize = 1
     }
 }
+
 namespace RideStylerShowcase.state {
     export interface StateChangedEvent {
         oldState: States;
@@ -118,12 +119,13 @@ namespace RideStylerShowcase.state {
         currentWheelFitment: ridestyler.Descriptions.WheelFitmentDescriptionModel;
         currentTire: ridestyler.Descriptions.TireModelDescriptionModel;
         currentTireOption: ridestyler.Descriptions.VehicleTireOptionDescriptionModel;
+        
+        currentSuspension: number;
     }
 
     export type PartialStateData = {
         [P in keyof StateData]?: StateData[P];
     }
-
 
     export class RideStylerShowcaseState {
         /**
@@ -147,7 +149,8 @@ namespace RideStylerShowcase.state {
             currentWheel: undefined,
             currentWheelFitment: undefined,
             currentTireOption: undefined,
-            currentVehicleDescriptionModel: undefined
+            currentVehicleDescriptionModel: undefined,
+            currentSuspension: undefined
         };
 
         public getData() { return this.currentData; }

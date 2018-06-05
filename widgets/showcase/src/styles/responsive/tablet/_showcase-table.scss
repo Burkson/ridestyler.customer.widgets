@@ -20,17 +20,17 @@
             }
 
             &-page {
-                height: 100vh;
+                height: 100%;
                 tbody {
-                    height: 77vh;
+                    height: 77%;
                     overflow: scroll;
                 }
             }
             &-summary {
-                max-height: 32vh;
+                max-height: 32%;
                 overflow: hidden; 
                 width: 100%;
-                margin-top: 49vh;
+                margin-top: 49%;
             }
         }
     }

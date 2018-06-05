@@ -1,14 +1,15 @@
 namespace RideStylerShowcase.PromiseHelper {
     export function all<T>(promises: (T | RideStylerPromise<T>)[]): RideStylerPromise<T[]>;
-    export function all<T1, T2, T3, T4>(promises: [T1 | RideStylerPromise<T1>, T2 | RideStylerPromise<T2>, T3 | RideStylerPromise<T3>, T4 | RideStylerPromise<T4>]): RideStylerPromise<[T1, T2, T3, T4]>;
-    export function all<T1, T2, T3>(promises: [T1 | RideStylerPromise<T1>, T2 | RideStylerPromise<T2>, T3 | RideStylerPromise<T3>]): RideStylerPromise<[T1, T2, T3]>;
     export function all<T1, T2>(promises: [T1 | RideStylerPromise<T1>, T2 | RideStylerPromise<T2>]): RideStylerPromise<[T1, T2]>;
+    export function all<T1, T2, T3>(promises: [T1 | RideStylerPromise<T1>, T2 | RideStylerPromise<T2>, T3 | RideStylerPromise<T3>]): RideStylerPromise<[T1, T2, T3]>;
+    export function all<T1, T2, T3, T4>(promises: [T1 | RideStylerPromise<T1>, T2 | RideStylerPromise<T2>, T3 | RideStylerPromise<T3>, T4 | RideStylerPromise<T4>]): RideStylerPromise<[T1, T2, T3, T4]>;
+    export function all<T1, T2, T3, T4, T5>(promises: [T1 | RideStylerPromise<T1>, T2 | RideStylerPromise<T2>, T3 | RideStylerPromise<T3>, T4 | RideStylerPromise<T4>, T5 | RideStylerPromise<T5>]): RideStylerPromise<[T1, T2, T3, T4, T5]>;
+    export function all<T1, T2, T3, T4, T5, T6>(promises: [T1 | RideStylerPromise<T1>, T2 | RideStylerPromise<T2>, T3 | RideStylerPromise<T3>, T4 | RideStylerPromise<T4>, T5 | RideStylerPromise<T5>, T6 | RideStylerPromise<T6>]): RideStylerPromise<[T1, T2, T3, T4, T5, T6]>;
+    export function all<T1, T2, T3, T4, T5, T6, T7>(promises: [T1 | RideStylerPromise<T1>, T2 | RideStylerPromise<T2>, T3 | RideStylerPromise<T3>, T4 | RideStylerPromise<T4>, T5 | RideStylerPromise<T5>, T6 | RideStylerPromise<T6>, T7 | RideStylerPromise<T7>]): RideStylerPromise<[T1, T2, T3, T4, T5, T6, T7]>;
     export function all(promises: (object | RideStylerPromise)[]): RideStylerPromise {
         const results = [];
         const merged = ArrayHelper.reduce(promises, function (accumulator, currentPromise) {
-            return then(then(accumulator as RideStylerPromise, 
-                () => currentPromise), 
-                r => results.push(r));
+            return then(then(accumulator as RideStylerPromise, () => currentPromise), r => results.push(r));
         }, resolved(null));
 
         Promise.all
@@ -22,6 +23,7 @@ namespace RideStylerShowcase.PromiseHelper {
     * @param onrejected The callback to execute when the Promise is rejected.
     * @returns A Promise for the completion of which ever callback is executed.
     */
+
     export function then<T_In, E_In=T_In, T_Out=T_In, E_Out=E_In>(promise:RideStylerPromise<T_In, E_In>, onfulfilled?: ((value: T_In) => T_Out | RideStylerPromise<T_Out, E_Out>) | undefined | null, onrejected?: ((reason: E_In) => T_Out | PromiseLike<T_Out>) | undefined | null): RideStylerPromise<T_Out, E_Out> {
         const returnPromise = ridestyler.promise<any>();
 

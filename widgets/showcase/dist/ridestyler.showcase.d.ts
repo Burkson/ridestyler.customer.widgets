@@ -68,6 +68,7 @@ declare namespace RideStylerShowcase.events {
         "resized": undefined;
         "breakpoint-changed": RideStylerShowcase.styles.Breakpoint;
         "vehicle-description-loaded": ridestyler.Descriptions.VehicleDescriptionModel;
+        "popState": undefined;
     }
     interface RideStylerShowcaseEventHandler<DataType = any> {
         /**
@@ -233,6 +234,14 @@ declare namespace RideStylerShowcase.filters {
     }
 }
 
+declare namespace RideStylerShowcase.parameters {
+    class RideStylerShowcaseParameters {
+        get(): {};
+        set(stateData: any): void;
+        popEventListener(context: any): void;
+    }
+}
+
 declare namespace RideStylerShowcase {
     enum States {
         ChooseVehicle = 0,
@@ -302,6 +311,7 @@ declare namespace RideStylerShowcase.state {
         currentWheelFitment: ridestyler.Descriptions.WheelFitmentDescriptionModel;
         currentTire: ridestyler.Descriptions.TireModelDescriptionModel;
         currentTireOption: ridestyler.Descriptions.VehicleTireOptionDescriptionModel;
+        currentSuspension: number;
     }
     type PartialStateData = {
         [P in keyof StateData]?: StateData[P];
@@ -503,6 +513,10 @@ declare namespace RideStylerShowcase {
          */
         events: events.EventHandler;
         /**
+         * The url check handler
+         */
+        parameters: parameters.RideStylerShowcaseParameters;
+        /**
          * Settings specified when the showcase was created
          */
         settings: RideStylerShowcaseSettings;
@@ -539,6 +553,7 @@ declare namespace RideStylerShowcase {
         initialize(container: HTMLElement): void;
         private initializeState();
         private initializeStyle();
+        private initializeParameters();
         private initializeFilters();
         private initializeComponents();
         private onStateChanged(ev);
@@ -570,6 +585,7 @@ declare namespace RideStylerShowcase {
         protected readonly showcase: RideStylerShowcaseInstance;
         protected readonly events: events.EventHandler;
         protected readonly state: state.RideStylerShowcaseState;
+        protected readonly parameters: parameters.RideStylerShowcaseParameters;
         /**
          * The main element for this component
          */
@@ -1024,6 +1040,7 @@ declare namespace RideStylerShowcase {
          */
         protected addOptionLoader(): void;
         protected clearOptionLoader(): void;
+        protected abstract getOptionElementValue(element: HTMLElement): string;
         protected addOptionElements(elements: Node[] | Node): void;
         protected noResultsElement: HTMLElement;
         protected showNoResults(): void;
@@ -1053,7 +1070,6 @@ declare namespace RideStylerShowcase {
         constructor(showcaseInstance: RideStylerShowcaseInstance);
         protected _loadMore(): ridestyler.RideStylerPromise<ridestyler.Responses.VehiclePaintSchemeDescriptionResultModel, ridestyler.Responses.VehiclePaintSchemeDescriptionResultModel>;
         private createOptions(schemes);
-        private urlEncode(paintScheme);
         onPaintSchemeSelected: (paintScheme: VehiclePaintSchemeDescriptionModel) => void;
         protected onOptionClick(optionElement: HTMLElement): void;
         private static createAttributeLabel(attributes);
@@ -1156,9 +1172,8 @@ declare namespace RideStylerShowcase {
             tertiary?: string;
         };
         private createOptions(products);
-        protected onOptionClick(optionElement: HTMLElement): void;
+        onOptionClick(optionElement: HTMLElement): void;
         productSelectedCallback: (product: DataType) => void;
-        private urlEncode(product);
         protected onProductClick(product: DataType): void;
     }
 }
@@ -1458,7 +1473,6 @@ declare namespace RideStylerShowcase {
         protected buildComponent(container: HTMLElement): void;
         private buildCopy();
         private onAuthenticated();
-        private urlEncode(selection);
         private onVehicleSelected(selection);
         /**
          * Show the passed in wheel models in the wheel showcase section of the vehicle selection screen
@@ -1471,6 +1485,7 @@ declare namespace RideStylerShowcase {
 
 declare namespace RideStylerShowcase {
     class RideStylerShowcaseVehicleVisualization extends MainComponentBase {
+        private productSelector;
         private viewport;
         private tabBar;
         private changeWheelSize;
@@ -1484,6 +1499,7 @@ declare namespace RideStylerShowcase {
         private customizationComponentContainer;
         private customizationComponents;
         private customizationComponentSettings;
+        private resultsArr;
         private components;
         /**
          * The ID of the currently displayed vehicle
@@ -1493,7 +1509,10 @@ declare namespace RideStylerShowcase {
          * The description of the currently displayed vehicle
          */
         private vehicleDescription;
-        private vehicleSuspension;
+        private targetDiameter;
+        /**
+         * The Image Type for displaying what angle the car is being viewed
+         */
         private imageType;
         /**
          * The ID of the currently displayed OE tire option for the vehicle
@@ -1518,6 +1537,9 @@ declare namespace RideStylerShowcase {
         private currentRenderInstructions;
         protected buildComponent(container: HTMLElement): void;
         private setupViewport(container);
+        private loadUrlData(urlObject);
+        private promiseBuilder(urlObject, Descriptions);
+        activeWheelDiameterSelect(results: any): void;
         private updateTabs();
         private updateTabLayout();
         private setupTabs();
@@ -1530,6 +1552,7 @@ declare namespace RideStylerShowcase {
         private getComponentKey(customizationComponent);
         private updateViewport(instructions?);
         private canSwitchAngle();
+        private getBestFitment(urlObject, results);
         private showFilters();
         private switchAngle();
     }
@@ -2007,9 +2030,12 @@ declare namespace RideStylerShowcase {
 
 declare namespace RideStylerShowcase.PromiseHelper {
     function all<T>(promises: (T | RideStylerPromise<T>)[]): RideStylerPromise<T[]>;
-    function all<T1, T2, T3, T4>(promises: [T1 | RideStylerPromise<T1>, T2 | RideStylerPromise<T2>, T3 | RideStylerPromise<T3>, T4 | RideStylerPromise<T4>]): RideStylerPromise<[T1, T2, T3, T4]>;
-    function all<T1, T2, T3>(promises: [T1 | RideStylerPromise<T1>, T2 | RideStylerPromise<T2>, T3 | RideStylerPromise<T3>]): RideStylerPromise<[T1, T2, T3]>;
     function all<T1, T2>(promises: [T1 | RideStylerPromise<T1>, T2 | RideStylerPromise<T2>]): RideStylerPromise<[T1, T2]>;
+    function all<T1, T2, T3>(promises: [T1 | RideStylerPromise<T1>, T2 | RideStylerPromise<T2>, T3 | RideStylerPromise<T3>]): RideStylerPromise<[T1, T2, T3]>;
+    function all<T1, T2, T3, T4>(promises: [T1 | RideStylerPromise<T1>, T2 | RideStylerPromise<T2>, T3 | RideStylerPromise<T3>, T4 | RideStylerPromise<T4>]): RideStylerPromise<[T1, T2, T3, T4]>;
+    function all<T1, T2, T3, T4, T5>(promises: [T1 | RideStylerPromise<T1>, T2 | RideStylerPromise<T2>, T3 | RideStylerPromise<T3>, T4 | RideStylerPromise<T4>, T5 | RideStylerPromise<T5>]): RideStylerPromise<[T1, T2, T3, T4, T5]>;
+    function all<T1, T2, T3, T4, T5, T6>(promises: [T1 | RideStylerPromise<T1>, T2 | RideStylerPromise<T2>, T3 | RideStylerPromise<T3>, T4 | RideStylerPromise<T4>, T5 | RideStylerPromise<T5>, T6 | RideStylerPromise<T6>]): RideStylerPromise<[T1, T2, T3, T4, T5, T6]>;
+    function all<T1, T2, T3, T4, T5, T6, T7>(promises: [T1 | RideStylerPromise<T1>, T2 | RideStylerPromise<T2>, T3 | RideStylerPromise<T3>, T4 | RideStylerPromise<T4>, T5 | RideStylerPromise<T5>, T6 | RideStylerPromise<T6>, T7 | RideStylerPromise<T7>]): RideStylerPromise<[T1, T2, T3, T4, T5, T6, T7]>;
     /**
     * Attaches callbacks for the resolution and/or rejection of the Promise.
     * @param onfulfilled The callback to execute when the Promise is resolved.

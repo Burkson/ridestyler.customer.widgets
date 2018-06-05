@@ -1,5 +1,6 @@
 namespace RideStylerShowcase {
     import Tab = RideStylerShowcaseTabBar.Tab;
+    
 
     const customizationsClass = 'ridestyler-showcase-customizations';
     const loadingClass = customizationsClass + '-loading';
@@ -7,6 +8,7 @@ namespace RideStylerShowcase {
     type customizationComponentKeys = 'paint' | 'wheels' | 'tires' | 'suspension';
 
     export class RideStylerShowcaseVehicleVisualization extends MainComponentBase {
+        private productSelector = RideStylerShowcaseProductSelector;
         private viewport:RideStylerViewport;
         private tabBar:RideStylerShowcaseTabBar;
         private changeWheelSize:RideStylerShowcaseChangeWheelSize;
@@ -57,6 +59,8 @@ namespace RideStylerShowcase {
             }
         }
 
+        private resultsArr:Array<any> = [];
+
         private components:IComponent[];
         /**
          * The ID of the currently displayed vehicle
@@ -68,14 +72,17 @@ namespace RideStylerShowcase {
          */
         private vehicleDescription:string;
 
-        private vehicleSuspension:string;
+        private targetDiameter:number;
 
+        /**
+         * The Image Type for displaying what angle the car is being viewed
+         */
         private imageType:ridestyler.DataObjects.VehicleResourceType;
 
         /**
          * The ID of the currently displayed OE tire option for the vehicle
          */
-        private vehicleTireOptionID:string;
+        private vehicleTireOptionID:string; 
 
         /**
          * A description of the currently selected OE tire option
@@ -102,10 +109,17 @@ namespace RideStylerShowcase {
             // Wait for initialization before creating the viewport because it detects
             // the offset positioning of the viewport element when created and our CSS
             // isn't guaranteed to be loaded until the initialized event
+
             this.events.on('initialized', () => {
                 this.setupViewport(container);
+                 
                 // Setup initial tab layout
                 this.updateTabLayout();
+
+                //Checks to see if there is a vehicle in the url and parses the data to make the API calls
+                if (location.search.indexOf('VehicleConfiguration') !== -1 ) {     
+                   this.loadUrlData(this.parameters.get());
+                }
 
                 this.events.on('vehicle-selected', () => {
                     if (this.vehicleDifferentFromState())
@@ -132,6 +146,7 @@ namespace RideStylerShowcase {
 
             this.setupTabs();
 
+                //Sets the diameter to state, updates the viewport, and pushes the description to the url
             this.changeWheelSize = new RideStylerShowcaseChangeWheelSize(this.showcase);
             this.changeWheelSize.optionSelectedCallback = newOption => {
                 this.state.extendData({
@@ -140,6 +155,7 @@ namespace RideStylerShowcase {
                 this.updateViewport({
                     WheelFitment: newOption.WheelFitmentID
                 });
+                this.parameters.set(this.state.getData())
             }
 
             this.components = [
@@ -234,8 +250,136 @@ namespace RideStylerShowcase {
             });
 
             this.viewport = new RideStylerViewport(viewportElement);
+            this.parameters.popEventListener(this);
+        }
 
-            //Listens for new car selection and hides vehicle between updates
+        //takes in the URL data and returns an updated Viewport
+        private loadUrlData(urlObject) {
+            let context = this;
+            let Descriptions = {
+                VehicleConfiguration: function(vehicleSelectArgs) { 
+                    var promise = api.request("vehicle/getdescriptions", { VehicleConfiguration: urlObject.VehicleConfiguration }); 
+
+                    promise.done(r => {
+                        if (r.Success && r.Descriptions.length > 0) {
+                            vehicleSelectArgs.VehicleConfiguration = r.Descriptions[0].ConfigurationID;
+                            vehicleSelectArgs.VehicleDescription = r.Descriptions[0].FullDescription;
+                        }
+                    });
+
+                    return promise;
+                },
+                TireOptionID:  function(vehicleSelectArgs) { 
+                    var promise = api.request('vehicle/gettireoptiondetails', {VehicleConfiguration: urlObject.VehicleConfiguration}); 
+
+                    promise.done(r => {
+                        if (r.Success && r.Details.length > 0) {
+                            vehicleSelectArgs.TireOptionID = r.Details[0].TireOptionID;
+                            vehicleSelectArgs.TireOptionString = r.Details[0].Front.Description;
+                            context.targetDiameter = r.Details[0].Front.InsideDiameter;
+                        }
+                    });
+
+                    return promise;
+                },
+                TireModelID:  function(vehicleSelectArgs) { 
+                    let promise = api.request("tire/getmodeldescriptions", {TireModel: urlObject.TireModelID});
+
+                    promise.done(r => {
+                        if (r.Success && r.Models.length > 0) {
+                            vehicleSelectArgs.currentTire = r.Models[0];
+                        }
+                    });
+                    
+                    return promise; 
+                },
+                PaintName:  function(vehicleSelectArgs) { 
+                    let promise = api.request("vehicle/getpaintschemedescriptions", {VehiclePaintScheme: urlObject.PaintScheme}); 
+
+                    promise.done(r => {
+                        if (r.Success && r.Schemes.length > 0) {
+                            for(let scheme of r.Schemes) {
+                                if (scheme.SchemeName == urlObject.PaintName) {
+                                    vehicleSelectArgs.PaintScheme = scheme;
+                                    break;
+                                }
+                            }
+                        }
+                    });
+                    return promise;
+                },
+                WheelModel:  function(vehicleSelectArgs) { 
+                    let promise = api.request("wheel/getmodeldescriptions", {WheelModel: urlObject.WheelModel}); 
+
+                    promise.done(r => {
+                        if (r.Success && r.Models.length > 0) {
+                            vehicleSelectArgs.currentWheel = r.Models[0];
+                        }
+                    });
+                    return promise;
+                },
+                WheelFitments:  function(vehicleSelectArgs) { 
+                    let promise = api.request("wheel/getfitmentdescriptions", {VehicleConfiguration: urlObject.VehicleConfiguration, WheelModel: urlObject.WheelModel});
+
+                    promise.done(r => {
+                        context.getBestFitment(urlObject, r);
+                    })
+                },
+                WheelFitmentID:  function(vehicleSelectArgs) { 
+                    let promise = api.request("wheel/getfitmentdescriptions", {WheelFitments: urlObject.WheelFitmentID}); 
+                    promise.done(r => {
+                       if (r.Success && r.Fitments.length > 0) {
+                           vehicleSelectArgs.currentWheelFitment = r.Fitments[0];
+                           context.activeWheelDiameterSelect(r);
+                       } 
+                    });
+                    return promise;
+                }
+            }
+            this.promiseBuilder(urlObject, Descriptions);
+        }    
+
+        private promiseBuilder(urlObject, Descriptions){
+            let promArr = [];
+            let vehicleSelectArgs = {
+                ImageUrl: '',
+                currentSuspension: Number(urlObject.Suspension)
+            };
+
+            for (let key in Descriptions) {            
+                if (urlObject.hasOwnProperty(key)) {
+                    promArr.push(Descriptions[key](vehicleSelectArgs));
+                    if (key == 'WheelModel') promArr.push(Descriptions.WheelFitments(vehicleSelectArgs));
+                }
+            }
+
+            var context = this;
+            PromiseHelper.all(promArr).done(function() {
+                context.events.trigger("vehicle-selected", vehicleSelectArgs);
+            });
+        } 
+
+        //Removes the active class in the 'wheel size' tab
+        //appends it to the proper element and updates the state
+        public activeWheelDiameterSelect(results){
+            let currentWheelDiameter = !results ? this.state.getData().currentWheelFitment.DiameterMin + '″' : results.Fitments[0].DiameterMin + '″';
+            let wheelSizeActive = document.getElementsByClassName('ridestyler-showcase-button-picker-option-active')[0];
+            
+            wheelSizeActive.classList.remove('ridestyler-showcase-button-picker-option-active');                    
+            
+            let wheelSizeList = document.getElementsByClassName('ridestyler-showcase-button-picker-option')
+            let currentSize; 
+            
+            for (var i = 0; i < wheelSizeList.length; i++) {
+              if (wheelSizeList[i].innerHTML === currentWheelDiameter) {
+                currentSize = wheelSizeList[i];
+              }
+            }
+
+            this.state.extendData({
+                currentWheelFitment: !results ? this.state.getData().currentWheelFitment : results.Fitments[0]
+            })
+            currentSize.classList.add('ridestyler-showcase-button-picker-option-active');
         }
 
         private updateTabs() {
@@ -313,7 +457,6 @@ namespace RideStylerShowcase {
         protected onDisplay() {
             if (this.vehicleDifferentFromState()) {
                 let stateData = this.state.getData();
-
                 this.vehicleConfigurationID = stateData.currentVehicleConfigurationID
                 this.vehicleDescription = stateData.currentVehicleDescription;                
                 this.vehicleTireOptionID = stateData.currentVehicleTireOptionID;
@@ -321,6 +464,7 @@ namespace RideStylerShowcase {
                 
                 this.tabBar.clearActiveTab();
                 this.onVehicleChanged();
+                this.parameters.set(this.state.getData())
             }
         }
 
@@ -367,7 +511,6 @@ namespace RideStylerShowcase {
                     vehicleHasSideImage: vehicleDescription.HasSideImage,
                     currentTireOption: vehicleTireOption,
                     currentVehicleDescriptionModel: vehicleDescription,
-
                 });
                 this.initializeForNewVehicle();
             });
@@ -377,7 +520,6 @@ namespace RideStylerShowcase {
             this.events.trigger("vehicle-description-loaded", this.vehicleDescriptionModel);
             this.currentRenderInstructions = {};
             this.tabBar.setActiveTab(this.tabs.paint);
-            this.viewport.Reset();
 
             // Create the components that will be switched with the tabs
             this.customizationComponents = {
@@ -386,7 +528,6 @@ namespace RideStylerShowcase {
                 tires: new RideStylerShowcaseTireSelector(this.showcase),
                 suspension: new RideStylerShowcaseSuspensionSelector(this.showcase)
             };
-
 
             this.customizationComponents.wheels.setFilters(this.showcase.filters.wheelFilters.getFilters());
 
@@ -399,13 +540,12 @@ namespace RideStylerShowcase {
             };
 
             this.customizationComponents.paint.onPaintSchemeSelected = paintScheme => {
+                this.state.extendData({currentPaintScheme: paintScheme})
                 this.customizationComponents.paint.setOptionIsLoading(true);
-
-                this.updateViewport({
-                    PaintColor: paintScheme.Colors[0].Hex
-                }).always(() => {
+                this.updateViewport({PaintColor: paintScheme.Colors[0].Hex}).always(() => {
                     this.customizationComponents.paint.setOptionIsLoading(false);
-                });
+                    this.parameters.set(this.state.getData())
+                })
             };
 
             this.customizationComponents.wheels.productSelectedCallback = model => {
@@ -420,44 +560,48 @@ namespace RideStylerShowcase {
                     VehicleConfiguration: this.vehicleConfigurationID,
                     WheelModel: model.WheelModelID
                 })
-                    .done(response => {
-                        let fitments:ridestyler.Descriptions.WheelFitmentDescriptionModel[] = response.Fitments;
-                        let bestFitment:ridestyler.Descriptions.WheelFitmentDescriptionModel = undefined;
-                        let targetDiameter = this.vehicleTireOption.Front.InsideDiameter;
+                .done(response => {
+                    let fitments:ridestyler.Descriptions.WheelFitmentDescriptionModel[] = response.Fitments;
+                    let bestFitment:ridestyler.Descriptions.WheelFitmentDescriptionModel = undefined;
+                    let targetDiameter = this.vehicleTireOption.Front.InsideDiameter;
 
-                        fitments.sort(function (a,b) {
-                            const aDiff = Math.abs(a.DiameterMin - targetDiameter);
-                            const bDiff = Math.abs(b.DiameterMin - targetDiameter);
-                            
-                            return aDiff - bDiff;
-                        });
+                    fitments.sort(function (a,b) {
+                        const aDiff = Math.abs(a.DiameterMin - targetDiameter);
+                        const bDiff = Math.abs(b.DiameterMin - targetDiameter);
+                        
+                        return aDiff - bDiff;
+                    });
 
-                        bestFitment = fitments[0];
+                    bestFitment = fitments[0];
 
-                        this.state.extendData({
-                            currentWheel: model,
-                            currentWheelFitment: bestFitment
-                        });
-
-                        this.changeWheelSize.setFitmentOptions(fitments, bestFitment);
-                        this.changeWheelSize.component.style.display = '';
-                        this.updateViewport({
-                            WheelFitment: bestFitment.WheelFitmentID
-                        }).always(() => {
-                            this.customizationComponents.wheels.setOptionIsLoading(false);
-                        });
-                    })
-                    .fail(() => this.customizationComponents.wheels.setOptionIsLoading(false));
+                    this.state.extendData({
+                        currentWheel: model,
+                        currentWheelFitment: bestFitment
+                    });
+                    this.changeWheelSize.setFitmentOptions(fitments, bestFitment);
+                    this.changeWheelSize.component.style.display = '';
+                    this.updateViewport({
+                        WheelFitment: bestFitment.WheelFitmentID
+                    }).always(() => {
+                        this.customizationComponents.wheels.setOptionIsLoading(false);
+                    });
+                    this.parameters.set(this.state.getData())
+                })
+                .fail(() => this.customizationComponents.wheels.setOptionIsLoading(false));   
             };
 
             this.customizationComponents.tires.productSelectedCallback = model => {
                 this.state.extendData({
                     currentTire: model
                 });
+                this.parameters.set(this.state.getData())
             };
 
             this.customizationComponents.suspension.suspensionChangeCallback = renderUpdate => {
-                this.updateViewport(renderUpdate);
+                this.state.extendData({currentSuspension: renderUpdate.Suspension })
+                this.updateViewport(renderUpdate)
+                this.parameters.set(this.state.getData())
+                console.log('this.state.getData()2', this.state.getData());
             };
 
             this.setActiveCustomizationComponent(this.customizationComponents.wheels);
@@ -468,20 +612,23 @@ namespace RideStylerShowcase {
             }
 
             this.imageType = ridestyler.DataObjects.VehicleResourceType.Angle;
-
             
             if (!this.vehicleDescriptionModel.HasAngledImage) this.imageType = ridestyler.DataObjects.VehicleResourceType.Side;
 
             this.rotateElement.style.display = this.canSwitchAngle() ? '' : 'none';
-
+            let stateData = this.state.getData();
             this.updateViewport({ 
                 VehicleConfiguration: this.vehicleConfigurationID,
+                WheelFitment: !stateData.currentWheelFitment ? undefined : stateData.currentWheelFitment.WheelFitmentID,
+                PaintColor: !stateData.currentPaintScheme ? undefined : stateData.currentPaintScheme.Colors[0].Hex,
                 VehicleTireOption: this.vehicleTireOptionID,
                 PositionX: ridestyler.Requests.ImagePosition.Center,
                 PositionY: ridestyler.Requests.ImagePosition.Far,
+                Suspension: !stateData.currentSuspension ? undefined : stateData.currentSuspension,
                 Type: this.imageType
             }).done(() => {
                 this.rotateElement.classList.add('in');
+                 this.parameters.set(this.state.getData());
             })
 
             this.customizationComponentContainer.classList.remove(loadingClass);
@@ -529,12 +676,30 @@ namespace RideStylerShowcase {
         }
 
         private updateViewport(instructions?:ridestyler.Requests.VehicleRenderInstructions) {
-            Object.assign(this.currentRenderInstructions, instructions);
+           Object.assign(this.currentRenderInstructions, instructions);
             return this.viewport.Update(instructions);
         }
 
         private canSwitchAngle():boolean {
             return this.vehicleDescriptionModel.HasAngledImage && this.vehicleDescriptionModel.HasSideImage ;
+        }
+
+        //Returns fitments for wheel state
+        private getBestFitment(urlObject, results){        
+            let fitments:ridestyler.Descriptions.WheelFitmentDescriptionModel[] = results.Fitments;
+            let bestFitment:ridestyler.Descriptions.WheelFitmentDescriptionModel = undefined;
+            
+            fitments.sort(function (a,b) {
+                const aDiff = Math.abs(a.DiameterMin - this.targetDiameter);
+                const bDiff = Math.abs(b.DiameterMin - this.targetDiameter);
+                
+                return aDiff - bDiff;
+            });
+
+            bestFitment = fitments[0];
+
+            this.changeWheelSize.setFitmentOptions(fitments, bestFitment);
+            this.changeWheelSize.component.style.display = '';
         }
 
         private showFilters() {
@@ -558,12 +723,13 @@ namespace RideStylerShowcase {
             }
         }
 
+        //Chnages angled view of vehicle
         private switchAngle() {
             if (!this.canSwitchAngle() || this.state.getData().currentWheel.HasSideImage === false) return;
 
             if (this.imageType === ridestyler.DataObjects.VehicleResourceType.Angle) {
 
-                this.imageType = ridestyler.DataObjects.VehicleResourceType.Side;
+                this.imageType = ridestyler.DataObjects.VehicleResourceType.Side;            
             }
             else
                 this.imageType = ridestyler.DataObjects.VehicleResourceType.Angle;
@@ -573,7 +739,6 @@ namespace RideStylerShowcase {
             });
         }
     }
-
 
     interface CustomizationComponentSettings {
         title:string;
