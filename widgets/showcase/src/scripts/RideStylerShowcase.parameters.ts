@@ -42,16 +42,18 @@ namespace RideStylerShowcase.parameters {
 
         public popEventListener(context) {
             window.addEventListener('popstate', function(e) {
-                context.state.extendData(e.state);
+                let historyState = e.state;
+
+                context.state.extendData(historyState);
                 context.activeWheelDiameterSelect();
                 context.viewport.Update({
-                    VehicleConfiguration: e.state.currentVehicleConfigurationID,
-                    VehicleTireOption: e.state.currentVehicleTireOptionID,
-                    WheelFitment: !e.state.currentWheelFitment ? null : e.state.currentWheelFitment.WheelFitmentID,
-                    Suspension:   !e.state.currentSuspension? null : e.state.currentSuspension,
-                    PaintColor:   !e.state.currentPaintScheme ? null : e.state.currentPaintScheme.Colors[0].Hex,
-                });
-            }.bind(this));
+                    VehicleConfiguration: historyState.currentVehicleConfigurationID,
+                    VehicleTireOption: historyState.currentVehicleTireOptionID,
+                    WheelFitment: !historyState.currentWheelFitment ? null : historyState.currentWheelFitment.WheelFitmentID,
+                    Suspension: !historyState.currentSuspension? null : historyState.currentSuspension,
+                    PaintColor: !historyState.currentPaintScheme ? null : historyState.currentPaintScheme.Colors[0].Hex,
+                }); 
+            });
         };  
     };
 };

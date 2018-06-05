@@ -81,10 +81,7 @@ namespace RideStylerShowcase {
             // The user has selected a vehicle using the vehicle selection modal.
             // Now we need to obtain a OE tire option for them.
             this.events.trigger("vehicle-selected", selection);
-<<<<<<< HEAD
             history.pushState(selection, null, null)
-=======
->>>>>>> 5b045d3d62785f4dbf68503cc969e8272a0fa46c
         }
 
         /**

@@ -157,11 +157,6 @@ namespace RideStylerShowcase {
             if (typeof this.productSelectedCallback === 'function') {
                 this.productSelectedCallback(product);
             }
-<<<<<<< HEAD
-       
-       
-=======
->>>>>>> 5b045d3d62785f4dbf68503cc969e8272a0fa46c
         }
     }
 }

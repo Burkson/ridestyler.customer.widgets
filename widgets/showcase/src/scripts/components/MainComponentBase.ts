@@ -26,28 +26,7 @@ namespace RideStylerShowcase {
          * A overridable function called after the base component is constructed
          * @virtual
          */
-        protected initializeComponent() {
-<<<<<<< HEAD
-            let currentUrl = decodeURIComponent(location.search.substr(1));
-            let splitUrl = [];
-            let dataObject = undefined;
-            let actionString = '';
-
-            if (currentUrl.length !== 1) {
-                let urlArray = currentUrl.split("&")
-                urlArray.forEach(innerArray => {
-                  splitUrl.push(innerArray.split("="));
-                })
-                
-                actionString = 'Vehicle/Render';
-                dataObject = splitUrl.reduce(function(object, [key, value]) {return  (object[key]=value, object)}, {});
-                
-                let url = ridestyler.ajax.url(actionString, dataObject);
-            }
-
-=======
->>>>>>> 5b045d3d62785f4dbf68503cc969e8272a0fa46c
-        }
+        protected initializeComponent() {}
 
         /**
          * A overridable function called after the main component is constructed
