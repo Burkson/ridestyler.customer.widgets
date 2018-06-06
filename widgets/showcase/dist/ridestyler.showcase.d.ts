@@ -1553,6 +1553,7 @@ declare namespace RideStylerShowcase {
         private updateViewport(instructions?);
         private canSwitchAngle();
         private getBestFitment(urlObject, results);
+        private fitmentSort(fitments);
         private showFilters();
         private switchAngle();
     }

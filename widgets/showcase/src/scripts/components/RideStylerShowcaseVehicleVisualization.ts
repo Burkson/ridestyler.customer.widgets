@@ -253,7 +253,7 @@ namespace RideStylerShowcase {
             this.parameters.popEventListener(this);
         }
 
-        //takes in the URL data and returns an updated Viewport
+        //takes in the URL data and returns proxied functions
         private loadUrlData(urlObject) {
             let context = this;
             let Descriptions = {
@@ -339,16 +339,18 @@ namespace RideStylerShowcase {
             this.promiseBuilder(urlObject, Descriptions);
         }    
 
+        //Creates an object with Vehicle details to trigger the "Vehicle Selected" event 
         private promiseBuilder(urlObject, Descriptions){
             let promArr = [];
             let vehicleSelectArgs = {
                 ImageUrl: '',
-                currentSuspension: Number(urlObject.Suspension)
+                currentSuspension: Number(urlObject.Suspension), 
             };
 
             for (let key in Descriptions) {            
                 if (urlObject.hasOwnProperty(key)) {
                     promArr.push(Descriptions[key](vehicleSelectArgs));
+                    //pushes wheel fitments through to get wheel visualization diameter
                     if (key == 'WheelModel') promArr.push(Descriptions.WheelFitments(vehicleSelectArgs));
                 }
             }
@@ -566,12 +568,7 @@ namespace RideStylerShowcase {
                     let bestFitment:ridestyler.Descriptions.WheelFitmentDescriptionModel = undefined;
                     let targetDiameter = this.vehicleTireOption.Front.InsideDiameter;
 
-                    fitments.sort(function (a,b) {
-                        const aDiff = Math.abs(a.DiameterMin - targetDiameter);
-                        const bDiff = Math.abs(b.DiameterMin - targetDiameter);
-                        
-                        return aDiff - bDiff;
-                    });
+                    this.fitmentSort(fitments);
 
                     bestFitment = fitments[0];
 
@@ -602,7 +599,6 @@ namespace RideStylerShowcase {
                 this.state.extendData({currentSuspension: renderUpdate.Suspension })
                 this.updateViewport(renderUpdate)
                 this.parameters.set(this.state.getData())
-                console.log('this.state.getData()2', this.state.getData());
             };
 
             this.setActiveCustomizationComponent(this.customizationComponents.wheels);
@@ -634,7 +630,7 @@ namespace RideStylerShowcase {
 
             this.customizationComponentContainer.classList.remove(loadingClass);
         }
-
+        
         private activeCustomizationComponent:IComponent;
         private setActiveCustomizationComponent(customizationComponent:IComponent) {
             let stateData = this.state.getData();
@@ -690,17 +686,21 @@ namespace RideStylerShowcase {
             let fitments:ridestyler.Descriptions.WheelFitmentDescriptionModel[] = results.Fitments;
             let bestFitment:ridestyler.Descriptions.WheelFitmentDescriptionModel = undefined;
             
+            this.fitmentSort(fitments);
+
+            bestFitment = fitments[0];
+
+            this.changeWheelSize.setFitmentOptions(fitments, bestFitment);
+            this.changeWheelSize.component.style.display = '';
+        }
+
+        private fitmentSort(fitments){
             fitments.sort(function (a,b) {
                 const aDiff = Math.abs(a.DiameterMin - this.targetDiameter);
                 const bDiff = Math.abs(b.DiameterMin - this.targetDiameter);
                 
                 return aDiff - bDiff;
             });
-
-            bestFitment = fitments[0];
-
-            this.changeWheelSize.setFitmentOptions(fitments, bestFitment);
-            this.changeWheelSize.component.style.display = '';
         }
 
         private showFilters() {
