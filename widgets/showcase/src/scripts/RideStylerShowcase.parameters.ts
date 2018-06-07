@@ -2,6 +2,8 @@ namespace RideStylerShowcase.parameters {
     var keyValueStore = {};
 
     export class RideStylerShowcaseParameters {
+
+        //Retrieves the url and parses data
         public get() {
            let currentUrl = decodeURIComponent(location.search.substr(1));
            let splitUrl = [];
@@ -15,6 +17,7 @@ namespace RideStylerShowcase.parameters {
            return keyValueStore;
         };
         
+        //Sets data to state, window.history and url 
         public set(stateData) {
             let historyState = history.state;
             let newData = Object.assign(historyState, stateData);
@@ -40,6 +43,7 @@ namespace RideStylerShowcase.parameters {
             history.pushState(newData, null, url);
         };
 
+        //listens for (back / forward) events
         public popEventListener(context) {
             window.addEventListener('popstate', function(e) {
                 let historyState = e.state;
