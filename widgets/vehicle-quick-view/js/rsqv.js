@@ -200,6 +200,7 @@ var rsqv = function() {
 
         // Make sure we restore visibility to the button
         removeClass(lnk.ele, lnk.loadingClass);
+        addClass(lnk.ele, 'rsqv-button-ready');
     }
 
     function showModal(models, partNumber, map) {
@@ -432,9 +433,13 @@ var rsqv = function() {
         var controls = createElement('<div class="rsqv-control-wrapper"></div>');
         buttonContainer.appendChild(controls);
 
-        controls.appendChild(createControllerMenuItem('Rotate', 'rsicon-rotate', false, function(menu) {
-            context.changeAngle((context.currentAngle == 'side') ? 'angle' : 'side');
-        }, context));
+        
+        var imageAvailability = context.anglesAvailable[context.selectedModelId + '_' + context.partNumber];
+        if (imageAvailability && imageAvailability.Angled && imageAvailability.Side) {
+            controls.appendChild(createControllerMenuItem('Rotate', 'rsicon-rotate', false, function(menu) {
+                context.changeAngle((context.currentAngle == 'side') ? 'angle' : 'side');
+            }, context));
+        }
 
         controls.appendChild(createControllerMenuItem('Suspension', 'rsicon-suspension', function(menu) {
             var susRanges = context.settings['SUSPENSION_RANGES'];
