@@ -5,7 +5,38 @@ namespace RideStylerShowcase.events {
     export interface RideStylerShowcaseEventParameterMapping {
         "state-changed": state.StateChangedEvent;
         "initialized": undefined;
-        "vehicle-selected": RideStylerVehicleSelectionModal.SelectedVehicleData;
+        "vehicle-selected": {
+            PaintScheme?: ridestyler.Descriptions.VehiclePaintSchemeDescriptionModel;
+
+            vehicleHasAngledImage?: boolean;
+            vehicleHasSideImage?:boolean;
+            currentTire?: ridestyler.Descriptions.TireModelDescriptionModel;
+            currentWheel?: ridestyler.Descriptions.WheelModelDescriptionModel;
+            currentWheelFitment?: ridestyler.Descriptions.WheelFitmentDescriptionModel;
+            currentTireOption?: ridestyler.Descriptions.VehicleTireOptionDescriptionModel;
+            currentVehicleDescriptionModel?: ridestyler.Descriptions.VehicleDescriptionModel;
+            currentSuspension?: number;
+
+            /**
+             * A description of the vehicle
+             */
+            VehicleDescription: string;
+
+            /**
+             * A VehicleConfigurationID representing the selected vehicle
+             */
+            VehicleConfiguration: string;
+
+            /**
+             * The VehicleTireOptionID representing the selected OE tire option
+             */
+            TireOptionID: string;
+
+            /**
+             * A description of the currently selected OE tire option
+             */
+            TireOptionString: string;
+        };
         "modal-show": { modal: RideStylerShowcaseModal };
         "modal-hide": { modal: RideStylerShowcaseModal };
         "resize": undefined;

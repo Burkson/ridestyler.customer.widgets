@@ -342,9 +342,10 @@ namespace RideStylerShowcase {
         //Creates an object with Vehicle details to trigger the "Vehicle Selected" event 
         private promiseBuilder(urlObject, Descriptions){
             let promArr = [];
-            let vehicleSelectArgs = {
-                ImageUrl: '',
-                currentSuspension: Number(urlObject.Suspension), 
+
+            // Vehicle selection arguments are built as promArr promises are resolved
+            let vehicleSelectArgs:any = {
+                currentSuspension: Number(urlObject.Suspension)
             };
 
             for (let key in Descriptions) {            

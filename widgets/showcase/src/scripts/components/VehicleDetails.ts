@@ -84,8 +84,16 @@ namespace RideStylerShowcase {
         private onDataChange(data:state.StateData) {
             const vehicleDescription = data.currentVehicleDescription;
             const shortVehicleDescription =  (vehicleDescription !== undefined && vehicleDescription.length > 40) ? vehicleDescription.substring(0, 38) + '...' : vehicleDescription;
+
+            let paintColor:string;
+
+            if (data.currentPaintScheme && data.currentPaintScheme.Colors && data.currentPaintScheme.Colors.length) {
+                paintColor = data.currentPaintScheme.Colors[0].Hex;
+            } else {
+                paintColor = firstPaintColor;
+            }
             
-            this.vehiclePaintSwatchElement.style.backgroundColor = data.currentPaintScheme ? (!data.currentPaintScheme.Colors ? data.currentPaintScheme : data.currentPaintScheme.Colors[0].Hex)  : firstPaintColor;
+            this.vehiclePaintSwatchElement.style.backgroundColor = paintColor;
             
             HTMLHelper.setText(this.vehicleDescriptionElement, shortVehicleDescription);
             HTMLHelper.setText(this.tireSizeElement, data.currentVehicleTireOptionDescription);

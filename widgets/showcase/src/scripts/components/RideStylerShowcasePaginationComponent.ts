@@ -165,8 +165,6 @@ namespace RideStylerShowcase {
             HTMLHelper.removeChildrenWithClasses(this.optionContainer, optionLoaderClass);
         }
 
-        protected abstract getOptionElementValue(element:HTMLElement): string; 
-
         protected addOptionElements(elements:Node[]|Node) {
    
             let hasNoResults = false;
