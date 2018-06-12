@@ -171,6 +171,7 @@ namespace RideStylerShowcase {
 
             if (elements instanceof DocumentFragment) {
                 hasNoResults = elements.childNodes.length === 0;
+                console.log('hi1');
                 this.optionContainer.appendChild(elements);
             } else if (elements instanceof Node) {
                 this.optionContainer.appendChild(elements);
@@ -184,6 +185,7 @@ namespace RideStylerShowcase {
             }
 
             if (hasNoResults) {
+                    console.log('hi2');
                 this.showNoResults();
             }
 
@@ -201,6 +203,7 @@ namespace RideStylerShowcase {
                 text: strings.getString('no-results'),
                 appendTo: this.optionContainer
             });
+            console.log('hi');
         }
 
         public clearOptions() {

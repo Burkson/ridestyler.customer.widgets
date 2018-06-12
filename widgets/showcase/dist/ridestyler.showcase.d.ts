@@ -1174,13 +1174,15 @@ declare namespace RideStylerShowcase {
         /**
          * Set filters and reload
          * @param newFilters The new filters
+         * @param loadResults   If true (by default), reload the product selector with the first page of results
          */
-        setFilters(newFilters: FilterType): void;
+        setFilters(newFilters: FilterType, loadResults?: boolean): void;
         /**
          * Update filters and reload
          * @param filterUpdates The filter properties to update
+         * @param loadResults   If true (by default), reload the product selector with the first page of results
          */
-        updateFilters(filterUpdates: FilterType): void;
+        updateFilters(filterUpdates: FilterType, loadResults?: boolean): void;
         /**
          * Returns false if the product should not be displayed in the list
          * @param product The product

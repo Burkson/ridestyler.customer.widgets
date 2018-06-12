@@ -1399,8 +1399,10 @@ img {
   -ms-user-select: none;
   user-select: none; }
   .ridestyler-showcase-pagination-option-no-results {
-    top: 3em;
-    left: -6.5em; }
+    position: relative;
+    min-width: 100%;
+    margin-left: 16.5em;
+    top: 3em; }
   .ridestyler-showcase-pagination-option-display {
     margin: 5px auto;
     width: 50px;

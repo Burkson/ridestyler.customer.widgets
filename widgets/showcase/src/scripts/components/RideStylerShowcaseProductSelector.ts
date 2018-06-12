@@ -47,8 +47,9 @@ namespace RideStylerShowcase {
         /**
          * Set filters and reload
          * @param newFilters The new filters
+         * @param loadResults   If true (by default), reload the product selector with the first page of results
          */
-        public setFilters(newFilters: FilterType) {
+        public setFilters(newFilters: FilterType, loadResults: boolean = true) {
             this.clearOptions();
             
             // Reset our count
@@ -60,16 +61,19 @@ namespace RideStylerShowcase {
             // Set our filters
             this.currentFilters = ObjectHelper.assign({}, this.currentFilters, newFilters);
             
-            // Load first result set
-            this.loadMore();
+            if (loadResults) {
+                // Load first result set
+                this.loadMore();
+            }
         }
 
         /**
          * Update filters and reload
          * @param filterUpdates The filter properties to update
+         * @param loadResults   If true (by default), reload the product selector with the first page of results
          */
-        public updateFilters(filterUpdates: FilterType) {
-            this.setFilters(ObjectHelper.assign({}, this.currentFilters, filterUpdates));
+        public updateFilters(filterUpdates: FilterType, loadResults: boolean = true) {
+            this.setFilters(ObjectHelper.assign({}, this.currentFilters, filterUpdates), loadResults);
         }
 
         /**

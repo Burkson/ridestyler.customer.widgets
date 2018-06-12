@@ -522,7 +522,14 @@ namespace RideStylerShowcase {
         private initializeForNewVehicle() {
             this.events.trigger("vehicle-description-loaded", this.vehicleDescriptionModel);
             this.currentRenderInstructions = {};
-            this.tabBar.setActiveTab(this.tabs.paint);
+
+            let firstCustomizationComponent:string;
+
+            if (this.customizationComponentSettings.wheels.enabled) firstCustomizationComponent = 'wheels';
+            else if (this.customizationComponentSettings.tires.enabled) firstCustomizationComponent = 'tires';
+            else firstCustomizationComponent = 'paint';
+
+            this.tabBar.setActiveTab(this.tabs[firstCustomizationComponent]);
 
             // Create the components that will be switched with the tabs
             this.customizationComponents = {
@@ -532,7 +539,8 @@ namespace RideStylerShowcase {
                 suspension: new RideStylerShowcaseSuspensionSelector(this.showcase)
             };
 
-            this.customizationComponents.wheels.setFilters(this.showcase.filters.wheelFilters.getFilters());
+            //Component
+            this.customizationComponents.wheels.setFilters(this.showcase.filters.wheelFilters.getFilters(), false);
 
             this.showcase.filters.wheelFilters.onFiltersChanged = filters => {
                 this.customizationComponents.wheels.setFilters(filters);
@@ -602,7 +610,7 @@ namespace RideStylerShowcase {
                 this.parameters.set(this.state.getData())
             };
 
-            this.setActiveCustomizationComponent(this.customizationComponents.wheels);
+            this.setActiveCustomizationComponent(this.customizationComponents[firstCustomizationComponent]);
 
             for (let customizationComponent of ObjectHelper.getValues<IComponent>(this.customizationComponents)) {
                 customizationComponent.component.classList.add('ridestyler-showcase-customization-component');
