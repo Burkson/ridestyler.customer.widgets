@@ -43,7 +43,7 @@ declare namespace RideStylerShowcase {
             Alpha = 0,
             Beta = 1,
             Live = 2,
-            Other = 3
+            Other = 3,
         }
         let environment: Environment;
     }
@@ -271,7 +271,7 @@ declare namespace RideStylerShowcase.parameters {
 declare namespace RideStylerShowcase {
     enum States {
         ChooseVehicle = 0,
-        Visualize = 1
+        Visualize = 1,
     }
 }
 declare namespace RideStylerShowcase.state {
@@ -369,7 +369,7 @@ declare namespace RideStylerShowcase.state {
          * a new one
          * @param state The state to return a callback register for
          */
-        private callbacksForState;
+        private callbacksForState(state);
         /**
          * Register a callback that is triggered when exiting a specific state
          * @param state The state to register a exit callback for
@@ -424,7 +424,7 @@ declare namespace RideStylerShowcase {
      * A list of acceptable languages
      */
     enum LanguageKeys {
-        En = 0
+        En = 0,
     }
     namespace strings {
         /**
@@ -461,17 +461,17 @@ declare namespace RideStylerShowcase.styles {
         element: HTMLElement;
         constructor(element: HTMLElement);
         initialized: RideStylerPromise;
-        private resolveOnDOMLoad;
+        private resolveOnDOMLoad();
         /**
          * Load the CSS from {@link RideStylerShowcase.css} into the first HEAD element
          * found in the document of the container
          */
-        private initializeCSS;
-        private initializeStyleClasses;
-        private initializeBreakpoints;
-        private resize;
-        private resized;
-        private breakpointChanged;
+        private initializeCSS();
+        private initializeStyleClasses();
+        private initializeBreakpoints();
+        private resize();
+        private resized();
+        private breakpointChanged(newBreakpoint);
         /**
          * A callback each time the element is resized
          */
@@ -484,13 +484,13 @@ declare namespace RideStylerShowcase.styles {
          * A callback for after the breakpoint has changed
          */
         onBreakpointChanged: (newBreakpoint: Breakpoint) => void;
-        private watchSize;
+        private watchSize();
         /**
          * The currently applied breakpoint
          */
         private currentBreakpoint;
         getCurrentBreakpoint(): Breakpoint;
-        private applyBreakpointClasses;
+        private applyBreakpointClasses();
     }
 }
 
@@ -571,20 +571,20 @@ declare namespace RideStylerShowcase {
         /**
          * Register the main components used by the showcase
          */
-        private registerComponents;
+        private registerComponents();
         /**
          * Set the container of this showcase instance and initialize (or re-initialize) it
          * @param container The container to initialize this showcase in
          */
         initialize(container: HTMLElement): void;
-        private initializeState;
-        private initializeStyle;
-        private initializeParameters;
-        private initializeFilters;
-        private initializeComponents;
-        private onStateChanged;
+        private initializeState();
+        private initializeStyle();
+        private initializeParameters();
+        private initializeFilters();
+        private initializeComponents();
+        private onStateChanged(ev);
         private activeLoadingSessionKeys;
-        private updateCurrentComponent;
+        private updateCurrentComponent(ev);
     }
     /**
      * Create a RideStyler Showcase instance and do not initialize it
@@ -666,8 +666,8 @@ declare namespace RideStylerShowcase {
          * @param visible If true, show the component, otherwise hide the component
          */
         setVisible(visible: boolean): void;
-        private setVisibleStyling;
-        private callWhenDoneAnimating;
+        private setVisibleStyling(visible);
+        private callWhenDoneAnimating(callback);
         /**
          * Called before this component is shown
          * @virtual
@@ -837,21 +837,21 @@ declare namespace RideStylerShowcase {
          * Attached to the image error event
          * @param errorEvent The error event
          */
-        private onImageError;
+        private onImageError(errorEvent);
         /**
          * Attached to the image load event
          * @param event The image load event
          */
-        private onImageLoad;
+        private onImageLoad(event);
         /**
          * Show the image
          */
-        private show;
+        private show();
         /**
          * Calculate the size of the image from the container
          */
-        private calculateRenderSize;
-        private sizeIsDifferent;
+        private calculateRenderSize();
+        private sizeIsDifferent(box);
         /**
          * Update or create the image
          * @param instructions New instructions to render the image with
@@ -891,7 +891,7 @@ declare namespace RideStylerShowcase {
         private optionContainer;
         constructor(showcaseInstance: RideStylerShowcaseInstance, options: RideStylerShowcaseButtonPicker.Settings);
         setOptions(options: RideStylerShowcaseButtonPicker.Option<T>[]): void;
-        private onOptionClick;
+        private onOptionClick(event);
         optionSelectedCallback: (value: T) => void;
     }
     namespace RideStylerShowcaseButtonPicker {
@@ -941,7 +941,7 @@ declare namespace RideStylerShowcase {
          * Build the modal DOM structure
          */
         protected buildModal(): void;
-        private buildActions;
+        private buildActions(actions);
         /**
          * Called when this modal is layed-out and about to transition in
          * @virtual
@@ -968,16 +968,16 @@ declare namespace RideStylerShowcase {
         /**
          * Creates the backdrop if needed
          */
-        private createBackdropIfNeeded;
+        private createBackdropIfNeeded();
     }
     class RideStylerShowcaseModalBackdrop extends ComponentBase {
         constructor(showcaseInstance: RideStylerShowcaseInstance);
-        private buildBackdrop;
+        private buildBackdrop();
         protected initializeComponent(): void;
         /**
          * Hide or show the backdrop based off the number of visible modals
          */
-        private update;
+        private update();
         show(): RideStylerPromise;
         hide(): RideStylerPromise;
         setVisibility(visible: boolean): void;
@@ -1008,13 +1008,13 @@ declare namespace RideStylerShowcase {
         value: any;
         constructor(name: string, options?: Option[]);
         setLoading(loading: boolean): void;
-        private generateOptionElement;
-        private clearOptions;
-        private appendOptions;
+        private generateOptionElement(option);
+        private clearOptions();
+        private appendOptions(options);
         setOptions(options: Option[]): void;
         setValue(value: any): void;
         onChange: (newValue: any) => void;
-        private onClicked;
+        private onClicked(clickEvent);
     }
     namespace RideStylerShowcaseOptionMenu {
         interface Option {
@@ -1057,10 +1057,10 @@ declare namespace RideStylerShowcase {
         protected abstract _loadMore(): RideStylerPromise;
         loadMore(): RideStylerPromise;
         updateBounds(): void;
-        private onScroll;
+        private onScroll();
         protected onEndVisible(): void;
-        private onComponentClick;
-        private updatePaginationButtons;
+        private onComponentClick(event);
+        private updatePaginationButtons();
         /**
          * Adds a spinner to the end of the list indicating something is loading
          */
@@ -1094,10 +1094,10 @@ declare namespace RideStylerShowcase {
         private readonly vehicleConfigurationID;
         constructor(showcaseInstance: RideStylerShowcaseInstance);
         protected _loadMore(): ridestyler.RideStylerPromise<ridestyler.Responses.VehiclePaintSchemeDescriptionResultModel, ridestyler.Responses.VehiclePaintSchemeDescriptionResultModel>;
-        private createOptions;
+        private createOptions(schemes);
         onPaintSchemeSelected: (paintScheme: VehiclePaintSchemeDescriptionModel) => void;
         protected onOptionClick(optionElement: HTMLElement): void;
-        private static createAttributeLabel;
+        private static createAttributeLabel(attributes);
     }
 }
 
@@ -1198,7 +1198,7 @@ declare namespace RideStylerShowcase {
             secondary?: string;
             tertiary?: string;
         };
-        private createOptions;
+        private createOptions(products);
         onOptionClick(optionElement: HTMLElement): void;
         productSelectedCallback: (product: DataType) => void;
         protected onProductClick(product: DataType): void;
@@ -1315,18 +1315,18 @@ declare namespace RideStylerShowcase {
          * Build the DOM structure
          */
         protected buildModal(): void;
-        private createShareButtons;
+        private createShareButtons();
         protected onShow(): void;
         protected onHidden(): void;
         private resizedCallback;
-        private updateViewport;
-        private getShareURL;
-        private setupViewport;
-        private canSwitchAngle;
-        private onInstructionsChanged;
-        private setEnabled;
-        private updateURL;
-        private switchAngle;
+        private updateViewport();
+        private getShareURL();
+        private setupViewport();
+        private canSwitchAngle();
+        private onInstructionsChanged();
+        private setEnabled(enabled);
+        private updateURL(shareURL);
+        private switchAngle();
     }
 }
 
@@ -1346,13 +1346,13 @@ declare namespace RideStylerShowcase {
         tabs: RideStylerShowcaseTabBar.Tab[];
         currentTab: RideStylerShowcaseTabBar.Tab;
         setMode(mode: RideStylerShowcaseTabBar.Mode): void;
-        private updateTabDisplay;
+        private updateTabDisplay();
         setTabs(tabs: RideStylerShowcaseTabBar.TabCreateOptions[]): any;
         setTabs(tabs: RideStylerShowcaseTabBar.Tab[]): any;
         clearActiveTab(): void;
         setActiveTab(newTab: RideStylerShowcaseTabBar.Tab): void;
-        private onClick;
-        private onTabClick;
+        private onClick(e);
+        private onTabClick(tab);
         tabForLabel(label: string): RideStylerShowcaseTabBar.Tab;
         tabForElement(element: HTMLElement): RideStylerShowcaseTabBar.Tab;
     }
@@ -1470,8 +1470,8 @@ declare namespace RideStylerShowcase {
         /**
          * Called when the toggle button is clicked on
          */
-        private onClicked;
-        private selectOptionElement;
+        private onClicked(clickEvent);
+        private selectOptionElement(optionElement, triggerChange?);
         setValue(value: string): void;
         setOptions(options: Option[]): void;
         addOption(option: Option): void;
@@ -1498,15 +1498,15 @@ declare namespace RideStylerShowcase {
         private modal;
         protected initializeMainComponent(): void;
         protected buildComponent(container: HTMLElement): void;
-        private buildCopy;
-        private onAuthenticated;
-        private onVehicleSelected;
+        private buildCopy();
+        private onAuthenticated();
+        private onVehicleSelected(selection);
         /**
          * Show the passed in wheel models in the wheel showcase section of the vehicle selection screen
          * @param models The wheel models to show
          */
-        private showWheels;
-        private generateVehiclePreviewSettings;
+        private showWheels(models);
+        private generateVehiclePreviewSettings();
     }
 }
 
@@ -1563,26 +1563,26 @@ declare namespace RideStylerShowcase {
          */
         private currentRenderInstructions;
         protected buildComponent(container: HTMLElement): void;
-        private setupViewport;
-        private loadUrlData;
-        private promiseBuilder;
+        private setupViewport(container);
+        private loadUrlData(urlObject);
+        private promiseBuilder(urlObject, Descriptions);
         activeWheelDiameterSelect(results: any): void;
-        private updateTabs;
-        private updateTabLayout;
-        private setupTabs;
-        private vehicleDifferentFromState;
+        private updateTabs();
+        private updateTabLayout();
+        private setupTabs();
+        private vehicleDifferentFromState();
         protected onDisplay(): void;
-        private onVehicleChanged;
-        private initializeForNewVehicle;
+        private onVehicleChanged();
+        private initializeForNewVehicle();
         private activeCustomizationComponent;
-        private setActiveCustomizationComponent;
-        private getComponentKey;
-        private updateViewport;
-        private canSwitchAngle;
-        private getBestFitment;
-        private fitmentSort;
-        private showFilters;
-        private switchAngle;
+        private setActiveCustomizationComponent(customizationComponent);
+        private getComponentKey(customizationComponent);
+        private updateViewport(instructions?);
+        private canSwitchAngle();
+        private getBestFitment(urlObject, results);
+        private fitmentSort(fitments);
+        private showFilters();
+        private switchAngle();
     }
 }
 
@@ -1594,13 +1594,13 @@ declare namespace RideStylerShowcase {
         private specsTable;
         private summaryTable;
         constructor(showcaseInstance: RideStylerShowcaseInstance, wheelModel: WheelModelDescriptionModel);
-        private buildSummaryTable;
-        private buildSpecsPage;
+        private buildSummaryTable(fitments);
+        private buildSpecsPage();
         protected createImage(): ResizeableResourceImage<"wheel/image">;
-        private static getFitmentRetailPriceDataObject;
-        private static getFitmentSizeDescription;
-        private static getFitmentPrice;
-        private static getFitmentItemNumber;
+        private static getFitmentRetailPriceDataObject(fitment);
+        private static getFitmentSizeDescription(fitment);
+        private static getFitmentPrice(fitment);
+        private static getFitmentItemNumber(fitment);
     }
 }
 
@@ -1631,7 +1631,7 @@ declare namespace RideStylerShowcase {
         private tireNameElement;
         private tireDescriptionElement;
         protected initializeComponent(): void;
-        private onDataChange;
+        private onDataChange(data);
     }
 }
 
@@ -1654,7 +1654,7 @@ declare namespace RideStylerShowcase {
          * A call back for when the paint swatch was clicked on
          */
         paintSwatchClickCallback: () => void;
-        private onDataChange;
+        private onDataChange(data);
     }
 }
 
@@ -1676,16 +1676,21 @@ declare namespace RideStylerShowcase {
         private readonly showCountTextFormat;
         private showButton;
         constructor(showcaseInstance: RideStylerShowcaseInstance, options: RideStylerShowcaseFilterModal.Options<FilterProviderType>);
-        private buildFilterMenus;
-        private buildShowButton;
-        private getValues;
-        private getFilters;
-        private updateCount;
+        private buildFilterMenus();
+        private buildShowButton();
+        private getValues();
+        private getFilters();
+        private updateCount();
         /**
          * Set the count text to a loading state
          * @param count
          */
-        private setCountText;
+        private setCountText(count);
+        /**
+         * Sets the count text
+         * @param count The count to set
+         */
+        private setCountText(count);
     }
     namespace RideStylerShowcaseFilterModal {
         interface Options<FilterProviderType> {
@@ -1698,8 +1703,8 @@ declare namespace RideStylerShowcase {
 declare namespace RideStylerShowcase.ArrayHelper {
     function copy<ArrayType extends Array<any>>(array: ArrayType): ArrayType;
     function remove<T>(array: T[], itemMatch: T): T[];
-    function remove<T>(array: T[], itemMatch: (T: any) => boolean): T[];
-    function filter<T>(array: T[], itemMatch: (T: any) => boolean): T[];
+    function remove<T>(array: T[], itemMatch: (T) => boolean): T[];
+    function filter<T>(array: T[], itemMatch: (T) => boolean): T[];
     function map<T, U>(array: T[], mapFunction: (value: T, index: number, array: T[]) => U, thisArg?: any): U[];
     function reduce<T>(array: T[], reducer: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue?: T): T;
     function reduce<T, U = T>(array: T[], reducer: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U;
