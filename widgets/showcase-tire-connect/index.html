@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        
+    <title>RideStyler Vehicle Customization</title>
+    
+    <link rel="stylesheet" href="https://rawgit.com/Burkson/com.burkson.ridestyler.widgets/master/widgets/showcase/dist/ridestyler.showcase.css">
+
+    <style>
+        #container {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <script src="http://api.ridestyler.net/js?DataType=json&amp;Key=dbb74f87bc0046dcb83c5755e904065f"></script>
+    <script src="https://rawgit.com/Burkson/com.burkson.ridestyler.widgets/master/widgets/showcase/dist/ridestyler.showcase.js"></script>
+
+    <script src="dist/plugin.js"></script>
+    <script type="text/javascript">
+
+    TireConnectPlugin.BaseURL = 'http://integritycarcare.com/tire-brands/';
+
+    </script>
+    <script type="text/javascript">
+        showcase = RideStylerShowcase.create('container', {
+            debug: {
+                events: true,
+                state: true
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "module": "none",
+        "target": "es5",
+        "rootDir": "src",
+        "outDir": "dist",
+        "inlineSourceMap": true
+    },
+
+    "include": [
+        "src/**/*.ts",
+        "node_modules/com.burkson.ridestyler.widgets/ridestyler.d.ts",
+        "node_modules/com.burkson.ridestyler.widgets/widgets/showcase/typings/**/*.d.ts",
+        "node_modules/com.burkson.ridestyler.widgets/widgets/vehicle-selection-modal/rsvsm.d.ts",
+        "node_modules/com.burkson.ridestyler.widgets/widgets/vehicle-renderer/rsvr.d.ts",
+        "node_modules/com.burkson.ridestyler.widgets/widgets/showcase/**/*.d.ts"
+    ],
+    "exclude": [
+        "src/showcase/**/*.ts"
+    ]
+}

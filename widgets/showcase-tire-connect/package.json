@@ -1,0 +1,18 @@
+{
+  "name": "ridestyler-tire-connect-plugin",
+  "version": "1.0.0",
+  "description": "A plugin to the RideStyler Showcase interface, adding a button to wheels to build tire/wheel packages using the Tire Connect API",
+  "scripts": {
+    "build": "tsc"
+  },
+  "author": {
+    "name": "Byron Carasco",
+    "email": "byron@burkson.com"
+  },
+  "devDependencies": {
+    "typescript": "^2.8.3",
+    "com.burkson.ridestyler.widgets": "git+https://github.com/Burkson/com.burkson.ridestyler.widgets.git"
+  },
+  "dependencies": {
+  }
+}
