@@ -53,7 +53,25 @@ namespace TireConnectPlugin {
                 let modal:RideStylerShowcase.RideStylerShowcaseModal;
 
                 const wheelFitments = currentWheel.WheelFitments;
-                
+
+                var recommendations = null;
+                var batch = ridestyler.ajax.batch();
+                for(var i = 0; i < wheelFitments.length; i++) {
+                    var wf = wheelFitments[i];
+
+                    batch.send(wf.PartNumber, {
+                        action: 'tire/recommendsize',
+                        data: {
+                            BaseTireSizeDesc: currentTireOption.Front.Description,
+                            NewWheelDiameter: wf.DiameterMin,
+                            NewWheelWidth: wf.WidthMin
+                        }
+                    });
+                }
+
+                batch.done(r => recommendations = r);
+                batch.execute();
+               
                 let tireConnectURLBase = BaseURL;
                 const tireConnectParams = {};
 
@@ -69,14 +87,23 @@ namespace TireConnectPlugin {
 
                 tireConnectParams[this.isVehicleID ? 'aces_id' : 'base_aces_id'] = this.currentACESID;
                 
-                const selectTire = (size:ridestyler.Descriptions.TireSizeDescriptionModel) => {
-                    tireConnectParams['tire_width[b]'] = size.Width;
-                    tireConnectParams['tire_height[b]'] = size.AspectRatio;
-                    tireConnectParams['tire_rim[b]'] = size.InsideDiameter;
+                const selectTire = (size:any) => {
+                    tireConnectParams['tire_width[b]'] = size.DisplayWidth;
+                    tireConnectParams['tire_height[b]'] = size.DisplayAspectRatio;
+                    tireConnectParams['tire_rim[b]'] = size.DisplayInsideDiameter;
                     tireConnectParams['tire_size[b]'] = size.Description;
                 };
                 
                 const selectFitment = (fitment:WheelFitmentDescriptionModel, qty:string) => {
+                    var r = recommendations[fitment.PartNumber];
+
+                    if (r.Recommendations.length == 0) {
+                        alert('We could not recommend a new tire for this wheel/vehicle combination. Please contact us directly for this application.');
+                        return;
+                    }
+
+                    selectTire(r.Recommendations[0].Size);
+
                     tireConnectParams['wheel_brand[b]'] = currentWheel.WheelBrandName;
                     tireConnectParams['wheel_product_name[b]'] = currentWheel.WheelModelName + ' (' + currentWheel.WheelModelFinishDescription + ')';
                     tireConnectParams['wheel_image[b]'] = RideStylerShowcase.api.getURL("wheel/image", {
@@ -113,11 +140,10 @@ namespace TireConnectPlugin {
                     else location.href = url;
                 }
 
-                selectTire(currentTireOption.Front);
-
                 if (wheelFitments.length === 0) return;
 
                 modal = new SelectWheelFitmentModal(this.showcase, currentWheel, (fitment, qty) => {
+                    if (recommendations == null) return;
                     selectFitment(fitment, qty);
                     modal.hide();
                 });
@@ -219,8 +245,26 @@ namespace TireConnectPlugin {
                 text: 'Please select a fitment:',
                 appendTo: this.component,
                 style: {
+                    marginBottom: '0',
                     fontWeight: 'bold'
                 }
+            });
+
+            HTMLHelper.createElement('small', {
+                text: 'Wheel and tire recommendations are for informational purposes only. You should consult with a professional to confirm fit before ordering or installing anything on your vehicle.',
+                style: {
+                    color: '#777',
+                    fontStyle: 'italic'
+                },
+                appendTo: this.component
+            });
+
+            let tableWrapper = HTMLHelper.createElement('div', {
+                className: 'scrollable ridestyler-showcase-product-modal-page',
+                style: {
+                    top: '17em'
+                },
+                appendTo: this.component
             });
 
             this.table = new RideStylerShowcaseTable<WheelFitmentDescriptionModel>(this.showcase, {
@@ -310,7 +354,7 @@ namespace TireConnectPlugin {
                 ]
             })
 
-            this.component.appendChild(this.table.component);
+            tableWrapper.appendChild(this.table.component);
         }
     }
 

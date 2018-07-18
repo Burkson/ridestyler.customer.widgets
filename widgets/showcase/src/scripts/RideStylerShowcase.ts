@@ -179,6 +179,7 @@ namespace RideStylerShowcase {
                     currentVehicleDescriptionModel: selection.currentVehicleDescriptionModel || undefined,
                     currentSuspension: selection.currentSuspension || undefined
                 };
+                
                 this.state.changeState(States.Visualize, vehicleSelectionState);
                 return true;
             });

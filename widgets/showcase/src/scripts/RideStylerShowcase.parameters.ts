@@ -1,8 +1,5 @@
 namespace RideStylerShowcase.parameters {
-    var keyValueStore = {};
-
     export class RideStylerShowcaseParameters {
-
         //Retrieves the url and parses data
         public get() {
            let currentUrl = decodeURIComponent(location.search.substr(1));
@@ -11,36 +8,34 @@ namespace RideStylerShowcase.parameters {
                splitUrl.push(innerArray.split("="));
            });
 
-           keyValueStore = splitUrl.reduce(function(o, [k, v]) {return  (o[k]=v, o)}, {});
-           
-           history.pushState(keyValueStore, null, null)
-           return keyValueStore;
+           return splitUrl.reduce(function(o, [k, v]) {return  (o[k]=v, o)}, {});
         };
         
         //Sets data to state, window.history and url 
         public set(stateData) {
-            let historyState = history.state;
-            let newData = Object.assign(historyState, stateData);
+            // Create an instance of our state for this specific history
+            let historyState = Object.assign({}, stateData);
 
+            // Update our URL fragments
             let vehicleFragments = {
-                VehicleConfiguration: stateData.currentVehicleConfigurationID,
-                TireOptionID: historyState.TireOptionID,
-                TireOptionString: historyState.TireOptionString,
-                TireModelID: !stateData.currentTire ? undefined : stateData.currentTire.TireModelID,
-                WheelModel: stateData.currentWheel == undefined ? historyState.WheelModel : stateData.currentWheel.WheelModelID,
-                WheelFitmentID: stateData.currentWheelFitment == undefined ? historyState.WheelFitmentID : stateData.currentWheelFitment.WheelFitmentID,
-                Suspension:  (stateData.currentSuspension !== historyState.Suspension && stateData.currentSuspension === 0) ? historyState.Suspension : stateData.currentSuspension,
-                PaintScheme: stateData.currentPaintScheme == undefined ? historyState.PaintScheme : stateData.currentPaintScheme.VehiclePaintSchemeID,
-                PaintName: stateData.currentPaintScheme == undefined ? historyState.PaintName : stateData.currentPaintScheme.SchemeName,
+                vc: stateData.currentVehicleConfigurationID,
+                to: stateData.currentVehicleTireOptionID,
+                wm: stateData.currentWheel ? stateData.currentWheel.WheelModelID : false,
+                wf: stateData.currentWheelFitment ? stateData.currentWheelFitment.WheelFitmentID : false,
+                p: stateData.currentPaintScheme ? stateData.currentPaintScheme.VehiclePaintSchemeID + '|' + stateData.currentPaintScheme.SchemeName : false,
+                s: stateData.currentSuspension ? stateData.currentSuspension : false,
+                tm: stateData.currentTire ? stateData.currentTire.TireModelID : false
             }
 
             vehicleFragments = JSON.parse(JSON.stringify(vehicleFragments));
 
-            let url = "?" + Object.keys(vehicleFragments).map(function(k) {
-                return encodeURIComponent(k) + '=' + encodeURIComponent(vehicleFragments[k])
-            }).join('&');
+            let url = '';
+            for(var prop in vehicleFragments) {
+                if (vehicleFragments[prop] == false) continue;
+                url += (url.length == 0 ? '?' : '&') + prop + '=' + encodeURIComponent(vehicleFragments[prop]);
+            }
 
-            history.pushState(newData, null, url);
+            history.pushState(historyState, null, url);
         };
 
         //listens for (back / forward) events

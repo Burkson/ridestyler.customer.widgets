@@ -262,7 +262,7 @@ declare namespace RideStylerShowcase.filters {
 
 declare namespace RideStylerShowcase.parameters {
     class RideStylerShowcaseParameters {
-        get(): {};
+        get(): any;
         set(stateData: any): void;
         popEventListener(context: any): void;
     }
@@ -1564,8 +1564,10 @@ declare namespace RideStylerShowcase {
         private currentRenderInstructions;
         protected buildComponent(container: HTMLElement): void;
         private setupViewport;
-        private loadUrlData;
-        private promiseBuilder;
+        private resumeSessionState;
+        /**
+         * Removes the active class from the diameter options and adds it to the correct element
+         */
         activeWheelDiameterSelect(results: any): void;
         private updateTabs;
         private updateTabLayout;
@@ -1579,8 +1581,13 @@ declare namespace RideStylerShowcase {
         private getComponentKey;
         private updateViewport;
         private canSwitchAngle;
-        private getBestFitment;
-        private fitmentSort;
+        /**
+         * Loads the results from a Wheel/GetFitmentDescriptions request and returns the best fitment option
+         * for the returned WheelFitmentDescriptions.
+         * @param model The wheel model used for querying the fitment descriptions
+         * @param fitmentDescriptionResult The response from a Wheel/GetFitmentDescriptions request for the specified model
+         */
+        private loadWheelFitmentDescriptions;
         private showFilters;
         private switchAngle;
     }

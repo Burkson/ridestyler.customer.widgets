@@ -110,16 +110,18 @@ namespace RideStylerShowcase {
             // the offset positioning of the viewport element when created and our CSS
             // isn't guaranteed to be loaded until the initialized event
 
+            this.state.afterDataChange(newData => {
+                this.parameters.set(newData);
+            })
+
             this.events.on('initialized', () => {
                 this.setupViewport(container);
                  
                 // Setup initial tab layout
                 this.updateTabLayout();
 
-                //Checks to see if there is a vehicle in the url and parses the data to make the API calls
-                if (location.search.indexOf('VehicleConfiguration') !== -1 ) {     
-                   this.loadUrlData(this.parameters.get());
-                }
+                // Attempt to resume our state from the URL
+                this.resumeSessionState(this.parameters.get());
 
                 this.events.on('vehicle-selected', () => {
                     if (this.vehicleDifferentFromState())
@@ -155,7 +157,6 @@ namespace RideStylerShowcase {
                 this.updateViewport({
                     WheelFitment: newOption.WheelFitmentID
                 });
-                this.parameters.set(this.state.getData())
             }
 
             this.components = [
@@ -254,11 +255,11 @@ namespace RideStylerShowcase {
         }
 
         //takes in the URL data and returns proxied functions
-        private loadUrlData(urlObject) {
+        private resumeSessionState(urlObject) {
             let context = this;
-            let Descriptions = {
-                VehicleConfiguration: function(vehicleSelectArgs) { 
-                    var promise = api.request("vehicle/getdescriptions", { VehicleConfiguration: urlObject.VehicleConfiguration }); 
+            let loadRoutines = {
+                vc: function(vehicleSelectArgs) { 
+                    var promise = api.request("vehicle/getdescriptions", { VehicleConfiguration: urlObject.vc }); 
 
                     promise.done(r => {
                         if (r.Success && r.Descriptions.length > 0) {
@@ -269,21 +270,25 @@ namespace RideStylerShowcase {
 
                     return promise;
                 },
-                TireOptionID:  function(vehicleSelectArgs) { 
-                    var promise = api.request('vehicle/gettireoptiondetails', {VehicleConfiguration: urlObject.VehicleConfiguration}); 
+                to:  function(vehicleSelectArgs) { 
+                    var promise = api.request('vehicle/gettireoptiondetails', { VehicleConfiguration: urlObject.vc }); 
 
                     promise.done(r => {
                         if (r.Success && r.Details.length > 0) {
-                            vehicleSelectArgs.TireOptionID = r.Details[0].TireOptionID;
-                            vehicleSelectArgs.TireOptionString = r.Details[0].Front.Description;
-                            context.targetDiameter = r.Details[0].Front.InsideDiameter;
+                            for(var i = 0; i < r.Details.length; i++) {
+                                if (r.Details[i].TireOptionID == urlObject.to || i == r.Details.length - 1) {
+                                    vehicleSelectArgs.TireOptionID = r.Details[0].TireOptionID;
+                                    vehicleSelectArgs.TireOptionString = r.Details[0].Front.Description;
+                                    context.targetDiameter = r.Details[0].Front.InsideDiameter;
+                                }
+                            }
                         }
                     });
 
                     return promise;
                 },
-                TireModelID:  function(vehicleSelectArgs) { 
-                    let promise = api.request("tire/getmodeldescriptions", {TireModel: urlObject.TireModelID});
+                tm:  function(vehicleSelectArgs) { 
+                    let promise = api.request("tire/getmodeldescriptions", { TireModel: urlObject.tm });
 
                     promise.done(r => {
                         if (r.Success && r.Models.length > 0) {
@@ -293,13 +298,16 @@ namespace RideStylerShowcase {
                     
                     return promise; 
                 },
-                PaintName:  function(vehicleSelectArgs) { 
-                    let promise = api.request("vehicle/getpaintschemedescriptions", {VehiclePaintScheme: urlObject.PaintScheme}); 
+                p:  function(vehicleSelectArgs) { 
+
+                    var tokens = urlObject.p.split('|');
+
+                    let promise = api.request("vehicle/getpaintschemedescriptions", { VehiclePaintScheme: tokens[0] }); 
 
                     promise.done(r => {
                         if (r.Success && r.Schemes.length > 0) {
                             for(let scheme of r.Schemes) {
-                                if (scheme.SchemeName == urlObject.PaintName) {
+                                if (scheme.SchemeName == tokens[1]) {
                                     vehicleSelectArgs.PaintScheme = scheme;
                                     break;
                                 }
@@ -308,67 +316,78 @@ namespace RideStylerShowcase {
                     });
                     return promise;
                 },
-                WheelModel:  function(vehicleSelectArgs) { 
-                    let promise = api.request("wheel/getmodeldescriptions", {WheelModel: urlObject.WheelModel}); 
+                wm:  function(vehicleSelectArgs) { 
+                    var promise = ridestyler.promise<boolean>();
 
-                    promise.done(r => {
-                        if (r.Success && r.Models.length > 0) {
-                            vehicleSelectArgs.currentWheel = r.Models[0];
+                    // Make our request for our selected model
+                    api.request("wheel/getmodeldescriptions", { WheelModel: urlObject.wm }).done(mr => {
+                        if (mr.Success && mr.Models.length > 0) {
+
+                            var model = mr.Models[0];
+                            vehicleSelectArgs.currentWheel = model;
+                            
+                            // Load our fitments for this model
+                            api.request("wheel/getfitmentdescriptions", { VehicleConfiguration: urlObject.vc, WheelModel: urlObject.wm, IncludePricing: true })
+                                .done(fr => {
+                                    if (fr.Success && fr.Fitments.length > 0) {
+                                        context.loadWheelFitmentDescriptions(model, fr);
+                                        promise.resolve(true);
+                                    } else {
+                                        promise.resolve(false);
+                                    }
+                                });
+
+                        } else {
+                            promise.resolve(false);
                         }
                     });
+
                     return promise;
                 },
-                WheelFitments:  function(vehicleSelectArgs) { 
-                    let promise = api.request("wheel/getfitmentdescriptions", {VehicleConfiguration: urlObject.VehicleConfiguration, WheelModel: urlObject.WheelModel});
-
-                    promise.done(r => {
-                        context.getBestFitment(urlObject, r);
-                    })
-                },
-                WheelFitmentID:  function(vehicleSelectArgs) { 
-                    let promise = api.request("wheel/getfitmentdescriptions", {WheelFitments: urlObject.WheelFitmentID}); 
+                wf:  function(vehicleSelectArgs) { 
+                    let promise = api.request("wheel/getfitmentdescriptions", { WheelFitments: urlObject.wf, IncludePricing: true }); 
                     promise.done(r => {
                        if (r.Success && r.Fitments.length > 0) {
                            vehicleSelectArgs.currentWheelFitment = r.Fitments[0];
                            context.activeWheelDiameterSelect(r);
                        } 
                     });
+
                     return promise;
                 }
             }
-            this.promiseBuilder(urlObject, Descriptions);
-        }    
-
-        //Creates an object with Vehicle details to trigger the "Vehicle Selected" event 
-        private promiseBuilder(urlObject, Descriptions){
+            
             let promArr = [];
 
             // Vehicle selection arguments are built as promArr promises are resolved
             let vehicleSelectArgs:any = {
-                currentSuspension: Number(urlObject.Suspension)
+                currentSuspension: Number(urlObject.s)
             };
 
-            for (let key in Descriptions) {            
-                if (urlObject.hasOwnProperty(key)) {
-                    promArr.push(Descriptions[key](vehicleSelectArgs));
-                    //pushes wheel fitments through to get wheel visualization diameter
-                    if (key == 'WheelModel') promArr.push(Descriptions.WheelFitments(vehicleSelectArgs));
+            for (let key in loadRoutines) {            
+                if (urlObject[key]) {
+                    promArr.push(loadRoutines[key](vehicleSelectArgs));
                 }
             }
 
-            var context = this;
-            PromiseHelper.all(promArr).done(function() {
-                context.events.trigger("vehicle-selected", vehicleSelectArgs);
-            });
-        } 
+            if (promArr.length > 0) {
+                PromiseHelper.all(promArr).done(function() {
+                    context.events.trigger("vehicle-selected", vehicleSelectArgs);
+                });
+            }
+        }    
 
-        //Removes the active class in the 'wheel size' tab
-        //appends it to the proper element and updates the state
+       
+
+        /**
+         * Removes the active class from the diameter options and adds it to the correct element
+         */
         public activeWheelDiameterSelect(results){
             let currentWheelDiameter = !results ? this.state.getData().currentWheelFitment.DiameterMin + '″' : results.Fitments[0].DiameterMin + '″';
+
+            // See if we have a selected size already and remove the active class
             let wheelSizeActive = document.getElementsByClassName('ridestyler-showcase-button-picker-option-active')[0];
-            
-            wheelSizeActive.classList.remove('ridestyler-showcase-button-picker-option-active');                    
+            if (wheelSizeActive) wheelSizeActive.classList.remove('ridestyler-showcase-button-picker-option-active');                    
             
             let wheelSizeList = document.getElementsByClassName('ridestyler-showcase-button-picker-option')
             let currentSize; 
@@ -382,7 +401,10 @@ namespace RideStylerShowcase {
             this.state.extendData({
                 currentWheelFitment: !results ? this.state.getData().currentWheelFitment : results.Fitments[0]
             })
-            currentSize.classList.add('ridestyler-showcase-button-picker-option-active');
+
+            // Make sure we found our new size so we can select it
+            if (currentSize)
+                currentSize.classList.add('ridestyler-showcase-button-picker-option-active');
         }
 
         private updateTabs() {
@@ -467,7 +489,6 @@ namespace RideStylerShowcase {
                 
                 this.tabBar.clearActiveTab();
                 this.onVehicleChanged();
-                this.parameters.set(this.state.getData())
             }
         }
 
@@ -555,7 +576,6 @@ namespace RideStylerShowcase {
                 this.customizationComponents.paint.setOptionIsLoading(true);
                 this.updateViewport({PaintColor: paintScheme.Colors[0].Hex}).always(() => {
                     this.customizationComponents.paint.setOptionIsLoading(false);
-                    this.parameters.set(this.state.getData())
                 })
             };
 
@@ -573,26 +593,14 @@ namespace RideStylerShowcase {
                     IncludePricing: true
                 })
                 .done(response => {
-                    let fitments:ridestyler.Descriptions.WheelFitmentDescriptionModel[] = response.Fitments;
-                    let bestFitment:ridestyler.Descriptions.WheelFitmentDescriptionModel = undefined;
-                    let targetDiameter = this.vehicleTireOption.Front.InsideDiameter;
 
-                    this.fitmentSort(fitments);
+                    var bestFitment = this.loadWheelFitmentDescriptions(model, response);
 
-                    bestFitment = fitments[0];
-
-                    this.state.extendData({
-                        currentWheel: model,
-                        currentWheelFitment: bestFitment
-                    });
-                    this.changeWheelSize.setFitmentOptions(fitments, bestFitment);
-                    this.changeWheelSize.component.style.display = '';
                     this.updateViewport({
                         WheelFitment: bestFitment.WheelFitmentID
                     }).always(() => {
                         this.customizationComponents.wheels.setOptionIsLoading(false);
                     });
-                    this.parameters.set(this.state.getData())
                 })
                 .fail(() => this.customizationComponents.wheels.setOptionIsLoading(false));   
             };
@@ -601,13 +609,11 @@ namespace RideStylerShowcase {
                 this.state.extendData({
                     currentTire: model
                 });
-                this.parameters.set(this.state.getData())
             };
 
             this.customizationComponents.suspension.suspensionChangeCallback = renderUpdate => {
                 this.state.extendData({currentSuspension: renderUpdate.Suspension })
                 this.updateViewport(renderUpdate)
-                this.parameters.set(this.state.getData())
             };
 
             this.setActiveCustomizationComponent(this.customizationComponents[firstCustomizationComponent]);
@@ -634,7 +640,6 @@ namespace RideStylerShowcase {
                 Type: this.imageType
             }).done(() => {
                 this.rotateElement.classList.add('in');
-                 this.parameters.set(this.state.getData());
             })
 
             this.customizationComponentContainer.classList.remove(loadingClass);
@@ -690,26 +695,38 @@ namespace RideStylerShowcase {
             return this.vehicleDescriptionModel.HasAngledImage && this.vehicleDescriptionModel.HasSideImage ;
         }
 
-        //Returns fitments for wheel state
-        private getBestFitment(urlObject, results){        
-            let fitments:ridestyler.Descriptions.WheelFitmentDescriptionModel[] = results.Fitments;
+        /**
+         * Loads the results from a Wheel/GetFitmentDescriptions request and returns the best fitment option
+         * for the returned WheelFitmentDescriptions.
+         * @param model The wheel model used for querying the fitment descriptions
+         * @param fitmentDescriptionResult The response from a Wheel/GetFitmentDescriptions request for the specified model
+         */
+        private loadWheelFitmentDescriptions(model, fitmentDescriptionResult) {
+            let fitments:ridestyler.Descriptions.WheelFitmentDescriptionModel[] = fitmentDescriptionResult.Fitments;
             let bestFitment:ridestyler.Descriptions.WheelFitmentDescriptionModel = undefined;
+
+            // Load our resulting fitments into our wheel model
+            model.WheelFitments = fitments;
             
-            this.fitmentSort(fitments);
-
-            bestFitment = fitments[0];
-
-            this.changeWheelSize.setFitmentOptions(fitments, bestFitment);
-            this.changeWheelSize.component.style.display = '';
-        }
-
-        private fitmentSort(fitments){
+            // Sort our fitments so we are ordered by best fitments first
             fitments.sort(function (a,b) {
                 const aDiff = Math.abs(a.DiameterMin - this.targetDiameter);
                 const bDiff = Math.abs(b.DiameterMin - this.targetDiameter);
                 
                 return aDiff - bDiff;
             });
+
+            bestFitment = fitments[0];
+
+            this.state.extendData({
+                currentWheel: model,
+                currentWheelFitment: bestFitment
+            });
+
+            this.changeWheelSize.setFitmentOptions(fitments, bestFitment);
+            this.changeWheelSize.component.style.display = '';
+
+            return bestFitment;
         }
 
         private showFilters() {
