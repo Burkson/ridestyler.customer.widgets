@@ -487,7 +487,7 @@ function RideStylerVehicleSelectionModal(options) {
                                     };
                                     
                                     if (details.length == 1) {
-                                        var detailString = formatDetail(detail);
+                                        var detailString = formatDetail(details[0]);
 
                                         bestConfiguration.Value = details[0].ConfigurationID;
                                         bestConfiguration.TireOptionBasic = {TireOptionID: details[0].TireOptionID, TireOptionString: detailString};
