@@ -458,55 +458,78 @@ function RideStylerVehicleSelectionModal(options) {
                 action: 'Vehicle/Select',
                 data: request,
                 callback: function (response) {
-                    if (response.Success) {
-                        if (response.BestConfiguration) {
-                            if (options.IncludeOETireOption) {
-                                ridestyler.ajax.send({
-                                    action: 'Vehicle/GetTireOptionDetails',
-                                    data: {'VehicleConfiguration': response.BestConfiguration.Value},
-                                    bestConfiguration: response.BestConfiguration,
-                                    callback: function (detailResponse) {
-                                        if (detailResponse.Success) {
-                                            var details = detailResponse.Details,
-                                            bestConfiguration = this.bestConfiguration;
-                                            if (details.length == 1) {
-                                                var detailString = (function (detail) {
-                                                    var f = detail.Front['Description'], r = detail.Rear['Description'];
-                                                    if (f==r) return f;
-                                                    else return "F: " + f + " R: " + r;
-                                                })(details[0]);
-                                                bestConfiguration.TireOptionBasic = {TireOptionID: details[0]['TireOptionID'], TireOptionString: detailString};
-                                                showSelection(modal, bestConfiguration);
-                                            }
-                                            else {
-                                                var optionMenu = {
-                                                    Groups: null,
-                                                    Description: 'Select Your Tire Size',
-                                                    Title: 'Tire Size',
-                                                    Key: 'tireoption',
-                                                    Options: []
-                                                }
-                                                for (var i = 0; i < details.length; i++) {
-                                                    var detailString = (function (detail) {
-                                                        var f = detail.Front['Description'], r = detail.Rear['Description'];
-                                                        if (f==r) return f;
-                                                        else return "F: " + f + " R: " + r;
-                                                    })(details[i]);
-                                                    optionMenu.Options.push({Group: null, Label: detailString, Value: details[i]['TireOptionID']});
-                                                }
-                                                updateModal(modal, optionMenu, bestConfiguration);
-                                            }
-                                        }
-                                        else showSelection(modal, bestConfiguration);
-                                    }
-                                });
+                    if (!response.Success) return;
+
+                    if (response.FinalTrims) {
+                        if (options.IncludeOETireOption) {
+                            var configurationIDs = [];
+                            var bestConfiguration = response.BestConfiguration;
+
+                            for (var i = response.TrimOptions.Options.length - 1; i >= 0; i--) {
+                                var option = response.TrimOptions.Options[i];
+                                configurationIDs.push(option.Value);
                             }
-                            else
-                                showSelection(modal, response.BestConfiguration);
+                            
+                            ridestyler.ajax.send({
+                                action: 'Vehicle/GetTireOptionDetails',
+                                data: {'VehicleConfigurations': configurationIDs},
+                                callback: function (detailResponse) {
+                                    if (!detailResponse.Success) {
+                                        showSelection(modal, bestConfiguration);
+                                        return;
+                                    }
+                                    
+                                    var details = detailResponse.Details;
+                                    var formatDetail = function (detail) {
+                                        var f = detail.Front['Description'], r = detail.Rear['Description'];
+                                        if (f==r) return f;
+                                        else return "F: " + f + " R: " + r;
+                                    };
+                                    
+                                    if (details.length == 1) {
+                                        var detailString = formatDetail(detail);
+
+                                        bestConfiguration.Value = details[0].ConfigurationID;
+                                        bestConfiguration.TireOptionBasic = {TireOptionID: details[0].TireOptionID, TireOptionString: detailString};
+
+                                        showSelection(modal, bestConfiguration);
+                                    }
+                                    else {
+                                        var optionMenu = {
+                                            Groups: null,
+                                            Description: 'Select Your Tire Size',
+                                            Title: 'Tire Size',
+                                            Key: 'tireoption',
+                                            Options: []
+                                        }
+
+                                        var tireOptionIDToVehicleConfigurationIDLookup = {};
+
+                                        for (var i = 0; i < details.length; i++) {
+                                            var detailString = formatDetail(details[i]);
+
+                                            tireOptionIDToVehicleConfigurationIDLookup[details[i].TireOptionID] = details[i].ConfigurationID;
+
+                                            optionMenu.Options.push({
+                                                Group: null,
+                                                Label: detailString,
+                                                Value: details[i].TireOptionID
+                                            });
+                                        }
+
+                                        updateModal(modal, optionMenu, bestConfiguration, function(option) {
+                                            bestConfiguration.Value = tireOptionIDToVehicleConfigurationIDLookup[option.value];
+                                            return option;
+                                        });
+                                    }
+                                }
+                            });
                         }
-                        else {
-                            updateModal(modal, response.Menu);
-                        }
+                        else
+                            showSelection(modal, response.BestConfiguration);
+                    }
+                    else {
+                        updateModal(modal, response.Menu);
                     }
                 }
             });
@@ -519,7 +542,7 @@ function RideStylerVehicleSelectionModal(options) {
      * @param  {Object} menu - Menu object to pass in for modal content update
      * @return void
      */
-    function updateModal(modal, menu, bestConfiguration) {
+    function updateModal(modal, menu, bestConfiguration, listOptionSelectionTransform) {
         var itemListContainer = modal.querySelectorAll('.vsm-list-container')[0],
         headerElement = modal.querySelectorAll('.vsm-header')[0],
         bodyElement = modal.querySelectorAll('.vsm-modal-body')[0],
@@ -531,12 +554,19 @@ function RideStylerVehicleSelectionModal(options) {
         menuGroups = menu.Groups;
 
         var onListItemSelected = function(o) {
-            var optionValue = o.getAttribute('data-optionvalue');
-            var optionKey = o.getAttribute('data-optionkey');
-            var optionLabel = o.getAttribute('data-optionlabel');
-            var optionTitle = o.getAttribute('data-menutitle');
-            dataArray.push(optionKey + ':' + optionValue);
-            infoArray.push(optionTitle + ':' + optionLabel);
+            var option = {
+                value: o.getAttribute('data-optionvalue'),
+                key: o.getAttribute('data-optionkey'),
+                label: o.getAttribute('data-optionlabel'),
+                title: o.getAttribute('data-menutitle')
+            };
+
+            if (typeof listOptionSelectionTransform === 'function') {
+                option = listOptionSelectionTransform(option);
+            }
+
+            dataArray.push(option.key + ':' + option.value);
+            infoArray.push(option.title + ':' + option.label);
 
             if (options.afterOptionSelected && typeof options.afterOptionSelected == 'function') {
                 var infoBaseObj = {};
@@ -554,28 +584,25 @@ function RideStylerVehicleSelectionModal(options) {
                     FullSelectionData: dataArray
                 }
 
-                outInfoObj.CurrentSelection[optionTitle] = optionLabel;
+                outInfoObj.CurrentSelection[option.title] = option.label;
 
                 options.afterOptionSelected(outInfoObj);
             }
 
-            if (!disCountinued) {
-                var transitionOption = {};
-                if (optionKey == 'tireoption' && bestConfiguration) {
-                    bestConfiguration.TireOptionBasic = {
-                        TireOptionID: optionValue,
-                        TireOptionString: optionLabel
-                    };
-                    transitionOption.bestConfiguration = bestConfiguration;
-                }
-                transitionToModal(
-                    base(requestStep, transitionOption, modal),
-                    modal
-                );
+            if (disCountinued) return;
+
+            var transitionOption = {};
+            if (option.key == 'tireoption' && bestConfiguration) {
+                bestConfiguration.TireOptionBasic = {
+                    TireOptionID: option.value,
+                    TireOptionString: option.label
+                };
+                transitionOption.bestConfiguration = bestConfiguration;
             }
-            else {
-                return;
-            }
+            transitionToModal(
+                base(requestStep, transitionOption, modal),
+                modal
+            );
         },
         buildListItem = function(optObj) {
             var optionLabel = optObj.Label,
