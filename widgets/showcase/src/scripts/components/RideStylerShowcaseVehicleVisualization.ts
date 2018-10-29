@@ -692,7 +692,20 @@ namespace RideStylerShowcase {
         }
 
         private canSwitchAngle():boolean {
-            return this.vehicleDescriptionModel.HasAngledImage && this.vehicleDescriptionModel.HasSideImage ;
+            var side = ridestyler.DataObjects.VehicleResourceType.Side;
+            var currentWheel = this.state.getData().currentWheel;
+            
+            if (this.imageType === side) {
+                if (!this.vehicleDescriptionModel.HasAngledImage) return false;
+                if (currentWheel && !currentWheel.HasAngleImage) return false;
+
+                return true;
+            } else {
+                if (!this.vehicleDescriptionModel.HasSideImage) return false;
+                if (currentWheel && !currentWheel.HasSideImage) return false;
+
+                return true;
+            }
         }
 
         /**
@@ -752,7 +765,7 @@ namespace RideStylerShowcase {
 
         //Chnages angled view of vehicle
         private switchAngle() {
-            if (!this.canSwitchAngle() || this.state.getData().currentWheel.HasSideImage === false) return;
+            if (!this.canSwitchAngle()) return;
 
             if (this.imageType === ridestyler.DataObjects.VehicleResourceType.Angle) {
 

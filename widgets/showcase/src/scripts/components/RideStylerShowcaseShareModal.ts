@@ -126,11 +126,25 @@ namespace RideStylerShowcase {
 
 
         private canSwitchAngle():boolean {
+            let side = ridestyler.DataObjects.VehicleResourceType.Side;
+            
             let {
-                currentVehicleDescriptionModel
+                currentVehicleDescriptionModel,
+                currentWheel
             } = this.state.getData();
 
-            return currentVehicleDescriptionModel.HasAngledImage && currentVehicleDescriptionModel.HasSideImage;
+            
+            if (this.imageType === side) {
+                if (!currentVehicleDescriptionModel.HasAngledImage) return false;
+                if (currentWheel && !currentWheel.HasAngleImage) return false;
+
+                return true;
+            } else {
+                if (!currentVehicleDescriptionModel.HasSideImage) return false;
+                if (currentWheel && !currentWheel.HasSideImage) return false;
+
+                return true;
+            }
         }
 
         private onInstructionsChanged() {
