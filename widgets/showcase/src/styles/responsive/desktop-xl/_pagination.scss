@@ -1,43 +1,36 @@
 .ridestyler-showcase-pagination {
-	margin-top: 4em;
-	height: 75%;
-
-  &-next, &-prev {
- 		top: 70px;
-  }
-
-  &-option {
-          &-loader {
+    margin-top: 4em;
+    height: 75%;
+    &-next,
+    &-prev {
+        top: 70px;
+    }
+    &-option {
+        &-loader {
             background: url(images/spinner.gif) no-repeat top center;
             background-size: 50%;
             margin-bottom: 5%;
             min-width: 50px;
             min-height: 50px;
-          }
-
-  	&:only-child {
-  		margin-bottom: 10%;
-  		margin-left: 45%;
-  	}
-      &-loading:after {
-          content: "";
-          
-          line-height: 0.3em;
-          font-size: 2em;
-          @include crispImageRendering;
-          @include rotate;
-          
-          position: absolute;
-
-          background-image: url('images/tire-loading.png');
-          background-size: 100%;
-          
-          $size: 25px;
-
-          width: $size ;
-          height: $size ;
-          margin-left: -$size/2;
-          margin-top: -$size/20;
-      }
-  }
+        }
+        &:only-child {
+            margin-bottom: 10%;
+            margin-left: 45%;
+        }
+        &-loading:after {
+            content: "";
+            line-height: 0.3em;
+            font-size: 2em;
+            @include crispImageRendering;
+            @include rotate;
+            position: absolute;
+            background-image: url('images/tire-loading.png');
+            background-size: 100%;
+            $size: 25px;
+            width: $size;
+            height: $size;
+            margin-left: -$size/2;
+            margin-top: -$size/20;
+        }
+    }
 }

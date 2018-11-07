@@ -3,6 +3,23 @@
 @include responsiveTabBar($tabBarWidth: 100px, $iconFontSize: 0.9em, $iconTextFontSize: 1.9em);
 
 
+.ridestyler-showcase-pagination-option {
+  font-size: 0.75em;
+  margin-bottom: 0;
+
+  $displaySize: 100px;
+
+  &-display {
+      width: $displaySize;
+      height: $displaySize;
+  }
+
+  &-loader {
+      min-width: $displaySize;
+      height: $displaySize;
+  }
+}
+
 .ridestyler-showcase-viewport {
     bottom: 24%;
     right: 15%;

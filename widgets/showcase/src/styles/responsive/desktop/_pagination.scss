@@ -2,31 +2,31 @@
 	height: 75%;
 	margin-top: 3em;
 
-	  &-option {
-	  			&-loading:after {
-	  			    content: "";
-	  			    
-	  			    line-height: 0.3em;
-	  			    font-size: 2em;
-	  			    @include crispImageRendering;
-	  			    @include rotate;
-	  			    
-	  			    position: absolute;
+	&-option {
+		&-loading:after {
+			content: "";
 
-	  			    background-image: url('images/tire-loading.png');
-	  			    background-size: 100%;
-	  	       
-	  			    $size: 25px;
+			line-height: 0.3em;
+			font-size: 2em;
+			@include crispImageRendering;
+			@include rotate;
 
-	  			    width: $size ;
-	  			    height: $size ;
-	  			    margin-left: -$size/2;
-	  	       margin-top: -$size/20;
-	  			}
+			position: absolute;
 
-	  	&:only-child {
-	  		margin-bottom: 7%;
-	  		margin-left: 37%;
-	  	}
+			background-image: url('images/tire-loading.png');
+			background-size: 100%;
+
+			$size: 25px;
+
+			width: $size ;
+			height: $size ;
+			margin-left: -$size/2;
+			margin-top: -$size/20;
 		}
+
+		&:only-child {
+			margin-bottom: 7%;
+			margin-left: 37%;
+		}
+	}
 }
