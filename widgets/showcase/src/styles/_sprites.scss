@@ -62,6 +62,10 @@
 	@if $filename == qr {
 		$char: "\";
 	}
+	
+	@if $filename == envelope-solid {
+		$char: "\";
+	}
 
 	@return $char;
 }

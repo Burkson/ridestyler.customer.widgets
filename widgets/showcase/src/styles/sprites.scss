@@ -44,4 +44,7 @@
 }
 .ridestyler-showcase-icon-qr {
 	@include ridestyler-showcase-icon(qr);
+}
+.ridestyler-showcase-icon-envelope-solid {
+	@include ridestyler-showcase-icon(envelope-solid);
 }
