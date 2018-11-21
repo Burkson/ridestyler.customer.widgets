@@ -10,6 +10,11 @@ namespace RideStylerShowcase.share {
         protected currentURL:string;
 
         /**
+         * The currently rendered vehicle instructions
+         */
+        protected currentInstructions:ridestyler.Requests.VehicleRenderInstructions;
+
+        /**
          * The tags to attach to the message
          */
         protected tags:string[];
@@ -52,6 +57,14 @@ namespace RideStylerShowcase.share {
          */
         public setMessage(message:string) {
             this.message = message;
+        }
+
+        /**
+         * Set the current instructions to share
+         * @param instructions The instructions to set
+         */
+        public setInstructions(instructions: ridestyler.Requests.VehicleRenderInstructions) {
+            this.currentInstructions = instructions;
         }
 
         /**
@@ -190,6 +203,88 @@ namespace RideStylerShowcase.share {
             url += facebookDialogParameters.join('&');
 
             this.openNewWindow(url);
+        }
+    }
+
+    export class EmailShareButton extends ShareButton {
+        private popover:RideStylerShowcasePopover;
+
+        constructor() {
+            super({
+                className: buttonClass + '-email'
+            });
+
+            this.popover = new RideStylerShowcasePopover();
+            this.component.appendChild(this.popover.component);
+
+            this.buildPopover();
+        }
+
+        private buildPopover() {
+            const form:HTMLFormElement = HTMLHelper.createElement('form', {
+                appendTo: this.popover.component
+            });
+
+            const emailInput:HTMLInputElement = HTMLHelper.createElement('input', {
+                properties: {
+                    type: 'email',
+                    placeholder: 'Enter your email'
+                },
+                appendTo: form
+            });
+
+            const submitButton:HTMLButtonElement = HTMLHelper.createButton({
+                text: 'Send',
+                properties: {
+                    type: 'submit'
+                },
+                appendTo: form
+            });
+
+            this.popover.component.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const submittedEmail = emailInput.value;
+
+                if (!submittedEmail || submitButton.disabled) return;
+
+                submitButton.disabled = true;
+
+                const request = ObjectHelper.assign<ridestyler.Requests.ShareVehicleRequest>({
+                    Mode: "Email",
+                    To: submittedEmail
+                }, this.currentInstructions);
+                
+                api.request("share/vehicle", request)
+                    .done(function () {
+                        emailInput.value = '';
+
+                        submitButton.style.backgroundColor = 'rgb(0,180,0)';
+                        submitButton.style.borderColor = 'rgb(0,100,0)';
+                        HTMLHelper.setText(submitButton, "Sent!");
+                    })
+                    .fail(function () {
+                        submitButton.style.backgroundColor = 'rgb(180,0,0)';
+                        submitButton.style.borderColor = 'rgb(100,0,0)';
+                        HTMLHelper.setText(submitButton, "Error");
+                    })
+                    .always(function () {
+                        submitButton.disabled = false;
+
+                        setTimeout(function () {
+                            submitButton.style.backgroundColor = submitButton.style.borderColor = '';
+                            HTMLHelper.setText(submitButton, "Send");
+                        }, 5000);
+                    })
+            });
+        }
+
+        public onClick() {
+            this.popover.toggle();
         }
     }
 

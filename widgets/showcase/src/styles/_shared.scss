@@ -49,3 +49,10 @@ img {
     -webkit-user-select: none;
     -ms-user-select: none;
 }
+
+input {
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 0.5em 1em;
+}

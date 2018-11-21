@@ -2,6 +2,14 @@
 @import "../shared";
 
 .ridestyler-showcase .ridestyler-showcase-share-button {
+    .ridestyler-showcase-popover {
+        pointer-events: none;
+
+        &.in {
+            pointer-events: all;
+        }
+    }
+
     &-facebook {
         background-color: #3c569a;
         border: 1px solid #2e4275;
@@ -48,5 +56,28 @@
     
     &-link {
         @include ridestyler-showcase-icon('external-link', after);
+    }
+
+    &-email {
+        display: flex;
+        justify-content: center;
+        position: relative;
+
+        .ridestyler-showcase-popover {
+            width: 280px;
+            top: 120%;
+            z-index: $zLayer1 + 1;
+        }
+
+        input {
+            width: 100%;
+        }
+
+        button {
+            margin-top: 1em;
+            padding: 0.5em 1em;
+        }
+
+        @include ridestyler-showcase-icon('envelope-solid', after);
     }
 }

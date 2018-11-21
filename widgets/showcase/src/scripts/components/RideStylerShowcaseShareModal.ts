@@ -60,9 +60,9 @@ namespace RideStylerShowcase {
         private createShareButtons() {
             this.shareButtons = [
                 new share.FacebookShareButton(),
-                new share.TwitterShareButton(),
                 new share.QRShareButton(),
-                new share.NewWindowShareButton()
+                new share.EmailShareButton(),
+                new share.TwitterShareButton()
             ];
 
             const shareButtonContainer = HTMLHelper.createElement({
@@ -102,7 +102,7 @@ namespace RideStylerShowcase {
             const shareParams = ridestyler.utils.toParamString(
                 ObjectHelper.assign(
                     ridestyler.auth.authenticateData(null),
-                    this.vehicleRenderInstructions
+                    ObjectHelper.removeUndefinedKeys(this.vehicleRenderInstructions)
                 )
             );
 
@@ -148,14 +148,16 @@ namespace RideStylerShowcase {
         }
 
         private onInstructionsChanged() {
-            const shareURL = this.getShareURL();
-
             this.setEnabled(false);
 
-            api.request("link/create", {
-                URL: this.getShareURL()
-            }).done(response => {
-                this.updateURL(response.ShortURL);
+            const instructions = ObjectHelper.removeUndefinedKeys(this.vehicleRenderInstructions);
+
+            for (const shareButton of this.shareButtons) {
+                shareButton.setInstructions(instructions);
+            }
+
+            api.request("share/vehicle", instructions).done(response => {
+                this.updateURL(response.Url);
                 this.setEnabled(true);
             });
         }

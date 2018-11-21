@@ -24,8 +24,24 @@ namespace RideStylerShowcase {
             return to;
         }
 
+        /**
+         * Creates a shallow copy of an object
+         * @param target The object to copy
+         */
         export function copy<T>(target:T):T {
             return assign({}, target);
+        }
+
+        /**
+         * Removes any keys in the target object that are undefined
+         * @param target The object to remove keys from
+         */
+        export function removeUndefinedKeys<T>(target:T):T {
+            for (const key in target)
+                if (target.hasOwnProperty(key) && typeof target[key] === 'undefined')
+                    delete target[key];
+
+            return target;
         }
 
         /**
