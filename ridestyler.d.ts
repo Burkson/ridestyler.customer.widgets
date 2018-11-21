@@ -790,6 +790,10 @@ declare namespace ridestyler {
             ShortURL: string
         }
 
+        interface ShareResultModel extends RideStylerAPIResponse {
+            Url: string;
+        }
+
         interface SettingsResultModel extends RideStylerAPIResponse{
             Settings: {
                 [key: string]: string;
@@ -1284,6 +1288,11 @@ declare namespace ridestyler {
         interface OrganizationSettingsRequestModel extends OrganizationFilterModel {
             Keys: string[];
         }
+
+        interface ShareVehicleRequest extends VehicleRenderInstructions {
+            Mode?: "Link"|"Email";
+            To?: string;
+        }
     }
     
     interface RidestylerAPIActionResponseMapping {
@@ -1291,6 +1300,8 @@ declare namespace ridestyler {
         "auth/start": Responses.RideStylerAuthStartResponse,
         
         "link/create": Responses.LinkCreateResponse,
+
+        "share/vehicle": Responses.ShareResultModel,
 
         "organization/image": never,
         "organization/getsettings": Responses.SettingsResultModel,
@@ -1331,6 +1342,8 @@ declare namespace ridestyler {
         "auth/start": { Username:string; Password:string; },
 
         "link/create": { URL: string },
+
+        "share/vehicle": Requests.ShareVehicleRequest,
 
         "organization/image": { AssetKey:string, Organization?:number },
         "organization/getsettings": Requests.OrganizationSettingsRequestModel,
