@@ -9,15 +9,29 @@
 
 
 .ridestyler-showcase-viewport {
-    bottom: 35%;
-}
-
-
-.ridestyler-showcase-viewport {
-    bottom: 32%;
+    bottom: 40%;
     right: 15%;
     height: 45%;
     margin-bottom: 20px;
     pointer-events: none;
     z-index: $zLayer1;
+}
+
+
+.ridestyler-showcase-change-wheel-size, .ridestyler-showcase-customization-component-title-container {
+    bottom: auto;
+    top: 20%;
+}
+
+.ridestyler-showcase-pagination-option {
+    min-width: 13em;
+}
+
+.ridestyler-showcase-pagination-option-display {
+    $size: 115px;
+
+    width: $size;
+    height: $size;
+
+    border-radius: $size/2;
 }

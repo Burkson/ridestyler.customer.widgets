@@ -26,17 +26,3 @@
         }
     }
 }
-
-// Prevents image from overlapping text while allowing fullscreen selection for mobile landscape - iPhone 5 / iPhone X
-@media only screen and (max-width: 411px) {
-   .ridestyler-showcase-pagination {
-       &-wrapper {
-        justify-content: flex-start;
-       }
-       &-option {
-        margin-right: 1.25em;
-        min-width: 9em;
-       }
-   }
-}
-

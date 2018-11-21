@@ -25,6 +25,7 @@
     margin-bottom: 10px;
     pointer-events: none;
     z-index: $zLayer3;
+    bottom: 40%;
 }
 
 .ridestyler-showcase-suspension-selector-element {
@@ -51,6 +52,8 @@
 
 .ridestyler-showcase-change-wheel-size, .ridestyler-showcase-customization-component-title-container {
     margin-bottom: 10px;
+    bottom: auto;
+    top: 20%;
 }
 
 .ridestyler-showcase-rotate-vehicle {
@@ -113,4 +116,17 @@
 
 .ridestyler-showcase-vehicle-details-vehicle-details {
     width: auto;
+}
+
+.ridestyler-showcase-pagination-option {
+    min-width: 12em;
+}
+
+.ridestyler-showcase-pagination-option-display {
+    $size: 75px;
+
+    width: $size;
+    height: $size;
+
+    border-radius: $size/2;
 }

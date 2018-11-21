@@ -2,6 +2,10 @@
 @import "../../modals";
 
 .ridestyler-showcase-share {
+    .ridestyler-showcase-viewport {
+        bottom: 15%;
+    }
+
     .ridestyler-showcase-share-button {
         width: 5em;
         height: 4em;
@@ -16,9 +20,5 @@
                 margin: 0;
             }
         }
-    }
-    img {
-        margin-top: 7.25em;
-        margin-left: -2.5em;
     }
 }
