@@ -103,6 +103,7 @@ var rsqv = function() {
                                     // Group our search results together based on unique images
                                     var group = {};
                                     // Make sure we are only taking the best matches since we are loose with our initial filtering
+                                    var bestMatch = 0;
                                     for(var x = descriptions.length - 1; x >= 0; x--) {
                                         var desc = descriptions[x];
                                         group[desc.SideImage + '_' + desc.AngledImage] = desc;
