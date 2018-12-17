@@ -13,5 +13,6 @@ declare class RideStylerViewport {
 
     public Update(instructions:ridestyler.Requests.VehicleRenderInstructions): RideStylerPromise;
     public Reset(): void;
+    public ResizeRenderArea(): void;
 }
 
