@@ -46,6 +46,11 @@ namespace RideStylerShowcase {
         public state:state.RideStylerShowcaseState;
 
         /**
+         * Theme information used to customize the interface
+         */
+        public theme:object;
+
+        /**
          * The style manager
          */
         public style:styles.StyleManager;
@@ -105,15 +110,38 @@ namespace RideStylerShowcase {
                     console.log(`[RideStylerShowcase Event] Name: ${name} Data:`, e, handlers);
                 };
 
-            if (container) {
-                if (typeof container === 'string') {
-                    container = document.getElementById(container);
+            let instance = this;
+            ridestyler.ajax.send({
+                action: 'client/gettheme',
+                data: null,
+                callback: function(response) {
+                    console.log(response);
+                    if (response.Success) {
+                        var theme = this.theme = response.Theme;
 
-                    if (!container) console.error('The ID "' + container + '" could not be found in the DOM.');
+                        strings.registerLanguageOverrides(theme.Content);
+
+                        // Do we need to create a custom style block?
+                        if (theme.CustomCSS || theme.GeneratedCSS) {
+                            let styleBlock = document.createElement('style');
+                            if (theme.CustomCSS) styleBlock.innerHTML += theme.CustomCSS;
+                            if (theme.GeneratedCSS) styleBlock.innerHTML += theme.GeneratedCSS;
+
+                            document.getElementsByTagName('head')[0].appendChild(styleBlock);
+                        }
+                    }
+
+                    if (container) {
+                        if (typeof container === 'string') {
+                            container = document.getElementById(container);
+        
+                            if (!container) console.error('The ID "' + container + '" could not be found in the DOM.');
+                        }
+        
+                        instance.initialize(container);
+                    }
                 }
-
-                this.initialize(container);
-            }
+            });
         }
 
         /**
@@ -149,6 +177,7 @@ namespace RideStylerShowcase {
             this.container = ObjectHelper.assign(container, {
                 ridestylerShowcase: this
             });
+            
             this.initializeParameters();
 
             this.initializeState();

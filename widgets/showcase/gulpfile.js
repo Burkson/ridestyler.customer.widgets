@@ -26,7 +26,7 @@ var through = require('through2'); // https://github.com/rvagg/through2
 /**
  * If true, dev mode is enabled, skip minification and output sourcemaps
  */
-var dev = true;
+var dev = false;
 
 var runTimestamp = Math.round(Date.now()/1000);
 

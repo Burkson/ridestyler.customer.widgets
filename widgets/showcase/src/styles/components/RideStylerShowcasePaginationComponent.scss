@@ -3,11 +3,6 @@
 
 .ridestyler-showcase-pagination {
     &-wrapper {
-        cursor: default;
-        display: flex;
-        align-items: center;
-        text-align: center;
-        justify-content: space-around;
         width: 100%;
 
         white-space: nowrap;
@@ -30,18 +25,6 @@
         vertical-align: top;
 
         margin-bottom: 2em;
-
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-
-        &-no-results {
-            position: relative;
-            min-width: 100%;
-            margin-left: 16.5em;
-            top: 3em;
-        }
 
         &-display {
             margin: 5px auto;
@@ -85,40 +68,46 @@
             width: 8px;
             text-align: center;
             margin-left: -4px;
-            margin-top: 0.2em;
+            margin-top: 0.4em;
         }
 
         &-loading:after {
             content: "";
-            
+
             line-height: 0.3em;
             font-size: 2em;
+
             @include crispImageRendering;
             @include rotate;
             
             position: absolute;
+            left: 50%;
+            top: 105%;
 
             background-image: url('images/tire-loading.png');
             background-size: 100%;
 
-            $size: 0.4em;
+            $size: 0.9em;
 
             width: $size;
             height: $size;
             margin-left: -$size/2;
+            
         }
 
         &-loader {
             background: url(images/spinner.gif) no-repeat top center;
             background-size: 100%;
-            max-width: 50px;
-            max-height: 50px;
+            min-width: 50px;
+            height: 50px;
         }
     }
 
     .ridestyler-showcase-pagination-option.ridestyler-showcase-pagination-option-no-results {
         text-align: center;
         color: white;
+        max-width: 100%;
+        width: 100%;
         line-height: 200px;
         font-size: 1em;
     }

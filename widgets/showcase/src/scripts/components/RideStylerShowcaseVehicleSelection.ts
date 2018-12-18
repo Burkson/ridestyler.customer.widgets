@@ -58,14 +58,22 @@ namespace RideStylerShowcase {
                 ];
             }
 
-            let visualizeString = HTMLHelper.createElement('h1', {
-                append: emboldenFirstWord(strings.getString("vehicle-select-visualize-intro")),
-                appendTo: this.contentContainer
-            });
-            let shareString = HTMLHelper.createElement('h1', {
-                append: emboldenFirstWord(strings.getString("vehicle-select-share-intro")),
-                appendTo: this.contentContainer
-            });
+            let customIntro = strings.getString("visualizer-custom-intro");
+            if (customIntro == "visualizer-custom-intro") {
+                let visualizeString = HTMLHelper.createElement('h1', {
+                    append: emboldenFirstWord(strings.getString("vehicle-select-visualize-intro")),
+                    appendTo: this.contentContainer
+                });
+                let shareString = HTMLHelper.createElement('h1', {
+                    append: emboldenFirstWord(strings.getString("vehicle-select-share-intro")),
+                    appendTo: this.contentContainer
+                });
+            } else {
+                let customIntroEle = document.createElement('div');
+                customIntroEle.innerHTML = customIntro;
+
+                this.contentContainer.appendChild(customIntroEle);
+            }
         }
 
         private onAuthenticated() {

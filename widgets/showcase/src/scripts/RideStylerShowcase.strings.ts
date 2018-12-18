@@ -3,6 +3,7 @@ namespace RideStylerShowcase {
      * A list of all of our acceptable string keys
      */
     export type StringKeys = 
+        "visualizer-custom-intro" |
         "vehicle-select-visualize-intro" |
         "vehicle-select-share-intro" |
         "select-your-vehicle" |
@@ -101,12 +102,25 @@ namespace RideStylerShowcase {
         }
 
         /**
+         * Overrides keys in the current language pack based on a dictionary
+         * of key/values
+         * @param data The key/value lookup
+         */
+        setOverrides(data:object) {
+            for(var n in data) {
+                this.language[n] = data[n];
+            }
+        }
+
+        /**
          * Get a key from the language dictionary
          * @param key The string key
          */
         getString(key:StringKeys):string {
             return this.language[key];
         }
+
+
     }
 
     /**
@@ -139,6 +153,11 @@ namespace RideStylerShowcase {
             let languageRegister = languageRegisters[languageKey] = new LanguageRegister(language);
 
             if (setAsDefault || !defaultLanguage) defaultLanguage = languageRegister;
+        }
+
+        export function registerLanguageOverrides(data:object, languageKey?:LanguageKeys) {
+            let languageRegister:LanguageRegister = getLanguage(languageKey);
+            languageRegister.setOverrides(data);
         }
 
         /**

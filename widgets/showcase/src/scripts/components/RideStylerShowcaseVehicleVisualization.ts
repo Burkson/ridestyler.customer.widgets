@@ -110,6 +110,8 @@ namespace RideStylerShowcase {
             // the offset positioning of the viewport element when created and our CSS
             // isn't guaranteed to be loaded until the initialized event
 
+            container.classList.add('ridestyler-showcase-screen-visualizer');
+
             this.state.afterDataChange(newData => {
                 this.parameters.set(newData);
             })
@@ -154,6 +156,10 @@ namespace RideStylerShowcase {
                 this.state.extendData({
                     currentWheelFitment: newOption
                 });
+
+                // Update our target diameter for future selections
+                this.targetDiameter = newOption.DiameterMin;
+
                 this.updateViewport({
                     WheelFitment: newOption.WheelFitmentID
                 });
@@ -528,6 +534,7 @@ namespace RideStylerShowcase {
                     }
                 }
 
+                this.targetDiameter = vehicleTireOption.Front.InsideDiameter;
                 this.vehicleTireOption = vehicleTireOption;
 
                 this.state.extendData({
@@ -722,9 +729,10 @@ namespace RideStylerShowcase {
             model.WheelFitments = fitments;
             
             // Sort our fitments so we are ordered by best fitments first
-            fitments.sort(function (a,b) {
-                const aDiff = Math.abs(a.DiameterMin - this.targetDiameter);
-                const bDiff = Math.abs(b.DiameterMin - this.targetDiameter);
+            let targetDiameter = this.targetDiameter;
+            fitments.sort(function (a, b) {
+                let aDiff = Math.abs(a.DiameterMin - targetDiameter);
+                let bDiff = Math.abs(b.DiameterMin - targetDiameter);
                 
                 return aDiff - bDiff;
             });
