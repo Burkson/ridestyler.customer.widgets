@@ -227,6 +227,7 @@ function RideStylerViewport(elem, options) {
 
             // Create a new image element for the current render result
             var img = document.createElement('img');
+            img.className = 'rsvr-vehicle';
             img.style.position = 'absolute';
             img.style.left = 0;
             img.style.top = 0;
@@ -277,6 +278,7 @@ function RideStylerViewport(elem, options) {
         loader.src = '//static.ridestyler.net/images/loaders/loader_radial_chaser_back_on_white_32.gif';
 
         // Setup style of the element
+        loader.className = 'rsvr-loader';
         loader.style.padding = '5px';
         loader.style.borderRadius = '21px';
         loader.style.background = '#fff';

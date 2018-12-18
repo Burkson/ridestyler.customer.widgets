@@ -27,6 +27,49 @@ declare namespace ridestyler {
             Angle = 2
         }
 
+        const enum VehicleSearchOptions
+        {
+            None = 0,
+    
+            /// <summary>
+            /// Requires that all tokens in the search string are matched when locating the vehicle configurations
+            /// </summary>
+            ExactMatch = 1,
+    
+            /// <summary>
+            /// Indicates that we prefer to sort results with images above those we feel might be a more accurate
+            /// vehicle for the search being performed.
+            /// </summary>
+            PreferImagesOverAccuracy = 2,
+    
+            /// <summary>
+            /// Requires that we match a known make during the search otherwise we won't return any results.
+            /// </summary>
+            RequireMakeMatch = 4,
+    
+            /// <summary>
+            /// Require that we can match a RideStyler model before proceeding to matching configurations. Otherwise, we will not return
+            /// any results for the request.
+            /// </summary>
+            RequireModelMatch = 8,
+    
+            /// <summary>
+            /// If we end up with a list of configurations and none of them have a score (we used all the tokens on initial matching or none of them match the tokens we have left)
+            /// then we just pick a random result and return it as the only search result
+            /// </summary>
+            AllowConfigurationGuessing = 16,
+    
+            /// <summary>
+            /// Limit our configuration guess to only include a single result instead of all configurations for the matched model
+            /// </summary>
+            LimitConfigurationsToSingleGuess = 32,
+    
+            /// <summary>
+            /// Limits result to only return a single record for each unique image set
+            /// </summary>
+            CombineResultsByImage = 64
+        }
+
         const enum WheelBrandFlags
         {
             None = 0,
@@ -738,6 +781,18 @@ declare namespace ridestyler {
             Resources: DataObjects.WheelFitmentResourceDataObject[];
         }
 
+        interface WheelCanBeRenderedResultModel extends RideStylerAPIResponse {
+            Result: {
+                [partNumber: string]: boolean
+            },
+            PossibleTypes: {
+                [partNumber: string]: {
+                    Angled: boolean;
+                    Side: boolean;
+                }
+            }
+        }
+
         interface VehicleDescriptionResultModel extends RideStylerAPIResponse {
             Descriptions: Descriptions.VehicleDescriptionModel[];
         }
@@ -811,7 +866,9 @@ declare namespace ridestyler {
             Search?:string;
             Start?:number;
             Count?:number;
-            Sort?:{[key:string]:OrderDirection}
+            Sort?:{[key:string]:OrderDirection},
+            NoCache?:boolean;
+            SortRandom?:boolean;
         }
 
         interface FitmentFilterModel {
@@ -1066,6 +1123,15 @@ declare namespace ridestyler {
             PricingGroupName?: string;
         }
 
+        interface WheelCanBeRenderedRequestModel {
+            PartNumbers?: string[];
+            ItemNumbers?: string[];
+            Type?: ridestyler.DataObjects.VehicleResourceType;
+            VehicleConfiguration?: string;
+            ExcludeDiscontinuedWheels?: boolean;
+            PricingGroupID?: string;
+        }
+
         interface VehicleFilterModel extends ActionRequestPagedModel {
             HasImage?: boolean;
             HasSideImage?: boolean;
@@ -1082,6 +1148,8 @@ declare namespace ridestyler {
             YearMin?: number;
             YearMax?: number;
             Years?: number[];
+
+            SearchOptions?: DataObjects.VehicleSearchOptions|number;
         }
 
         interface VehicleReferenceFilterModel extends ActionRequestPagedModel {
@@ -1335,6 +1403,7 @@ declare namespace ridestyler {
         "wheel/getfitments": Responses.WheelFitmentResultModel,
         "wheel/getfitmentdescriptions": Responses.WheelFitmentDescriptionResultModel,
         "wheel/getfitmentresources": Responses.WheelFitmentResourcesResultModel,
+        "wheel/canberendered": Responses.WheelCanBeRenderedResultModel,
         "wheel/image": never
     }
     interface RidestylerAPIActionRequestMapping {
@@ -1377,6 +1446,7 @@ declare namespace ridestyler {
         "wheel/getfitments": Requests.WheelFilterModel,
         "wheel/getfitmentdescriptions": Requests.WheelFitmentDescriptionRequestModel,
         "wheel/getfitmentresources": Requests.WheelFilterModel,
+        "wheel/canberendered": Requests.WheelCanBeRenderedRequestModel,
         "wheel/image": Requests.WheelRenderInstructions
     }
 
