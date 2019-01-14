@@ -19,6 +19,11 @@ declare namespace RideStylerVehicleSelectionModal {
         ConfirmButtonText?:string;
 
         /**
+         * Default parameters to send with the Vehicle/Select requests
+         */
+        DefaultVehicleSelectParameters?: object;
+
+        /**
          * Image Settings for vehicle image
          */
         ImageSettings?: ridestyler.Requests.ImageRenderRequest|ImageSettingsCallback;

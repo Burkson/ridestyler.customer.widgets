@@ -33,6 +33,8 @@ function RideStylerVehicleSelectionModal(options) {
         YearScreenColumns: 3,
         MakeScreenColumns: 2,
 
+        DefaultVehicleSelectParameters: {},
+
         container: document.body,
 
         afterBackClicked: null,
@@ -446,9 +448,9 @@ function RideStylerVehicleSelectionModal(options) {
      * @return void
      */
     function requestStep(modal, stepOptions) {
-        var request = {
+        var request = extend({}, options.DefaultVehicleSelectParameters, {
             Selection: dataArray
-        };
+        });
 
         if (stepOptions && stepOptions.bestConfiguration) {
             showSelection(modal, stepOptions.bestConfiguration);
@@ -859,9 +861,14 @@ function RideStylerVehicleSelectionModal(options) {
 
         vehicleImage.src = imageUrl;
         vehicleImage.style.display = 'inline-block';
+        vehicleImage.onerror = function () {
+            var container = vehicleImage.parentElement;
+
+            container.parentElement.removeChild(container);
+        };
         vehicleImage.onload = function(){
             vehicleLoader.style.display = 'none';
-        }
+        };
 
         var confirmHandler = function (e) {
             e.target.removeEventListener(e.type, confirmHandler);
