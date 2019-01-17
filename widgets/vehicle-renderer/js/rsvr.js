@@ -78,9 +78,10 @@ function RideStylerViewport(elem, options) {
     }
 
     var lastClientWidth = 0;
+    var lastClientHeight = 0;
     var refreshTimeout = 0;
     this.ResizeRenderArea = function() {
-        if (container.clientWidth != lastClientWidth) {
+        if (container.clientWidth != lastClientWidth || (desiredAspectHeight == null && container.clientHeight != lastClientHeight)) {
             lastClientWidth = container.clientWidth;
             state['width'] = lastClientWidth;
 
@@ -89,6 +90,9 @@ function RideStylerViewport(elem, options) {
                 var height = Math.round(lastClientWidth * desiredAspectHeight);
                 container.style.height = height + 'px';
                 state['height'] = height;
+            } else {
+                lastClientHeight = container.clientHeight;
+                state['height'] = lastClientHeight;
             }
 
             // Make sure our renderer is active before attempt to redraw
