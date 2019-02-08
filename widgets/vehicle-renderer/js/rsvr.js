@@ -188,6 +188,9 @@ function RideStylerViewport(elem, options) {
         var activeImage = null;
         var retiredImages = [];
 
+        var layerRedrawTimer = 0;
+        var activeLayerPromise = null;
+
         /**
          * @return {RideStylerPromise}
          */
@@ -206,70 +209,79 @@ function RideStylerViewport(elem, options) {
          * @return {RideStylerPromise}
          */
         function createNewLayer(instructions) {
-            var promise = ridestyler.promise();
-            // Show our loader since we are creating a new layer
-            showLoaderElement();
-
-
-            // Retire our active image if it is available
-            if (activeImage != null) {
-                // hideOldVehicle();
-                retiredImages.push(activeImage);
-                activeImage = null;
+            // Clear our pending refresh
+            if (activeLayerPromise != null && !activeLayerPromise.isResolved() && !activeLayerPromise.isRejected()) {
+                clearTimeout(layerRedrawTimer);
+                activeLayerPromise.reject({ cancelled: true });
             }
 
-            // Find all of our old images and fade them to half transparent (if they are visible)
-            for(var i = retiredImages.length - 1; i >= 0; i--) {
-                var oimg = retiredImages[i];
+            var promise = activeLayerPromise = ridestyler.promise();
 
-                // Partially fade out our retired images
-                if (oimg.style.opacity > 0.5) oimg.style.opacity = 0.5;
-            }
-            
-            var imageUrl = ridestyler.ajax.url('Vehicle/Render', instructions);
+            // Queue our redraw
+            layerRedrawTimer = setTimeout(function() {
+                // Show our loader since we are creating a new layer
+                showLoaderElement();
 
-
-            // Create a new image element for the current render result
-            var img = document.createElement('img');
-            img.className = 'rsvr-vehicle';
-            img.style.position = 'absolute';
-            img.style.left = 0;
-            img.style.top = 0;
-            img.style.opacity = 0;
-            img.style.transition = 'opacity linear 300ms';
-
-            // Add our new image layer to the DOM
-            container.appendChild(activeImage = img);
-
-            // Listen for our new layer to become ready and display it to the user. Also, cleanup any legacy layers.
-            img.onload = function() {
-                // Only fade in this IMG if it hasn't already been replaced.
-                if (img == activeImage) {
-                    hideLoaderElement();
-                    img.style.opacity = 1;
-
-                    var removedImages = retiredImages.splice(0, retiredImages.length);
-                    // Fade all of our old images out of view
-                    for(var i = 0; i < removedImages.length; i++) {
-                        removedImages[i].style.opacity = 0;
-                    }
-
-                    // Remove the elements after they have had a chance to fade out
-                    setTimeout(function() {
-                        for(var i = 0; i < removedImages.length; i++) {
-                            container.removeChild(removedImages[i]);
-                        }
-                        promise.resolve();
-                    }, 300);
+                // Retire our active image if it is available
+                if (activeImage != null) {
+                    // hideOldVehicle();
+                    retiredImages.push(activeImage);
+                    activeImage = null;
                 }
-            };
 
-            img.onerror = function () {
-                promise.reject();
-            };
+                // Find all of our old images and fade them to half transparent (if they are visible)
+                for(var i = retiredImages.length - 1; i >= 0; i--) {
+                    var oimg = retiredImages[i];
 
-            // Start loading our image
-            img.src = imageUrl;
+                    // Partially fade out our retired images
+                    if (oimg.style.opacity > 0.5) oimg.style.opacity = 0.5;
+                }
+                
+                var imageUrl = ridestyler.ajax.url('Vehicle/Render', instructions);
+
+
+                // Create a new image element for the current render result
+                var img = document.createElement('img');
+                img.className = 'rsvr-vehicle';
+                img.style.position = 'absolute';
+                img.style.left = 0;
+                img.style.top = 0;
+                img.style.opacity = 0;
+                img.style.transition = 'opacity linear 300ms';
+
+                // Add our new image layer to the DOM
+                container.appendChild(activeImage = img);
+
+                // Listen for our new layer to become ready and display it to the user. Also, cleanup any legacy layers.
+                img.onload = function() {
+                    // Only fade in this IMG if it hasn't already been replaced.
+                    if (img == activeImage) {
+                        hideLoaderElement();
+                        img.style.opacity = 1;
+
+                        var removedImages = retiredImages.splice(0, retiredImages.length);
+                        // Fade all of our old images out of view
+                        for(var i = 0; i < removedImages.length; i++) {
+                            removedImages[i].style.opacity = 0;
+                        }
+
+                        // Remove the elements after they have had a chance to fade out
+                        setTimeout(function() {
+                            for(var i = 0; i < removedImages.length; i++) {
+                                container.removeChild(removedImages[i]);
+                            }
+                            promise.resolve();
+                        }, 300);
+                    }
+                };
+
+                img.onerror = function () {
+                    promise.reject();
+                };
+
+                // Start loading our image
+                img.src = imageUrl;
+            }, 100);
 
             return promise;
         }
