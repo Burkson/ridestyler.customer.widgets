@@ -5,6 +5,7 @@
     "type": "git",
     "url": "https://github.com/Burkson/com.burkson.ridestyler.widgets.git"
   },
+  "types": "ridestyler.d.ts",
   "contributors": [
     {
       "name": "Byron Carasco",

@@ -567,6 +567,8 @@ declare namespace ridestyler {
             WheelFitmentArchived: boolean;
             WheelFitmentDataStatus: DataObjects.DataStatus;
             WheelFitmentUpdated: string;
+            HasAngleImage: boolean;
+            HasSideImage: boolean;
     
             BoltPatternDescription: string;
             BoltPattern: DataObjects.BoltPatternDataObject;
@@ -799,6 +801,18 @@ declare namespace ridestyler {
 
         interface VehicleReferencesResultModel extends RideStylerAPIResponse {
             References: DataObjects.VehicleReferenceDataObject[]
+        }
+
+        interface VehicleCanBeRenderedResponseModel extends RideStylerAPIResponse {
+            Result: VehicleCanBeRenderedResultModel
+        }
+
+        interface VehicleCanBeRenderedResultModel {
+            [vehicleConfigurationID: string]: {
+                [identifier: string]: {
+                    Renderable: boolean
+                }
+            }
         }
 
         interface TireBrandsResultModel extends RideStylerAPIResponse {
@@ -1166,6 +1180,17 @@ declare namespace ridestyler {
             VehicleReferenceValues?: string[];
         }
 
+        interface VehicleCanBeRenderedRequestModel {
+            Vehicles: string[];
+            Wheels?: VehicleCanBeRenderedRequestFitment[];
+        }
+
+        interface VehicleCanBeRenderedRequestFitment {
+            ID?: string;
+            PartNumber?: string;
+            ItemNumber?: string;
+        }
+
         const enum VehicleTireSizeComparisonSettings
         {
             None = 0,
@@ -1392,6 +1417,7 @@ declare namespace ridestyler {
         "vehicle/getpaintschemedescriptions": Responses.VehiclePaintSchemeDescriptionResultModel,
         "vehicle/countreferences": Responses.ActionCountResultModel,
         "vehicle/getreferences": Responses.VehicleReferencesResultModel,
+        "vehicle/canberendered": Responses.VehicleCanBeRenderedResponseModel,
 
         "wheel/countmodels": Responses.ActionCountResultModel,
         "wheel/countbrands": Responses.ActionCountResultModel,
@@ -1435,6 +1461,7 @@ declare namespace ridestyler {
         "vehicle/getpaintschemedescriptions": Requests.VehiclePaintSchemeRequestModel,
         "vehicle/countreferences": Requests.VehicleReferenceFilterModel,
         "vehicle/getreferences": Requests.VehicleReferenceFilterModel,
+        "vehicle/canberendered": Requests.VehicleCanBeRenderedRequestModel,
 
         "wheel/countmodels": Requests.WheelFilterModel,
         "wheel/countbrands": Requests.WheelFilterModel,
