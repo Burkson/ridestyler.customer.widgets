@@ -922,6 +922,18 @@ declare namespace ridestyler {
             OutsideDiameterMax?: number;
         }
 
+        interface TireRecommendationRequest {
+            VehicleTireOption?: string;
+            BaseTireSizeDesc?: string;
+
+            NewWheelDiameter?: number;
+            NewWheelWidth?: number;
+
+            OutsideDiameterTargetWhole?: number;
+            OutsideDiameterVarianceMin?: number;
+            OutsideDiameterVarianceMax?: number;
+        }
+
         interface TireFilterModel extends ActionRequestPagedModel {
             SelectBrandsOnly?: boolean;
 
@@ -953,6 +965,8 @@ declare namespace ridestyler {
             TireSidewalls?: number[];
     
             IgnoredTireModelAttributes?: number[];
+
+            Recommend: TireRecommendationRequest;
     
             RequiredTireModelAttribute?: number;
             RequiredTireModelAttributes?: number[];
@@ -1092,6 +1106,8 @@ declare namespace ridestyler {
     
             WheelFinishCategory?: string;
             WheelFinishCategories?: string[];
+
+            TireSize?: string;
     
             BrandResourceType?: WheelBrandResourceType;
             BrandResourceTypes?: WheelBrandResourceType[];
