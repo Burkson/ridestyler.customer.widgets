@@ -569,6 +569,7 @@ declare namespace ridestyler {
             WheelFitmentUpdated: string;
             HasAngleImage: boolean;
             HasSideImage: boolean;
+            HasCatalogImage: boolean;
     
             BoltPatternDescription: string;
             BoltPattern: DataObjects.BoltPatternDataObject;
@@ -672,7 +673,12 @@ declare namespace ridestyler {
             TireFitmentUseType: DataObjects.TireUseTypeFlags;
             TireFitmentUpdated: string;
             TireFitmentArchived: boolean;
-        
+
+            HasSideImage: boolean;
+            HasTreadImage: boolean;
+            HasCatalogImage: boolean;
+            HasRenderSideImage: boolean;
+
             TireBrandID: string;
             TireBrandName: string;
         
