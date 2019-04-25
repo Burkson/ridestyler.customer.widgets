@@ -1617,6 +1617,10 @@ declare namespace ridestyler {
         export function image(filters:Requests.WheelRenderInstructions):string;
     }
 
+    export namespace user {
+        export const ready:RideStylerPromise;
+    }
+
     export namespace utils {
         export function toParamString(object:object):string;
     }
