@@ -25,7 +25,7 @@
 		this.tplHtml = '';
 
 		// Paths to our stylesheet and template
-		this.urlPfx = this.dev ? 'src/' : 'https://cdn.rawgit.com/Burkson/com.burkson.ridestyler.widgets/853961fc/widgets/plus-size-calculator/dist/';
+		this.urlPfx = this.dev ? 'src/' : 'https://static.ridestyler.net/widgets/plus-size-calculator/1.0/';
 		this.cssFile = this.dev ? 'psc.css' : 'psc.min.css';
 		this.cssUrl = this.urlPfx + 'css/' + this.cssFile;
 		this.tplUrl = this.urlPfx + 'html/psc.tpl';
@@ -366,7 +366,7 @@
 			data: params,
 			callback: function (res) {
 				if (res.Success) {
-					self.populateComparison(res); 
+					self.populateComparison(res);
 				} else {
 					console.error('RS request failed');
 				}
@@ -480,7 +480,7 @@
 				} else {
 					if (inDiam[tSize.Width + '_' + tSize.AspectRatio].indexOf(tSize.InsideDiameter) === -1) {
 						inDiam[tSize.Width + '_' + tSize.AspectRatio].push(tSize.InsideDiameter);
-					} 
+					}
 				}
 			}
 		}
@@ -549,10 +549,10 @@
 		increment = this.mphIncrement,
 		rowVals = null,
 		rows = {
-			OutsideDiameter: document.getElementById('psc-diameter-row').getElementsByClassName('psc-value'), 
-			Width: document.getElementById('psc-width-row').getElementsByClassName('psc-value'), 
-			SidewallHeight: document.getElementById('psc-sidewall-row').getElementsByClassName('psc-value'), 
-			OutsideCircumference: document.getElementById('psc-circumference-row').getElementsByClassName('psc-value'), 
+			OutsideDiameter: document.getElementById('psc-diameter-row').getElementsByClassName('psc-value'),
+			Width: document.getElementById('psc-width-row').getElementsByClassName('psc-value'),
+			SidewallHeight: document.getElementById('psc-sidewall-row').getElementsByClassName('psc-value'),
+			OutsideCircumference: document.getElementById('psc-circumference-row').getElementsByClassName('psc-value'),
 			Revolutions: document.getElementById('psc-revsmile-row').getElementsByClassName('psc-value')
 		};
 
@@ -634,7 +634,7 @@
 	};
 
 	/**
-	 * Display or remove a loading indicator 
+	 * Display or remove a loading indicator
 	 * @param {boolean} isLoading
 	 */
 	PlusSizeCalculator.prototype.showLoading = function(isLoading) {
@@ -696,7 +696,7 @@
 	 * Add an event listener of type eventType for a single element
 	 * @param {Element} el
 	 * @param {string} eventType
-	 * @param {function} cb 
+	 * @param {function} cb
 	 */
 	PlusSizeCalculator.prototype.addListener = function(el, eventType, cb) {
 		if (el) {
@@ -715,7 +715,7 @@
 	 * @param {Element} elem
 	 */
 	var emptyDisableElem = function(elem) {
-		elem.innerHTML = ''; 
+		elem.innerHTML = '';
 		elem.disabled = 'disabled';
 	};
 
