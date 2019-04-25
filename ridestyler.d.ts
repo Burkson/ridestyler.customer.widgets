@@ -70,6 +70,74 @@ declare namespace ridestyler {
             CombineResultsByImage = 64
         }
 
+        const enum OrganizationFlags
+        {
+            /**
+             * This is the default, 0 value for an organization without any flags.
+             */
+            None = 0,
+            /**
+             * The organization should not inherit its parent's data shard.
+             */
+            DisableDataShardInheritance = 1,
+            /**
+             * The organization should not inherit its parent's subscription.
+             */
+            DisableSubscriptionInheritance = 2,
+            /**
+             * The organization is managed by Burkson and should not need a subscription.
+             */
+            ManagedOrganization = 4,
+            /**
+             * Disables inclusion state inheritance for this organization. Parent inclusion settings will not effect
+             */
+            DisableInclusionInheritance = 8
+        }
+
+        interface DataShardDataObject {
+            DataShardID: number;
+            DataShard_OrganizationID: number;
+            DataShardDescription: string;
+            DataShardDefault: boolean;
+        }
+
+        const enum SessionCredentialType
+        {
+            NotAuthorized = 0,
+            User = 1,
+            ApiKey = 2,
+            Manual = 5
+        }
+
+        const enum UserDataObjectStatus
+        {
+            Active = 1,
+            Pending = 2,
+            Blocked = 3
+        }
+
+        interface UserDataObject {
+            UserID: number;
+            User_OrganizationID: number;
+            UserActiveShard_DataShardID: number;
+            UserName: string;
+            UserEmail: string;
+            UserPassword: string;
+            UserSalt: string;
+            UserStatus: UserDataObjectStatus;
+            UserFailedLoginAttempts: number;
+            UserLastFailedLogin: string;
+            UserLastSuccessfulLogin: string;
+        }
+
+        interface OrganizationDataObject {
+            OrganizationID: number;
+            Organization_OrganizationID: number;
+            OrganizationName: string;
+            OrganizationContactEmail: string;
+            OrganizationFlags: OrganizationFlags;
+        }
+
         const enum WheelBrandFlags
         {
             None = 0,
@@ -473,6 +541,16 @@ declare namespace ridestyler {
     }
 
      namespace Descriptions {
+        interface UserDescriptionModel {
+            UserID: number;
+            User_OrganizationID: number;
+            UserName: string;
+            UserEmail: string;
+            ParentOrganization: ridestyler.DataObjects.OrganizationDataObject;
+            DataShard: ridestyler.DataObjects.DataShardDataObject;
+            Roles: string[];
+        }
+
         interface VehiclePaintSchemeDescriptionModel {
             VehiclePaintSchemeID: string;
             SchemeName: string;
@@ -747,6 +825,14 @@ declare namespace ridestyler {
             UserID: number;
             Token: string;
             Roles: ("System Admin"|"Organization Admin"|"Manage Vehicles"|"Manage Tires"|"Manage Wheels")[]
+        }
+
+        interface AuthStatusResponse extends RideStylerAPIResponse {
+            Organization: ridestyler.DataObjects.OrganizationDataObject;
+            SessionType: ridestyler.DataObjects.SessionCredentialType;
+            SessionExpiration: string;
+            ActiveSubscription: boolean;
+            User: ridestyler.Descriptions.UserDescriptionModel;
         }
 
         interface ActionCountResultModel extends RideStylerAPIResponse {
@@ -1413,6 +1499,7 @@ declare namespace ridestyler {
     interface RidestylerAPIActionResponseMapping {
         "auth/validate": RideStylerAPIResponse,
         "auth/start": Responses.RideStylerAuthStartResponse,
+        "auth/status": Responses.AuthStatusResponse,
         
         "link/create": Responses.LinkCreateResponse,
 
@@ -1457,6 +1544,7 @@ declare namespace ridestyler {
     interface RidestylerAPIActionRequestMapping {
         "auth/validate": object,
         "auth/start": { Username:string; Password:string; },
+        "auth/status": object,
 
         "link/create": { URL: string },
 
