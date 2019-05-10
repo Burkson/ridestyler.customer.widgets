@@ -1,0 +1,12 @@
+{
+    "include": [
+        "./src/**/*",
+        "./node_modules/com.burkson.ridestyler.widgets/ridestyler.d.ts"
+    ],
+    "compilerOptions": {
+        "module": "es2015",
+        "moduleResolution": "node",
+        "target": "es5",
+        "sourceMap": true
+    }
+}

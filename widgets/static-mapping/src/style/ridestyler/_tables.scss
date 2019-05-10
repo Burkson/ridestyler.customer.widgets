@@ -1,0 +1,61 @@
+table {
+	width: 100%;
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+	
+	background-color: #fff;
+}
+
+.table-hover {
+	$hover-color: #ddd;
+    tr {		
+		&:hover {
+			background-color: $hover-color;
+		}
+
+		&.selected:hover {
+			background-color: hsl(hue($primary-color), saturation($primary-color), lightness($hover-color));
+		}
+	}
+}
+
+th,
+td {
+	padding: 15px;
+	background-color: rgba(255,255,255,0.2);
+}
+
+th {
+	text-align: left;
+}
+
+tr.selected {
+	background-color: $primary-color;
+}
+
+thead {
+	th {
+        background-color: $dark-background-color;
+        color: $dark-text-color;
+	}
+}
+
+tbody {
+	
+	td {
+		position: relative;
+		&:hover {
+			&:before {
+				content: "";
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: -9999px;
+				bottom: -9999px;
+				background-color: rgba(255,255,255,0.2);
+				z-index: -1;
+			}
+		}
+	}
+}
