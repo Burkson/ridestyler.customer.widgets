@@ -292,4 +292,8 @@ export default {
 .toast-enter, .toast-leave-to {
   opacity: 0;
 }
+
+table {
+    font-size: 0.8rem;
+}
 </style>
