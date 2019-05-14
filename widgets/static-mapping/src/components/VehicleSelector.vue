@@ -35,9 +35,12 @@
 </template>
 
 <script>
-
 import LoadingIndicator from './LoadingIndicator';
 import DataTable from './DataTable'
+
+function getSearchFromHash() {
+    return decodeURIComponent(location.hash.slice(1));
+}
 
 export default {
     components: {
@@ -45,6 +48,7 @@ export default {
         LoadingIndicator
     },
     data() {
+
         return {
             search: '',
             errorMessage: '',
@@ -70,6 +74,8 @@ export default {
             this.selection = [];
             this.errorMessage = undefined;
 
+            location.hash = '#' + encodeURIComponent(this.search);
+
             ridestyler.ajax.send({
                 action: 'vehicle/getdescriptions',
                 data: {
@@ -93,6 +99,20 @@ export default {
                 }
             })
         }
+    },
+    created() {
+        const checkHashSearch = () => {
+            const hashSearch = getSearchFromHash();
+
+            if (hashSearch && hashSearch !== this.search) {
+                this.search = hashSearch;
+                this.performSearch();
+            }
+        };
+
+        checkHashSearch();
+
+        window.addEventListener('hashchange', checkHashSearch)
     },
     watch: {
         selection () {
