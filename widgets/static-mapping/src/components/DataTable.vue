@@ -44,7 +44,7 @@
 
                 <tr v-else v-for="row in computedData" :key="row.id" :class="getRowClass(row)" @click="onRowClick($event, row)">
                     <td v-if="selectable">
-                        <input :name="id + '-selection'" :value="row.id" :type="singleSelect ? 'radio' : 'checkbox'" :checked.prop="isRowSelected(row)" @change="setRowSelected(row, $event.currentTarget.checked)">
+                        <input :name="id + '-selection'" :value="row.id" :type="singleSelect ? 'radio' : 'checkbox'" :checked.prop="isRowSelected(row)" @change="setRowSelected(row, $event.currentTarget.checked, $event.shiftKey)">
                     </td>
                     <td v-for="column in columns" :key="column.name">
                         <slot :name="'column:' + column.name.replace(' ', '')">
@@ -126,16 +126,36 @@ export default {
         isRowSelected(row) {
             return this.selectable && this.selectedRows.some(selectedRow => selectedRow.id === row.id);
         },
-        setRowSelected(row, selected) {
+        setRowSelected(row, selected, shiftKey) {
+            
+            const _setSelected = (row, selected) => {
             if (!selected) {
-                const indexOfRow = this.selectedRows.indexOf(row);
+                    const selectedRowIndex = this.selectedRows.findIndex(r => r.id === row.id);
 
-                if (indexOfRow > -1) this.selectedRows.splice(indexOfRow, 1);
+                    if (selectedRowIndex >= 0) this.selectedRows.splice(selectedRowIndex, 1);
             } else {
                 if (this.singleSelect) this.selectedRows = [row];
                 else this.selectedRows.push(row)
             }
+            };
 
+            const index = this.computedData.findIndex(r => r.id === row.id);
+
+            if (!this.singleSelect && shiftKey && this.lastSelection) {
+                const from = Math.min(index, this.lastSelection.index);
+                const to   = Math.max(index, this.lastSelection.index);
+
+                this.computedData.slice(from, to + 1).forEach(row => _setSelected(row, selected));
+            } else {
+                _setSelected(row, selected);
+            }
+
+            this.lastSelection = {
+                index,
+                selected
+            };
+
+            // Emit an event different from selection so that we can differentiate between user selections and other selections
             this.$emit('user-selection', this.selectedRows);
         },
 
@@ -201,7 +221,7 @@ export default {
          */
         onRowClick(e, row) {
             if (this.clickRowsToSelect) {
-                this.setRowSelected(row, !this.isRowSelected(row));
+                this.setRowSelected(row, !this.isRowSelected(row), e.shiftKey);
             }
         }
     },
