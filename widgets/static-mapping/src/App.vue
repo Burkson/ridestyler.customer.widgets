@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <transition-group id="toast-container" name="toast">
+        <transition-group id="toast-container" name="toast" v-if="messages.length > 0">
             <div v-for="message of messages" :class="['alert', 'alert-' + message.type ]" :key="message.text">
                 {{ message.text }}
 
