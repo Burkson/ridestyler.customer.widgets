@@ -7,6 +7,13 @@ const ModalTargetComponent = {
                 class: 'modal-target',
                 style: {
                     display: this.modals.length > 0 ? 'block' : 'none'
+                },
+                on: {
+                    /** @param {MouseEvent} e */
+                    click: e => {
+                        if (e.target === e.currentTarget)
+                            this.modals.forEach(modal => modal.$emit('close'));
+                    }
                 }
             },
             

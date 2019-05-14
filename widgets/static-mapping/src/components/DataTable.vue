@@ -3,7 +3,7 @@
         <table :class="{'table-hover': clickRowsToSelect}">
             <thead>
                 <tr>
-                    <th scope="col" v-if="selectable">
+                    <th scope="col" v-if="selectable" style="width: 1%">
                         <input type="checkbox"
                             v-if="!singleSelect"
                             v-bind:checked.prop="selectedRows.length > 0"
@@ -104,6 +104,9 @@ export default {
             }
 
             return computedData;
+        },
+        numberOfRows() {
+            return this.computedData.length;
         }
     },
     methods: {
@@ -129,14 +132,14 @@ export default {
         setRowSelected(row, selected, shiftKey) {
             
             const _setSelected = (row, selected) => {
-            if (!selected) {
+                if (!selected) {
                     const selectedRowIndex = this.selectedRows.findIndex(r => r.id === row.id);
 
                     if (selectedRowIndex >= 0) this.selectedRows.splice(selectedRowIndex, 1);
-            } else {
-                if (this.singleSelect) this.selectedRows = [row];
-                else this.selectedRows.push(row)
-            }
+                } else {
+                    if (this.singleSelect) this.selectedRows = [row];
+                    else this.selectedRows.push(row)
+                }
             };
 
             const index = this.computedData.findIndex(r => r.id === row.id);
@@ -246,6 +249,9 @@ export default {
     watch: {
         selectedRows() {
             this.$emit('selection', this.selectedRows);
+        },
+        numberOfRows() {
+            this.$emit('update:numberOfRows', this.numberOfRows);
         },
         selection() {
             this.selectedRows = this.selection;

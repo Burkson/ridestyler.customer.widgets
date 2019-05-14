@@ -11,6 +11,7 @@
         v-model="selectedFitments"
 
         @user-selection="hasUserChanges = true"
+        @update:numberOfRows="numberOfRows => $emit('update:numberOfRows', numberOfRows)"
 
         :single-select="singleSelect"
 
@@ -103,15 +104,25 @@ export default {
             }, 0);
         },
         rows() {
+            var seenIDs = new Set();
+            const fitments = [];
+            
             this.fitments.forEach(fitment => {
+                seenIDs.add(fitment.id);
+
                 fitment.unsaved = this.fitmentSelected(fitment.id) ? !this.fitmentMappedToAllVehicles(fitment.id) : this.fitmentMappedToAnyVehicle(fitment.id);
+
+                fitments.push(fitment);
             });
 
             this.additionalFitments.forEach(fitment => {
+                if (seenIDs.has(fitment.id)) return;
+
                 fitment.unsaved = this.fitmentSelected(fitment.id);
+                fitments.push(fitment);
             });
 
-            return this.fitments.concat(this.additionalFitments);
+            return fitments;
         }
     },
 

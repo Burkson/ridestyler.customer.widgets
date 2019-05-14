@@ -44,6 +44,8 @@
             <modal
                 id="add-fitment-modal"
                 v-if="isAdding"
+
+                @close="isAdding = false"
             >
                 <button
                     class="unstyled close"
@@ -64,6 +66,10 @@
                             v-model="search"
                             @paste="onAddInputPaste"
                         >
+
+                        <div class="input-group-addon" v-if="searchPartNumberCount > 0" style="padding: 0 10px;">
+                            Found {{matchedFitmentCount}} of {{searchPartNumberCount}} PNs
+                        </div>
 
                         <div class="input-group-addon">
                             <button type="submit">
@@ -86,6 +92,7 @@
                     id="add-fitment-selector"
                     :filters="addFitmentFilters"
                     @selection="fitments => fitmentsToAdd = fitments"
+                    @update:numberOfRows="rowCount => matchedFitmentCount = rowCount"
                 />
             </modal>
         </template>
@@ -96,12 +103,15 @@
 import FitmentSelector from './FitmentSelector'
 import Modal from './Modal'
 
+const partNumberSearchExpression = /Part ?Numbers\s*:?\s*(.*,?)+/i;
+
 export default {
     data: function () {
         return {
             isAdding: false,
             fitmentsToAdd: [],
             additionalFitments: [],
+            matchedFitmentCount: 0,
 
             /** @type {string} */
             search: undefined,
@@ -109,7 +119,8 @@ export default {
             /** @type {ridestyler.Requests.WheelFilterModel} */
             addFitmentFilters: undefined,
             unsavedChangeCount: 0,
-            hasUserChanges: false
+            hasUserChanges: false,
+            searchPartNumberCount: 0
         };
     },
 
@@ -127,26 +138,22 @@ export default {
                 Count: 500
             };
 
-            const partNumberSearchExpression = /Part ?Numbers\s*:?\s*(.*,?)+/i;
-            const partNumberSearchMatch = search.match(partNumberSearchExpression);
+            const partNumberSearchMatch = this.search && this.search.match(partNumberSearchExpression);
+            const searchPartNumbers = partNumberSearchMatch ? [...new Set(partNumberSearchMatch[1].split(/\s*,\s*/).map(pn => pn.trim()).filter(pn => !!pn))] : [];
+            
+            this.searchPartNumberCount = searchPartNumbers.length;
 
-            if (partNumberSearchMatch) {
-                const separatorMatch = /\s*,\s*/;
-
-                this.addFitmentFilters.PartNumbers = partNumberSearchMatch[1].split(separatorMatch);
+            if (this.searchPartNumberCount > 0) {
+                this.addFitmentFilters.PartNumbers = searchPartNumbers;
             } else {
                 this.addFitmentFilters.Search = search;
             }
-
-            
         },
 
         addFitment () {
             this.$root.addMessage(`The ${this.fitmentsToAdd.length > 1 ? 'fitments have' : 'fitment has'} been added to the list.`)
             this.additionalFitments = this.additionalFitments.concat(this.fitmentsToAdd);
-            this.fitmentsToAdd = [];
             this.isAdding = false;
-            this.search = undefined;
             this.hasUserChanges = true;
         },
         
@@ -178,11 +185,16 @@ export default {
     watch: {
         vehicles () {
             this.additionalFitments = [];
-
-            if (this.vehicles.length === 0) this.hasUserChanges = false;
+            this.hasUserChanges = false;
         },
         requiresSave () {
             this.$emit('update:requiresSave', this.requiresSave);
+        },
+        isAdding() {
+            if (!this.isAdding) {
+                this.fitmentsToAdd = [];
+                this.search = undefined;
+            }
         }
     },
 

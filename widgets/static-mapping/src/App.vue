@@ -15,7 +15,7 @@
                     Read Only
                 </span>
 
-                <button v-else-if="vehicles.length > 0" @click="saveLinkages" :disabled="saving">
+                <button v-else-if="vehicles.length > 0" @click="saveLinkages" :disabled="!saveNeeded || saving">
                     Save
                     <icon icon="save"></icon>
                 </button>
