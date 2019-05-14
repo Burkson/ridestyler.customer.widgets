@@ -69,7 +69,7 @@ export default {
                     format(row) {
                         const offset = row.OffsetMin;
 
-                        let sign = offset > 0 ? '+' : offset < 0 ? '-' : '';
+                        let sign = offset > 0 ? '+' : '';
 
                         return sign + offset + 'mm';
                     }
