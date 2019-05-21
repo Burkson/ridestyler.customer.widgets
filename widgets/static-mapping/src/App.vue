@@ -68,6 +68,8 @@ import VehicleSelector from './components/VehicleSelector';
 import MappedFitmentManager from './components/MappedFitmentManager';
 import ModalTarget from './components/ModalTarget';
 
+import {formatMultipleVehicleDescriptions} from './format';
+
 export default {
     name: 'app',
     data() {
@@ -103,47 +105,68 @@ export default {
         saveLinkages() {
             this.saving = true;
 
-            ridestyler.ajax.send({
-                action: 'wheel/savelinkages',
-                data: {
-                    VehicleConfigurations: this.vehicles.map(vehicle => vehicle.id),
-                    Linkages: this.fitments.map(fitment => {
-                        return {
-                            ID: fitment.id
-                        }
-                    })
-                },
-                callback: response => {
-                    this.saving = false;
+            const vehicles = this.vehicles;
 
-                    let vehicleDescription = '';
+            const approveVehicles = new Promise((resolve, reject) => {
+                const vehiclesToApprove = vehicles.filter(vehicle => !vehicle.IsApproved).map(vehicle => vehicle.id);
 
-                    for (let i = 0; i < this.vehicles.length; i++) {
-                        const vehicle = this.vehicles[i];
-
-                        if (i > 2) {
-                            vehicleDescription += ` and ${this.vehicles.length - i} more`
-                            break;
-                        }
-
-                        if (i > 0) {
-                            if (i < this.vehicles.length - 1)  vehicleDescription += ', ';
-                            else vehicleDescription += ' and ';
-                        }
-
-                        vehicleDescription += vehicle.FullDescription;
-                    }
-
-                    if (response.Success) {
-                        this.$root.addMessage(`The linkages for ${vehicleDescription} have been saved.`, 'success');
-
-                        // hack to cause the vehicle fitment list to reload
-                        this.vehicles = this.vehicles.slice();
-                    } else {
-                        this.$root.addMessage(`There was an error saving your linkages: ${response.Message}`, 'error');
-                    }
+                if (vehiclesToApprove.length === 0) {
+                    resolve();
+                    return;
                 }
-            })
+
+                ridestyler.ajax.send({
+                    action: 'vehicle/setapproved',
+                    data: {
+                        VehicleConfigurations: vehiclesToApprove,
+                        Approved: true
+                    },
+                    callback: response => {
+                        if (response.Success) {
+                            vehicles.forEach(vehicle => vehicle.IsApproved = true);
+                            resolve();
+                        } else {
+                            reject(response.Message);
+                        }
+                    }
+                })
+            });
+
+            const saveLinkages = new Promise((resolve, reject) => { 
+                ridestyler.ajax.send({
+                    action: 'wheel/savelinkages',
+                    data: {
+                        VehicleConfigurations: vehicles.map(vehicle => vehicle.id),
+                        Linkages: this.fitments.map(fitment => {
+                            return {
+                                ID: fitment.id
+                            }
+                        })
+                    },
+                    callback: response => {
+                        this.saving = false;
+
+                        if (response.Success) {
+                            resolve();
+                        } else {
+                            reject(response.Message);
+                            this.$root.addMessage(`There was an error saving your linkages: ${response.Message}`, 'error');
+                        }
+                    }
+                })
+            });
+
+            Promise.all([approveVehicles, saveLinkages]).then(
+                () => {
+                    const vehicleDescription = formatMultipleVehicleDescriptions(vehicles);
+                    
+                    this.$root.addMessage(`The linkages for ${vehicleDescription} have been saved.`, 'success');
+
+                    // hack to cause the vehicle fitment list to reload
+                    this.vehicles = this.vehicles.slice();
+                },
+                message => this.$root.addMessage(`There was an error saving your linkages: ${message}`, 'error')
+            )
         },
         onNewVehiclesSelected(newVehicles) {
             if (this.saveNeeded && window.confirm(this.savePrompt + " Would you like to save it before continuing?")) {

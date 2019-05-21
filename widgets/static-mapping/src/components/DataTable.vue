@@ -17,6 +17,9 @@
                             <icon icon="sort-down" v-if="getSortStatus(column).descending" />
                             <icon icon="sort-up" v-else />
                         </template>
+
+                        <slot :name="'header:' + getColumnHeaderKey(column)">
+                        </slot>
                     </th>
                 </tr>
             </thead>
@@ -47,7 +50,7 @@
                         <input :name="id + '-selection'" :value="row.id" :type="singleSelect ? 'radio' : 'checkbox'" :checked.prop="isRowSelected(row)" @change="setRowSelected(row, $event.currentTarget.checked, $event.shiftKey)">
                     </td>
                     <td v-for="column in columns" :key="column.name" :title="getCellTitle(row, column)">
-                        <slot :name="'column:' + column.name.replace(' ', '')">
+                        <slot :name="'column:' + getColumnHeaderKey(column)" :row="row" :column="column">
                             {{ getCellText(row, column) }}
                         </slot>
                     </td>
@@ -125,6 +128,9 @@ export default {
             }
             
             return classes;
+        },
+        getColumnHeaderKey(column) {
+            return  column.name.replace(' ', '').toLowerCase();
         },
         isRowSelected(row) {
             return this.selectable && this.selectedRows.some(selectedRow => selectedRow.id === row.id);

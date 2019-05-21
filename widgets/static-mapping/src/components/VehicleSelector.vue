@@ -32,6 +32,25 @@
                 <loading-indicator />
             </template>
 
+            <!-- <template v-slot:header:approved>
+                <div class="header-buttons" v-if="savingApprovalStatus">
+                    <icon icon="compact-disc" spin ></icon>
+                </div>
+                <div class="header-buttons" v-else>
+                    <button title="Approve Selected" :disabled="!selection.some(vehicle => !vehicle.IsApproved)" @click="setSelectedVehicleApprovalStatus(true)">
+                        <icon icon="check" />
+                    </button>
+                    
+                    <button title="Unapprove Selected" :disabled="!selection.some(vehicle => vehicle.IsApproved)" @click="setSelectedVehicleApprovalStatus(false)">
+                        <icon icon="times" />
+                    </button>
+                </div>
+            </template> -->
+
+            <template v-slot:column:approved="{ row }" class="text-center">
+                <icon :icon="row.IsApproved ? 'check' : 'times'" />
+            </template>
+
         </data-table>
     </div>
 </template>
@@ -39,6 +58,8 @@
 <script>
 import LoadingIndicator from './LoadingIndicator';
 import DataTable from './DataTable'
+
+import {formatMultipleVehicleDescriptions} from '../format'
 
 function getSearchFromHash() {
     return decodeURIComponent(location.hash.slice(1));
@@ -62,10 +83,15 @@ export default {
                 {
                     name: "Vehicle",
                     field: "FullDescription"
+                },
+                {
+                    name: "Approved",
+                    field: "IsApproved"
                 }
             ],
             vehicles: [],
-            selection: []
+            selection: [],
+            savingApprovalStatus: false
         }
     },
     methods: {
@@ -82,6 +108,7 @@ export default {
                 action: 'vehicle/getdescriptions',
                 data: {
                     Search: this.search,
+                    ApprovalStatus: 'All',
                     NoCache: true,
                     SearchOptions: 0
                 },
@@ -98,6 +125,29 @@ export default {
                     }
 
                     this.loading = false;
+                }
+            })
+        },
+        setSelectedVehicleApprovalStatus(approved) {
+            this.savingApprovalStatus = true;
+
+            const vehicleDescription = formatMultipleVehicleDescriptions(this.selection);
+           
+            ridestyler.ajax.send({
+                action: 'vehicle/setapproved',
+                data: {
+                    VehicleConfigurations: this.selection.map(vehicle => vehicle.id),
+                    Approved: approved
+                },
+                callback: response => {
+                    if (response.Success) {
+                        this.$root.addMessage(`These vehicles have been marked as ${approved ? 'approved' : 'not approved'}: ${vehicleDescription}`, 'success');
+                        this.selection.forEach(vehicle => vehicle.IsApproved = approved);
+                    } else {
+                        this.$root.addMessage(`There was an error saving the approval status: ${response.Message}`, 'error');
+                    }
+
+                    this.savingApprovalStatus = false;
                 }
             })
         }

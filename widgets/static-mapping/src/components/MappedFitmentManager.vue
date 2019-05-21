@@ -344,7 +344,8 @@ export default {
                 ridestyler.ajax.send({
                     action: 'vehicle/getfitments',
                     data: {
-                        VehicleConfigurations: this.vehicles.map(v => v.id)
+                        VehicleConfigurations: this.vehicles.map(v => v.id),
+                        ApprovalStatus: 'All'
                     },
                     callback(response) {
                         if (response.Success) resolve(response.Fitments);
@@ -433,6 +434,7 @@ export default {
             if (!this.isAdding) {
                 this.fitmentsToAdd = [];
                 this.search = undefined;
+                this.addFitmentFilters.forEach((/** @type {AddFitmentFilter} */ filter) => { filter.value = undefined; });
             }
         }
     },
