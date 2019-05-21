@@ -31,7 +31,7 @@
             <div id="right">
                 <mapped-fitment-manager
                     @selection="selectedFitments => fitments = selectedFitments"
-                    @update:requiresSave="doesRequireSave => saveNeeded = doesRequireSave"
+                    @update:unsavedChangeCount="unsavedChanges => saveNeeded = unsavedChanges > 0"
                     :vehicles="vehicles"
                     :readonly="readonly" />
             </div>
@@ -214,22 +214,33 @@ export default {
 @import "./style/ridestyler/index.scss";
 
 #left, #right {
+    $padding: 1rem;
+
     position: absolute;
     top: 80px;
     bottom: 0;
-    width: 50%;
 
-    padding: 1rem;
+    padding: $padding;
     box-sizing: border-box;
 
-    overflow: auto;
+    .main-table {
+        position: absolute;
+        left: $padding;
+        right: $padding;
+        top: 3.2rem + $padding;
+        bottom: $padding;
+
+        overflow: auto;
+    }
 }
 
 #left {
+    width: 40%;
     left: 0;
 }
 
 #right {
+    width: 60%;
     right: 0;
 }
 
@@ -295,5 +306,14 @@ export default {
 
 table {
     font-size: 0.8rem;
+}
+
+@media screen and (max-width: 1610px) {
+    #left {
+        width: 30%;
+    }
+    #right {
+        width: 70%;
+    }
 }
 </style>

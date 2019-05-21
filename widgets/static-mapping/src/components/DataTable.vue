@@ -8,7 +8,7 @@
                             v-if="!singleSelect"
                             v-bind:checked.prop="selectedRows.length > 0"
                             v-bind:indeterminate.prop="selectedRows.length > 0 && selectedRows.length < computedData.length"
-                            v-on:change="$event.currentTarget.checked ? selectAll() : clearSelection()">
+                            v-on:change="setAllRowsSelected($event.currentTarget.checked)">
                     </th>
                     <th scope="col" v-for="column in columns" :key="column.name" @click="onHeaderClick($event, column)">
                         {{ column.name }}
@@ -46,7 +46,7 @@
                     <td v-if="selectable">
                         <input :name="id + '-selection'" :value="row.id" :type="singleSelect ? 'radio' : 'checkbox'" :checked.prop="isRowSelected(row)" @change="setRowSelected(row, $event.currentTarget.checked, $event.shiftKey)">
                     </td>
-                    <td v-for="column in columns" :key="column.name">
+                    <td v-for="column in columns" :key="column.name" :title="getCellTitle(row, column)">
                         <slot :name="'column:' + column.name.replace(' ', '')">
                             {{ getCellText(row, column) }}
                         </slot>
@@ -184,6 +184,12 @@ export default {
             return '';
         },
 
+        getCellTitle(row, column) {
+            if (typeof column.tooltip === 'function') return column.tooltip(row);
+            
+            return '';
+        },
+
         selectAll() {
             this.selectedRows = this.data.concat()
         },
@@ -215,8 +221,6 @@ export default {
             } else {
                 this.$set(currentSort, 'descending', !currentSort.descending);
             }
-
-            console.log(currentSort);
         },
 
         /**
@@ -226,6 +230,14 @@ export default {
             if (this.clickRowsToSelect) {
                 this.setRowSelected(row, !this.isRowSelected(row), e.shiftKey);
             }
+        },
+
+        setAllRowsSelected(selected) {
+            if (selected) this.selectAll();
+            else this.clearSelection();
+
+            // Emit an event different from selection so that we can differentiate between user selections and other selections
+            this.$emit('user-selection', this.selectedRows);
         }
     },
     props: {

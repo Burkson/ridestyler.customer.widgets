@@ -30,6 +30,17 @@ button {
         border-color: $success-color;
     }
 
+    &.dark {
+        background-color: $dark-background-color;
+        border-color: $dark-background-color;
+        color: $dark-text-color;
+    }
+
+    &.secondary {
+        background-color: $secondary-color;
+        border-color: $secondary-color;
+    }
+
     cursor: pointer;
 }
 

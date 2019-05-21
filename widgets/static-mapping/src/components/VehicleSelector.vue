@@ -15,6 +15,8 @@
         </div>
 
         <data-table
+            class="main-table"
+
             :columns="columns"
             :data="vehicles"
             :loading="loading"
@@ -80,16 +82,16 @@ export default {
                 action: 'vehicle/getdescriptions',
                 data: {
                     Search: this.search,
-                    NoCache: true
+                    NoCache: true,
+                    SearchOptions: 0
                 },
                 callback: response => {
                     if (response.Success) {
-                        this.vehicles = response.Descriptions.map(description => {
-                            return {
-                                id: description.ConfigurationID,
-                                FullDescription: description.FullDescription
-                            }
+                        response.Descriptions.forEach(description => {
+                            description.id = description.ConfigurationID;
                         });
+
+                        this.vehicles = response.Descriptions;
                     } else {
                         this.errorMessage = response.Message;
                         this.vehicles = [];

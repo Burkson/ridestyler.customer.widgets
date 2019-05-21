@@ -1,5 +1,6 @@
 <template>
     <data-table
+        class="main-table"
         :columns="columns"
         :data="rows"
         :loading="loading"
@@ -54,6 +55,18 @@ export default {
                     field: 'WheelModelFinishDescription'
                 },
                 {
+                    name: 'Bolt Pattern',
+                    field: 'BoltPattern',
+                    format(row) {
+                        if (!row.BoltPatterns || !row.BoltPatterns.length) return '';
+                        
+                        if (row.BoltPatterns.length > 2) return row.BoltPatterns.length + ' Bolt Patterns';
+
+                        return row.BoltPatterns.map(bp => bp.BoltPatternDescription).join(' and ');
+                    },
+                    tooltip: r => r.BoltPatterns ? r.BoltPatterns.map(bp => bp.BoltPatternDescription).join("\n") : ''
+                },
+                {
                     name: 'Part Number',
                     field: 'PartNumber'
                 },
@@ -99,9 +112,13 @@ export default {
 
     computed: {
         unsavedChangeCount() {
-            return this.rows.reduce((count, row) => {
-                return row.unsaved ? count + 1 : count;
+            const count = this.rows.reduce((count, row) => {
+                return this.rowIsUnsaved(row) ? count + 1 : count;
             }, 0);
+
+            this.$emit('update:unsavedChangeCount', count);
+
+            return count;
         },
         rows() {
             var seenIDs = new Set();
@@ -109,16 +126,11 @@ export default {
             
             this.fitments.forEach(fitment => {
                 seenIDs.add(fitment.id);
-
-                fitment.unsaved = this.fitmentSelected(fitment.id) ? !this.fitmentMappedToAllVehicles(fitment.id) : this.fitmentMappedToAnyVehicle(fitment.id);
-
                 fitments.push(fitment);
             });
 
             this.additionalFitments.forEach(fitment => {
                 if (seenIDs.has(fitment.id)) return;
-
-                fitment.unsaved = this.fitmentSelected(fitment.id);
                 fitments.push(fitment);
             });
 
@@ -140,7 +152,7 @@ export default {
         ]
 
         this.rowClass = {
-            'unsaved': row => row.unsaved
+            'unsaved': row => this.rowIsUnsaved(row)
         };
 
         if (this.loadInitially) this.reloadFitments();
@@ -254,6 +266,18 @@ export default {
 
         fitmentSelected(fitmentID) {
             return this.selectedFitments.some(fitment => fitment.id === fitmentID);
+        },
+
+        rowIsUnsaved(row) {
+            const id = row.id;
+            const isAdditional = this.additionalFitments.some(fitment => fitment.id === id);
+            const selected     = this.fitmentSelected(id);
+
+            return isAdditional ?
+                selected : 
+                selected ? 
+                    !this.fitmentMappedToAllVehicles(id) : 
+                    this.fitmentMappedToAnyVehicle(id);
         }
     },
     watch: {
@@ -270,8 +294,7 @@ export default {
             this.selectedFitments = this.selectedFitments.concat(this.additionalFitments);
         },
         unsavedChangeCount() {
-            this.$emit('update:unsavedChangeCount', this.unsavedChangeCount);
-        },
+            },
         hasUserChanges() {
             this.$emit('update:hasUserChanges', this.hasUserChanges);
         }
