@@ -32,19 +32,20 @@ This will render a new QR Code in your chosen container.
 After the QR Capture widget is instantiated, use these listeners to design your own events around the user's progress. Here are some examples of the listeners that are available to you:
 ```
 qr.onSessionStart = function(){
-		// Runs right when you load the widget loads.
+// Runs right when you load the widget loads.
 }
 qr.onWaitingForUpload = function(){
-		// Runs when user reaches the Capture UI, after they scan the QR Code.
+// Runs when user reaches the Capture UI, after they scan the QR Code.
 }
 qr.onImageReady = function(){
-		// Runs when user confirms their image selection.
+// Runs when user confirms their image selection.
 
-		// This method will display the users image along with the wheel bounds. This can only be run within the 'onImageReady' listener, given the id of the container you want the image to be displayed in.
-		qr.displayImage('vehicle');
+// This method will display the users image along with the wheel bounds. This can only be run within the 'onImageReady' 	listener, given the id of the container you want the image to be displayed in.
+qr.displayImage('vehicle');
+
 }
 qr.onEnded = function(){
-		// Runs if user get's a time out on the Capture UI.
+// Runs if user get's a time out on the Capture UI.
 }
 ```
 
