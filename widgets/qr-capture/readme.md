@@ -22,14 +22,14 @@ Next, create a container div in your document to store the QR Code. Give it an i
 ```
 
 ## Initialize the Widget
-Now we need to initialize the QR Capture widget. To do this, you need to pass it an array of 'layer stacks'. An example layer stack resembles the following:
+Now we need to initialize the QR Capture widget. To do this, you need to pass it a container ID so it resembles the following:
 ```
 var qr = new QrCapture('container');
 ```
 This will render a new QR Code in your chosen container.
 
 ## Use the widget
-After the QR Capture widget is instantiated, use these listeners to design your own events around the users progress. Here are some examples of the listeners that are available to you:
+After the QR Capture widget is instantiated, use these listeners to design your own events around the user's progress. Here are some examples of the listeners that are available to you:
 ```
 qr.onSessionStart = function(){
 		// Runs right when you load the widget loads.
