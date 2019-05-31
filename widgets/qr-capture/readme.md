@@ -4,13 +4,13 @@ This script allows you to implement the QR Capture widget into your website.
 # Getting Started
 All of the RideStyler Widgets are designed to be as easy as possible to add to your website. Simply follow the step-by-step instructions outlined below.
 
-## Add Script References
+## Add Script Reference
 The first step is simply adding reference to the QR Capture script into your site. You can host the scripts yourself and include them like this:
 ```
 <script type="text/javascript" src="src/js/qrCapture.js"></script>
 ```
 
-Or you can load them from a CDN like this:
+Or you can load the script from a CDN like this:
 ```
 <script type="text/javascript" src="ridestylerAPI...../qrCapture.js"></script>
 ```
