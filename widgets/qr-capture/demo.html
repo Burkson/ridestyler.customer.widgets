@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="src/css/qrCapture.css" />
+	<link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+	<script type="text/javascript" src="src/js/qrCapture.js"></script>
+</head>
+<body>
+	<div id="container">
+		<div id="vehicle"></div>
+	</div>
+	<script>
+		var qr = new QrCapture('container');
+
+		qr.onSessionStart = function(){
+			console.log('Session started...');
+		}
+		qr.onWaitingForUpload = function(){
+			console.log('Waiting for upload...');
+		}
+		qr.onImageReady = function(){
+			console.log('Image is ready...');
+			qr.displayImage('vehicle');
+		}
+		qr.onEnded = function(){
+			console.log('Session ended...');
+		}
+	</script>
+</body>
+</html>
