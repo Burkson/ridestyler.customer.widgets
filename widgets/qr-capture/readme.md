@@ -26,22 +26,22 @@ This will create a new session and allow you to use our listener functions shown
 After the QR Capture widget is instantiated, use these listeners to design your own events around the user's progress. Pass in the parameter "Session" to gain access to the current session data. (Session data structure shown below). Here are some examples of the listeners that are available to you:
 ```
 qr.OnSessionStart = function(Session){
-// Runs right when you load the widget loads.
+// The "OnSessionStart" listener runs right when widget fully loads onto the page and a new session is created.
 
   // Returns a 'base64' string that when added to an image's src attribute will create a QR Code re-directing the user to RideStyler's Snap UI.
   var qrSrc = qr.CreateQR();
 
-  // Creates a url string that when added to a link tag will re-direct user to RideStyler's Snap UI.
+  // Returns a url string that when added to a link tag will re-direct the user to RideStyler's Snap UI.
   var qrLink = qr.CreateLink();
 
 }
 
 qr.OnWaitingForUpload = function(Session){
-// Runs when user reaches the Capture UI, after they scan the QR Code.
+// The "OnWaitingForUpload" listener runs when a user reaches the Capture UI, after they scan the QR Code.
 }
 
 qr.OnImageReady = function(Session){
-// Runs when user confirms their image selection.
+// The "OnImageReady" listener runs when a user confirms their image selection.
 
   // This method will display the user's image along with the wheel bounds. This can only be run within the 'OnImageReady' listener, given the id of the container you want the image to be displayed in, and the current Session.
   qr.CreateVehicleImage('#vehicle', Session);
@@ -49,7 +49,7 @@ qr.OnImageReady = function(Session){
 }
 
 qr.OnEnded = function(Session){
-// Runs if user get's a time out on the Capture UI.
+// The "OnEnded" listener runs if a user get's a time out on the Capture UI.
 
 }
 ```
