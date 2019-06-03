@@ -90,6 +90,7 @@
 	QrCapture.prototype.CreateVehicleImage = function(userSelector, userSession) {
 		var self = this;
 		if(typeof userSelector == "string" && document.querySelector(userSelector) != null){
+			console.log('test')
 			var container = document.querySelector(userSelector);
 			var vehicleWrapper = document.createElement('div');
 			var vehicleImage = document.createElement('img')
@@ -107,14 +108,20 @@
 		}
 	}
 
-	QrCapture.prototype.CreateQR = function(){
-		var src = "data:image/png;base64, " + this.SessionStartModel.captureQR;
-		return src;
+	QrCapture.prototype.CreateQR = function(userSelector){
+		var self = this;
+		if(typeof userSelector == "string" && document.querySelector(userSelector) != null){
+			var qrImg = document.querySelector(userSelector);
+			qrImg.src = "data:image/png;base64, " + self.SessionStartModel.captureQR;
+		}
 	}
 
-	QrCapture.prototype.CreateLink = function(){
-		var url = this.SessionStartModel.captureURL;
-		return url;
+	QrCapture.prototype.CreateLink = function(userSelector){
+		var self = this;
+		if(typeof userSelector == "string" && document.querySelector(userSelector) != null){
+			var qrLink = document.querySelector(userSelector);
+			qrLink.href = self.SessionStartModel.captureURL;
+		}
 	}
 
 	QrCapture.prototype.GetOrientation  = function(wrapper, orientation) {

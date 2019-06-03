@@ -2,28 +2,38 @@
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="src/css/qrCapture.css" />
 	<link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
 	<script type="text/javascript" src="src/js/qrCapture.js"></script>
 </head>
 <body>
-	<div id="container">
-		<div id="vehicle"></div>
+	<div id="container" style="text-align: center;">
+		<img id="qr" style="width: 500px;display: inline-block;"/>
+		<a id="qr-link" target="_blank" style="font-size: 1.5em;display: block;">Test Link</a>
+		<div id="vehicle">
+		</div>
 	</div>
 	<script>
-		var qr = new QrCapture('container');
+		var qr = new QrCapture();
 
-		qr.onSessionStart = function(){
+		qr.OnSessionStart = function(Session){
 			console.log('Session started...');
+
+			var qrSrc = qr.CreateQR();
+			var qrCode = document.getElementById('qr');
+			qrCode.src = qrSrc;
+
+			var qrLink = qr.CreateLink();
+			qrLinkTag = document.getElementById('qr-link');
+			qrLinkTag.href = qrLink;
 		}
-		qr.onWaitingForUpload = function(){
+		qr.OnWaitingForUpload = function(Session){
 			console.log('Waiting for upload...');
 		}
-		qr.onImageReady = function(){
+		qr.OnImageReady = function(Session){
 			console.log('Image is ready...');
-			qr.displayImage('vehicle');
+			qr.CreateVehicleImage('#vehicle', Session);
 		}
-		qr.onEnded = function(){
+		qr.OnEnded = function(Session){
 			console.log('Session ended...');
 		}
 	</script>

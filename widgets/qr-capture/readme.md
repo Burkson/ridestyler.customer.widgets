@@ -15,38 +15,56 @@ Or you can load the script from a CDN like this:
 <script type="text/javascript" src="ridestylerAPI...../qrCapture.js"></script>
 ```
 
-## Add a Container
-Next, create a container div in your document to store the QR Code. Give it an id attribute, for example, "container".
-```
-<div id="container"></div>
-```
-
 ## Initialize the Widget
-Now we need to initialize the QR Capture widget. To do this, you need to pass it a container ID so it resembles the following:
+Now we need to initialize the QR Capture widget:
 ```
-var qr = new QrCapture('container');
+var qr = new QrCapture();
 ```
-This will render a new QR Code in your chosen container.
+This will create a new session and allow you to use our listener functions shown below.
 
 ## Use the widget
-After the QR Capture widget is instantiated, use these listeners to design your own events around the user's progress. Here are some examples of the listeners that are available to you:
+After the QR Capture widget is instantiated, use these listeners to design your own events around the user's progress. Pass in the parameter "Session" to gain access to the current session data. (Session data structure shown below). Here are some examples of the listeners that are available to you:
 ```
-qr.onSessionStart = function(){
+qr.OnSessionStart = function(Session){
 // Runs right when you load the widget loads.
+
+  // Returns a 'base64' string that when added to an image's src attribute will create a QR Code re-directing the user to RideStyler's Snap UI.
+  var qrSrc = qr.CreateQR();
+
+  // Creates a url string that when added to a link tag will re-direct user to RideStyler's Snap UI.
+  var qrLink = qr.CreateLink();
+
 }
-qr.onWaitingForUpload = function(){
+
+qr.OnWaitingForUpload = function(Session){
 // Runs when user reaches the Capture UI, after they scan the QR Code.
 }
-qr.onImageReady = function(){
+
+qr.OnImageReady = function(Session){
 // Runs when user confirms their image selection.
 
-// This method will display the users image along with the wheel bounds. This can only be run within the 'onImageReady' 	listener, given the id of the container you want the image to be displayed in.
-qr.displayImage('vehicle');
+  // This method will display the user's image along with the wheel bounds. This can only be run within the 'OnImageReady' listener, given the id of the container you want the image to be displayed in, and the current Session.
+  qr.CreateVehicleImage('#vehicle', Session);
 
 }
-qr.onEnded = function(){
+
+qr.OnEnded = function(Session){
 // Runs if user get's a time out on the Capture UI.
+
 }
+```
+
+## Session Model
+Below is a model of the Session parameter that can be included in any of the listeners above:
+```
+"session":{
+  "state":1,
+  "timestamp":"2019-06-03T21:44:47.250494Z",
+  "id":"1aa7768c-9c3a-49de-8562-5085f72e4013",
+  "imageData":null,
+  "imageOrientation":0,
+  "wheelBoundInformation":null
+},
 ```
 
 # Documentation
