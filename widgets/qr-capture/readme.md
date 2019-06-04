@@ -43,7 +43,7 @@ qr.OnWaitingForUpload = function(Session){
 qr.OnImageReady = function(Session){
 // The "OnImageReady" listener runs when a user confirms their image selection.
 
-  // This method will display the user's image along with the wheel bounds. This can only be run within the 'OnImageReady' listener, given the id of the container you want the image to be displayed in, and the current Session.
+  // This method will display the user's image along with the wheel bounds. This can only be run within the 'OnImageReady' listener, given the selector of the container you want the image to be displayed in and the current Session.
   qr.CreateVehicleImage('#vehicle', Session);
 
 }
