@@ -13,25 +13,22 @@
 		</div>
 	</div>
 	<script>
+		var qrImg = document.getElementById('qr');
+		var qrLink = document.getElementById('qr-link');
 		var qr = new QrCapture();
+
+		qr.StartSession();
 
 		qr.OnSessionStart = function(Session){
 			console.log('Session started...');
-
-			var qrSrc = qr.CreateQR();
-			var qrCode = document.getElementById('qr');
-			qrCode.src = qrSrc;
-
-			var qrLink = qr.CreateLink();
-			qrLinkTag = document.getElementById('qr-link');
-			qrLinkTag.href = qrLink;
+			qrLink.href = qr.SessionStartModel.captureURL;
+			qrImg.src = qr.SessionStartModel.captureQR;
 		}
 		qr.OnWaitingForUpload = function(Session){
 			console.log('Waiting for upload...');
 		}
 		qr.OnImageReady = function(Session){
 			console.log('Image is ready...');
-			qr.CreateVehicleImage('#vehicle', Session);
 		}
 		qr.OnEnded = function(Session){
 			console.log('Session ended...');

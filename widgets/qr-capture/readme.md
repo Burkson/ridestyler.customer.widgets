@@ -1,5 +1,5 @@
 # QR Capture
-This script allows you to implement the QR Capture widget into your website.
+This script allows you to communicate with Ridestyler's AR Snap API.
 
 # Getting Started
 All of the RideStyler Widgets are designed to be as easy as possible to add to your website. Simply follow the step-by-step instructions outlined below.
@@ -25,26 +25,21 @@ This will create a new session and allow you to use our listener functions shown
 ## Use the widget
 After the QR Capture widget is instantiated, use these listeners to design your own events around the user's progress. Pass in the parameter "Session" to gain access to the current session data. (Session data structure shown below). Here are some examples of the listeners that are available to you:
 ```
+// The "SessionStart" method creates a new session that will be used throughout the widget.
+qr.StartSession();
+
 qr.OnSessionStart = function(Session){
 // The "OnSessionStart" listener runs right when widget fully loads onto the page and a new session is created.
-
-  // Returns a 'base64' string that when added to an image's src attribute will create a QR Code re-directing the user to RideStyler's Snap UI.
-  var qrSrc = qr.CreateQR();
-
-  // Returns a url string that when added to a link tag will re-direct the user to RideStyler's Snap UI.
-  var qrLink = qr.CreateLink();
 
 }
 
 qr.OnWaitingForUpload = function(Session){
 // The "OnWaitingForUpload" listener runs when a user reaches the Capture UI, after they scan the QR Code.
+
 }
 
 qr.OnImageReady = function(Session){
 // The "OnImageReady" listener runs when a user confirms their image selection.
-
-  // This method will display the user's image along with the wheel bounds. This can only be run within the 'OnImageReady' listener, given the selector of the container you want the image to be displayed in and the current Session.
-  qr.CreateVehicleImage('#vehicle', Session);
 
 }
 
