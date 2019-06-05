@@ -81,18 +81,20 @@ function RideStylerViewport(elem, options) {
     var lastClientHeight = 0;
     var refreshTimeout = 0;
     this.ResizeRenderArea = function() {
+        var pixelRatio = getPixelRatio();
+
         if (container.clientWidth != lastClientWidth || (desiredAspectHeight == null && container.clientHeight != lastClientHeight)) {
             lastClientWidth = container.clientWidth;
-            state['width'] = lastClientWidth;
+            state['width'] = lastClientWidth * pixelRatio;
 
             // If we are maintaining the aspect ratio we need to update that
             if (desiredAspectHeight != null) {
                 var height = Math.round(lastClientWidth * desiredAspectHeight);
                 container.style.height = height + 'px';
-                state['height'] = height;
+                state['height'] = height * pixelRatio;
             } else {
                 lastClientHeight = container.clientHeight;
-                state['height'] = lastClientHeight;
+                state['height'] = lastClientHeight * pixelRatio;
             }
 
             // Make sure our renderer is active before attempt to redraw
@@ -123,8 +125,9 @@ function RideStylerViewport(elem, options) {
         instructions = prepareArguments(instructions);
 
         // Inject our variables based on global params
-        instructions['width'] = container.clientWidth;
-        instructions['height'] = container.clientHeight;
+        var pixelRatio = getPixelRatio();
+        instructions['width'] = container.clientWidth * pixelRatio;
+        instructions['height'] = container.clientHeight * pixelRatio;
 
         // Update our internal state and watch for changes
         var hasChanges = false;
@@ -177,6 +180,11 @@ function RideStylerViewport(elem, options) {
         }
 
         return values;
+    }
+
+    function getPixelRatio() {
+        if (window.devicePixelRatio) return window.devicePixelRatio;
+        else return 1;
     }
 
     function isCanvasSupported() {
@@ -323,4 +331,3 @@ function RideStylerViewport(elem, options) {
         loader.style.opacity = 0;
     }
 }
-
