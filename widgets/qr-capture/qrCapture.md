@@ -5,34 +5,56 @@ QrCapture: An app that generates a QR code for users to navigate to the RideStyl
 
 Initiation of the widget.
 
-### qr.OnSessionStart
+### qr.StartSession();
 
-Event listener that runs right when you load the widget loads.
+Creates new session for the widget. This method is needed to use the widget.
 
-### qr.OnWaitingForUpload  
+### qr.OnSessionStart = function(Session){}
 
-Event listener that runs when user reaches the Capture UI.
+Event listener that runs right when you load the widget loads. Session model can be used inside of the listener.
 
-### qr.OnImageReady
+### qr.OnWaitingForUpload = function(Session){}  
 
-Event listener that runs when user confirms their image selection.
+Event listener that runs when user reaches the Capture UI. Session model can be used inside of the listener.
 
-### qr.OnEnded
+### qr.OnImageReady = function(Session){}
 
-Event listener that runs if user get's a time out on the Capture UI.
+Event listener that runs when user confirms their image selection. Session model can be used inside of the listener.
 
-### qr.CreateVehicleImage(Selector, Session);
+### qr.OnEnded = function(Session){}
 
-Parmeters(Selector of container you want the image to be displayed in, Current session)
+Event listener that runs if user get's a time out on the Capture UI. Session model can be used inside of the listener.
 
-This method will display the users image along with the wheel bounds. This can only be run within the 'OnImageReady' listener, given the id of the container you want the image to be displayed in.
+### qr.SessionStartModel = function(){}
 
-### qr.CreateQR();
+This will return the initial session model that is created when StartSession method is run:
 
-This method will return a 'base64' string that when added to an image's src attribute will create a QR Code re-directing the user to RideStyler's Snap UI.
+```
+{
+  captureQR: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABHQA",
+  captureURL: "http://192.168.1.185:3000/Capture/CaptureUI?sessionID=6c79c813-2c3d-42e6-90b9-c7b92fc4c21b",
+  session: {
+    id: "6c79c813-2c3d-42e6-90b9-c7b92fc4c21b",
+    imageData: null,
+    state: 1,
+    timestamp: "2019-06-05T20:32:40.7605385Z",
+    wheelBoundInformation: null
+  }
+}
+```
 
-### qr.CreateLink();
+### Event listener session model
 
-This method will return a url string that when added to a link tag will re-direct users to RideStyler's Snap UI.
+This is what the session model looks like when included as a parameter on the event listeners above:
+
+```
+session: {
+  id: "6c79c813-2c3d-42e6-90b9-c7b92fc4c21b",
+  imageData: null,
+  state: 1,
+  timestamp: "2019-06-05T20:32:40.7605385Z",
+  wheelBoundInformation: null
+}
+```
 
 * * *
