@@ -57,13 +57,59 @@ Below is a model of the Session parameter that can be included in any of the lis
   "timestamp":"2019-06-03T21:44:47.250494Z",
   "id":"1aa7768c-9c3a-49de-8562-5085f72e4013",
   "imageData":null,
-  "imageOrientation":0,
   "wheelBoundInformation":null
 },
 ```
 
-# Documentation
+## Display the Vehicle Image 
+Want to diplay the user's vehicle image? Here is an example of how you can do that:
+```
+qr.OnImageReady = function(Session){
+  var Image = document.createElement('img'); //Create an image reference
+  Image.src = Session.imageData; //Set the src of your Image
+  document.body.append(Image); //Display the image
+}
 
+```
+
+## Display the Vehicle Wheel Bounds
+Not only can you display the user's vehicle, you can also display the wheel bounds that were created along with the vehicle, Here's how:
+```
+qr.OnImageReady = function(Session){
+  var Container = document.createElement('div'); //Create a container for all of your elements to be stored in.
+  Container.style.position = 'relative';
+  Container.style.display = 'inline-block';
+  
+  var Image = document.createElement('img'); //Create an image reference
+  Image.src = Session.imageData; //Set the src of your Image
+  Container.append(Image); //Append vehicle image to container
+  
+  var wheelData = JSON.parse(Session.wheelBoundInformation); //Parse the wheel data that is in the form of a String.
+  
+  function displayWheelBounds(bouds){ //This function takes the wheel bound data and creates a div element.
+    var wheel = document.createElement('div');
+    wheel.style.left = (bounds.X * 100) + '%';
+    wheel.style.top = (bounds.Y * 100) + '%';
+    wheel.style.width = (bounds.Width * 100) + '%';
+    wheel.style.height = (bounds.Height * 100) + '%';
+    wheel.style.background = 'rgba(255, 0, 0, 0.5)';
+    wheel.style.position = 'absolute';
+    wheel.style.borderRadius = '50%';
+    
+    return wheel;
+  }
+  
+  //append wheel bound element to the container
+  Container.append(displayWheelBounds(wheelData.RelativeBounds[0].Bounds)); 
+  Container.append(displayWheelBounds(wheelData.RelativeBounds[1].Bounds));
+  
+  //append container element to the body
+  document.body.append(Container);
+}
+
+```
+
+# Documentation
 ```
 
 ## API
