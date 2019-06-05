@@ -27,8 +27,6 @@
 	QrCapture.prototype.CheckSessionStatus = function(data) {
 		var self = this;
 		var state;
-		var args = ['id', data.session.id];
-		var returnData;
 
 		var myInterval = setInterval(function(){
 			self.SendRequest('http://localhost:50199/Session/Get?id=' + data.session.id, getSession);
