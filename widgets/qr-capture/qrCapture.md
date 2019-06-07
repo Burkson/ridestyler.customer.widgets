@@ -25,7 +25,7 @@ Event listener that runs when user confirms their image selection. Session model
 
 Event listener that runs if user get's a time out on the Capture UI. Session model can be used inside of the listener.
 
-### qr.SessionStartModel = function(){}
+### qr.SessionStartModel
 
 This will return the initial session model that is created when StartSession method is run:
 
