@@ -1,0 +1,20 @@
+{
+  "name": "qr-capture",
+  "version": "1.0.0",
+  "description": "This script allows you to communicate with Ridestyler's AR Snap API.",
+  "main": "src/js/qrCapture.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Burkson/com.burkson.ridestyler.widgets.git"
+  },
+  "author": "Blake Bless",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Burkson/com.burkson.ridestyler.widgets/issues"
+  },
+  "homepage": "https://github.com/Burkson/com.burkson.ridestyler.widgets#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-minify": "^3.1.0"
+  }
+}
