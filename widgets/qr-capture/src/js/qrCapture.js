@@ -50,7 +50,7 @@
 					case 3:
 						if(typeof self.OnImageReady == 'function'){
 							if(state != 3){
-								self.OnImageReady(session.id);
+								self.OnImageReady(session);
 								state = 3;
 							}
 						}
@@ -58,7 +58,7 @@
 					case 4:
 						if(typeof self.OnEnded == 'function'){
 							if(state != 4){
-								self.OnEnded(session.id);
+								self.OnEnded(session);
 								state = 4;
 							}
 						}
