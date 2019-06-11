@@ -35,8 +35,8 @@
 								self.OnSessionStart(session)
 								state = 1;
 							}
-							getSession(session.id)
 						}
+						getSession(session.id);
 						break;
 					case 2:
 						if(typeof self.OnWaitingForUpload == 'function'){
@@ -44,8 +44,8 @@
 								self.OnWaitingForUpload(session);
 								state = 2;
 							}
-							getSession(session.id);
 						}
+						getSession(session.id);
 						break;
 					case 3:
 						if(typeof self.OnImageReady == 'function'){
