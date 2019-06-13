@@ -2,13 +2,26 @@
 function RideStylerViewport(elem, options) {
     // Viewport elements
     /** @type {HTMLElement} */
+    var rootContainer = null;
+    /** @type {HTMLElement} */
     var container  = null;
+    /** @type {HTMLElement} */
     var loader = null;
     var renderer = null;
 
-    // Stores the current vehicle state for the vehicle
-    var active = false;
+    // Store viewport states
+    var self = this;
+    var active = true;
+    var vehicleActive = false;
     var state = { };
+
+
+    // Store layout states
+    var lastClientWidth = 0;
+    var lastClientHeight = 0;
+    var refreshTimeout = 0;
+    var responsiveInterval = 0;
+    var usingPseudoHeight = 0;
 
     // Make sure our options object is initialized
     options = options || {};
@@ -20,42 +33,53 @@ function RideStylerViewport(elem, options) {
     // Attempt to find our container based on the selection string if we can
     if (typeof elem === 'string') {
         if (typeof document.querySelector === 'function') {
-            container = document.querySelector(elem);
+            rootContainer = document.querySelector(elem);
         } else if (elem[0] === '.') {
-            container = document.getElementsByClassName(elem.substring(1));
+            rootContainer = document.getElementsByClassName(elem.substring(1));
         } else if (elem[0] === '#') {
-            container = document.getElementById(elem.substring(1));
+            rootContainer = document.getElementById(elem.substring(1));
         }
     } else if (typeof elem === 'object') {
         // Is this a DOM element
         if (elem.tagName) {
-            container = elem;
+            rootContainer = elem;
         }
     }
 
     // Make sure we can find our element that we are trying to use for this viewer
-    if (!container) console.error('Could not find element specified for: ' + elem);
+    if (!rootContainer) console.error('Could not find element specified for: ' + elem);
+    var rootStyles = 'getComputedStyle' in window ? getComputedStyle(rootContainer) : rootContainer.runtimeStyle;
 
     // Prepare the container so it can properly wrap the contents
     var isOffsetPositioned = function () {
-        var position = container.style.position;
+        var position = rootContainer.style.position;
         var isOffsetPositionValue = function (value) {
             return value === 'fixed' || value === 'absolute' || value === 'relative';
         };
 
         if (isOffsetPositionValue(position)) return true;
 
-        /** @type {CSSStyleDeclaration} */
-        var calculatedStyle = 'getComputedStyle' in window ? getComputedStyle(container) : container.runtimeStyle;
-
-        if (!calculatedStyle) return false;
-
-        return isOffsetPositionValue(calculatedStyle.position);
+        if (!rootStyles) return false;
+        return isOffsetPositionValue(rootStyles.position);
     }();
 
     // If we're not positioned using offset positioning, set relative positioning on the container
     if (!isOffsetPositioned)
-        container.style.position = 'relative';
+        rootContainer.style.position = 'relative';
+
+    
+
+    // Insert our image container element that will be used for holding our rendered images
+    container = document.createElement('div');
+
+    // Setup style of the element
+    container.className = 'rsvr-viewport';
+    container.style.position = 'absolute';
+    container.style.left = rootStyles.paddingLeft;
+    container.style.top = rootStyles.paddingTop;
+    container.style.right = rootStyles.paddingRight;
+    container.style.bottom = rootStyles.paddingBottom;
+    rootContainer.appendChild(container);
 
     // Create our other required elements
     createLoaderElement();
@@ -77,105 +101,163 @@ function RideStylerViewport(elem, options) {
         desiredAspectHeight = options.containerAspectRatio;
     }
 
-    var lastClientWidth = 0;
-    var lastClientHeight = 0;
-    var refreshTimeout = 0;
     this.ResizeRenderArea = function() {
-        var pixelRatio = getPixelRatio();
+        if (container.clientWidth != lastClientWidth || (desiredAspectHeight == null && usingPseudoHeight == false && container.clientHeight != lastClientHeight)) {
+            lastClientWidth = container.clientWidth;          
+            lastClientHeight = container.clientHeight;
 
-        if (container.clientWidth != lastClientWidth || (desiredAspectHeight == null && container.clientHeight != lastClientHeight)) {
-            lastClientWidth = container.clientWidth;
-            state['width'] = lastClientWidth * pixelRatio;
+            // Handle situations where the rootContainer does not provide a height because it is not specifically set
+            if (lastClientHeight === 0 && desiredAspectHeight == null) {
+                usingPseudoHeight = true;
+                container.style.position = 'relative';
+                container.style.left = '0';
+                container.style.top = '0';
+            }
 
-            // If we are maintaining the aspect ratio we need to update that
-            if (desiredAspectHeight != null) {
-                var height = Math.round(lastClientWidth * desiredAspectHeight);
-                container.style.height = height + 'px';
-                state['height'] = height * pixelRatio;
-            } else {
-                lastClientHeight = container.clientHeight;
-                state['height'] = lastClientHeight * pixelRatio;
+            // Calculate our pseudo height since width changed
+            if (usingPseudoHeight) {
+                container.style.height = lastClientWidth * 0.5 + 'px';
             }
 
             // Make sure our renderer is active before attempt to redraw
-            if (active) {
+            if (vehicleActive) {
                 clearTimeout(refreshTimeout);
                 refreshTimeout = setTimeout(function() {
-                    // Trigger a refresh on the renderer
-                    renderer.Render(state);
+                    // Trigger a refresh on the renderer if we have an active vehicle
+                    if (vehicleActive !== true) return;
+                    self.Update(true);
                 }, 150);
             }
         }
-    };
+    };  
 
-    // Check to see if we should be controlling the container aspect ratio
-    if (options.responsive !== false) {
-        setInterval(this.ResizeRenderArea, 100);
+    this.SuspendLayout = function() {
+        if (active === false) return;
+        if (options.responsive !== false) 
+            clearInterval(responsiveInterval);
     }
 
-    // Trigger our resize regardless because we may want an espect ratio but
-    // not a reponsive monitor.
-    setTimeout(this.ResizeRenderArea, 10);
+    this.ResumeLayout = function() {
+        if (active === false) return;
+        if (options.responsive !== false)
+            responsiveInterval = setInterval(this.ResizeRenderArea, 100);
+
+        // Trigger our resize regardless because we may want an espect ratio but not a reponsive monitor.
+        setTimeout(this.ResizeRenderArea, 10);
+    }   
+
+    this.Destroy = function() {
+        if (active === false) return;
+        active = false;
+
+        this.SuspendLayout();
+
+        // Remove our viewport element from the original target
+        rootContainer.removeChild(container);
+
+        // Cleanup references to detached elements
+        container = null;
+        loader = null;
+        renderer = null;
+    }
 
     this.Update = function(instructions) {
+        if (active === false) return;
+
+        var forcedUpdate = (instructions === true);
+        var skipRendering = false;
+
         // Let our system know that we are ready to rock
-        active = true;
-       
-        // Make sure our instructions are in an object format
-        instructions = prepareArguments(instructions);
+        vehicleActive = true;
 
-        // Inject our variables based on global params
         var pixelRatio = getPixelRatio();
-        instructions['width'] = container.clientWidth * pixelRatio;
-        instructions['height'] = container.clientHeight * pixelRatio;
+        var dimensions = {
+            width: Math.round(container.clientWidth * pixelRatio),
+            height: Math.round(container.clientHeight * pixelRatio)
+        };
 
-        // Update our internal state and watch for changes
-        var hasChanges = false;
-        for(var x in instructions) {
-            var v1 = state[x];
-            var v2 = instructions[x];
-            if (v1 != v2) {
-                state[x] = v2;
-                hasChanges = true;
+        // If we are maintaining the aspect ratio we need to update that
+        if (desiredAspectHeight != null) {
+            dimensions.height = Math.round(dimensions.width * desiredAspectHeight);
+        }
+
+        if (forcedUpdate === false) 
+        {
+            // Make sure our instructions are in an object format
+            instructions = prepareArguments(instructions);
+
+            // Make sure we are using the correct size for our viewport
+            instructions.width = dimensions.width;
+            instructions.height = dimensions.height;
+
+            // Update our internal state and watch for changes
+            var hasChanges = false;
+            for(var x in instructions) {
+                var v1 = state[x];
+                var v2 = instructions[x];
+                if (v1 != v2) {
+                    state[x] = v2;
+                    hasChanges = true;
+                }
+            }
+            // If we didn't make any changes to our internal state we don't need to perform an update
+            if (hasChanges === false) {
+                skipRendering = true;
             }
         }
-        // If we didn't make any changes to our internal state we don't need to perform an update
-        if (hasChanges == false) {
+        else
+        {
+            // This is a force update so just make sure we have the newest dimensions for our image
+            state.width = dimensions.width;
+            state.height = dimensions.height;
+        }
+
+        if (state.width == 0 || state.height == 0) {
+            console.log('Skipping vehicle render since current dimension would be 0.')
+            skipRendering = true;
+        }
+
+        if (skipRendering)
+        {
             var promise = ridestyler.promise();
-
             promise.resolve();
-
             return promise;
         }
+
         return renderer.Render(state);
     };
 
-
     this.Reset = function() {
+        if (active === false) return;
+
         state = {};
         if (typeof renderer.Reset === 'function') renderer.Reset();
     };
 
+    // Begin our layout logic for this component since it is now created
+    this.ResumeLayout();
 
     function prepareArguments(args) {
         var values = {};
 
-        if (typeof args === 'string') {
-            var tokens = args.split('?');
-            tokens = (tokens.length == 1 ? tokens[0] : tokens[1]).split('&');
-            for(var i = 0; i < tokens.length; i++) {
-                var kv = tokens[i].split('=');
-                var key = decodeURIComponent(kv[0]).toLowerCase();
-            
-                // Skip over variables that are not used for rendering
-                if (key == 'key' || key == 'token') continue;
+        if (args) {
+            if (typeof args === 'string') {
+                var tokens = args.split('?');
+                tokens = (tokens.length == 1 ? tokens[0] : tokens[1]).split('&');
+                for(var i = 0; i < tokens.length; i++) {
+                    var kv = tokens[i].split('=');
+                    var key = decodeURIComponent(kv[0]).toLowerCase();
+                
+                    // Skip over variables that are not used for rendering
+                    if (key == 'key' || key == 'token') continue;
 
-                values[key] = decodeURIComponent(kv[1]);
-            }
-        } else {
-            // Make sure all keys are in lower case
-            for(var k in args) {
-                values[k.toLowerCase()] = args[k];
+                    values[key] = decodeURIComponent(kv[1]);
+                }
+            } else {
+                // Make sure all keys are in lower case
+                for(var k in args) {
+                    values[k.toLowerCase()] = args[k];
+                }
             }
         }
 
@@ -252,6 +334,7 @@ function RideStylerViewport(elem, options) {
                 var img = document.createElement('img');
                 img.className = 'rsvr-vehicle';
                 img.style.position = 'absolute';
+                img.style.maxWidth = '100%';
                 img.style.left = 0;
                 img.style.top = 0;
                 img.style.opacity = 0;

@@ -13,8 +13,8 @@
             border: 1px solid #ccc;
             width: 600px;
             max-width: 100%;
-            
-            height: 400px;
+            padding: 20px;
+            box-sizing: border-box;
 
             overflow:hidden;
         }
@@ -31,7 +31,7 @@
     <script>
         ridestyler.initialize({ Key: 'c028c54cf0c447c594a862de6ac85d1a' });
         var cso = 0;
-        var rsv = new RideStylerViewport('#container', { containerAspectRatio: 0.42 });
+        var rsv = new RideStylerViewport('#container');//, { containerAspectRatio: 0.42 });
         var instructions = {
             Type: 'side',
             PaintColor: '#AFB2A3',
