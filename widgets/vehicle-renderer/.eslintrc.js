@@ -14,7 +14,7 @@ module.exports = {
         "no-console": 0,
         "linebreak-style": [
             "error",
-            "unix"
+            "windows"
         ],
         "quotes": [
             "error",
