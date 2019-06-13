@@ -256,6 +256,7 @@ function RideStylerViewport(elem, options) {
                 img.style.top = 0;
                 img.style.opacity = 0;
                 img.style.transition = 'opacity linear 300ms';
+                img.alt = '';
 
                 // Add our new image layer to the DOM
                 container.appendChild(activeImage = img);
@@ -300,6 +301,7 @@ function RideStylerViewport(elem, options) {
 
         // Set our image
         loader.src = '//static.ridestyler.net/images/loaders/loader_radial_chaser_back_on_white_32.gif';
+        loader.alt = '';
 
         // Setup style of the element
         loader.className = 'rsvr-loader';
