@@ -25,7 +25,7 @@
 		this.tplHtml = '';
 
 		// Paths to our stylesheet and template
-		this.urlPfx = this.dev ? 'src/' : 'https://static.ridestyler.net/widgets/plus-size-calculator/1.0/';
+		this.urlPfx = this.dev ? 'src/' : 'https://static.ridestyler.net/widgets/plus-size-calculator/1.1/';
 		this.cssFile = this.dev ? 'psc.css' : 'psc.min.css';
 		this.cssUrl = this.urlPfx + 'css/' + this.cssFile;
 		this.tplUrl = this.urlPfx + 'html/psc.tpl';
@@ -507,7 +507,7 @@
 
 		for (var i = 0; i < len; i++) {
 			tSize = tireSizes[i];
-			
+
 			if (outDiam.indexOf(tSize.OutsideDiameter) === -1) {
 				outDiam.push(tSize.OutsideDiameter);
 				width[tSize.OutsideDiameter] = [];
