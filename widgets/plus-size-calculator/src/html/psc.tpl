@@ -49,6 +49,7 @@
 
 		<div class="psc-ts-wrap">
 			<h2 class="psc-h2">Tire Specifications</h2>
+			<p>Physical differences between Tire 1 and Tire 2</p>
 			<table class="psc-table psc-ts-table" id="psc-ts-table">
 				<thead>
 					<tr>
