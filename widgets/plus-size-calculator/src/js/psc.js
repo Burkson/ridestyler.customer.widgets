@@ -507,7 +507,7 @@
 
 		for (var i = 0; i < len; i++) {
 			tSize = tireSizes[i];
-
+			
 			if (outDiam.indexOf(tSize.OutsideDiameter) === -1) {
 				outDiam.push(tSize.OutsideDiameter);
 				width[tSize.OutsideDiameter] = [];
@@ -515,8 +515,7 @@
 				inDiam[tSize.OutsideDiameter + '_' + tSize.Width] = [];
 				inDiam[tSize.OutsideDiameter + '_' + tSize.Width].push(tSize.InsideDiameter);
 			} else {
-				if (width.indexOf(tSize.Width) === -1) {
-					width[tSize.OutsideDiameter] = [];
+				if (width[tSize.OutsideDiameter].indexOf(tSize.Width) === -1) {
 					width[tSize.OutsideDiameter].push(tSize.Width);
 					inDiam[tSize.OutsideDiameter + '_' + tSize.Width] = [];
 					inDiam[tSize.OutsideDiameter + '_' + tSize.Width].push(tSize.InsideDiameter);
@@ -527,7 +526,6 @@
 				}
 			}
 		}
-
 		res.first = outDiam;
 		res.second = width;
 		res.third = inDiam;

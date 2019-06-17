@@ -40,7 +40,7 @@
 
 		<div class="psc-input-group psc-input-radio-group">
 			<label class="psc-radio psc-inline">
-				<input checked="checked" id="psc-sizetype0" name="psc-sizetype" type="radio" value="metric" class="psc-sizetype" /> Metric 
+				<input checked="checked" id="psc-sizetype0" name="psc-sizetype" type="radio" value="metric" class="psc-sizetype" /> Metric
 			</label>
 			<label class="psc-radio psc-inline">
 				<input id="psc-sizetype1" name="psc-sizetype" type="radio" value="flotation" class="psc-sizetype" /> Flotation
@@ -74,7 +74,7 @@
 						<td><span class="psc-value psc-tire2"></span></td>
 						<td><span class="psc-value psc-diff"></span></td>
 					</tr>
-					<tr id="psc-sidewall-row"> 
+					<tr id="psc-sidewall-row">
 						<td class="psc-image"><i class="psc-sprite psc-sidewall"></i></td>
 						<td><span class="psc-title">Sidewall</span><span class="psc-exp">Inch</span></td>
 						<td><span class="psc-value psc-tire1"></span></td>
@@ -101,40 +101,49 @@
 
 		<div class="psc-tsd-wrap">
 			<h2 class="psc-h2">Tire Speed Difference (Mph)</h2>
+			<p>Driving speed for Tire 1 vs Driving speed for Tire 2</p>
 			<table class="psc-table psc-tsd-table" id="psc-tsd-table">
 				<thead>
 					<tr>
 						<th>Tire 1</th>
+						<th></th>
 						<th>Tire 2</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
 						<td class="tire-1"><span class="psc-value psc-tire1"></span></td>
+						<td class="vs">vs</td>
 						<td class="tire-2"><span class="psc-value"></span></td>
 					</tr>
 					<tr>
 						<td class="tire-1"><span class="psc-value psc-tire1"></span></td>
+						<td class="vs">vs</td>
 						<td class="tire-2"><span class="psc-value"></span></td>
 					</tr>
 					<tr>
 						<td class="tire-1"><span class="psc-value psc-tire1"></span></td>
+						<td class="vs">vs</td>
 						<td class="tire-2"><span class="psc-value"></span></td>
 					</tr>
 					<tr>
 						<td class="tire-1"><span class="psc-value psc-tire1"></span></td>
+						<td class="vs">vs</td>
 						<td class="tire-2"><span class="psc-value"></span></td>
 					</tr>
 					<tr>
 						<td class="tire-1"><span class="psc-value psc-tire1"></span></td>
+						<td class="vs">vs</td>
 						<td class="tire-2"><span class="psc-value"></span></td>
 					</tr>
 					<tr>
 						<td class="tire-1"><span class="psc-value psc-tire1"></span></td>
+						<td class="vs">vs</td>
 						<td class="tire-2"><span class="psc-value"></span></td>
 					</tr>
 					<tr>
 						<td class="tire-1"><span class="psc-value psc-tire1"></span></td>
+						<td class="vs">vs</td>
 						<td class="tire-2"><span class="psc-value"></span></td>
 					</tr>
 				</tbody>

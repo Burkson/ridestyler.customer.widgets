@@ -71,7 +71,7 @@ th.psc-diff-header {
 .psc-table td {
 	width: 80px;
 	padding: 0px 5px;
-}	
+}
 
 .psc-table td > span {
 	display: block;
@@ -108,8 +108,8 @@ th.psc-diff-header {
 
 .psc-clear {
 	clear: both;
-} 
- 
+}
+
 td.psc-image {
 	text-align: center;
 	transform: scale(.8);
@@ -313,4 +313,11 @@ td.psc-image {
 
 .psc-smallest .psc-input-select-group span {
 	width: 110px;
+}
+
+.vs {
+	width: 2px;
+	padding: 0px;
+	text-align: center;
+	font-size: 16px;
 }
