@@ -503,28 +503,39 @@
 		width = [],
 		inDiam = [],
 		len = tireSizes.length,
-		tSize = null;
+		tSize = null,
+		curWidth = null,
+		lastNum = null;
 
 		for (var i = 0; i < len; i++) {
 			tSize = tireSizes[i];
+			curWidth = tSize.Width;
 
 			if (outDiam.indexOf(tSize.OutsideDiameter) === -1) {
 				outDiam.push(tSize.OutsideDiameter);
 				width[tSize.OutsideDiameter] = [];
-				width[tSize.OutsideDiameter].push(tSize.Width);
-				inDiam[tSize.OutsideDiameter + '_' + tSize.Width] = [];
-				inDiam[tSize.OutsideDiameter + '_' + tSize.Width].push(tSize.InsideDiameter);
+				width[tSize.OutsideDiameter].push(curWidth);
+				inDiam[tSize.OutsideDiameter + '_' + curWidth] = [];
+				inDiam[tSize.OutsideDiameter + '_' + curWidth].push(tSize.InsideDiameter);
 			} else {
-				if (width[tSize.OutsideDiameter].indexOf(tSize.Width) === -1) {
-					width[tSize.OutsideDiameter].push(tSize.Width);
-					inDiam[tSize.OutsideDiameter + '_' + tSize.Width] = [];
-					inDiam[tSize.OutsideDiameter + '_' + tSize.Width].push(tSize.InsideDiameter);
+				if (width[tSize.OutsideDiameter].indexOf(curWidth) === -1) {
+					if(lastNum != curWidth){
+						if(curWidth.toString().length == 1){
+							curWidth = parseFloat(curWidth.toString()).toFixed(curWidth.toString().split('.')[0].length);
+							width[tSize.OutsideDiameter].push(curWidth);
+						} else {
+							width[tSize.OutsideDiameter].push(curWidth);
+						}
+					}
+					inDiam[tSize.OutsideDiameter + '_' + curWidth] = [];
+					inDiam[tSize.OutsideDiameter + '_' + curWidth].push(tSize.InsideDiameter);
 				} else {
-					if (inDiam[tSize.OutsideDiameter + '_' + tSize.Width].indexOf(tSize.InsideDiameter) === -1) {
-						inDiam[tSize.OutsideDiameter + '_' + tSize.Width].push(tSize.InsideDiameter);
+					if (inDiam[tSize.OutsideDiameter + '_' + curWidth].indexOf(tSize.InsideDiameter) === -1) {
+						inDiam[tSize.OutsideDiameter + '_' + curWidth].push(tSize.InsideDiameter);
 					}
 				}
 			}
+			lastNum = curWidth;
 		}
 		res.first = outDiam;
 		res.second = width;
