@@ -77,7 +77,7 @@
 
 	QrCapture.prototype.SendRequest = function(endpoint, callback){
 		var request = new XMLHttpRequest();
-		var url = 'http://ridestylercaptureapi-745226033.us-west-2.elb.amazonaws.com/' + endpoint;
+		var url = 'https://capture.ridestyler.net/' + endpoint;
 
 		request.addEventListener('readystatechange', function () {
 			if (this.readyState !== 4) {
