@@ -25,7 +25,7 @@
 		this.tplHtml = '';
 
 		// Paths to our stylesheet and template
-		this.urlPfx = this.dev ? 'src/' : 'https://static.ridestyler.net/widgets/plus-size-calculator/1.2/';
+		this.urlPfx = this.dev ? 'src/' : 'https://static.ridestyler.net/widgets/plus-size-calculator/1.3/';
 		this.cssFile = this.dev ? 'psc.css' : 'psc.min.css';
 		this.cssUrl = this.urlPfx + 'css/' + this.cssFile;
 		this.tplUrl = this.urlPfx + 'html/psc.tpl';
@@ -72,7 +72,10 @@
 		this.firsti = null;
 		this.secondi = null;
 		this.thirdi = null;
-		this.sizeType = null;
+		this.sizeType0 = null;
+		this.sizeType1 = null;
+		this.sizeTypeCompare0 = null;
+		this.sizeTypeCompare1 = null;
 		this.submit = null;
 		this.selects = null;
 
@@ -189,6 +192,7 @@
 		this.secondi = this.element.getElementsByClassName('psc-secondi');
 		this.thirdi = this.element.getElementsByClassName('psc-thirdi');
 		this.sizeType = this.element.getElementsByClassName('psc-sizetype');
+		this.sizeType1 = this.element.getElementsByClassName('psc-sizetype1');
 		this.selects = this.element.getElementsByClassName('psc-select');
 		this.selectHeaders = this.element.getElementsByClassName('psc-select-header');
 		this.spinners = this.element.getElementsByClassName('psc-loading');
@@ -214,6 +218,7 @@
 		this.addListeners(this.secondi, 'change', this.onSecondChange);
 		this.addListeners(this.thirdi, 'change', this.onThirdChange);
 		this.addListeners(this.sizeType, 'change', this.onSizeTypeChange);
+		this.addListeners(this.sizeType1, 'change', this.onSizeTypeChange);
 		this.addListeners(this.submit, 'click', this.onSubmit);
 
 		this.adjustLayout();
@@ -226,7 +231,7 @@
 		var first = e.target,
 		secondVals = [],
 		secondLabel = '',
-		fVal = first.value,
+		fVal = parseFloatValue(first.value),
 		parent = first.parentElement.parentElement,
 		second = first.parentElement.nextElementSibling,
 		third = second.nextElementSibling;
@@ -251,7 +256,7 @@
 	PlusSizeCalculator.prototype.onSecondChange = function(e) {
 		var second = e.target,
 		thirdVals = [],
-		sVal = second.value,
+		sVal = parseFloatValue(second.value),
 		parent = second.parentElement.parentElement,
 		first = second.parentElement.previousElementSibling,
 		third = second.parentElement.nextElementSibling,
@@ -285,38 +290,31 @@
 	PlusSizeCalculator.prototype.onSizeTypeChange = function(e) {
 		var self = this,
 		sizetype = e.target,
-		firstSelects = this.firsti,
-		len = this.selects.length,
+		firstSelects = this.firsti[0],
+		len = 3,
 		stVal = sizetype.value,
-		firstVals = null;
+		firstVals = null,
+		i = 0,
+		parent = e.target.parentElement.parentElement.previousElementSibling;
 
-		for (var i = 0; i < len; i++) {
+		if(e.target.name == "psc-sizetype2"){
+			firstSelects = this.firsti[1];
+			len = 6;
+			i = 3;
+		}
+
+		for (i; i < len; i++) {
 			emptyDisableElem(this.selects[i]);
 		}
 
-		clearValsByClass('psc-value');
-
-		len = firstSelects.length;
 		if (stVal === 'flotation') {
 			firstVals = this.flotSizes.first;
-			for (i = 0; i < len; i++) {
-				initSelect(firstSelects[i], 'Outer Diameter', firstVals);
-			}
-
-			len = this.inputGroups.length;
-			for (i = 0; i < len; i++) {
-				addClass(this.inputGroups[i], 'flotation');
-			}
+			initSelect(firstSelects, 'Outer Diameter', firstVals);
+			addClass(parent, 'flotation');
 		} else {
 			firstVals = this.metricSizes.first;
-			for (i = 0; i < len; i++) {
-				initSelect(firstSelects[i], 'Width', firstVals);
-			}
-
-			len = this.inputGroups.length;
-			for (i = 0; i < len; i++) {
-				removeClass(this.inputGroups[i], 'flotation');
-			}
+			initSelect(firstSelects, 'Width', firstVals);
+			removeClass(parent, 'flotation');
 		}
 	};
 
@@ -504,38 +502,39 @@
 		inDiam = [],
 		len = tireSizes.length,
 		tSize = null,
-		curWidth = null,
 		lastNum = null;
 
 		for (var i = 0; i < len; i++) {
 			tSize = tireSizes[i];
-			curWidth = tSize.Width;
 
 			if (outDiam.indexOf(tSize.OutsideDiameter) === -1) {
 				outDiam.push(tSize.OutsideDiameter);
 				width[tSize.OutsideDiameter] = [];
-				width[tSize.OutsideDiameter].push(curWidth);
-				inDiam[tSize.OutsideDiameter + '_' + curWidth] = [];
-				inDiam[tSize.OutsideDiameter + '_' + curWidth].push(tSize.InsideDiameter);
+				if(tSize.Width.toString().length === 1){
+					width[tSize.OutsideDiameter].push(parseFloat(tSize.Width.toString()).toFixed(1));
+				} else {
+					width[tSize.OutsideDiameter].push(tSize.Width);
+				}
+				inDiam[tSize.OutsideDiameter + '_' + tSize.Width] = [];
+				inDiam[tSize.OutsideDiameter + '_' + tSize.Width].push(tSize.InsideDiameter);
 			} else {
-				if (width[tSize.OutsideDiameter].indexOf(curWidth) === -1) {
-					if(lastNum != curWidth){
-						if(curWidth.toString().length == 1){
-							curWidth = parseFloat(curWidth.toString()).toFixed(curWidth.toString().split('.')[0].length);
-							width[tSize.OutsideDiameter].push(curWidth);
+				if (width[tSize.OutsideDiameter].indexOf(tSize.Width) === -1) {
+					if(lastNum != tSize.Width){
+						if(tSize.Width.toString().length === 1){
+							width[tSize.OutsideDiameter].push(parseFloat(tSize.Width.toString()).toFixed(1));
 						} else {
-							width[tSize.OutsideDiameter].push(curWidth);
+							width[tSize.OutsideDiameter].push(tSize.Width);
 						}
 					}
-					inDiam[tSize.OutsideDiameter + '_' + curWidth] = [];
-					inDiam[tSize.OutsideDiameter + '_' + curWidth].push(tSize.InsideDiameter);
+					inDiam[tSize.OutsideDiameter + '_' + tSize.Width] = [];
+					inDiam[tSize.OutsideDiameter + '_' + tSize.Width].push(tSize.InsideDiameter);
 				} else {
-					if (inDiam[tSize.OutsideDiameter + '_' + curWidth].indexOf(tSize.InsideDiameter) === -1) {
-						inDiam[tSize.OutsideDiameter + '_' + curWidth].push(tSize.InsideDiameter);
+					if (inDiam[tSize.OutsideDiameter + '_' + tSize.Width].indexOf(tSize.InsideDiameter) === -1) {
+						inDiam[tSize.OutsideDiameter + '_' + tSize.Width].push(tSize.InsideDiameter);
 					}
 				}
 			}
-			lastNum = curWidth;
+			lastNum = tSize.Width;
 		}
 		res.first = outDiam;
 		res.second = width;
@@ -716,6 +715,22 @@
 			} else {
 				console.error('Unable to attach ' + eventType + ' event listener');
 			}
+		}
+	};
+
+	/**
+	*	Takes a string value and returns a number if the val can be parsed
+	* @param {String} val
+	*/
+	var parseFloatValue = function(val) {
+		var parsedValue,
+		valString = val;
+
+		if(valString.length == 3 && valString.charAt(2) == 0){ //can be parsed, parse value return value
+			parsedValue = parseFloat(valString);
+			return parsedValue;
+		} else { //cant be parsed, just return val
+			return val;
 		}
 	};
 

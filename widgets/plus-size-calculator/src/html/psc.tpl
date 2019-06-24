@@ -16,6 +16,15 @@
 					<select class="psc-thirdi psc-select" id="psc-third0" name="psc-third0" disabled></select>
 				</span>
 			</div>
+
+			<div class="psc-input-group psc-input-radio-group">
+				<label class="psc-radio psc-inline">
+					<input checked="checked" id="psc-sizetype1-0" name="psc-sizetype1" type="radio" value="metric" class="psc-sizetype" /> Metric
+				</label>
+				<label class="psc-radio psc-inline">
+					<input id="psc-sizetype1-1" name="psc-sizetype1" type="radio" value="flotation" class="psc-sizetype" /> Flotation
+				</label>
+			</div>
 		</div>
 
 		<div class="psc-ctm-wrap">
@@ -34,18 +43,18 @@
 					<select class="psc-thirdi psc-select" id="psc-third1" name="psc-third1" disabled></select>
 				</span>
 			</div>
+
+			<div class="psc-input-group psc-input-radio-group">
+				<label class="psc-radio psc-inline">
+					<input checked="checked" id="psc-sizetype2-0" name="psc-sizetype2" type="radio" value="metric" class="psc-sizetype1" /> Metric
+				</label>
+				<label class="psc-radio psc-inline">
+					<input id="psc-sizetype2-1" name="psc-sizetype2" type="radio" value="flotation" class="psc-sizetype1" /> Flotation
+				</label>
+			</div>
 		</div>
 
 		<div class="psc-clear"></div>
-
-		<div class="psc-input-group psc-input-radio-group">
-			<label class="psc-radio psc-inline">
-				<input checked="checked" id="psc-sizetype0" name="psc-sizetype" type="radio" value="metric" class="psc-sizetype" /> Metric
-			</label>
-			<label class="psc-radio psc-inline">
-				<input id="psc-sizetype1" name="psc-sizetype" type="radio" value="flotation" class="psc-sizetype" /> Flotation
-			</label>
-		</div>
 
 		<div class="psc-ts-wrap">
 			<h2 class="psc-h2">Tire Specifications</h2>
