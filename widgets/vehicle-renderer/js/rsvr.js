@@ -67,8 +67,6 @@ function RideStylerViewport(elem, options) {
     if (!isOffsetPositioned)
         rootContainer.style.position = 'relative';
 
-    
-
     // Insert our image container element that will be used for holding our rendered images
     container = document.createElement('div');
 
@@ -107,7 +105,7 @@ function RideStylerViewport(elem, options) {
             lastClientHeight = container.clientHeight;
 
             // Handle situations where the rootContainer does not provide a height because it is not specifically set
-            if (lastClientHeight === 0 && desiredAspectHeight == null) {
+            if (lastClientHeight === 0 && (desiredAspectHeight === null || (rootContainer.clientHeight === 0 && rootContainer.clientWidth !== 0))) {
                 usingPseudoHeight = true;
                 container.style.position = 'relative';
                 container.style.left = '0';
