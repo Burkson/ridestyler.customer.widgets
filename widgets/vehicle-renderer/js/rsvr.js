@@ -82,15 +82,6 @@ function RideStylerViewport(elem, options) {
     // Create our other required elements
     createLoaderElement();
 
-    // Figure out which version of our viewer we want to use
-    /*
-    if (isCanvasSupported() == false) { // TODO: NEED TO REMOVE THE FALSE REQUIREMENT - WE ARE FLIPPING FOR DEBUG
-
-    } else {
-        renderer = new RideStylerImageRenderer(container);
-    }
-    */
-
     // We are always using the image renderer since that is all that is supported currently
     renderer = new RideStylerImageRenderer(container);
 
@@ -157,6 +148,14 @@ function RideStylerViewport(elem, options) {
         container = null;
         loader = null;
         renderer = null;
+    };
+
+    this.CurrentInstructions = function (newInstructions) {
+        if (typeof newInstructions !== 'undefined') {
+            return this.Update(newInstructions);
+        }
+
+        return state;
     };
 
     this.Update = function(instructions) {
@@ -265,11 +264,6 @@ function RideStylerViewport(elem, options) {
     function getPixelRatio() {
         if (window.devicePixelRatio) return window.devicePixelRatio;
         else return 1;
-    }
-
-    function isCanvasSupported() {
-        var elem = document.createElement('canvas');
-        return !!(elem.getContext && elem.getContext('2d'));
     } 
 
     function RideStylerImageRenderer(container) {

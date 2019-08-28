@@ -14,5 +14,16 @@ declare class RideStylerViewport {
     public Update(instructions:ridestyler.Requests.VehicleRenderInstructions): RideStylerPromise;
     public Reset(): void;
     public ResizeRenderArea(): void;
+
+    /**
+     * Returns the current instructions for the renderer
+     */
+    public CurrentInstructions():ridestyler.Requests.VehicleRenderInstructions;
+
+    /**
+     * Updates the renderer with new instructions. Shortcut to Update
+     * @param instructions New instructions to update to
+     */
+    public CurrentInstructions(instructions: ridestyler.Requests.VehicleRenderInstructions):RideStylerPromise;
 }
 
