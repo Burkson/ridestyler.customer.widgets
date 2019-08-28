@@ -133,7 +133,7 @@ function RideStylerViewport(elem, options) {
         if (active === false) return;
         if (options.responsive !== false) 
             clearInterval(responsiveInterval);
-    }
+    };
 
     this.ResumeLayout = function() {
         if (active === false) return;
@@ -142,7 +142,7 @@ function RideStylerViewport(elem, options) {
 
         // Trigger our resize regardless because we may want an espect ratio but not a reponsive monitor.
         setTimeout(this.ResizeRenderArea, 10);
-    }   
+    };   
 
     this.Destroy = function() {
         if (active === false) return;
@@ -157,7 +157,7 @@ function RideStylerViewport(elem, options) {
         container = null;
         loader = null;
         renderer = null;
-    }
+    };
 
     this.Update = function(instructions) {
         if (active === false) return;
@@ -211,7 +211,7 @@ function RideStylerViewport(elem, options) {
         }
 
         if (state.width == 0 || state.height == 0) {
-            console.log('Skipping vehicle render since current dimension would be 0.')
+            console.log('Skipping vehicle render since current dimension would be 0.');
             skipRendering = true;
         }
 
