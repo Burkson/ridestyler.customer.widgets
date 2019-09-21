@@ -23,55 +23,70 @@
 		wheelBackOne,
 		wheelBackTwo,
 		wheelBackDiff,
+		wheelFrontOne,
+		wheelFrontTwo,
+		wheelFrontDiff,
 		wheelOffsetOne,
 		wheelOffsetTwo,
-		wheelOffsetDiff;
+		wheelOffsetDiff,
+		wheelDetSuspension,
+		wheelDetFenders,
+		wheelDetWheelWells,
+		wheelDetBrakes,
+		clearanceNotes;
 
 		/**
 		 * Runs when DOM content loaded. Load resources, then initialize UI.
 		 */
 		function onDomReady(){
-			Promise.all([loadTpl, loadStyles]).then(function(){
-				initializeUi();
+			loadStyles().then(function(){
+				loadTpl().then(function(){
+					initializeUi();
+				});
 			});
 		}
 
 		/**
 		 * load stylesheet from cdn
 		 */
-		const loadStyles = new Promise(function(resolve){
-			let css = document.createElement('link');
-			css.rel = "stylesheet";
-			css.href = cssUrl;
-			document.getElementsByTagName('head')[0].append(css);
+		function loadStyles(){
+			return new Promise(function(resolve){
+				let css = document.createElement('link');
+				css.rel = "stylesheet";
+				css.href = cssUrl;
+				document.getElementsByTagName('head')[0].append(css);
 
-			css.onload = function(){
-				resolve();
-			}
-		});
+				css.onload = function(){
+					resolve();
+				}
+			});
+		}
 
 		/**
 		 * load tpl from cdn
 		 */
-		const loadTpl = new Promise(function(resolve){
-			let xhr = new XMLHttpRequest();
- 
-			xhr.onreadystatechange = function() {
-				var completed = 4;
+		function loadTpl(){ 
+			return new Promise(function(resolve){
+				let xhr = new XMLHttpRequest(),
+				container = document.getElementById(containerId);
 	
-				if (xhr.readyState === completed) {
-					if (xhr.status === 200) {
-						container.innerHTML = xhr.responseText;
-						resolve();
-					} else {
-						console.error('template failed to load');
+				xhr.onreadystatechange = function() {
+					var completed = 4;
+		
+					if (xhr.readyState === completed) {
+						if (xhr.status === 200) {
+							container.innerHTML = xhr.responseText;
+							resolve();
+						} else {
+							console.error('template failed to load');
+						}
 					}
-				}
-			};
-	
-			xhr.open('GET', tplUrl, true);
-			xhr.send(null);
-		});
+				};
+		
+				xhr.open('GET', tplUrl, true);
+				xhr.send(null);
+			});
+		}
 
 		/**
 		 * initialize ui for template
@@ -86,12 +101,20 @@
 			wheelBackOne = document.getElementById('wc-wheel-backspace0');
 			wheelBackTwo = document.getElementById('wc-wheel-backspace1');
 			wheelBackDiff = document.getElementById('wc-backspace-diff');
+			wheelFrontOne = document.getElementById('wc-wheel-frontspace0');
+			wheelFrontTwo = document.getElementById('wc-wheel-frontspace1');
+			wheelFrontDiff = document.getElementById('wc-frontspace-diff');
 			wheelOffsetOne = document.getElementById('wc-wheel-offset0');
-			wheelOffsetTwo = document.getElementById('wc-wheel-offset0');
+			wheelOffsetTwo = document.getElementById('wc-wheel-offset1');
 			wheelOffsetDiff = document.getElementById('wc-offset-diff');
 			diameterSelects = document.getElementsByClassName('wc-firsti');
 			widthSelects = document.getElementsByClassName('wc-secondi');
 			offsetSelects = document.getElementsByClassName('wc-thirdi');
+			wheelDetSuspension = document.getElementById('wc-details-suspension');
+			wheelDetFenders = document.getElementById('wc-details-fenders');
+			wheelDetWheelWells = document.getElementById('wc-details-wheelwells');
+			wheelDetBrakes = document.getElementById('wc-details-brakes');
+			clearanceNotes = document.getElementById('wc-clearance-container');
 
 			addListeners(diameterSelects, 'change', onFirstChange);
 			addListeners(widthSelects, 'change', onSecondChange);
@@ -114,6 +137,8 @@
 				count++;
 			}
 
+			wheelDiameters.unshift("Diameter");
+
 			populateField(diameterSelects[0], wheelDiameters)
 			populateField(diameterSelects[1], wheelDiameters)
 		}
@@ -134,6 +159,8 @@
 				count+=.5;
 			}
 
+			wheelWidths.unshift("Width");
+
 			populateField(nextEl, wheelWidths);
 		}
 
@@ -153,27 +180,9 @@
 				count++;
 			}
 
+			wheelOffsets.unshift("Offset");
+
 			populateField(nextEl, wheelOffsets);
-		}
-		
-		/**
-		 * call ridestyler api to compare two given wheels
-		 */
-		function getCompareData(){
-			sendRequest("Wheel/CompareWheels", "Comparison", {BaseWheel: wheel[0], NewWheel: wheel[1]}).then(function(comparisonData){
-				wheelDiamOne.innerHTML = comparisonData.BaseWheel.Diameter;
-				wheelDiamTwo.innerHTML = comparisonData.NewWheel.Diameter;
-				wheelDiamDiff.innerHTML = comparisonData.Differences.OutsideDiameter;
-				wheelWidthOne.innerHTML = comparisonData.BaseWheel.Width;
-				wheelWidthTwo.innerHTML = comparisonData.NewWheel.Width;
-				wheelWidthDiff.innerHTML = comparisonData.Differences.Width;
-				wheelBackOne.innerHTML = comparisonData.BaseWheel.Back;
-				wheelBackTwo.innerHTML = comparisonData.NewWheel.Back;
-				wheelBackDiff.innerHTML = comparisonData.Differences.BackSpacing;
-				wheelOffsetOne.innerHTML = comparisonData.BaseWheel.Offset;
-				wheelOffsetTwo.innerHTML = comparisonData.NewWheel.Offset;
-				wheelOffsetDiff.innerHTML = comparisonData.Differences.Offset;
-			});
 		}
 
 		/**
@@ -194,33 +203,93 @@
 		}
 
 		/**
+		 * call ridestyler api to compare two given wheels
+		 */
+		function getCompareData(){
+			let requestData = {BaseSize:wheels[0].Diameter + "x" + wheels[0].Width + "ET" + wheels[0].Offset, "NewSizes[0]":wheels[1].Diameter + "x" + wheels[1].Width + " ET" + wheels[1].Offset}
+
+			sendRequest("Wheel/CompareSizes", requestData).then(function(comparisonData){
+				if(comparisonData){
+					displayCompareData(comparisonData)
+				}
+			});
+		}
+
+		function displayCompareData(comparisonData){
+			wheelDiamOne.innerHTML = verifyData(comparisonData.BaseSize.DisplayDiameter);
+			wheelDiamTwo.innerHTML = verifyData(comparisonData.NewSizes[0].DisplayDiameter);
+			wheelDiamDiff.innerHTML = verifyData(comparisonData.Differences[0].Diameter.Percent, "diff");
+			wheelWidthOne.innerHTML = verifyData(comparisonData.BaseSize.DisplayWidth).toFixed(1);
+			wheelWidthTwo.innerHTML = verifyData(comparisonData.NewSizes[0].DisplayWidth).toFixed(1);
+			wheelWidthDiff.innerHTML = verifyData(comparisonData.Differences[0].Width.Percent, "diff");
+			wheelBackOne.innerHTML = verifyData(comparisonData.BaseSize.DisplayBackspacing).toFixed(2);
+			wheelBackTwo.innerHTML = verifyData(comparisonData.NewSizes[0].DisplayBackspacing).toFixed(2);
+			wheelBackDiff.innerHTML = verifyData(comparisonData.Differences[0].Backspacing.Percent, "diff");
+			wheelFrontOne.innerHTML = verifyData(comparisonData.BaseSize.DisplayFrontspacing).toFixed(2);
+			wheelFrontTwo.innerHTML = verifyData(comparisonData.NewSizes[0].DisplayFrontspacing).toFixed(2);
+			wheelFrontDiff.innerHTML = verifyData(comparisonData.Differences[0].Frontspacing.Percent, "diff");
+			wheelOffsetOne.innerHTML = verifyData(comparisonData.BaseSize.DisplayOffset);
+			wheelOffsetTwo.innerHTML = verifyData(comparisonData.NewSizes[0].DisplayOffset);
+			wheelOffsetDiff.innerHTML = verifyData(comparisonData.Differences[0].Offset.Percent, "diff");
+			verifyData(comparisonData.Messages[0][0], "message", wheelDetSuspension);
+			verifyData(comparisonData.Messages[0][1], "message", wheelDetFenders);
+			verifyData(comparisonData.Messages[0][2], "message", wheelDetWheelWells);
+			verifyData(comparisonData.Messages[0][3], "message", wheelDetBrakes);
+
+			function verifyData(data, type, el){
+				let returnData = data;
+
+				if(type === "diff"){
+					if(isNaN(parseInt(returnData)) === false){
+						returnData = returnData.toFixed(2) + "%"
+					}
+				} else if(type === "message") {
+					clearanceNotes.style.display = 'block';
+					if(returnData.Type == 1){
+						el.classList.remove('wc-error');
+						el.classList.remove('wc-warning');
+						el.classList.add('wc-warning');
+					} else if(returnData.Type == 2){
+						el.classList.remove('wc-error');
+						el.classList.remove('wc-warning');
+						el.classList.add('wc-error');
+					} else {
+						el.classList.remove('wc-error');
+						el.classList.remove('wc-warning');
+					}
+					returnData = returnData.Message;
+				}
+
+				if(returnData !== undefined && el === undefined){
+					return returnData;
+				} else if(el !== undefined) {
+					el.innerHTML = returnData;
+				}
+			}
+		}
+
+		/**
 		 * Update our wheel object with new values
 		 * @param {DOM Element} e - DOM element
 		 */
 		function updateWheelObject(e){
 			let wheelElement = e.target,
-			wheelIndex = wheelElement.id.charAt(wheelElement.id.length - 1);
+			wheelIndex = wheelElement.id.charAt(wheelElement.id.length - 1),
+			wheelValue = wheelElement.value;
 
+			if(wheelValue !== isNaN){}
 			if(wheelElement.classList.contains('wc-firsti')){
-				wheels[wheelIndex]["Diameter"] = wheelElement.value;
+				wheels[wheelIndex]["Diameter"] = wheelValue;
 			} else if(wheelElement.classList.contains('wc-secondi')) {
-				wheels[wheelIndex]["Width"] = wheelElement.value;
+				wheels[wheelIndex]["Width"] = wheelValue;
 			} else {
-				wheels[wheelIndex]["Offset"] = wheelElement.value;
+				wheels[wheelIndex]["Offset"] = wheelValue;
 				wheels[wheelIndex]["Backspace"] = getBackspacing(wheels[wheelIndex]["Width"], wheels[wheelIndex]["Offset"]);
 			}
 
 			if(wheels[0].Offset !== undefined && wheels[1].Offset !== undefined){
 				isWheelsConfirmed = true;
 			}
-		}
-		
-		/**
-		 * Display wheel data given the dom element with new value
-		 * @param {object} wheelData - Object of new wheel data
-		 */
-		function displayWheelData(wheelData) {
-			
 		}
 
 		/**
@@ -254,16 +323,15 @@
 		/**
 		 * Send ridestyler api request
 		 * @param {string} endpoint - endpoint for request
-		 * @param {string} getter - property you want to grab from result
 		 * @param {object||formData} data - data to include in request
 		 */
-		function sendRequest(endpoint, getter, data){
+		function sendRequest(endpoint, data){
 			return new Promise(function(resolve){
 				ridestyler.ajax.send({
 					action: endpoint,
 					data: data,
 					callback: function (res) {
-						resolve(res[getter]);
+						resolve(res);
 					}
 				});
 			});
@@ -292,7 +360,9 @@
 		function onFirstChange(e){
 			updateWheelObject(e);
 			getWheelWidths(e);
-			getCompareData();
+			if(wheels[1].Offset !== undefined){
+				getCompareData();
+			}
 		}
 
 		/**
@@ -302,7 +372,9 @@
 		function onSecondChange(e){
 			updateWheelObject(e);
 			getWheelOffsets(e);
-			getCompareData();
+			if(wheels[1].Offset !== undefined){
+				getCompareData();
+			}
 		}
 
 		/**
@@ -311,19 +383,15 @@
 		 */
 		function onThirdChange(e){
 			updateWheelObject(e);
-			displayWheelData(e);
-			getCompareData();
-
-			if(isWheelsConfirmed){
-				// displayDifferences();
-				// generateDifferenceData();
+			if(wheels[1].Offset !== undefined){
+				getCompareData();
 			}
 		}
 
 		/**
 		 * On window load DOM content
 		 */
-		window.addEventListener('DOMContentLoaded', function(){
+		document.addEventListener("DOMContentLoaded", function(event) { 
 			onDomReady();
 			// initializeUi();
 		});
