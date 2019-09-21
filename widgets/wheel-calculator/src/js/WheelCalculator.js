@@ -10,7 +10,6 @@
 		widthSelects,
 		offsetSelects,
 		wheels = [{Diameter:undefined, Width:undefined, Offset:undefined, Backspace:undefined}, {Diameter:undefined, Width:undefined, Offset:undefined, Backspace:undefined}],
-		isWheelsConfirmed = false,
 		cdnUrl = "https://static.ridestyler.net/widgets/wheel-calculator/1.0",
 		tplUrl = cdnUrl + "/html/wc.tpl",
 		cssUrl = cdnUrl + "/css/wc.min.css",
@@ -33,7 +32,8 @@
 		wheelDetFenders,
 		wheelDetWheelWells,
 		wheelDetBrakes,
-		clearanceNotes;
+		clearanceNotes,
+		disclaimer;
 
 		/**
 		 * Runs when DOM content loaded. Load resources, then initialize UI.
@@ -115,6 +115,13 @@
 			wheelDetWheelWells = document.getElementById('wc-details-wheelwells');
 			wheelDetBrakes = document.getElementById('wc-details-brakes');
 			clearanceNotes = document.getElementById('wc-clearance-container');
+			disclaimer = document.getElementById('wc-disclaimer'); 
+
+			if(options){
+				disclaimer.innerHTML = options.disclaimer;
+			} else {
+				disclaimer.innerHTML = "This tool is for estimation purposes only. You should consult a professional and confirm measurements prior to making any modifications to your vehicle.";
+			}
 
 			addListeners(diameterSelects, 'change', onFirstChange);
 			addListeners(widthSelects, 'change', onSecondChange);
@@ -285,10 +292,6 @@
 			} else {
 				wheels[wheelIndex]["Offset"] = wheelValue;
 				wheels[wheelIndex]["Backspace"] = getBackspacing(wheels[wheelIndex]["Width"], wheels[wheelIndex]["Offset"]);
-			}
-
-			if(wheels[0].Offset !== undefined && wheels[1].Offset !== undefined){
-				isWheelsConfirmed = true;
 			}
 		}
 

@@ -586,6 +586,7 @@
 					</tr>
 				</tbody>
 			</table>
+			<div class="wc-clear"></div>
 		</div>
 		<div class="wc-ts-wrap" id="Clearance">
 			<h2 class="wc-h2">Clearance Notes</h2>
@@ -612,5 +613,6 @@
 		</div>
 		<div class="wc-clear"></div>
 		<input id="wc-form-submit" type="submit">
+		<div id="wc-disclaimer"></div>
 	</form>
 </div>
