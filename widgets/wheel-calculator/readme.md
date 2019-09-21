@@ -6,7 +6,7 @@ All of the RideStyler Widgets are designed to be as easy as possible to add to y
 ## Add Script References
 The first step is simply adding a reference to the RideStyler JavaScript API and the Wheel Calculator script.
 ```
-<script src="http://api.ridestyler.net/js?DataType=json"></script>
+<script src="https://api.ridestyler.net/js?DataType=json"></script>
 <script src="https://static.ridestyler.net/widgets/wheel-calculator/1.0/js/wc-min.js"></script>
 ```
 ## Add a Container
