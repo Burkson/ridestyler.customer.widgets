@@ -37,5 +37,10 @@ Finally, we initialize the Wheel Calculator. Pass the id attribute of the contai
 ```
 var wc = new WheelCalculator('container');
 ```
+## Custom Disclaimer
+You can add a custom disclaimer by adding the option on initialization:
+```
+var wc = new WheelCalculator('container', {disclaimer: "this is a disclaimer"});
+```
 ## Enjoy
 That's it! The widget will render in the container specified and you can begin comparing wheel sizes.
