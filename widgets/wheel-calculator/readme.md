@@ -6,7 +6,7 @@ All of the RideStyler Widgets are designed to be as easy as possible to add to y
 ## Add Script References
 The first step is simply adding a reference to the RideStyler JavaScript API and the Wheel Calculator script.
 ```
-<script src="http://api-alpha.ridestyler.net/js?DataType=json"></script>
+<script src="http://api.ridestyler.net/js?DataType=json"></script>
 <script src="https://static.ridestyler.net/widgets/wheel-calculator/1.0/js/wc-min.js"></script>
 ```
 ## Add a Container
@@ -30,12 +30,17 @@ Now we need to initialize the API and our Wheel Calculator widget.
 
 First, we will initialize the JavaScript API using our API key.
 ```
-ridestyler.initialize({ Key: 'c028c54cf0c447c594a862de6ac85d1a' });
+ridestyler.initialize({ Key: 'API KEY' });
 ```
 
 Finally, we initialize the Wheel Calculator. Pass the id attribute of the container above to the constructor.
 ```
 var wc = new WheelCalculator('container');
+```
+## Custom Disclaimer
+You can add a custom disclaimer by adding the option on initialization:
+```
+var wc = new WheelCalculator('container', {disclaimer: "this is a disclaimer"});
 ```
 ## Enjoy
 That's it! The widget will render in the container specified and you can begin comparing wheel sizes.
