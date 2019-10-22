@@ -1409,9 +1409,35 @@ declare namespace ridestyler {
             WheelItemNumberFront?:string;
             WheelItemNumberRear?:string;
             
+            /**
+             * The WheelFitmentID to render in the front and rear of the vehicle
+             */
             WheelFitment?:string;
+
+            /**
+             * The WheelFitmentID to render in the front of the vehicle
+             */
             WheelFitmentFront?:string;
+            
+            /**
+             * The WheelFitmentID to render in the rear of the vehicle
+             */
             WheelFitmentRear?:string;
+            
+            /**
+             * The TireFitmentID to render in the front and rear of the vehicle
+             */
+            TireFitment?:string;
+
+            /**
+             * The TireFitmentID to render in the front of the vehicle
+             */
+            TireFitmentFront?:string;
+            
+            /**
+             * The TireFitmentID to render in the rear of the vehicle
+             */
+            TireFitmentRear?:string;
             
             WheelFitmentResource?:string;
             WheelFitmentResourceFront?:string;
