@@ -156,6 +156,19 @@ declare namespace ridestyler {
             OrganizationFlags: OrganizationFlags;
         }
 
+        type SubscriptionPlanProduct = "visualizer"|"pro";
+
+        interface SubscriptionPlan {
+            AllowedRequestCount: number;
+            AllowedUserCount: number;
+            Code: string;
+            Description: string;
+            BaseFee: number;
+            Interval: string;
+            IncludedProducts: SubscriptionPlanProduct;
+            IsSystemPlan: boolean;
+        }
+
         const enum WheelBrandFlags
         {
             None = 0,
@@ -851,6 +864,9 @@ declare namespace ridestyler {
             SessionExpiration: string;
             ActiveSubscription: boolean;
             User: ridestyler.Descriptions.UserDescriptionModel;
+            DataShard: ridestyler.DataObjects.DataShardDataObject;
+            ActiveOrganization: ridestyler.DataObjects.OrganizationDataObject;
+            SubscriptionPlan: ridestyler.DataObjects.SubscriptionPlan;
         }
 
         interface ActionCountResultModel extends RideStylerAPIResponse {
