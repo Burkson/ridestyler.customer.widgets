@@ -94,6 +94,24 @@ declare namespace ridestyler {
             DisableInclusionInheritance = 8
         }
 
+        const enum ApiAccessKeyStatus
+        {
+            Invalid = 0,
+            Active = 1,
+            Cancelled = 2
+        }
+
+        interface ApiAccessKeyDataObject
+        {
+            ApiAccessKeyID: number;
+            ApiAccessKey_OrganizationID: number;
+            ApiAccessKeyValue: string;
+            ApiAccessKeyStatus: ApiAccessKeyStatus;
+            ApiAccessKeyOrigin: string;
+            ApiAccessKeyDescription: string;
+            ApiAccessKey_Organization: OrganizationDataObject;
+        }
+
         interface DataShardDataObject {
             DataShardID: number;
             DataShard_OrganizationID: number;
@@ -839,6 +857,10 @@ declare namespace ridestyler {
             Count: number;
         }
 
+        interface ApiAccessKeyGetKeysResponse extends RideStylerAPIResponse {
+            Keys: DataObjects.ApiAccessKeyDataObject[];
+        }
+
         interface DiameterResultModel extends RideStylerAPIResponse {
             Diameters: number[];
         }
@@ -1024,6 +1046,17 @@ declare namespace ridestyler {
             OutsideDiameterTargetWhole?: number;
             OutsideDiameterVarianceMin?: number;
             OutsideDiameterVarianceMax?: number;
+        }
+
+        interface ApiAccessKeyFilterModel extends ActionRequestPagedModel {
+            ApiAccessKeyID?: number;
+            ApiAccessKeyIDs?: number[];
+
+            ApiAccessKeyValue?: string;
+            ApiAccessKeyValues?: string[];
+
+            Organization?: number;
+            Organizations?: number[];
         }
 
         interface TireFilterModel extends ActionRequestPagedModel {
@@ -1531,6 +1564,9 @@ declare namespace ridestyler {
 
         "share/vehicle": Responses.ShareResultModel,
 
+        "apiaccesskey/getkeys": Responses.ApiAccessKeyGetKeysResponse,
+        "apiaccesskey/countkeys": Responses.ActionCountResultModel,
+
         "organization/image": never,
         "organization/getsettings": Responses.SettingsResultModel,
 
@@ -1575,6 +1611,9 @@ declare namespace ridestyler {
         "link/create": { URL: string },
 
         "share/vehicle": Requests.ShareVehicleRequest,
+
+        "apiaccesskey/getkeys": Requests.ApiAccessKeyFilterModel,
+        "apiaccesskey/countkeys": Requests.ApiAccessKeyFilterModel,
 
         "organization/image": { AssetKey:string, Organization?:number },
         "organization/getsettings": Requests.OrganizationSettingsRequestModel,
