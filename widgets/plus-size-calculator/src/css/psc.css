@@ -380,9 +380,6 @@ span.psc-sizetype.selected, span.psc-sizetype1.selected {
 }
 
 @media screen and (max-width: 470px){
-	#container {
-		margin: 2px;
-	}
 	.psc-widget {
 		padding: 0;
 		min-width: auto;
@@ -407,6 +404,8 @@ span.psc-sizetype.selected, span.psc-sizetype1.selected {
 		margin: 2px 0px;
 	}
 	#psc-disclaimer {
-		padding: 5px;
+		padding: 0;
+		text-align: center;
+		font-size: 11px;
 	}
 }

@@ -5,7 +5,6 @@
 
 .wc-widget {
     font-size: 12px;
-    min-width: 410px;
     min-height: 200px;
     overflow: auto;
     height: 100%;
@@ -420,4 +419,48 @@ div span.wc-title {
     max-width: 400px;
     margin: 20px 0 20px 0;
     line-height: 20px;
+}
+
+@media screen and (max-width: 470px) {
+    .wc-widget {
+        text-align: center;
+        padding: 0;
+        min-width: auto
+    }
+
+    .wc-ts-wrap {
+        text-align: center;
+    }
+
+    #wc-info-wrapper, #wc-selection-wrapper {
+        width: 100%;
+        margin-right: 0
+    }
+
+    .wc-image {
+        display: none
+    }
+
+    .wc-table td {
+        padding: 1px
+    }
+
+    .wc-small .wc-table {
+        display: inline-block
+    }
+
+    .wc-table th, .wc-title {
+        font-size: 11px;
+    }
+
+    .wc-widget select {
+        margin-bottom: 2px;
+    }
+
+    #wc-disclaimer {
+        text-align: center;
+        padding: 5px;
+        width: 100%;
+        max-width: none;
+    }
 }
