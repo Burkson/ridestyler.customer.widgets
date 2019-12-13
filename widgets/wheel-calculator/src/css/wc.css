@@ -1,24 +1,18 @@
+.wc-widget h5 {
+    text-transform: uppercase;
+    font-weight: 900;
+}
+
 .wc-widget {
     font-size: 12px;
-    font-family: proxima-nova-alt-ext-cond,sans-serif;
-    color: #555;
     min-width: 410px;
     min-height: 200px;
     overflow: auto;
     height: 100%;
-    padding: 5px 18px;
     text-align: left;
     display: block;
-    width: 70%
-}
-
-.wc-h2 {
-    display: inline;
-    color: #428def;
-    font-size: 16px;
-    line-height: 24px;
-    font-weight: 600;
-    text-transform: uppercase
+    width: 100%;
+    padding: 5px 18px;
 }
 
 .wc-loading {
@@ -32,37 +26,69 @@
     background-repeat: no-repeat
 }
 
-.wc-tm-wrap {
-    margin: 0 20px 60px 0
+#wc-selection-wrapper {
+    width: auto;
+    display: inline-flex;
+    flex-direction: column;
+    margin-right: 5%;
 }
 
-.wc-ctm-wrap,.wc-tm-wrap {
-    float: left;
-    display: inline-block
+#wc-info-wrapper {
+    width: auto;
+    display: inline-flex;
+    flex-direction: column;
+    max-width: 432px;
 }
 
-.wc-ctm-wrap {
-    margin: 0 0 20px
+.wc-ctm-wrap, .wc-tm-wrap {
+    display: inline-block;
+    margin-bottom: 4%;
 }
 
-.wc-ts-wrap,.wc-tsd-wrap {
-    float: left
+.wc-ctm-wrap p, .wc-tm-wrap p {
+    margin-bottom: 12px;
 }
 
 .wc-ts-wrap {
     text-align: left;
     display: inline-block;
-    vertical-align: top
+    vertical-align: top;
 }
 
-#Rims {
-    padding-right: 25px;
-    border-right: 2px dashed #dedede
+.wc-ts-wrap, .wc-tsd-wrap {
+    float: left
 }
 
-#Clearance,.wc-tsd-wrap {
-    padding-left: 25px;
-    width: 40%
+.wc-ts-wrap p, .wc-tsd-wrap p {
+    margin-bottom: 0;
+    line-height: 1.5em;
+}
+
+#wc-info-header {
+    display: block;
+}
+
+#wc-info-header h5 {
+    display: inline-block;
+}
+
+#wc-info-header p {
+    display: inline-block;
+    margin: 0 0 0 15px;
+    font-weight: bold;
+    cursor: pointer;
+    border-bottom: 2px solid rgba(0, 0, 0, 0);
+    line-height: 20px;
+    color: gray;
+}
+
+#wc-info-header p.selected {
+    border-bottom: 2px solid #8fdafa;
+    color: black;
+}
+
+#Notes {
+    display: none;
 }
 
 table.wc-table {
@@ -71,28 +97,29 @@ table.wc-table {
     display: inline-block
 }
 
-.wc-table th,.wc-title {
+table.wc-table thead {
+    text-align: center;
+}
+
+.wc-table th, .wc-title {
     font-weight: 400;
     font-size: 14px;
-    text-transform: uppercase
+    text-transform: uppercase;
 }
 
-th.wc-diff-header {
-    font-size: 12px
-}
-
-#Clearance .wc-table td {
+#Notes .wc-table td {
     padding: 1px;
     max-height: 60px
 }
 
 .wc-table td {
     width: 80px;
-    padding: 0 5px
+    padding: 0 5px;
+    line-height: 1;
 }
 
 .wc-table td>span {
-    display: block
+    display: block;
 }
 
 .wc-widget select {
@@ -102,7 +129,7 @@ th.wc-diff-header {
     color: #555
 }
 
-.wc-value,.wc-widget select {
+.wc-value, .wc-widget select {
     box-sizing: border-box;
     background-color: #fcfcfc;
     box-shadow: none;
@@ -110,7 +137,7 @@ th.wc-diff-header {
     border: 1px solid #ccc
 }
 
-#Clearance .wc-value {
+#Notes .wc-value {
     height: auto;
     text-align: left;
     padding: 6px 0;
@@ -123,15 +150,16 @@ th.wc-diff-header {
     background: none
 }
 
-#Clearance .wc-table td:nth-child(2n+0) {
+#Notes .wc-table td:nth-child(2n+0) {
     margin-top: 40px
 }
 
 .wc-value {
-    height: 36px;
+    height: 35px;
     line-height: 36px;
     text-align: center;
-    min-width: 59px
+    min-width: 59px;
+    border-radius: 6px;
 }
 
 .wc-exp {
@@ -174,10 +202,9 @@ svg {
     text-align: left;
     display: inline-block;
     position: relative;
-    float: left;
 }
 
-.wc-sizetype,.wc-sizetype1 {
+.wc-sizetype, .wc-sizetype1 {
     margin-top: -1px;
     vertical-align: middle
 }
@@ -268,7 +295,7 @@ svg {
     margin: 0 auto
 }
 
-.wc-small .wc-ctm-wrap,.wc-small .wc-tm-wrap {
+.wc-small .wc-ctm-wrap, .wc-small .wc-tm-wrap {
     float: none;
     margin: 0 0 20px
 }
@@ -285,7 +312,7 @@ svg {
     font-size: 14px
 }
 
-.wc-smallest .wc-table th,.wc-smallest .wc-title {
+.wc-smallest .wc-table th, .wc-smallest .wc-title {
     font-size: 12px
 }
 
@@ -369,19 +396,19 @@ div span.wc-title {
     font-weight: 700
 }
 
-#Clearance p {
+#Notes p {
     margin-bottom: 40px
 }
 
-#Clearance div {
+#Notes div {
     margin: 10px 0
 }
 
-#Clearance #wc-clearance-container {
+#Notes #wc-Notes-container {
     display: none
 }
 
-#Clearance .wc-clearance-note {
+#Notes .wc-Notes-note {
     margin: 10px 0 35px;
 }
 
@@ -390,6 +417,7 @@ div span.wc-title {
     font-size: 12px;
     color: #d3d3d3;
     display: block;
-    max-width: 460px;
-    margin: 20px;
+    max-width: 400px;
+    margin: 20px 0 20px 0;
+    line-height: 20px;
 }

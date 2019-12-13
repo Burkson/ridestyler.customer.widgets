@@ -2,15 +2,13 @@
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<!-- <link rel="stylesheet" href="src/css/wc.css" /> -->
-	<script src="http://alpha.ridestyler.net/js"></script>
-	<script src="dist/js/wc.js"></script>
- 	<script>
-		ridestyler.initialize({ Key: 'c028c54cf0c447c594a862de6ac85d1a' });
-		var wc = new WheelCalculator('container');
-	</script>
 </head>
 <body>
 	<div id="container"></div>
+	<script src="http://api.ridestyler.net/js?Key=c028c54cf0c447c594a862de6ac85d1a"></script>
+	<script src="dist/js/wc.js"></script>
+ 	<script>
+		var wc = new WheelCalculator('container');
+	</script>
 </body>
 </html>

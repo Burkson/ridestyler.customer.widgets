@@ -1,3 +1,5 @@
+import Promise from 'promise-polyfill';
+
 (function () {
 	/**
 	 * WheelCalculator: Render the Wheel Calculator widget within a container element
@@ -7,33 +9,43 @@
 	 */
 	function WheelCalculator(containerId, options) {
 		let diameterSelects,
-		widthSelects,
-		offsetSelects,
-		wheels = [{Diameter:undefined, Width:undefined, Offset:undefined, Backspace:undefined}, {Diameter:undefined, Width:undefined, Offset:undefined, Backspace:undefined}],
-		cdnUrl = "https://static.ridestyler.net/widgets/wheel-calculator/1.0",
-		tplUrl = cdnUrl + "/html/wc.tpl",
-		cssUrl = cdnUrl + "/css/wc.min.css",
-		wheelDiamOne,
-		wheelDiamTwo,
-		wheelDiamDiff,
-		wheelWidthOne,
-		wheelWidthTwo,
-		wheelWidthDiff,
-		wheelBackOne,
-		wheelBackTwo,
-		wheelBackDiff,
-		wheelFrontOne,
-		wheelFrontTwo,
-		wheelFrontDiff,
-		wheelOffsetOne,
-		wheelOffsetTwo,
-		wheelOffsetDiff,
-		wheelDetSuspension,
-		wheelDetFenders,
-		wheelDetWheelWells,
-		wheelDetBrakes,
-		clearanceNotes,
-		disclaimer;
+			widthSelects,
+			offsetSelects,
+			wheels = [{Diameter:undefined, Width:undefined, Offset:undefined, Backspace:undefined}, {Diameter:undefined, Width:undefined, Offset:undefined, Backspace:undefined}],
+			cdnUrl = "https://static.ridestyler.net/widgets/wheel-calculator/edge",
+			tplUrl = cdnUrl + "/html/wc.tpl",
+			cssUrl = cdnUrl + "/css/wc.min.css",
+			wheelDiamOne,
+			wheelDiamTwo,
+			wheelDiamDiff,
+			wheelWidthOne,
+			wheelWidthTwo,
+			wheelWidthDiff,
+			wheelBackOne,
+			wheelBackTwo,
+			wheelBackDiff,
+			wheelFrontOne,
+			wheelFrontTwo,
+			wheelFrontDiff,
+			wheelOffsetOne,
+			wheelOffsetTwo,
+			wheelOffsetDiff,
+			wheelDetSuspension,
+			wheelDetFenders,
+			wheelDetWheelWells,
+			wheelDetBrakes,
+			clearanceNotes,
+			disclaimer,
+			notesWrapper,
+			dimsWrapper,
+			dimsToggle,
+			notesToggle,
+			containerElement = document.getElementById(containerId);
+
+			if(options && options.dev){
+				tplUrl = "src/html/wc.tpl";
+				cssUrl = "src/css/wc.css";
+			}
 
 		/**
 		 * Runs when DOM content loaded. Load resources, then initialize UI.
@@ -52,9 +64,10 @@
 		function loadStyles(){
 			return new Promise(function(resolve){
 				let css = document.createElement('link');
+
 				css.rel = "stylesheet";
 				css.href = cssUrl;
-				document.getElementsByTagName('head')[0].append(css);
+				document.getElementsByTagName('head')[0].appendChild(css);
 
 				css.onload = function(){
 					resolve();
@@ -67,15 +80,14 @@
 		 */
 		function loadTpl(){ 
 			return new Promise(function(resolve){
-				let xhr = new XMLHttpRequest(),
-				container = document.getElementById(containerId);
+				let xhr = new XMLHttpRequest();
 	
 				xhr.onreadystatechange = function() {
 					var completed = 4;
 		
 					if (xhr.readyState === completed) {
 						if (xhr.status === 200) {
-							container.innerHTML = xhr.responseText;
+							containerElement.innerHTML = xhr.responseText;
 							resolve();
 						} else {
 							console.error('template failed to load');
@@ -92,32 +104,36 @@
 		 * initialize ui for template
 		 */
 		function initializeUi(){
-			wheelDiamOne = document.getElementById('wc-wheel-diam0');
-			wheelDiamTwo = document.getElementById('wc-wheel-diam1');
-			wheelDiamDiff = document.getElementById('wc-diam-diff');
-			wheelWidthOne = document.getElementById('wc-wheel-width0');
-			wheelWidthTwo = document.getElementById('wc-wheel-width1');
-			wheelWidthDiff = document.getElementById('wc-width-diff');
-			wheelBackOne = document.getElementById('wc-wheel-backspace0');
-			wheelBackTwo = document.getElementById('wc-wheel-backspace1');
-			wheelBackDiff = document.getElementById('wc-backspace-diff');
-			wheelFrontOne = document.getElementById('wc-wheel-frontspace0');
-			wheelFrontTwo = document.getElementById('wc-wheel-frontspace1');
-			wheelFrontDiff = document.getElementById('wc-frontspace-diff');
-			wheelOffsetOne = document.getElementById('wc-wheel-offset0');
-			wheelOffsetTwo = document.getElementById('wc-wheel-offset1');
-			wheelOffsetDiff = document.getElementById('wc-offset-diff');
-			diameterSelects = document.getElementsByClassName('wc-firsti');
-			widthSelects = document.getElementsByClassName('wc-secondi');
-			offsetSelects = document.getElementsByClassName('wc-thirdi');
-			wheelDetSuspension = document.getElementById('wc-details-suspension');
-			wheelDetFenders = document.getElementById('wc-details-fenders');
-			wheelDetWheelWells = document.getElementById('wc-details-wheelwells');
-			wheelDetBrakes = document.getElementById('wc-details-brakes');
-			clearanceNotes = document.getElementById('wc-clearance-container');
-			disclaimer = document.getElementById('wc-disclaimer'); 
+			wheelDiamOne = document.querySelector('#wc-wheel-diam0');
+			wheelDiamTwo = document.querySelector('#wc-wheel-diam1');
+			wheelDiamDiff = document.querySelector('#wc-diam-diff');
+			wheelWidthOne = document.querySelector('#wc-wheel-width0');
+			wheelWidthTwo = document.querySelector('#wc-wheel-width1');
+			wheelWidthDiff = document.querySelector('#wc-width-diff');
+			wheelBackOne = document.querySelector('#wc-wheel-backspace0');
+			wheelBackTwo = document.querySelector('#wc-wheel-backspace1');
+			wheelBackDiff = document.querySelector('#wc-backspace-diff');
+			wheelFrontOne = document.querySelector('#wc-wheel-frontspace0');
+			wheelFrontTwo = document.querySelector('#wc-wheel-frontspace1');
+			wheelFrontDiff = document.querySelector('#wc-frontspace-diff');
+			wheelOffsetOne = document.querySelector('#wc-wheel-offset0');
+			wheelOffsetTwo = document.querySelector('#wc-wheel-offset1');
+			wheelOffsetDiff = document.querySelector('#wc-offset-diff');
+			diameterSelects = document.querySelectorAll('.wc-firsti');
+			widthSelects = document.querySelectorAll('.wc-secondi');
+			offsetSelects = document.querySelectorAll('.wc-thirdi');
+			wheelDetSuspension = document.querySelector('#wc-details-suspension');
+			wheelDetFenders = document.querySelector('#wc-details-fenders');
+			wheelDetWheelWells = document.querySelector('#wc-details-wheelwells');
+			wheelDetBrakes = document.querySelector('#wc-details-brakes');
+			clearanceNotes = document.querySelector('#wc-clearance-container');
+			disclaimer = document.querySelector('#wc-disclaimer');
+			notesWrapper = document.querySelector('#Notes');
+			notesToggle = document.querySelector('#notes');
+			dimsWrapper = document.querySelector('#Dimensions');
+			dimsToggle = document.querySelector('#dims');
 
-			if(options){
+			if(options && options.disclaimer){
 				disclaimer.innerHTML = options.disclaimer;
 			} else {
 				disclaimer.innerHTML = "This tool is for estimation purposes only. You should consult a professional and confirm measurements prior to making any modifications to your vehicle.";
@@ -126,6 +142,8 @@
 			addListeners(diameterSelects, 'change', onFirstChange);
 			addListeners(widthSelects, 'change', onSecondChange);
 			addListeners(offsetSelects, 'change', onThirdChange);
+			addListeners(dimsToggle, 'click', toggleResults);
+			addListeners(notesToggle, 'click', toggleResults);
 
 			getWheelDiameters();
 		}
@@ -136,8 +154,8 @@
 		 */
 		function getWheelDiameters(){
 			let count = 12,
-			wheelDiameterMax = 30,
-			wheelDiameters = [];
+				wheelDiameterMax = 30,
+				wheelDiameters = [];
 
 			while(count < wheelDiameterMax + 1){
 				wheelDiameters.push(count);
@@ -156,10 +174,11 @@
 		 */
 		function getWheelWidths(element){
 			element = element.target;
+			
 			let nextEl = element.parentElement.nextElementSibling.children[0],
-			count = 4,
-			wheelWidthMax = 12.5,
-			wheelWidths = [];
+				count = 4,
+				wheelWidthMax = 12.5,
+				wheelWidths = [];
 
 			while(count < wheelWidthMax + .5){
 				wheelWidths.push(count);
@@ -177,10 +196,11 @@
 		 */
 		function getWheelOffsets(element){
 			element = element.target;
+			
 			let nextEl = element.parentElement.nextElementSibling.children[0],
-			count = -65,
-			wheelOffetMax = 125,
-			wheelOffsets = [];
+				count = -65,
+				wheelOffetMax = 125,
+				wheelOffsets = [];
 
 			while(count < wheelOffetMax + 1){
 				wheelOffsets.push(count);
@@ -198,7 +218,7 @@
 		 * @param {array} dataArray - data you to add to element
 		 */
 		function populateField(field, dataArray){
-			dataArray.forEach(data => {
+			dataArray.forEach(function(data){
 				let option = document.createElement('option');
 				option.value = data;
 				option.innerHTML = data;
@@ -213,7 +233,7 @@
 		 * call ridestyler api to compare two given wheels
 		 */
 		function getCompareData(){
-			let requestData = {BaseSize:wheels[0].Diameter + "x" + wheels[0].Width + "ET" + wheels[0].Offset, "NewSizes[0]":wheels[1].Diameter + "x" + wheels[1].Width + " ET" + wheels[1].Offset}
+			let requestData = {BaseSize:wheels[0].Diameter + "x" + wheels[0].Width + " ET" + wheels[0].Offset, "NewSizes[0]":wheels[1].Diameter + "x" + wheels[1].Width + " ET" + wheels[1].Offset}
 
 			sendRequest("Wheel/CompareSizes", requestData).then(function(comparisonData){
 				if(comparisonData){
@@ -281,10 +301,9 @@
 		 */
 		function updateWheelObject(e){
 			let wheelElement = e.target,
-			wheelIndex = wheelElement.id.charAt(wheelElement.id.length - 1),
-			wheelValue = wheelElement.value;
+				wheelIndex = wheelElement.id.charAt(wheelElement.id.length - 1),
+				wheelValue = wheelElement.value;
 
-			if(wheelValue !== isNaN){}
 			if(wheelElement.classList.contains('wc-firsti')){
 				wheels[wheelIndex]["Diameter"] = wheelValue;
 			} else if(wheelElement.classList.contains('wc-secondi')) {
@@ -292,6 +311,10 @@
 			} else {
 				wheels[wheelIndex]["Offset"] = wheelValue;
 				wheels[wheelIndex]["Backspace"] = getBackspacing(wheels[wheelIndex]["Width"], wheels[wheelIndex]["Offset"]);
+			}
+
+			if(wheels[0].Offset !== undefined && wheels[1].Offset !== undefined){
+				getCompareData();
 			}
 		}
 
@@ -302,8 +325,8 @@
 		 */
 		function getBackspacing(width, offset){
 			let backSpacing,
-			offsetInInches = mmToInches(offset),
-			wheelCenter = parseInt(width / 2);
+				offsetInInches = mmToInches(offset),
+				wheelCenter = parseInt(width / 2);
 
 			backSpacing = (wheelCenter + offsetInInches);
 
@@ -316,7 +339,7 @@
 		 */
 		function mmToInches(mm) {
 			let inches,
-			mmToInch = 25.4;
+				mmToInch = 25.4;
 
 			inches = parseInt((mm / mmToInch).toFixed(2));
 
@@ -347,9 +370,9 @@
 		 * @param {function} cb - callback function
 		 */
 		function addListeners(el, listener, cb){
-			if(typeof el === "object" || typeof el === "array"){
-				for(let e of el){
-					e.addEventListener(listener, cb);
+			if(typeof el === "object" && Object.keys(el).length > 1 || typeof el === "array"){
+				for(let e in el){
+					if(typeof el[e] == "object") el[e].addEventListener(listener, cb);
 				}
 			} else {
 				el.addEventListener(listener, cb);
@@ -363,9 +386,6 @@
 		function onFirstChange(e){
 			updateWheelObject(e);
 			getWheelWidths(e);
-			if(wheels[1].Offset !== undefined){
-				getCompareData();
-			}
 		}
 
 		/**
@@ -375,9 +395,6 @@
 		function onSecondChange(e){
 			updateWheelObject(e);
 			getWheelOffsets(e);
-			if(wheels[1].Offset !== undefined){
-				getCompareData();
-			}
 		}
 
 		/**
@@ -386,18 +403,33 @@
 		 */
 		function onThirdChange(e){
 			updateWheelObject(e);
-			if(wheels[1].Offset !== undefined){
-				getCompareData();
+		}
+
+		function toggleResults(e){
+			if(e.target.id == "dims") {
+				notesWrapper.style.display = "none";
+				dimsWrapper.style.display = "block";
+				notesToggle.classList.remove('selected');
+				dimsToggle.classList.add('selected');
+			} else {
+				dimsWrapper.style.display = "none";
+				notesWrapper.style.display = "block";
+				dimsToggle.classList.remove('selected');
+				notesToggle.classList.add('selected');
 			}
 		}
 
 		/**
 		 * On window load DOM content
 		 */
-		document.addEventListener("DOMContentLoaded", function(event) { 
+		if (!containerElement) {
+			document.addEventListener("DOMContentLoaded", function(event) { 
+				containerElement = document.getElementById(containerId);
+				onDomReady();
+			});
+		} else {
 			onDomReady();
-			// initializeUi();
-		});
+		}
 	}
 	window.WheelCalculator = WheelCalculator;
 })();

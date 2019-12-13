@@ -2,11 +2,10 @@
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>#container{overflow: hidden;}</style>
 	<script src="http://api-alpha.ridestyler.net/js?Key=c028c54cf0c447c594a862de6ac85d1a"></script>
-	<script src="src/js/psc.js"></script>
-	<script>
-	var psc = new PlusSizeCalculator('container');
-	</script>
+	<script src="dist/js/psc.min.js"></script>
+	<script>var psc = new PlusSizeCalculator('container', {dev: true});</script>
 </head>
 <body>
 	<div id="container">

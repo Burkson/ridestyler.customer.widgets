@@ -25,7 +25,7 @@
 		this.tplHtml = '';
 
 		// Paths to our stylesheet and template
-		this.urlPfx = this.dev ? 'src/' : 'https://static.ridestyler.net/widgets/plus-size-calculator/1.2.1/';
+		this.urlPfx = this.dev ? 'src/' : 'https://static.ridestyler.net/widgets/plus-size-calculator/edge/';
 		this.cssFile = this.dev ? 'psc.css' : 'psc.min.css';
 		this.cssUrl = this.urlPfx + 'css/' + this.cssFile;
 		this.tplUrl = this.urlPfx + 'html/psc.tpl';
@@ -77,7 +77,13 @@
 		this.sizeTypeCompare0 = null;
 		this.sizeTypeCompare1 = null;
 		this.submit = null;
+		this.toggleSize = null;
+		this.toggleSpeed = null;
+		this.speedWrapper = null;
+		this.sizeWrapper = null;
 		this.selects = null;
+		this.disclaimer = null;
+		this.options = options;
 
 		// If we don't have a container element loaded, wait for DOMContent loaded to fire
 		if (!this.element) {
@@ -95,8 +101,6 @@
 	 */
 	PlusSizeCalculator.prototype.onDomReady = function() {
 		var cb = this.onAsyncComplete;
-
-		this.showLoading(true);
 
 		if (this.element == null) {
 			console.error('Invalid container Id');
@@ -129,7 +133,6 @@
 
 		// Initialize template when we are ready
 		if (!this.tplInitComplete) {
-			this.showLoading(false);
 			this.element.innerHTML = this.tplHtml;
 			this.adjustLayout();
 			this.initTpl();
@@ -196,7 +199,18 @@
 		this.selects = this.element.getElementsByClassName('psc-select');
 		this.selectHeaders = this.element.getElementsByClassName('psc-select-header');
 		this.spinners = this.element.getElementsByClassName('psc-loading');
-		this.submit = document.getElementById('psc-form-submit');
+		this.submit = this.element.querySelector('#psc-form-submit');
+		this.toggleSize = this.element.querySelector('#sizeToggle');
+		this.toggleSpeed = this.element.querySelector('#speedToggle');
+		this.speedWrapper = this.element.querySelector('#speedWrapper');
+		this.sizeWrapper = this.element.querySelector('#sizeWrapper');
+		this.disclaimer = this.element.querySelector('#psc-disclaimer');
+
+		if(this.options && this.options.disclaimer){
+			this.disclaimer.innerHTML = this.options.disclaimer;
+		} else {
+			this.disclaimer.innerHTML = "This tool is for estimation purposes only. You should consult a professional and confirm measurements prior to making any modifications to your vehicle.";
+		}
 
 		// Initialize the 'firsti' selects with metric data
 		if (md.first.length) {
@@ -217,9 +231,11 @@
 		this.addListeners(this.firsti, 'change', this.onFirstChange);
 		this.addListeners(this.secondi, 'change', this.onSecondChange);
 		this.addListeners(this.thirdi, 'change', this.onThirdChange);
-		this.addListeners(this.sizeType, 'change', this.onSizeTypeChange);
-		this.addListeners(this.sizeType1, 'change', this.onSizeTypeChange);
+		this.addListeners(this.sizeType, 'click', this.onSizeTypeChange);
+		this.addListeners(this.sizeType1, 'click', this.onSizeTypeChange);
 		this.addListeners(this.submit, 'click', this.onSubmit);
+		this.addListeners(this.toggleSize, 'click', this.onResultsToggle);
+		this.addListeners(this.toggleSpeed, 'click', this.onResultsToggle);
 
 		this.adjustLayout();
 	};
@@ -288,16 +304,22 @@
 	 * @param {Object} e - Click event
 	 */
 	PlusSizeCalculator.prototype.onSizeTypeChange = function(e) {
-		var self = this,
-		sizetype = e.target,
+		var sizetype = e.target,
 		firstSelects = this.firsti[0],
 		len = 3,
-		stVal = sizetype.value,
+		stVal = sizetype.innerHTML.toLowerCase(),
 		firstVals = null,
 		i = 0,
-		parent = e.target.parentElement.parentElement.previousElementSibling;
+		parent = e.target.parentElement.nextElementSibling.nextElementSibling,
+		sibling = null;
 
-		if(e.target.name == "psc-sizetype2"){
+		if(sizetype.nextElementSibling !== null && sizetype.nextElementSibling.classList.contains(sizetype.classList[0])) sibling = sizetype.nextElementSibling;
+		else sibling = sizetype.previousElementSibling;
+
+		sizetype.classList.add('selected');
+		sibling.classList.remove('selected');
+
+		if(sizetype.classList.contains("psc-sizetype1")){
 			firstSelects = this.firsti[1];
 			len = 6;
 			i = 3;
@@ -354,12 +376,6 @@
 			'NewSizes[0]': compareSize
 		};
 
-		setTimeout(function() {
-			if (!xhr || xhr.readyState !== 4) {
-				spinner.style.display = 'inline-block';
-			}
-		}, 200);
-
 		var xhr = ridestyler.ajax.send({
 			action: 'Tire/CompareSizes',
 			data: params,
@@ -369,12 +385,30 @@
 				} else {
 					console.error('RS request failed');
 				}
-				spinner.style.display = 'none';
 			}
 		});
 
 		return false;
 	};
+
+	PlusSizeCalculator.prototype.onResultsToggle = function(e) {
+		var toggler = e.target,
+		sibling = null;
+
+		if(toggler.nextElementSibling !== null && toggler.nextElementSibling.classList.contains(toggler.classList[0])) sibling = toggler.nextElementSibling;
+		else sibling = toggler.previousElementSibling;
+
+		toggler.classList.add('selected');
+		sibling.classList.remove('selected');
+
+		if(toggler.id === "sizeToggle"){
+			this.speedWrapper.style.display = 'none';
+			this.sizeWrapper.style.display = 'block';
+		} else {
+			this.sizeWrapper.style.display = 'none';
+			this.speedWrapper.style.display = 'block';
+		}
+	}
 
 	/**
 	 * Set class(es) on widget wrapper based on container dimensions
@@ -629,17 +663,12 @@
 		css.type = 'text/css';
 		css.href = this.cssUrl;
 
-		css.onload = function() {
-			if (!self.stylesheetLoaded) {
-				self.stylesheetLoaded = true;
-
-				if (typeof cb === 'function') {
-					cb.apply(self);
-				}
-			}
-		};
-
 		prependChild(document.getElementsByTagName('head')[0], css);
+
+		css.onload = function() {
+			self.stylesheetLoaded = true;
+			cb.apply(self);
+		};
 	};
 
 	/**
@@ -649,6 +678,7 @@
 	PlusSizeCalculator.prototype.showLoading = function(isLoading) {
 		var loadingIndicator = document.getElementById('psc-loading'),
 		elem = null,
+		elemWrapper = null,
 		position = '',
 		cHeight = this.element.clientHeight;
 		cWidth = this.element.clientWidth;
@@ -660,6 +690,16 @@
 		if (isLoading) {
 			if (!loadingIndicator && cHeight > 0 && cWidth > 0) {
 				elem = document.createElement('img');
+				elemWrapper = document.createElement('div');
+				elemWrapper.style.width = '100%';
+				elemWrapper.style.height = '100vh';
+				elemWrapper.style.position = 'absolute';
+				elemWrapper.style.display = 'flex';
+				elemWrapper.style.flexDirection = 'column';
+				elemWrapper.style.alignItems = 'center';
+				elemWrapper.style.justifyContent = 'center';
+				elemWrapper.style.left = '0';
+				elemWrapper.style.top = '0';
 				elem.id = 'psc-loading';
 				elem.src = this.loadingImg;
 				elem.style.position = 'absolute';
@@ -674,11 +714,8 @@
 					this.element.style.position = 'relative';
 				}
 
-				this.element.appendChild(elem);
-			}
-		} else {
-			if (loadingIndicator) {
-				loadingIndicator.outerHTML = '';
+				elemWrapper.appendChild(elem)
+				this.element.appendChild(elemWrapper);
 			}
 		}
 	};
