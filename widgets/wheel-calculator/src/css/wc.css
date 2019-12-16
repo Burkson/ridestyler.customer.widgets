@@ -269,6 +269,7 @@ svg {
     line-height: 32px;
     color: #666;
     width: 16px;
+    margin-right: 3px;
     display: inline-block;
 }
 
@@ -478,6 +479,7 @@ div span.wc-title {
 
     .wc-widget select {
         margin-bottom: 2px;
+        width: 82px;
     }
 
 }

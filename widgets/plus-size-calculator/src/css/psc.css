@@ -245,12 +245,13 @@ span.psc-sizetype.selected, span.psc-sizetype1.selected {
 }
 
 .psc-third-input:before {
-	content: 'R';
-	text-align: center;
-	line-height: 32px;
-	color: #666;
-	width: 12px;
-	display: inline-block;
+    content: "R";
+    text-align: center;
+    line-height: 32px;
+    color: #666;
+    margin-right: 3px;
+    width: 12px;
+    display: inline-block;
 }
 
 .psc-small.psc-widget {
@@ -407,5 +408,6 @@ span.psc-sizetype.selected, span.psc-sizetype1.selected {
 	}
 	.psc-smallest .psc-select {
 		margin: 2px 0px;
+		width: 82px;
 	}
 }
