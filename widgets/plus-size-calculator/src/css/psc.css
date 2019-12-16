@@ -1,3 +1,5 @@
+/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.23, autoprefixer: v9.7.3) */
+
 h5 {
     text-transform: uppercase;
     font-weight: 900;
@@ -28,15 +30,25 @@ h5 {
 
 #psc-selections-wrapper {
     width: auto;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
     display: inline-flex;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     margin-right: 5%;
 }
 
 #psc-info-wrapper {
     width: auto;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
     display: inline-flex;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
 }
 
 #psc-info-header {
@@ -110,10 +122,12 @@ th.psc-diff-header {
 }
 
 .psc-widget select {
-	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
 	height: 32px;
 	background-color: #fcfcfc;
-	box-shadow: none;
+	-webkit-box-shadow: none;
+	        box-shadow: none;
 	font-size: 12px;
 	padding: 3px;
 	width: 124px;
@@ -123,11 +137,13 @@ th.psc-diff-header {
 
 .psc-value {
 	font-size: 12px;
-	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
 	height: 36px;
 	line-height: 36px;
 	background-color: #fcfcfc;
-	box-shadow: none;
+	-webkit-box-shadow: none;
+	        box-shadow: none;
 	text-align: center;
 	border: 1px solid #ccc;
 	border-radius: 6px;
@@ -145,7 +161,9 @@ th.psc-diff-header {
 
 td.psc-image {
 	text-align: center;
-	transform: scale(.8);
+	-webkit-transform: scale(.8);
+	    -ms-transform: scale(.8);
+	        transform: scale(.8);
 	padding-left: 0px;
 }
 
@@ -301,7 +319,9 @@ span.psc-sizetype.selected, span.psc-sizetype1.selected {
 
 }
 .psc-smallest td.psc-image {
-	transform: scale(.6);
+	-webkit-transform: scale(.6);
+	    -ms-transform: scale(.6);
+	        transform: scale(.6);
 }
 
 .psc-smallest th.psc-diff-header {
@@ -380,8 +400,13 @@ span.psc-sizetype.selected, span.psc-sizetype1.selected {
 		display: inline-block;
 		margin: 20px auto;
 	}
-	#psc-selections-wrapper, #psc-info-wrapper {
+	#psc-form {
+		text-align: center;
+	}
+	#psc-selections-wrapper {
 		width: 100%;
+	}
+	#psc-selections-wrapper, #psc-info-wrapper {
 		margin-right: 0;
 		text-align: center;
 	}

@@ -1,3 +1,5 @@
+/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.23, autoprefixer: v9.7.3) */
+
 .wc-widget h5 {
     text-transform: uppercase;
     font-weight: 900;
@@ -26,15 +28,25 @@
 
 #wc-selection-wrapper {
     width: auto;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
     display: inline-flex;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     margin-right: 5%;
 }
 
 #wc-info-wrapper {
     width: auto;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
     display: inline-flex;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     max-width: 432px;
 }
 
@@ -128,9 +140,11 @@ table.wc-table thead {
 }
 
 .wc-value, .wc-widget select {
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
     background-color: #fcfcfc;
-    box-shadow: none;
+    -webkit-box-shadow: none;
+            box-shadow: none;
     font-size: 12px;
     border: 1px solid #ccc
 }
@@ -171,7 +185,9 @@ table.wc-table thead {
 
 td.wc-image {
     text-align: center;
-    transform: scale(.8);
+    -webkit-transform: scale(.8);
+        -ms-transform: scale(.8);
+            transform: scale(.8);
     padding-left: 0
 }
 
@@ -324,7 +340,9 @@ svg {
 }
 
 .wc-smallest td.wc-image {
-    transform: scale(.6)
+    -webkit-transform: scale(.6);
+        -ms-transform: scale(.6);
+            transform: scale(.6)
 }
 
 .wc-smallest th.wc-diff-header {
@@ -425,9 +443,11 @@ div span.wc-title {
     #wc-form {
         text-align: center;
     }
+    #wc-selection-wrapper {
+        width: 100%;
+    }
     #wc-info-wrapper, #wc-selection-wrapper {
         text-align: center;
-        width: 100%;
         margin-right: 0
     }
     #wc-tm-wrap, #wc-ctm-wrap {
