@@ -15,7 +15,7 @@
 			tplEl = null,
 			container = null,
 			bestConfigurationId = null,
-			bestTireOption = null;
+			bestTireConfigId = null;
 
 		options = options || {};
 
@@ -78,7 +78,10 @@
 		function initializeUi(){
 			let yearEl = tplEl.querySelector('select[name=year]'),
 				makeEl = tplEl.querySelector('select[name=make]'),
-				modelEl = tplEl.querySelector('select[name=model]');
+				modelEl = tplEl.querySelector('select[name=model]'),
+				configTitle = tplEl.querySelector('#config-message');
+
+			if(options.configTitle) configTitle.innerHTML = options.configTitle;
 
 			loadNextStep();
 
@@ -110,7 +113,7 @@
 
 			for(let property in vehicleModel){
 				if(vehicleModel[property] != ""){
-					if(property == 'tire') bestTireOption = vehicleModel[property];
+					if(property == 'tire') bestTireConfigId = vehicleModel[property];
 					vehicleSelectRequest.Selection.push(
 						property + ":" + vehicleModel[property]
 					);
@@ -118,18 +121,14 @@
 			}
 
 			if(currentSelection != 'tire'){
-				ridestyler.ajax.send({ 
-					action: 'Vehicle/Select',
-					data: vehicleSelectRequest,
-					callback: function(response){
-						if(response){
-							if(!vehicleModel[response.Menu.Key]){ //if key doesn't already exist, add it and populate the select field
-								vehicleModel[response.Menu.Key] = "";
-								populateVehicleOptions(response.Menu);
-							} else if(response.BestConfiguration){
-								bestConfigurationId = response.BestConfiguration.Value;
-								getTireConfig();
-							}
+				ridestyler.ajax.send({action:'Vehicle/Select', data:vehicleSelectRequest}).then(function(response){
+					if(response){
+						if(!vehicleModel[response.Menu.Key]){ //if key doesn't already exist in our vehicle model, add it and populate the select field
+							vehicleModel[response.Menu.Key] = "";
+							populateVehicleOptions(response.Menu);
+						} else if(response.BestConfiguration){ //if we have our BestConfiguration set then we need to get our tire config
+							bestConfigurationId = response.BestConfiguration.Value;
+							getTireConfig();
 						}
 					}
 				});
@@ -225,16 +224,12 @@
 		 * Shows availble tire configurations to the user
 		 */
 		function getTireConfig(){
-			ridestyler.ajax.send({
-				action: 'vehicle/gettireoptiondetails',
-				data: {VehicleConfigurations: [bestConfigurationId]},
-				callback: function(response){
-					if(response && response.Details.length){
-						let tireOptions = {Options: response.Details}
-						populateVehicleOptions(tireOptions, true);
-					} else {
-						buildUrl();
-					}
+			ridestyler.ajax.send({action:'vehicle/gettireoptiondetails', data:{VehicleConfigurations: [bestConfigurationId]}}).then(function(response){
+				if(response && response.Details.length){
+					let tireOptions = {Options: response.Details}
+					populateVehicleOptions(tireOptions, true);
+				} else {
+					buildUrl();
 				}
 			})
 		}
@@ -245,29 +240,46 @@
 		function buildUrl(){
 			let url = "http://app.ridestyler.net/showcase?"
 
-			if(options.apiKey) url += options.apiKey + "#";
-			else url += getRSApiKey();
-			if(bestConfigurationId) url += "vc=" + bestConfigurationId;
-			if(bestTireOption) url += "&to=" + bestTireOption;
-			
-			showButton(url);
+			if(options.apiKey){
+				url += options.apiKey + "#";
+				if(bestConfigurationId) url += "vc=" + bestConfigurationId;
+				if(bestTireConfigId) url += "&to=" + bestTireConfigId;
+				showButton(url);
+			} else {
+				getRSApiKey().then(function(apiKey){ 
+					url += apiKey + "#"; 
+					if(bestConfigurationId) url += "vc=" + bestConfigurationId;
+					if(bestTireConfigId) url += "&to=" + bestTireConfigId;
+					showButton(url);
+				});
+			}
 		}
 
 		/**
-		 * Get the users RideStyler Api key
+		 * Get the users RideStyler api key
 		 * @returns {String}
 		 */
 		function getRSApiKey(){
-
+			return new Promise(function(resolve){
+				ridestyler.ajax.send({action:"ApiAccessKey/GetSharedKey"}).then(function(response){
+					if(response){
+						resolve(response.Key)
+					}
+				});
+			});
 		}
 
 		/**
-		 * Show the button that will direct users to showcase.
+		 * Show the button that will direct users to showcase given a url to the showcase.
+		 * @param {String}
 		 */
 		function showButton(url){
 			let confirmButton = document.createElement('button');
 			
-			confirmButton.innerHTML = "See Wheels";
+			if(options.buttonText) confirmButton.innerHTML = options.buttonText;
+			else confirmButton.innerHTML = "See Wheels";
+
+			if(options.buttonClasses) options.buttonClasses.map(btnClass => confirmButton.classList.add(btnClass)); //if user has super secret special button classes
 
 			confirmButton.addEventListener('click', function(){
 				window.open(url);
