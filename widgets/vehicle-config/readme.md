@@ -35,12 +35,26 @@ ridestyler.initialize({ Key: 'API KEY' });
 
 Finally, we initialize the Vehicle Configuration. Pass the id attribute of the container above to the constructor.
 ```
-var wc = new VehicleConfiguration('container');
+var vc = new VehicleConfiguration('container');
 ```
-## Custom Disclaimer
-You can add a custom disclaimer by adding the option on initialization:
+## Additional Settings
+Now that you have your widget initialized you can add some additional settings to customize the look of your configurator.
+
+buttonClasses will add any of the classes specified to the buttons in the widget
+(Array) buttonClasses: ['btn', 'red-btn']; 
+
+includeStyles will add our custom styles to the widget
+(Boolean) includeStyles: true;
+
+buttonText will add custom text onto the submit button
+(String) buttonText: "Go to visualizer"
+
+titleText will add custom text onto the title of the widget
+(String) titleText: "My super awesome vehicle configurator"
+
+Example integration with additional settings:
 ```
-var vc = new VehicleConfiguration('container', {message: "this is a disclaimer", styles: true, url: "https://your-url.com"}  );
+var vc = new VehicleConfiguration('container', { titleText: "this is a disclaimer", includeStyles: true, buttonClasses: ['btn', 'red-btn'] }  );
 ```
 ## Enjoy
-That's it! The widget will render in the container specified and you can begin comparing wheel sizes.
+That's it! The widget will render in the container specified.

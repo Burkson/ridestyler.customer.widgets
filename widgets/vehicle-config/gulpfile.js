@@ -1,4 +1,4 @@
-var gulp = require('gulp'),
+var { src, series, dest } = require('gulp'),
 rename = require('gulp-rename'),
 htmlclean = require('gulp-htmlclean'),
 cssnano = require('gulp-cssnano'),
@@ -12,41 +12,44 @@ var config = {
   srcDir: './src'
 };
 
-gulp.task('html', function() {
-  return gulp.src(config.srcDir + '/html/wc.tpl')
+function html() {
+  return src(config.srcDir + '/html/vc.tpl')
     .pipe(htmlclean())
-    .pipe(gulp.dest(config.distDir + '/html'));
-});
+    .pipe(dest(config.distDir + '/html'));
+}
 
-gulp.task('min-css', function() {
-  return gulp.src(config.srcDir + '/css/wc.css')
+function minCss() {
+  return src(config.srcDir + '/css/vc.css')
     .pipe(cssnano())
     .pipe(rename({
       'suffix': '.min'
     }))
-    .pipe(gulp.dest(config.distDir + '/css'));
-});
+    .pipe(dest(config.distDir + '/css'));
+}
 
-gulp.task('build', () => {
+function jsBuild(){
   browserify({
-    entries: './src/js/WheelCalculator.js',
+    entries: config.srcDir + '/js/VehicleConfiguration.js',
     debug: true
   })
   .transform(babelify, {presets:['@babel/env']})
   .bundle()
-  .pipe( source('./wc.js') )
-  .pipe( gulp.dest('./dist/js') );
+  .pipe( source('./VehicleConfiguration.js') )
+  .pipe( dest(config.distDir + '/js') );
 
-  return gulp.src('./dist/js/wc.js')
+  return src(config.distDir + '/js/VehicleConfiguration.js')
+}
 
-});
-
-gulp.task('minify', () => {
-  gulp.src('./dist/js/wc.js')
+function jsMinify(){
+  src(config.distDir + '/js/VehicleConfiguration.js')
   .pipe( minify() )
-  .pipe(gulp.dest('./dist/js'));
+  .pipe(dest(config.distDir + '/js'));
 
-  return gulp.src('./dist/js/wc.min.js')
-})
+  return src(config.distDir + '/js/VehicleConfiguration.js')
+}
 
-gulp.task('default', ['html', 'min-css', 'build', 'minify']);
+exports.html = html;
+exports.minCss = minCss;
+exports.jsBuild = jsBuild;
+exports.jsMinify = jsMinify;
+exports.default = series(html, minCss, jsBuild, jsMinify);

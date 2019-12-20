@@ -1,6 +1,9 @@
 #ridestyler-vehicle-config {
     width: 100%;
 }
+#ridestyler-vehicle-config .config-select{
+    text-align: left;
+}
 #ridestyler-vehicle-config select {
     display: block;
     height: 30px;
@@ -10,9 +13,10 @@
 #ridestyler-vehicle-config label {
     display: inline-block;
     position: relative;
-    background: white;
+    background: #fff;
     top: 8px;
-    left: 12px;
+    left: 6px;
+    font-size: 0.8em;
 }
 #ridestyler-vehicle-config button {
     margin-top: 20px;

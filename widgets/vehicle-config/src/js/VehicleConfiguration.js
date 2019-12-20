@@ -1,4 +1,4 @@
-// import Promise from 'promise-polyfill';
+import Promise from 'promise-polyfill';
 
 (function () {
 	/**
@@ -11,7 +11,7 @@
 		let vehicleModel = {},
 			cdnUrl = options.devMode ? './src/' : 'https://static.ridestyler.net/widgets/vehicle-configuration/edge/',
 			tplUrl = cdnUrl + 'html/vc.tpl',
-			cssUrl = cdnUrl + 'css/vc.css',
+			cssUrl = cdnUrl + 'css/vc.min.css',
 			tplEl = null,
 			container = null,
 			bestConfigurationId = null,
@@ -68,7 +68,9 @@
 		 */
 		function loadStyles() {
 			let link = document.createElement('link');
-			link.src = cssUrl;
+			link.href = cssUrl;
+			link.type = 'text/css';
+			link.rel = 'stylesheet';
 			document.head.appendChild(link);
 		}
 
@@ -208,6 +210,7 @@
 				newFieldLabel = document.createElement('label'),
 				defaultOption = document.createElement('option');
 
+			newFieldDiv.classList.add('config-select');
 			defaultOption.innerHTML = "Select a " + newFieldInfo.Key;
 			newFieldLabel.innerHTML = newFieldInfo.Label;
 			newFieldSelect.setAttribute('name', newFieldInfo.Key);
