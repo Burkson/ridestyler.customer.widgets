@@ -1,4 +1,4 @@
-import Promise from 'promise-polyfill';
+// import Promise from 'promise-polyfill';
 
 (function () {
 	/**
@@ -99,10 +99,17 @@ import Promise from 'promise-polyfill';
 		function loadNextStep(e){
 			let currentEl = e,
 				currentSelection = null,
-				vehicleSelectRequest = {Selection:[]};
+				vehicleSelectRequest = {Selection:[]},
+				loader = null;
 			
 			if(currentEl){
 				if(currentEl.target) currentEl = currentEl.target;
+				if(currentEl.parentElement.lastElementChild.classList.contains('active-loader')) currentEl.parentElement.lastElementChild.classList.remove('active-loader');
+				if(currentEl.parentElement.nextElementSibling && currentEl.parentElement.nextElementSibling.querySelector('.select-loader')){
+					loader = currentEl.parentElement.nextElementSibling.querySelector('.select-loader');
+					loader.classList.add('active-loader');
+				}
+
 				currentSelection = currentEl.getAttribute('name');
 
 				if(vehicleModel[currentSelection]) { // if the selection already exists
@@ -130,7 +137,7 @@ import Promise from 'promise-polyfill';
 							populateVehicleOptions(response.Menu);
 						} else if(response.BestConfiguration){ //if we have our BestConfiguration set then we need to get our tire config
 							bestConfigurationId = response.BestConfiguration.Value;
-							getTireConfig();
+							getTireConfig()
 						}
 					}
 				});
@@ -196,6 +203,7 @@ import Promise from 'promise-polyfill';
 				});	
 			} 
 
+			selectElement.nextElementSibling.classList.remove('active-loader');	//remove loader on select element
 			if(selectElement.value.indexOf('Select') == -1) loadNextStep(selectElement); //if there was only one option it's selected, move to next step.
 		}
 
@@ -208,8 +216,11 @@ import Promise from 'promise-polyfill';
 			let newFieldDiv = document.createElement('div'),
 				newFieldSelect = document.createElement('select'),
 				newFieldLabel = document.createElement('label'),
-				defaultOption = document.createElement('option');
+				defaultOption = document.createElement('option'),
+				selectLoader = document.createElement('div');
 
+			selectLoader.classList.add('active-loader');
+			selectLoader.classList.add('select-loader');
 			newFieldDiv.classList.add('config-select');
 			defaultOption.innerHTML = "Select a " + newFieldInfo.Key;
 			newFieldLabel.innerHTML = newFieldInfo.Label;
@@ -218,6 +229,7 @@ import Promise from 'promise-polyfill';
 			newFieldSelect.appendChild(defaultOption);
 			newFieldDiv.appendChild(newFieldLabel);
 			newFieldDiv.appendChild(newFieldSelect);
+			newFieldDiv.appendChild(selectLoader);
 			tplEl.appendChild(newFieldDiv);
 
 			return newFieldSelect;
@@ -227,14 +239,18 @@ import Promise from 'promise-polyfill';
 		 * Shows availble tire configurations to the user
 		 */
 		function getTireConfig(){
-			ridestyler.ajax.send({action:'vehicle/gettireoptiondetails', data:{VehicleConfigurations: [bestConfigurationId]}}).then(function(response){
-				if(response && response.Details.length){
-					let tireOptions = {Options: response.Details}
-					populateVehicleOptions(tireOptions, true);
-				} else {
-					buildUrl();
-				}
-			})
+			return new Promise(function(resolve){
+				ridestyler.ajax.send({action:'vehicle/gettireoptiondetails', data:{VehicleConfigurations: [bestConfigurationId]}}).then(function(response){
+					if(response && response.Details.length){
+						vehicleModel.tire = '';
+						let tireOptions = {Options: response.Details}
+						populateVehicleOptions(tireOptions, true);
+					} else {
+						buildUrl();
+					}
+					resolve();
+				});
+			});
 		}
 
 		/**
@@ -249,11 +265,14 @@ import Promise from 'promise-polyfill';
 				if(bestTireConfigId) url += "&to=" + bestTireConfigId;
 				showButton(url);
 			} else {
-				getRSApiKey().then(function(apiKey){ 
-					url += apiKey + "#"; 
-					if(bestConfigurationId) url += "vc=" + bestConfigurationId;
-					if(bestTireConfigId) url += "&to=" + bestTireConfigId;
-					showButton(url);
+				return new Promise(function(resolve){
+					getRSApiKey().then(function(apiKey){ 
+						url += apiKey + "#"; 
+						if(bestConfigurationId) url += "vc=" + bestConfigurationId;
+						if(bestTireConfigId) url += "&to=" + bestTireConfigId;
+						showButton(url);
+						resolve();
+					});
 				});
 			}
 		}
@@ -317,5 +336,6 @@ import Promise from 'promise-polyfill';
 			initializeWidget();
 		})
 	}
+
 	window.VehicleConfiguration = VehicleConfiguration;
 })();
