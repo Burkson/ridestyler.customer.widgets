@@ -6,7 +6,7 @@ All of the RideStyler Widgets are designed to be as easy as possible to add to y
 ## Add Script References
 The first step is simply adding a reference to the RideStyler JavaScript API and the Wheel Calculator script.
 ```
-<script src="https://api.ridestyler.net/js?DataType=json"></script>
+<script src="https://api.ridestyler.net/js?DataType=json&Key=YOURKEY"></script>
 <script src="https://static.ridestyler.net/widgets/vehicle-config/vc.js"></script>
 ```
 ## Add a Container
@@ -21,35 +21,32 @@ Optionally, you might consder specifying a width, height, and border for your co
 	width: 600px;
 	height: 800px;
 	margin: 0 auto;
-	border: 1px dotted #CCC;
+	border: 1px solid #CCC;
 }
 </style>
 ```
 ## Initialize the Widget
-Now we need to initialize the API and our Vehicle Configuration widget.
-
-First, we will initialize the JavaScript API using our API key.
-```
-ridestyler.initialize({ Key: 'API KEY' });
-```
-
-Finally, we initialize the Vehicle Configuration. Pass the id attribute of the container above to the constructor.
+Now we need to initialize our Vehicle Configuration widget.
 ```
 var vc = new VehicleConfiguration('container');
 ```
 ## Additional Settings
 Now that you have your widget initialized you can add some additional settings to customize the look of your configurator.
 
-buttonClasses will add any of the classes specified to the buttons in the widget
+- buttonClasses will add any of the classes specified to the buttons in the widget
+
 (Array) buttonClasses: ['btn', 'red-btn']; 
 
-includeStyles will add our custom styles to the widget
+- includeStyles will add our custom styles to the widget
+
 (Boolean) includeStyles: true;
 
-buttonText will add custom text onto the submit button
+- buttonText will add custom text onto the submit button
+
 (String) buttonText: "Go to visualizer"
 
-titleText will add custom text onto the title of the widget
+- titleText will add custom text onto the title of the widget
+
 (String) titleText: "My super awesome vehicle configurator"
 
 Example integration with additional settings:
