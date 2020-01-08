@@ -2,12 +2,12 @@ import Promise from 'promise-polyfill';
 
 (function () {
 	/**
-	 * Vehicle Configuration: Render the Vehicle Configuration widget within a container element
+	 * Quick Select: Render the Quick Selct widget within a container element
 	 * @constructor
 	 * @param {number} containerId - The id of the widget's parent element
 	 * @param {Object} options - Optional arguments
 	 */
-	function VehicleConfiguration(containerId, options) {
+	function QuickSelect(containerId, options) {
 		let vehicleModel = {},
 			cdnUrl = options.devMode ? './src/' : 'https://static.ridestyler.net/widgets/quick-select/edge/',
 			tplUrl = cdnUrl + 'html/qs.tpl',
@@ -39,7 +39,7 @@ import Promise from 'promise-polyfill';
 		}
 
 		/**
-		 * Load the Vehicle configuration tpl
+		 * Load the Quick Select tpl
 		 */
 		function loadTpl() {
 			return new Promise(function(resolve){
@@ -53,7 +53,7 @@ import Promise from 'promise-polyfill';
 							tplEl = document.querySelector('#ridestyler-quick-select');
 							resolve();
 						} else {
-							console.error('Vehicle configuration template failed to load.');
+							console.error('Quick Select template failed to load.');
 						}
 					}
 				};
@@ -337,5 +337,5 @@ import Promise from 'promise-polyfill';
 		})
 	}
 
-	window.VehicleConfiguration = VehicleConfiguration;
+	window.QuickSelect = QuickSelect;
 })();
