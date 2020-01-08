@@ -1,14 +1,14 @@
 {
-  "name": "vehicle-config",
+  "name": "quick-select",
   "version": "1.0.0",
-  "description": "Adds a vehicle configurator to your website that directs users to your showcase",
+  "description": "Adds a quick select widget to your website that directs users to your showcase",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Burkson/ridestyler.customer.widgets/tree/master/widgets/vehicle-config"
+    "url": "https://github.com/Burkson/ridestyler.customer.widgets/tree/master/widgets/quick-select"
   },
   "author": "Blake Bless",
   "license": "ISC",

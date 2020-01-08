@@ -1,12 +1,12 @@
-#ridestyler-vehicle-config {
+#ridestyler-quick-select {
     width: 100%;
 }
-#ridestyler-vehicle-config .config-select {
+#ridestyler-quick-select .config-select {
     text-align: left;
     position: relative;
     display: block;
 }
-#ridestyler-vehicle-config select {
+#ridestyler-quick-select select {
     display: block;
     height: 30px;
     width: 100%;
@@ -27,7 +27,7 @@
     right: 0;
     bottom: 6px;
 }
-#ridestyler-vehicle-config label {
+#ridestyler-quick-select label {
     display: inline-block;
     position: relative;
     top: 8px;
@@ -35,7 +35,7 @@
     font-size: 0.8em;
     z-index: 1;
 }
-#ridestyler-vehicle-config label::after {
+#ridestyler-quick-select label::after {
     height: 12px;
     display: block;
     background: white;
@@ -45,7 +45,7 @@
     width: 100%;
     z-index: -1;
 }
-#ridestyler-vehicle-config button {
+#ridestyler-quick-select button {
     margin-top: 20px;
     width: 100%;
     height: 40px;

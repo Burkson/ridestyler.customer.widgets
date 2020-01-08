@@ -13,13 +13,13 @@ var config = {
 };
 
 function html() {
-  return src(config.srcDir + '/html/vc.tpl')
+  return src(config.srcDir + '/html/qs.tpl')
     .pipe(htmlclean())
     .pipe(dest(config.distDir + '/html'));
 }
 
 function minCss() {
-  return src(config.srcDir + '/css/vc.css')
+  return src(config.srcDir + '/css/qs.css')
     .pipe(cssnano())
     .pipe(rename({
       'suffix': '.min'
@@ -29,23 +29,23 @@ function minCss() {
 
 function jsBuild(){
   browserify({
-    entries: config.srcDir + '/js/VehicleConfiguration.js',
+    entries: config.srcDir + '/js/QuickSelect.js',
     debug: true
   })
   .transform(babelify, {presets:['@babel/env']})
   .bundle()
-  .pipe( source('./VehicleConfiguration.js') )
+  .pipe( source('./QuickSelect.js') )
   .pipe( dest(config.distDir + '/js') );
 
-  return src(config.distDir + '/js/VehicleConfiguration.js')
+  return src(config.distDir + '/js/QuickSelect.js')
 }
 
 function jsMinify(){
-  src(config.distDir + '/js/VehicleConfiguration.js')
+  src(config.distDir + '/js/QuickSelect.js')
   .pipe( minify() )
   .pipe(dest(config.distDir + '/js'));
 
-  return src(config.distDir + '/js/VehicleConfiguration.js')
+  return src(config.distDir + '/js/QuickSelect.js')
 }
 
 exports.html = html;

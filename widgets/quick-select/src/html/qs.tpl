@@ -1,4 +1,4 @@
-<div id="ridestyler-vehicle-config">
+<div id="ridestyler-quick-select">
 	<div id="config-message"> 
 		Select your vehicle
 	</div>

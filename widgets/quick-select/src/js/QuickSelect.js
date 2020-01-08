@@ -9,9 +9,9 @@ import Promise from 'promise-polyfill';
 	 */
 	function VehicleConfiguration(containerId, options) {
 		let vehicleModel = {},
-			cdnUrl = options.devMode ? './src/' : 'https://static.ridestyler.net/widgets/vehicle-configuration/edge/',
-			tplUrl = cdnUrl + 'html/vc.tpl',
-			cssUrl = cdnUrl + 'css/vc.min.css',
+			cdnUrl = options.devMode ? './src/' : 'https://static.ridestyler.net/widgets/quick-select/edge/',
+			tplUrl = cdnUrl + 'html/qs.tpl',
+			cssUrl = cdnUrl + 'css/qs.min.css',
 			tplEl = null,
 			container = null,
 			bestConfigurationId = null,
@@ -50,7 +50,7 @@ import Promise from 'promise-polyfill';
 					if (xhr.readyState === completed) {
 						if (xhr.status === 200) {
 							container.innerHTML = xhr.responseText;
-							tplEl = document.querySelector('#ridestyler-vehicle-config');
+							tplEl = document.querySelector('#ridestyler-quick-select');
 							resolve();
 						} else {
 							console.error('Vehicle configuration template failed to load.');
