@@ -736,7 +736,24 @@ declare namespace ridestyler {
             SearchConfidence: number;
         }
 
-
+        interface VehicleFitmentDescriptionModel {
+            VehicleFitmentID: string;
+            VehicleFitment_VehicleConfigurationID: string;
+            VehicleFitment_DataShardID: number;
+            VehicleFitmentHub: number;
+            VehicleFitmentOffsetMin: number;
+            VehicleFitmentOffsetMax: number;
+            VehicleFitmentDiameterMin: number;
+            VehicleFitmentDiameterMax: number;
+            VehicleFitmentWidthMin: number;
+            VehicleFitmentWidthMax: number;
+            VehicleFitmentPosition: Requests.VehicleFitmentPositionType;
+            VehicleFitmentUpdated: string;
+            VehicleFitmentArchived: boolean;
+            VehicleFitmentHash: string;
+            VehicleFitment_BoltPatternID: number;
+            VehicleFitment_BoltPatternDescription: string;
+        }
 
         interface TireSizeDescriptionModel
         {
