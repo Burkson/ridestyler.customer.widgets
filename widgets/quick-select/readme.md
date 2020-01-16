@@ -19,16 +19,16 @@ Optionally, you might consder specifying a width, height, and border for your co
 <style>
 #container {
 	width: 600px;
-	height: 800px;
 	margin: 0 auto;
 	border: 1px solid #CCC;
 }
 </style>
 ```
 ## Initialize the Widget
-Now we need to initialize our Quick Select widget.
+Now we need to initialize our Quick Select widget. Make sure you include the url of the page that contains your showcase instance in the
+settings of your initialization.
 ```
-var qs = new QuickSelect('container');
+new QuickSelect('container', {url: 'https://your-url.com'});
 ```
 ## Additional Settings
 Now that you have your widget initialized you can add some additional settings to customize the look of your configurator.
@@ -51,7 +51,7 @@ Now that you have your widget initialized you can add some additional settings t
 
 Example integration with additional settings:
 ```
-var vc = new QuickSelect('container', { titleText: "this is a disclaimer", includeStyles: true, buttonClasses: ['btn', 'red-btn'] }  );
+new QuickSelect('container', { url: 'https://your-url.com', titleText: "this is a disclaimer", includeStyles: true, buttonClasses: ['btn', 'red-btn'] }  );
 ```
 ## Enjoy
 That's it! The widget will render in the container specified.
