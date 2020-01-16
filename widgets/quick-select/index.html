@@ -2,15 +2,16 @@
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<style>#container{overflow: hidden;}body,html{margin:0;}</style>
-	<link href="src/css/vc.css" rel="stylesheet" type="text/css">
+	<style>#container{overflow: hidden;width:300px;margin:0 auto;}body,html{margin:0;}</style>
+	<link href="src/css/qs.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="https://static.ridestyler.net/rs-ui/latest/rsui.min.css">
 </head>
 <body>
 	<div id="container"></div>
 	<script src="http://api.ridestyler.net/js?Key=c028c54cf0c447c594a862de6ac85d1a"></script>
-	<script src="src/js/VehicleConfiguration.js"></script>
+	<script src="src/js/QuickSelect.js"></script>
  	<script>
-		var vc = new VehicleConfiguration('container', {devMode: true, buttonClasses: ['btn'], buttonText: 'Go To Visualizer', configTitle: 'This is a title', includeStyles: true});
+		new QuickSelect('container', {url: 'https://gatewaytire.com/shop-for-wheels/?thisisavar=true', devMode: true, buttonClasses: ['btn'], buttonText: 'See wheels', configTitle: 'Quick Select'});
 	</script>
 </body>
 </html>

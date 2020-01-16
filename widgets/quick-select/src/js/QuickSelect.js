@@ -257,7 +257,10 @@ import Promise from 'promise-polyfill';
 		 * Build the url that will take users to the showcase with their configuration settings.
 		 */
 		function buildUrl(){
-			let url = "http://app.ridestyler.net/showcase?"
+			let url = options.url;
+
+			if(url.indexOf('?') == -1) url += '?';
+			else url += '&';
 
 			if(options.apiKey){
 				url += options.apiKey + "#";
