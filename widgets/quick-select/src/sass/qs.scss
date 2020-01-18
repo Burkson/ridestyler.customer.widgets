@@ -1,18 +1,21 @@
 @import "https://static.ridestyler.net/rs-ui/latest/rsui.min.css";
+
 #ridestyler-quick-select {
   width: 300px;
   padding: 1em;
-  border: 1px solid gray; }
-  #ridestyler-quick-select #config-message {
+  border: 1px solid gray;
+  #config-message {
     text-align: center;
     font-size: 1.375rem;
-    font-weight: bold; }
-  #ridestyler-quick-select .config-select {
+    font-weight: bold;
+  }
+  .config-select {
     text-align: left;
     position: relative;
-    display: block; }
-  #ridestyler-quick-select select,
-  #ridestyler-quick-select input {
+    display: block;
+  }
+  select,
+  input {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -32,14 +35,16 @@
     border: none;
     border-bottom-style: solid;
     border-color: #c7c7c7;
-    border-width: .1rem; }
-  #ridestyler-quick-select select {
+    border-width: .1rem;
+  }
+  select {
     display: block;
     height: 30px;
     width: 100%;
     margin: 0px 0;
-    z-index: 1; }
-  #ridestyler-quick-select .select-loader.active-loader {
+    z-index: 1;
+  }
+  .select-loader.active-loader {
     display: inline-block;
     background-image: url("https://static.ridestyler.net/images/loaders/loader_radial_chaser_back_on_white_32.gif");
     position: absolute;
@@ -48,15 +53,17 @@
     background-position: top left;
     background-size: 100%;
     right: 0;
-    bottom: 6px; }
-  #ridestyler-quick-select label {
+    bottom: 6px;
+  }
+  label {
     display: inline-block;
     position: relative;
     top: 8px;
     left: 6px;
     font-size: 0.8em;
-    z-index: 1; }
-  #ridestyler-quick-select label::after {
+    z-index: 1;
+  }
+  label::after {
     height: 12px;
     display: block;
     background: #fff;
@@ -64,13 +71,15 @@
     position: absolute;
     top: 9px;
     width: 100%;
-    z-index: -1; }
-  #ridestyler-quick-select button {
+    z-index: -1;
+  }
+  button {
     margin-top: 20px;
     width: 100%;
     height: 40px;
-    cursor: pointer; }
-  #ridestyler-quick-select button {
+    cursor: pointer;
+  }
+  button {
     color: #fff;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -98,4 +107,6 @@
     user-select: none;
     vertical-align: middle;
     background: #21b8f7;
-    font-size: 1em; }
+    font-size: 1em;
+  }
+}

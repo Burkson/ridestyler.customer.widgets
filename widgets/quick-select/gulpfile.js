@@ -1,7 +1,7 @@
 var { src, series, dest } = require('gulp'),
 rename = require('gulp-rename'),
 htmlclean = require('gulp-htmlclean'),
-cssnano = require('gulp-cssnano'),
+sass = require('gulp-sass'),
 browserify = require("browserify"),
 babelify = require("babelify"),
 source = require("vinyl-source-stream"),
@@ -18,9 +18,9 @@ function html() {
     .pipe(dest(config.distDir + '/html'));
 }
 
-function minCss() {
-  return src(config.srcDir + '/css/qs.css')
-    .pipe(cssnano())
+function minSass() {
+  return src(config.srcDir + '/sass/qs.scss')
+    .pipe(sass().on('error', sass.logError))
     .pipe(rename({
       'suffix': '.min'
     }))
@@ -49,7 +49,7 @@ function jsMinify(){
 }
 
 exports.html = html;
-exports.minCss = minCss;
+exports.minSass = minSass;
 exports.jsBuild = jsBuild;
 exports.jsMinify = jsMinify;
-exports.default = series(html, minCss, jsBuild, jsMinify);
+exports.default = series(html, minSass, jsBuild, jsMinify);

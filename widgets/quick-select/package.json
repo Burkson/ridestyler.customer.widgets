@@ -25,5 +25,9 @@
     "gulp-rename": "^1.2.2",
     "promise-polyfill": "^8.1.3",
     "vinyl-source-stream": "^2.0.0"
+  },
+  "devDependencies": {
+    "gulp-sass": "^4.0.2",
+    "ridestyler.ui": "github:Burkson/ridestyler.ui"
   }
 }
