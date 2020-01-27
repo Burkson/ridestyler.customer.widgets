@@ -2,15 +2,16 @@
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<style>#container{overflow: hidden;margin:0 auto;}body,html{margin:0;}</style>
+	<style>#container{margin:0 auto;text-align: center;}body,html{margin:0;}#ridestyler-quick-select{display: inline-block;margin: 20px auto;}</style>
 	<link href="dist/css/qs.min.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="https://static.ridestyler.net/rs-ui/latest/rsui.min.css">
 </head>
 <body>
 	<div id="container"></div>
 	<script src="http://api.ridestyler.net/js?Key=c028c54cf0c447c594a862de6ac85d1a"></script>
-	<script src="src/js/QuickSelect.js"></script>
+	<script src="dist/js/QuickSelect.js"></script>
  	<script>
-		new QuickSelect('container', {url: 'https://gatewaytire.com/shop-for-wheels/?thisisavar=true', devMode: true, buttonClasses: ['btn'], buttonText: 'See wheels', configTitle: 'Quick Select'});
+		new QuickSelect('container', {url: 'https://gatewaytire.com/shop-for-wheels/?thisisavar=true', devMode: true, buttonText: 'See wheels', configTitle: 'Quick Select'});
 	</script>
 </body>
 </html>
