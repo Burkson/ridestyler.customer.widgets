@@ -6,13 +6,21 @@ var config = {
   distDir: './dist',
 };
 
-gulp.task('min-js', function() {
+gulp.task('js', function() {
   return gulp.src('./js/rsvr.js')
-    .pipe(uglify())
     .pipe(rename({
-      'suffix': '.min'
+      'suffix': '.latest'
     }))
     .pipe(gulp.dest(config.distDir + '/js'));
 });
 
-gulp.task('default', [ 'min-js']);
+gulp.task('min-js', function() {
+  return gulp.src('./js/rsvr.js')
+    .pipe(uglify())
+    .pipe(rename({
+      'suffix': '.latest.min'
+    }))
+    .pipe(gulp.dest(config.distDir + '/js'));
+});
+
+gulp.task('default', ['js', 'min-js']);

@@ -25,7 +25,7 @@
 		this.tplHtml = '';
 
 		// Paths to our stylesheet and template
-		this.urlPfx = this.dev ? 'src/' : 'https://static.ridestyler.net/widgets/plus-size-calculator/edge/';
+		this.urlPfx = this.dev ? 'src/' : 'https://static.ridestyler.com/widgets/plus-size-calculator/edge/';
 		this.cssFile = this.dev ? 'psc.css' : 'psc.min.css';
 		this.cssUrl = this.urlPfx + 'css/' + this.cssFile;
 		this.tplUrl = this.urlPfx + 'html/psc.tpl';

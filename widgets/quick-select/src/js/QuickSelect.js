@@ -9,7 +9,7 @@
 	 */
 	function QuickSelect(containerId, options) {
 		let vehicleModel = {},
-			cdnUrl = options.devMode ? './src/' : 'https://static.ridestyler.net/widgets/quick-select/edge/',
+			cdnUrl = options.devMode ? './src/' : 'https://static.ridestyler.com/widgets/quick-select/edge/',
 			tplUrl = cdnUrl + 'html/qs.tpl',
 			cssUrl = cdnUrl + 'css/qs.min.css',
 			tplEl = null,

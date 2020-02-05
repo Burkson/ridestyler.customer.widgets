@@ -12,6 +12,9 @@ gulp.task('css', function() {
   return gulp.src('./scss/rsqv.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(cssbeautify())
+    .pipe(rename({
+      'suffix': '.latest'
+    }))
     .pipe(gulp.dest(config.distDir + '/css'));
 });
 
@@ -21,18 +24,27 @@ gulp.task('min-css', function() {
       outputStyle: 'compressed'
     }).on('error', sass.logError))
     .pipe(rename({
-      'suffix': '.min'
+      'suffix': '.latest.min'
     }))
     .pipe(gulp.dest(config.distDir + '/css'));
+});
+
+gulp.task('js', function() {
+  return gulp.src('./js/*.js')
+    .pipe(uglify())
+    .pipe(rename({
+      'suffix': '.latest'
+    }))
+    .pipe(gulp.dest(config.distDir + '/js'));
 });
 
 gulp.task('min-js', function() {
   return gulp.src('./js/*.js')
     .pipe(uglify())
     .pipe(rename({
-      'suffix': '.min'
+      'suffix': '.latest.min'
     }))
     .pipe(gulp.dest(config.distDir + '/js'));
 });
 
-gulp.task('default', ['css', 'min-css', 'min-js']);
+gulp.task('default', ['css', 'min-css', 'js', 'min-js']);

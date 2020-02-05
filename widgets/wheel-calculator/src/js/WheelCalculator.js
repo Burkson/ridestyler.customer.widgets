@@ -12,7 +12,7 @@ import Promise from 'promise-polyfill';
 			widthSelects,
 			offsetSelects,
 			wheels = [{Diameter:undefined, Width:undefined, Offset:undefined, Backspace:undefined}, {Diameter:undefined, Width:undefined, Offset:undefined, Backspace:undefined}],
-			cdnUrl = "https://static.ridestyler.net/widgets/wheel-calculator/edge",
+			cdnUrl = "https://static.ridestyler.com/widgets/wheel-calculator/edge",
 			tplUrl = cdnUrl + "/html/wc.tpl",
 			cssUrl = cdnUrl + "/css/wc.min.css",
 			wheelDiamOne,

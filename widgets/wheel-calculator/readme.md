@@ -7,7 +7,7 @@ All of the RideStyler Widgets are designed to be as easy as possible to add to y
 The first step is simply adding a reference to the RideStyler JavaScript API and the Wheel Calculator script.
 ```
 <script src="https://api.ridestyler.net/js?DataType=json"></script>
-<script src="https://static.ridestyler.net/widgets/wheel-calculator/1.0/js/wc-min.js"></script>
+<script src="https://static.ridestyler.com/widgets/wheel-calculator/1.0/js/wc-min.js"></script>
 ```
 ## Add a Container
 Next, create a container div in your document to store the Wheel Calculator widget. Give it an id attribute, for example, "container".
