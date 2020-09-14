@@ -1,25 +1,25 @@
 <div id="ridestyler-quick-select">
 	<div id="config-message"> 
-		Select your vehicle
+		Browse Wheels by Vehicle
 	</div>
 	<div class="config-select">
-		<label>Year</label>
+		<div class="config-select-icon"></div>
 		<select name="year" disabled>
-			<option disabled="true" selected>Select a year</option>
+			<option disabled="true" value="Select" selected>Year</option>
 		</select>
 		<div class="select-loader"></div>
 	</div>
 	<div class="config-select">
-		<label>Make</label>
+		<div class="config-select-icon"></div>
 		<select name="make" disabled>
-			<option disabled="true" selected>Select a make</option>
+			<option disabled="true" selected>Make</option>
 		</select>
 		<div class="select-loader"></div>
 	</div>
 	<div class="config-select">
-		<label>Model</label>
+		<div class="config-select-icon"></div>
 		<select name="model" disabled>
-			<option disabled="true" selected>Select a model</option>
+			<option disabled="true" selected>Model</option>
 		</select>
 		<div class="select-loader"></div>
 	</div>

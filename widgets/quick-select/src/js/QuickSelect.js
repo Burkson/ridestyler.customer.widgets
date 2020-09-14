@@ -1,5 +1,3 @@
-// import Promise from 'promise-polyfill';
-
 (function () {
 	/**
 	 * Quick Select: Render the Quick Selct widget within a container element
@@ -9,15 +7,38 @@
 	 */
 	function QuickSelect(containerId, options) {
 		let vehicleModel = {},
-			cdnUrl = options.devMode ? './src/' : 'https://static.ridestyler.com/widgets/quick-select/edge/',
-			tplUrl = cdnUrl + 'html/qs.tpl',
-			cssUrl = cdnUrl + 'css/qs.min.css',
+			cdnUrl = options.devMode ? './src/' : 'https://static.ridestyler.com/widgets/quick-select/' + getRideStylerEnvironment() + '/',
+			tplUrl = options.devMode ? './src/html/qs.tpl' : cdnUrl + 'html/qs.tpl',
+			cssUrl = options.devMode ? './dist/css/qs.min.css' : cdnUrl + 'css/qs.min.css',
 			tplEl = null,
 			container = null,
 			bestConfigurationId = null,
-			bestTireConfigId = null;
+			bestTireConfigId = null,
+			theme = null;
 
 		options = options || {};
+
+		/**
+		 * Get RideStyler environment
+		 */
+		function getRideStylerEnvironment() {
+			const url = ridestyler.ajax.url('', undefined);
+		
+			if (/\/api-alpha\./i.test(url)) return 'alpha';
+			else if (/\/api-beta\./i.test(url)) return 'beta';
+			else if (/\/api\./i.test(url)) return 'edge';
+		}
+
+		/**
+		 * Get the clients theme
+		 */
+		function getClientTheme(){
+			return ridestyler.ajax.send({action:'client/GetTheme'}).then(thing => {
+				if(thing && thing.Theme){
+					container.style.setProperty('--primaryColor', thing.Theme.PrimaryColor);
+				}
+			});
+		}
 
 		/**
 		 * Load our template and styles if specified. Add event listeners to our selects.
@@ -25,7 +46,10 @@
 		function initializeWidget(){
 			initializeContainer();
 			loadTpl().then(function(){
-				if(options.includeStyles) loadStyles();
+				if(options.includeStyles) {
+					getClientTheme();
+					loadStyles();
+				}
 				initializeUi();
 			})
 		}
@@ -81,7 +105,8 @@
 			let yearEl = tplEl.querySelector('select[name=year]'),
 				makeEl = tplEl.querySelector('select[name=make]'),
 				modelEl = tplEl.querySelector('select[name=model]'),
-				configTitle = tplEl.querySelector('#config-message');
+				configTitle = tplEl.querySelector('#config-message'),
+				selectIcon = tplEl.querySelector('.config-select-icon');
 
 			if(options.configTitle) configTitle.innerHTML = options.configTitle;
 
@@ -174,7 +199,7 @@
 				fieldInfo = {};
 
 			if(isTireOptions){ //if these are tire options we know we need to generate a new field with info not from the passed data
-				fieldInfo = {Key: 'tire', Label: 'Tire Option', Callback: loadNextStep};
+				fieldInfo = {Key: 'tire', Callback: loadNextStep};
 				selectElement = generateNewField(fieldInfo);
 			} else if(tplEl.querySelector('select[name=' + newFieldInfo.Key + ']')){ //else if the field already exists we want to use it
 				selectElement = tplEl.querySelector('select[name=' + newFieldInfo.Key + ']');
@@ -199,12 +224,15 @@
 						optionEl.innerHTML = option.Label;
 						selectElement.appendChild(optionEl);
 					}
-					if(newFieldInfo.Options.length == 1) optionEl.setAttribute('selected', true); //check if there is only one option, if so select it
+					if(newFieldInfo.Options.length == 1) {
+						optionEl.setAttribute('selected', true); //check if there is only one option, if so select it
+						if(newFieldInfo.Key != 'make' && newFieldInfo.Key != 'model') selectElement.parentElement.style.display = 'none';
+					}
 				});	
 			} 
 
 			selectElement.nextElementSibling.classList.remove('active-loader');	//remove loader on select element
-			if(selectElement.value.indexOf('Select') == -1) loadNextStep(selectElement); //if there was only one option it's selected, move to next step.
+			if(selectElement.length == 2) loadNextStep(selectElement); //if there was only one option move to next step.
 		}
 
 		/**
@@ -215,19 +243,19 @@
 		function generateNewField(newFieldInfo){
 			let newFieldDiv = document.createElement('div'),
 				newFieldSelect = document.createElement('select'),
-				newFieldLabel = document.createElement('label'),
 				defaultOption = document.createElement('option'),
+				selectIcon = document.createElement('div'),
 				selectLoader = document.createElement('div');
 
 			selectLoader.classList.add('active-loader');
 			selectLoader.classList.add('select-loader');
 			newFieldDiv.classList.add('config-select');
-			defaultOption.innerHTML = "Select a " + newFieldInfo.Key;
-			newFieldLabel.innerHTML = newFieldInfo.Label;
+			selectIcon.classList.add('config-select-icon');
+			defaultOption.innerHTML = (newFieldInfo.Key == 'features_pickup' ? 'Feature' : newFieldInfo.Key.charAt(0).toUpperCase() + newFieldInfo.Key.substr(1, newFieldInfo.Key.length));
 			newFieldSelect.setAttribute('name', newFieldInfo.Key);
 			newFieldSelect.addEventListener('change', function(event){newFieldInfo.Callback(event)});
 			newFieldSelect.appendChild(defaultOption);
-			newFieldDiv.appendChild(newFieldLabel);
+			newFieldDiv.appendChild(selectIcon);
 			newFieldDiv.appendChild(newFieldSelect);
 			newFieldDiv.appendChild(selectLoader);
 			tplEl.appendChild(newFieldDiv);
@@ -302,7 +330,7 @@
 			let confirmButton = document.createElement('button');
 			
 			if(options.buttonText) confirmButton.innerHTML = options.buttonText;
-			else confirmButton.innerHTML = "See Wheels";
+			else confirmButton.innerHTML = "Browse wheels";
 
 			if(options.buttonClasses) options.buttonClasses.map(btnClass => confirmButton.classList.add(btnClass)); //if user has super secret special button classes
 
@@ -328,7 +356,7 @@
 				let disabledEl = document.createElement('option');
 				disabledEl.setAttribute('disabled', true);
 				disabledEl.setAttribute('selected', true);
-				disabledEl.innerHTML = 'Select a ' + key;
+				disabledEl.innerHTML = key.charAt(0).toUpperCase() + key.substr(1, key.length);
 				fieldElement.innerHTML = "";
 				fieldElement.appendChild(disabledEl);
 			}
@@ -337,7 +365,7 @@
 
 		document.addEventListener('DOMContentLoaded', function(){
 			initializeWidget();
-		})
+		});
 	}
 
 	window.QuickSelect = QuickSelect;

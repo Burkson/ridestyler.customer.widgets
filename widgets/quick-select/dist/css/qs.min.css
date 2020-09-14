@@ -1,12 +1,27 @@
 @import "https://static.ridestyler.com/rs-ui/latest/rsui.min.css";
+:root {
+  primaryColor: #21b8f7; }
+
 #ridestyler-quick-select {
   width: 350px;
-  padding: 1.7em;
-  box-shadow: 0px 6px 13px rgba(0, 0, 0, 0.3); }
+  padding: 2em;
+  box-shadow: 0px 6px 13px rgba(0, 0, 0, 0.3);
+  border: 1px solid #c4c4c4;
+  border-radius: 3px; }
   #ridestyler-quick-select #config-message {
     text-align: left;
     font-size: 1.375rem;
-    font-weight: bold; }
+    font-weight: bold;
+    margin-bottom: 1.2em; }
+  #ridestyler-quick-select .config-select-icon {
+    width: 0px;
+    height: 0px;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid var(--primaryColor, #21b8f7);
+    position: absolute;
+    right: 13px;
+    top: 9.5px; }
   #ridestyler-quick-select .config-select {
     text-align: left;
     position: relative;
@@ -15,8 +30,12 @@
     display: block;
     height: 30px;
     width: 100%;
-    margin: 0px 0;
-    z-index: 1; }
+    margin: 0 0 1em;
+    z-index: 1;
+    appearance: none;
+    padding: 0px 13px;
+    border-radius: 3px;
+    border-color: #c4c4c4; }
   #ridestyler-quick-select .select-loader.active-loader {
     display: inline-block;
     background-image: url("https://static.ridestyler.com/images/loaders/loader_radial_chaser_back_on_white_32.gif");
@@ -36,15 +55,15 @@
     z-index: 1; }
   #ridestyler-quick-select label::after {
     height: 12px;
+    width: 100%;
     display: block;
     background: #fff;
     content: "";
     position: absolute;
     top: 9px;
-    width: 100%;
     z-index: -1; }
   #ridestyler-quick-select button {
-    margin-top: 20px;
+    margin-top: 0.5em;
     width: 100%;
     height: 40px;
     cursor: pointer; }
@@ -75,5 +94,5 @@
     -ms-user-select: none;
     user-select: none;
     vertical-align: middle;
-    background: #21b8f7;
+    background: var(--primaryColor, #21b8f7);
     font-size: 1em; }
