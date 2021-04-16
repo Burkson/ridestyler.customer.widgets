@@ -1,13 +1,16 @@
 {
   "name": "quick-select",
-  "version": "1.0.0",
+  "version": "1.2",
   "description": "Adds a quick select widget to your website that directs users to your showcase",
   "main": "gulpfile.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Burkson/ridestyler.customer.widgets/tree/master/widgets/quick-select"
   },
-  "author": "Blake Bless",
+  "contributors": [
+    {"name": "Blake Bless"},
+    {"name": "Byron Carasco"}
+  ],
   "license": "ISC",
   "dependencies": {
     "@babel/core": "^7.7.7",
