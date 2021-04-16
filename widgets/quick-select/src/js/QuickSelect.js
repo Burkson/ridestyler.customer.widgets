@@ -3,7 +3,15 @@
 	 * Quick Select: Render the Quick Selct widget within a container element
 	 * @constructor
 	 * @param {number} containerId - The id of the widget's parent element
-	 * @param {Object} options - Optional arguments
+	 * @param {Object} [options] - Optional arguments
+	 * @param {string[]} [options.buttonClasses]
+	 * @param {boolean} [options.includeStyles]
+	 * @param {string} [options.configTitle]
+	 * @param {boolean} [options.devMode]
+	 * @param {string} [options.apiKey]
+	 * @param {string} [options.url]
+	 * @param {Function} [options.callback]
+	 * @param {Function} [options.openInSamePage]
 	 */
 	function QuickSelect(containerId, options) {
 		let vehicleModel = {},
@@ -14,6 +22,8 @@
 			container = null,
 			bestConfigurationId = null,
 			bestTireConfigId = null,
+			bestTireOptionDetails = null,
+			tireOptionDetailsLookup = {},
 			theme = null;
 
 		options = options || {};
@@ -143,11 +153,17 @@
 				} else { // else add it
 					vehicleModel[currentSelection] = currentEl.value; 
 				}
+
+				if (currentSelection !== 'year' && currentSelection !== 'make')
+					addStaticLoader();
 			}
 
 			for(let property in vehicleModel){
 				if(vehicleModel[property] != ""){
-					if(property == 'tire') bestTireConfigId = vehicleModel[property];
+					if(property == 'tire') {
+						bestTireConfigId = vehicleModel[property];
+						bestTireOptionDetails = tireOptionDetailsLookup[bestTireConfigId];
+					}
 					vehicleSelectRequest.Selection.push(
 						property + ":" + vehicleModel[property]
 					);
@@ -167,7 +183,7 @@
 					}
 				});
 			} else {
-				buildUrl();
+				updateButton();
 			}
 		}
 
@@ -187,7 +203,21 @@
 				}
 			}
 			
-			if(tplEl.querySelector('button')) tplEl.removeChild(tplEl.querySelector('button'))
+			if(tplEl.querySelector('a')) tplEl.removeChild(tplEl.querySelector('a'))
+		}
+
+		function addStaticLoader() {
+			removeStaticLoader();
+			
+			var staticLoader = document.createElement('div');
+
+			staticLoader.className = "select-loader static-loader";
+			
+			tplEl.appendChild(staticLoader);
+		}
+
+		function removeStaticLoader() {
+			tplEl.querySelectorAll('.static-loader').forEach(el => el.parentElement.removeChild(el));
 		}
 
 		/**
@@ -197,6 +227,7 @@
 		function populateVehicleOptions(newFieldInfo, isTireOptions){
 			let selectElement = null,
 				fieldInfo = {};
+
 
 			if(isTireOptions){ //if these are tire options we know we need to generate a new field with info not from the passed data
 				fieldInfo = {Key: 'tire', Callback: loadNextStep};
@@ -233,6 +264,7 @@
 
 			selectElement.nextElementSibling.classList.remove('active-loader');	//remove loader on select element
 			if(selectElement.length == 2) loadNextStep(selectElement); //if there was only one option move to next step.
+			else removeStaticLoader();			
 		}
 
 		/**
@@ -255,9 +287,9 @@
 			newFieldSelect.setAttribute('name', newFieldInfo.Key);
 			newFieldSelect.addEventListener('change', function(event){newFieldInfo.Callback(event)});
 			newFieldSelect.appendChild(defaultOption);
-			newFieldDiv.appendChild(selectIcon);
 			newFieldDiv.appendChild(newFieldSelect);
 			newFieldDiv.appendChild(selectLoader);
+			newFieldDiv.appendChild(selectIcon);
 			tplEl.appendChild(newFieldDiv);
 
 			return newFieldSelect;
@@ -267,43 +299,50 @@
 		 * Shows availble tire configurations to the user
 		 */
 		function getTireConfig(){
-			return new Promise(function(resolve){
-				ridestyler.ajax.send({action:'vehicle/gettireoptiondetails', data:{VehicleConfigurations: [bestConfigurationId]}}).then(function(response){
-					if(response && response.Details.length){
-						vehicleModel.tire = '';
-						let tireOptions = {Options: response.Details}
-						populateVehicleOptions(tireOptions, true);
-					} else {
-						buildUrl();
-					}
-					resolve();
-				});
+			return ridestyler.ajax.send({action:'vehicle/gettireoptiondetails', data:{VehicleConfigurations: [bestConfigurationId]}}).then(function(response){
+				if(response && response.Details.length){
+					vehicleModel.tire = '';
+
+					let tireOptions = {Options: response.Details}
+
+					tireOptionDetailsLookup = {};
+					response.Details.forEach(detail => {
+						tireOptionDetailsLookup[detail.TireOptionID] = detail;
+					});
+
+					populateVehicleOptions(tireOptions, true);
+				} else {
+					updateButton();
+				}
 			});
 		}
 
 		/**
-		 * Build the url that will take users to the showcase with their configuration settings.
+		 * Build the data that will take users to the showcase with their configuration settings.
 		 */
-		function buildUrl(){
+		function updateButton(){
 			let url = options.url;
 
 			if(url.indexOf('?') == -1) url += '?';
 			else url += '&';
 
+			const data = bestTireOptionDetails ? bestTireOptionDetails : {
+				ConfigurationID: bestConfigurationId
+			};
+
 			if(options.apiKey){
 				url += options.apiKey + "#";
 				if(bestConfigurationId) url += "vc=" + bestConfigurationId;
 				if(bestTireConfigId) url += "&to=" + bestTireConfigId;
-				showButton(url);
+
+				showButton(url, data);
 			} else {
-				return new Promise(function(resolve){
-					getRSApiKey().then(function(apiKey){ 
-						url += apiKey + "#"; 
-						if(bestConfigurationId) url += "vc=" + bestConfigurationId;
-						if(bestTireConfigId) url += "&to=" + bestTireConfigId;
-						showButton(url);
-						resolve();
-					});
+				getRSApiKey().then(function(apiKey){ 
+					url += apiKey + "#"; 
+					if(bestConfigurationId) url += "vc=" + bestConfigurationId;
+					if(bestTireConfigId) url += "&to=" + bestTireConfigId;
+
+					showButton(url, data);
 				});
 			}
 		}
@@ -326,16 +365,28 @@
 		 * Show the button that will direct users to showcase given a url to the showcase.
 		 * @param {String}
 		 */
-		function showButton(url){
-			let confirmButton = document.createElement('button');
+		function showButton(url, data){
+			removeStaticLoader();
+
+			let confirmButton = document.createElement('a');
+
+			confirmButton.href = url;
+
+			if (!options.openInSamePage)
+				confirmButton.target = '_blank';
 			
 			if(options.buttonText) confirmButton.innerHTML = options.buttonText;
 			else confirmButton.innerHTML = "Browse wheels";
 
 			if(options.buttonClasses) options.buttonClasses.map(btnClass => confirmButton.classList.add(btnClass)); //if user has super secret special button classes
 
-			confirmButton.addEventListener('click', function(){
-				window.open(url);
+			confirmButton.addEventListener('click', function (e) {
+				if (typeof options.callback !== 'function') return;
+
+				options.callback(data);
+
+				e.preventDefault();
+				return false;
 			});
 
 			tplEl.appendChild(confirmButton);

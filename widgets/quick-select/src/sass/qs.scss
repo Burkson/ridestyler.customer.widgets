@@ -41,15 +41,31 @@
     border-radius: 3px;
     border-color: #c4c4c4;
   }
-  .select-loader.active-loader {
+
+  .select-loader {
     display: inline-block;
     background-image: url("https://static.ridestyler.com/images/loaders/loader_radial_chaser_back_on_white_32.gif");
     position: absolute;
     width: 20px; height: 20px;
     background-position: top left;
     background-size: 100%;
-    right: 0; bottom: 6px;
+    right: 6px; bottom: 5px;
+    visibility: hidden;
+
+    &.active-loader {
+      visibility: visible;
+
+      & ~.config-select-icon {
+        display: none;
+      }
+    }
   }
+
+  .static-loader {
+    position: static !important;
+    visibility: visible;
+  }
+
   label {
     display: inline-block;
     position: relative;
@@ -66,12 +82,12 @@
     top: 9px;
     z-index: -1;
   }
-  button {
+  a {
     margin-top: 0.5em;
     width: 100%; height: 40px;
     cursor: pointer;
   }
-  button {
+  a {
     color: #fff;
     -webkit-appearance: none;
     -moz-appearance: none;
