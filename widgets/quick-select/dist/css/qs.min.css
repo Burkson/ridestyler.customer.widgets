@@ -36,7 +36,7 @@
     padding: 0px 13px;
     border-radius: 3px;
     border-color: #c4c4c4; }
-  #ridestyler-quick-select .select-loader.active-loader {
+  #ridestyler-quick-select .select-loader {
     display: inline-block;
     background-image: url("https://static.ridestyler.com/images/loaders/loader_radial_chaser_back_on_white_32.gif");
     position: absolute;
@@ -44,8 +44,16 @@
     height: 20px;
     background-position: top left;
     background-size: 100%;
-    right: 0;
-    bottom: 6px; }
+    right: 6px;
+    bottom: 5px;
+    visibility: hidden; }
+    #ridestyler-quick-select .select-loader.active-loader {
+      visibility: visible; }
+      #ridestyler-quick-select .select-loader.active-loader ~ .config-select-icon {
+        display: none; }
+  #ridestyler-quick-select .static-loader {
+    position: static !important;
+    visibility: visible; }
   #ridestyler-quick-select label {
     display: inline-block;
     position: relative;
@@ -62,12 +70,12 @@
     position: absolute;
     top: 9px;
     z-index: -1; }
-  #ridestyler-quick-select button {
+  #ridestyler-quick-select a {
     margin-top: 0.5em;
     width: 100%;
     height: 40px;
     cursor: pointer; }
-  #ridestyler-quick-select button {
+  #ridestyler-quick-select a {
     color: #fff;
     -webkit-appearance: none;
     -moz-appearance: none;
