@@ -321,7 +321,7 @@
 		 * Build the data that will take users to the showcase with their configuration settings.
 		 */
 		function updateButton(){
-			let url = options.url;
+			let url = options.url || '';
 
 			if(url.indexOf('?') == -1) url += '?';
 			else url += '&';
