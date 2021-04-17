@@ -8,8 +8,12 @@
     "url": "https://github.com/Burkson/ridestyler.customer.widgets/tree/master/widgets/quick-select"
   },
   "contributors": [
-    {"name": "Blake Bless"},
-    {"name": "Byron Carasco"}
+    {
+      "name": "Blake Bless"
+    },
+    {
+      "name": "Byron Carasco"
+    }
   ],
   "license": "ISC",
   "dependencies": {
