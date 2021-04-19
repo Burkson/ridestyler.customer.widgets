@@ -1,6 +1,6 @@
 {
   "name": "quick-select",
-  "version": "1.2",
+  "version": "1.2.1",
   "description": "Adds a quick select widget to your website that directs users to your showcase",
   "main": "gulpfile.js",
   "repository": {
@@ -15,6 +15,9 @@
       "name": "Byron Carasco"
     }
   ],
+  "scripts": {
+    "build": "gulp"
+  },
   "license": "ISC",
   "dependencies": {
     "@babel/core": "^7.7.7",
