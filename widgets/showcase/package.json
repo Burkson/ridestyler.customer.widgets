@@ -4,7 +4,7 @@
   "devDependencies": {
     "@types/nouislider": "^9.0.4",
     "TinyAnimate": "^0.4.0",
-    "async": "^2.6.1",
+    "async": "^3.2.2",
     "autoprefixer": "^7.2.6",
     "babel-core": "^6.26.3",
     "babel-plugin-transform-remove-strict-mode": "0.0.2",
