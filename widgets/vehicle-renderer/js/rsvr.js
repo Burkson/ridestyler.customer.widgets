@@ -137,7 +137,6 @@ function RideStylerViewport(elem, options) {
 
     this.Destroy = function() {
         if (active === false) return;
-        active = false;
 
         this.SuspendLayout();
 
@@ -148,6 +147,8 @@ function RideStylerViewport(elem, options) {
         container = null;
         loader = null;
         renderer = null;
+
+        active = false;
     };
 
     this.CurrentInstructions = function (newInstructions) {
