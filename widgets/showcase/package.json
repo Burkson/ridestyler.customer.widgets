@@ -14,7 +14,7 @@
     "consolidate": "^0.14.5",
     "cssnano": "^3.10.0",
     "del": "^3.0.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-babel": "^7.0.1",
     "gulp-concat": "^2.6.1",
     "gulp-file": "^0.3.0",
